@@ -1,0 +1,244 @@
+/* Travelio Global Design System & Styles */
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif-italic: 'Cormorant Garamond', Georgia, serif;
+
+  /* Spec Palette */
+  --bg-dark: #0f1410;
+  --bg-dark-panel: #1A1B16;
+  --bg-pale-yellow: #FEF6C7;
+  --bg-eyebrow-yellow: #FBEFA6;
+  --bg-pink: #F9D6DE;
+  --bg-peach: #FFE0CE;
+  --bg-light-blue: #D9E9F7;
+  --bg-card: #F5F5F3;
+  --text-dark: #141613;
+  --text-muted: #666C75;
+  --text-light: #F3F4F6;
+  --border-light: #E5E7EB;
+
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Mixed-Typeface Emphasis Accent */
+.accent-serif {
+  font-family: var(--font-serif-italic);
+  font-style: italic;
+  font-weight: 600;
+  display: inline-block;
+  padding: 0 0.15em;
+}
+
+/* Eyebrow Pill */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-eyebrow-yellow);
+  color: var(--text-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.eyebrow-pill .gear-icon {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* Two-Tone Pill Buttons */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px 8px 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.btn-pill-dark {
+  background-color: var(--text-dark);
+  color: #ffffff;
+}
+
+.btn-pill-dark:hover {
+  background-color: #2a2d28;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.btn-pill-white {
+  background-color: #ffffff;
+  color: var(--text-dark);
+}
+
+.btn-pill-white:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.btn-pill-pink {
+  background-color: var(--bg-pink);
+  color: var(--text-dark);
+}
+
+.btn-pill-pink:hover {
+  background-color: #f7c5cf;
+  transform: translateY(-2px);
+}
+
+/* Inset Circle Badge on Buttons */
+.btn-badge-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.btn-pill-dark .btn-badge-icon {
+  background-color: #ffffff;
+  color: var(--text-dark);
+}
+
+.btn-pill-white .btn-badge-icon {
+  background-color: #f43f5e;
+  color: #ffffff;
+}
+
+.btn-pill-pink .btn-badge-icon {
+  background-color: #ffffff;
+  color: var(--text-dark);
+}
+
+.btn-pill:hover .btn-badge-icon {
+  transform: rotate(45deg);
+}
+
+/* Die-cut Scalloped Ticket Edge Strip */
+.scalloped-strip {
+  position: relative;
+  background-color: var(--text-dark);
+  color: #ffffff;
+  padding: 32px 0;
+  overflow: hidden;
+}
+
+.scalloped-strip::before,
+.scalloped-strip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background-size: 24px 24px;
+  z-index: 2;
+}
+
+.scalloped-strip::before {
+  top: -6px;
+  background-image: radial-gradient(circle at 12px -6px, transparent 12px, var(--text-dark) 13px);
+}
+
+.scalloped-strip::after {
+  bottom: -6px;
+  background-image: radial-gradient(circle at 12px 18px, transparent 12px, var(--text-dark) 13px);
+}
+
+/* Starburst / Blob Shapes */
+.shape-blob-yellow {
+  background: var(--bg-eyebrow-yellow);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+
+.shape-starburst-pink {
+  background: var(--bg-pink);
+  clip-path: polygon(50% 0%, 65% 10%, 85% 5%, 90% 25%, 100% 45%, 92% 65%, 98% 85%, 80% 90%, 65% 100%, 45% 92%, 25% 98%, 10% 85%, 0% 65%, 10% 45%, 2% 25%, 20% 10%);
+}
+
+.shape-blob-peach {
+  background: var(--bg-peach);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.shape-diamond-blue {
+  background: var(--bg-light-blue);
+  border-radius: 24px;
+  transform: rotate(45deg);
+}
+
+.shape-diamond-inner {
+  transform: rotate(-45deg);
+}
+
+/* Horizontal Auto-Scroll Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
