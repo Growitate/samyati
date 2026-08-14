@@ -21,7 +21,7 @@ const REVIEWS = [
     name: 'Marcus Thorne',
     location: 'London, UK',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
-    quote: 'From Kyoto tea houses to bullet trains, Travelio executed seamless luxury travel without a single hitch.'
+    quote: 'From Kyoto tea houses to bullet trains, Samyati executed seamless luxury travel without a single hitch.'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const REVIEWS = [
     name: 'David Chen',
     location: 'Vancouver, Canada',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80',
-    quote: 'Trekking the Icelandic fjords with Travelio felt like stepping into an epic documentary. 10/10 recommendation.'
+    quote: 'Trekking the Icelandic fjords with Samyati felt like stepping into an epic documentary. 10/10 recommendation.'
   },
   {
     id: 5,

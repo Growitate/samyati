@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { Settings, Clock, Star, Eye } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Settings, Clock, Star, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PACKAGES } from '../data/travelData';
 
 export default function FeaturedTours({ onSelectPackage, onNavigate }) {
-  const [filterCategory] = useState('Domestic');
+  const [filterCategory, setFilterCategory] = useState('All');
+  const scrollRef = useRef(null);
 
-  // Filter packages by category
-  const filteredPackages = PACKAGES.filter((p) => p.category === filterCategory);
+  // Filter packages by category ('All', 'Domestic', 'International')
+  const displayPackages = filterCategory === 'All' 
+    ? PACKAGES 
+    : PACKAGES.filter((p) => p.category === filterCategory);
 
-  // Duplicate items to create an infinite, seamless running marquee track
-  const marqueePackages = [...filteredPackages, ...filteredPackages];
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 374;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const handleRedirect = (page) => {
     if (onNavigate) {
@@ -36,7 +46,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           </div>
 
           <div className="header-right">
-            {/* Two rightmost redirect boxes: Domestic & International */}
+            {/* Quick Realm Links */}
             <div className="filter-pill-group">
               <button 
                 className="filter-btn active"
@@ -53,15 +63,35 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                 ✈️ International
               </button>
             </div>
+
+            {/* Manual Navigation Arrow Buttons */}
+            <div className="carousel-arrows-group">
+              <button 
+                className="carousel-arrow-btn"
+                onClick={() => handleScroll('left')}
+                title="Scroll Left"
+                aria-label="Previous tours"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button 
+                className="carousel-arrow-btn"
+                onClick={() => handleScroll('right')}
+                title="Scroll Right"
+                aria-label="Next tours"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Continuous Running Infinite Marquee Track */}
-        <div className="marquee-viewport">
-          <div className="marquee-track">
-            {marqueePackages.map((tour, index) => (
+        {/* Manual Horizontal Scroll Carousel */}
+        <div className="manual-carousel-container" ref={scrollRef}>
+          <div className="manual-carousel-track">
+            {displayPackages.map((tour) => (
               <div 
-                key={`${tour.id}-${index}`} 
+                key={tour.id} 
                 className="tour-card"
                 onClick={() => onSelectPackage(tour)}
               >
@@ -138,6 +168,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           display: flex;
           align-items: center;
           justify-content: flex-end;
+          gap: 14px;
         }
 
         /* Exactly 2 Filter Boxes on Far Right */
@@ -168,33 +199,61 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
 
-        /* Continuous Running Infinite Marquee Viewport & Track */
-        .marquee-viewport {
-          width: 100%;
-          overflow: hidden;
-          padding: 10px 0 20px;
-          position: relative;
+        /* Carousel Navigation Arrow Buttons */
+        .carousel-arrows-group {
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
 
-        .marquee-track {
+        .carousel-arrow-btn {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          color: #0f172a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+          transition: all 0.2s ease;
+        }
+
+        .carousel-arrow-btn:hover {
+          background: #0f172a;
+          color: #ffffff;
+          border-color: #0f172a;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+        }
+
+        .carousel-arrow-btn:active {
+          transform: scale(0.96);
+        }
+
+        /* Manual Horizontal Scroll Carousel */
+        .manual-carousel-container {
+          width: 100%;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          padding: 10px 4px 24px;
+          position: relative;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .manual-carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+
+        .manual-carousel-track {
           display: flex;
           gap: 24px;
           width: max-content;
-          animation: runningMarquee 90s linear infinite;
-          will-change: transform;
-        }
-
-        .marquee-viewport:hover .marquee-track {
-          animation-play-state: paused;
-        }
-
-        @keyframes runningMarquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
         }
 
         .tour-card {
@@ -378,9 +437,18 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         }
 
         @media (max-width: 768px) {
-          .featured-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .featured-section { padding: 60px 0; }
+          .featured-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
           .header-right { width: 100%; justify-content: flex-start; }
-          .tour-card { flex: 0 0 300px; width: 300px; }
+          .tour-card { flex: 0 0 285px; width: 285px; }
+          .card-photo-wrapper { height: 190px; }
+          .card-body { padding: 18px 16px; }
+          .tour-card-title { font-size: 15px; }
+        }
+
+        @media (max-width: 480px) {
+          .filter-btn { padding: 6px 14px; font-size: 12px; }
+          .tour-card { flex: 0 0 270px; width: 270px; }
         }
       `}</style>
     </section>

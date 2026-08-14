@@ -28,7 +28,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
     {
       id: 1,
       sender: 'ai',
-      text: "Hello! I'm Samyati AI, your personal travel consultant. Tell me what type of trip you are planning today or select your options below!"
+      text: "Hello! I'm Samyati AI, your personal travel advisor. Tell me what type of trip you are planning today or select your options below!"
     }
   ]);
 
@@ -157,7 +157,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                   <Bot size={20} className="bot-head-icon" />
                 </div>
                 <div className="bot-meta">
-                  <h3 className="bot-name">Samyati AI Consultant</h3>
+                  <h3 className="bot-name">Samyati Travel Advisor</h3>
                   <span className="bot-status">
                     <span className="online-dot" /> Instant Itinerary Assistant
                   </span>
@@ -835,11 +835,25 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .highlight-text { color: #ea580c; }
 
         @media (max-width: 960px) {
+          .promise-ai-section { padding: 60px 0 80px; }
           .promise-grid-layout { grid-template-columns: 1fr; grid-template-rows: auto; }
-          .chatbot-card-window { grid-column: 1; grid-row: 1; }
+          .chatbot-card-window { grid-column: 1; grid-row: 1; border-radius: 20px; }
           .scatter-shape-wrapper { display: none; }
           .curved-photo-left, .curved-photo-right { display: none; }
           .results-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+          .chatbot-header-bar { padding: 14px 16px; }
+          .bot-name { font-size: 14px; }
+          .chatbot-feed { padding: 16px 12px; gap: 14px; }
+          .chat-msg-content { max-width: 88%; padding: 10px 14px; font-size: 13px; }
+          .chatbot-prompt-controls { padding: 14px 12px; gap: 14px; }
+          .chip-btn { padding: 6px 10px; font-size: 11.5px; }
+          .chatbot-input-bar { padding: 10px 12px; gap: 8px; }
+          .chat-input-wrapper { padding: 6px 12px; }
+          .chat-text-input { font-size: 12.5px; }
+          .chat-send-btn { padding: 8px 14px; font-size: 12px; }
         }
       `}</style>
     </section>

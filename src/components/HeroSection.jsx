@@ -25,7 +25,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
 
         {/* Subhead Paragraph */}
         <p className="hero-subhead">
-          Plan domestic & international trips with handpicked stays, smooth transfers, sightseeing, and complete travel support from consultation to return.
+          plan domestic & international trips with handpicked stays, smooth transfers, sightseeing, and complete travel support from consultation to return.
         </p>
 
         {/* Search Bar Pill & CTA */}
@@ -41,7 +41,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
                 className="search-input"
               />
             </div>
-            
+
             <button type="submit" className="search-submit-btn">
               <span>Get Your Offer</span>
               <ArrowRight size={16} />
@@ -249,44 +249,76 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         @media (max-width: 768px) {
           .hero-container {
             min-height: 600px;
-            padding-top: 110px;
+            padding-top: 100px;
             padding-bottom: 90px;
           }
           .hero-headline {
-            font-size: clamp(32px, 8vw, 46px);
-            margin-bottom: 16px;
+            font-size: clamp(28px, 7.5vw, 42px);
+            margin-bottom: 14px;
           }
           .hero-subhead {
-            font-size: 14px;
-            padding: 0 12px;
-            margin-bottom: 28px;
+            font-size: 13.5px;
+            padding: 0 6px;
+            margin-bottom: 20px;
+            line-height: 1.5;
           }
           .hero-search-form {
-            padding: 0 10px;
+            padding: 0;
+            margin-bottom: 16px;
           }
           .hero-search-pill {
             flex-direction: column;
-            padding: 8px 12px;
-            border-radius: 24px;
+            padding: 8px;
+            border-radius: 18px;
             gap: 8px;
           }
           .search-input-group {
             width: 100%;
-            padding: 6px 4px;
+            padding: 6px 8px;
+          }
+          .search-input {
+            font-size: 13px;
           }
           .search-submit-btn {
             width: 100%;
             justify-content: center;
-            padding: 12px 20px;
-            border-radius: 9999px;
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-size: 13.5px;
           }
           .hero-trust-bar {
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px 18px;
+            gap: 6px 8px;
             font-size: 11px;
-            padding: 0 10px;
+            padding: 0 4px;
+            position: relative;
+            z-index: 10;
+            margin-top: 8px;
+          }
+          .trust-item {
+            background: rgba(15, 20, 16, 0.85);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-container {
+            padding-top: 90px;
+            padding-bottom: 85px;
+          }
+          .hero-headline {
+            font-size: clamp(26px, 7.5vw, 34px);
+          }
+          .trust-item {
+            font-size: 10.5px;
+            padding: 4px 10px;
           }
         }
       `}</style>

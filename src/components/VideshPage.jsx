@@ -693,20 +693,25 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
 
         @media (max-width: 768px) {
           .videsh-hero-banner {
-            min-height: 400px;
-            padding-bottom: 40px;
+            min-height: 380px;
+            padding-bottom: 30px;
           }
           .videsh-main-title {
-            font-size: clamp(54px, 13vw, 84px);
-            margin-bottom: 8px;
+            font-size: clamp(52px, 14vw, 80px);
+            margin-bottom: 6px;
           }
           .videsh-hero-desc {
             font-size: 13.5px;
-            padding: 0 14px;
+            padding: 0 10px;
           }
           .row-3 { grid-template-columns: 1fr; gap: 16px; }
-          .videsh-card { height: 260px; }
-          .drawer-grid { grid-template-columns: 1fr; }
+          .videsh-dest-card { border-radius: 18px; }
+          .card-photo-wrapper { height: 190px; }
+          .photo-wide { height: 200px; }
+          .drawer-grid { grid-template-columns: 1fr; gap: 12px; }
+          .dest-drawer-backdrop { padding: 12px; }
+          .dest-drawer-modal { padding: 20px 16px; border-radius: 20px; max-height: 90vh; }
+          .drawer-heading { font-size: 20px; }
           .flight-path-decoration { display: none; }
         }
       `}</style>

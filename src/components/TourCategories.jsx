@@ -12,20 +12,13 @@ export default function TourCategories({ onNavigate }) {
           </h2>
         </div>
 
-        {/* Jaipur Castle Arched Window Grid */}
+        {/* Realm Cards Grid */}
         <div className="jaipur-window-grid">
-          {/* Desh Jaipur Arched Window Card */}
+          {/* Desh Card */}
           <div 
             className="jaipur-arch-card card-desh-arch"
             onClick={() => onNavigate('desh')}
           >
-            {/* Jaipur Arch Crest Motif */}
-            <div className="arch-crest crest-desh">
-              <svg viewBox="0 0 100 25" className="arch-svg">
-                <path d="M0,25 C30,25 35,0 50,0 C65,0 70,25 100,25 Z" fill="#ffffff" />
-              </svg>
-            </div>
-
             <div className="arch-window-frame">
               <img 
                 src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=85" 
@@ -34,12 +27,9 @@ export default function TourCategories({ onNavigate }) {
               />
               <div className="arch-overlay overlay-desh" />
 
-              {/* Top Badge */}
-              <span className="arch-badge badge-desh">🇮🇳 देश (7 Destinations)</span>
-
               {/* Bottom Content */}
               <div className="arch-card-content">
-                <h3 className="arch-heading">देश <span className="serif-sub">(Desh)</span></h3>
+                <h3 className="arch-heading">Desh</h3>
 
                 <button className="btn-explore btn-explore-desh">
                   <span>Explore Packages</span>
@@ -49,18 +39,11 @@ export default function TourCategories({ onNavigate }) {
             </div>
           </div>
 
-          {/* Videsh Jaipur Arched Window Card */}
+          {/* Videsh Card */}
           <div 
             className="jaipur-arch-card card-videsh-arch"
             onClick={() => onNavigate('videsh')}
           >
-            {/* Jaipur Arch Crest Motif */}
-            <div className="arch-crest crest-videsh">
-              <svg viewBox="0 0 100 25" className="arch-svg">
-                <path d="M0,25 C30,25 35,0 50,0 C65,0 70,25 100,25 Z" fill="#ffffff" />
-              </svg>
-            </div>
-
             <div className="arch-window-frame">
               <img 
                 src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=85" 
@@ -69,12 +52,9 @@ export default function TourCategories({ onNavigate }) {
               />
               <div className="arch-overlay overlay-videsh" />
 
-              {/* Top Badge */}
-              <span className="arch-badge badge-videsh">✈️ विदेश (7 Destinations)</span>
-
               {/* Bottom Content */}
               <div className="arch-card-content">
-                <h3 className="arch-heading">विदेश <span className="serif-sub">(Videsh)</span></h3>
+                <h3 className="arch-heading">Videsh</h3>
 
                 <button className="btn-explore btn-explore-videsh">
                   <span>Explore Packages</span>
@@ -104,7 +84,7 @@ export default function TourCategories({ onNavigate }) {
           line-height: 1.2;
         }
 
-        /* Jaipur Arched Window Grid */
+        /* Jaipur Window Grid */
         .jaipur-window-grid {
           display: flex;
           align-items: center;
@@ -125,34 +105,18 @@ export default function TourCategories({ onNavigate }) {
           transform: translateY(-8px);
         }
 
-        /* Arch Crest Peak */
-        .arch-crest {
-          position: absolute;
-          top: -20px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 140px;
-          height: 24px;
-          z-index: 12;
-        }
-
-        .arch-svg {
-          width: 100%;
-          height: 100%;
-        }
-
-        /* Jaipur Palace Window Jharokha Dome Shape */
+        /* Curved Rectangle / Soft Square Window Frame */
         .arch-window-frame {
           position: relative;
-          height: 340px;
+          height: 320px;
           width: 100%;
-          border-radius: 160px 160px 24px 24px;
+          border-radius: 24px;
           overflow: hidden;
           box-shadow: 0 14px 36px rgba(0,0,0,0.12);
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          padding: 32px 24px 24px;
+          justify-content: flex-end;
+          padding: 32px 24px 28px;
           border: 3px solid rgba(255, 255, 255, 0.8);
           transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -183,34 +147,13 @@ export default function TourCategories({ onNavigate }) {
         .overlay-desh {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(20, 14, 8, 0.25) 0%, rgba(20, 14, 8, 0.85) 100%);
+          background: linear-gradient(180deg, rgba(20, 14, 8, 0.15) 0%, rgba(20, 14, 8, 0.85) 100%);
         }
 
         .overlay-videsh {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(9, 30, 66, 0.25) 0%, rgba(9, 30, 66, 0.85) 100%);
-        }
-
-        .arch-badge {
-          position: relative;
-          z-index: 10;
-          align-self: center;
-          font-size: 11px;
-          font-weight: 800;
-          padding: 6px 16px;
-          border-radius: 9999px;
-          color: #ffffff;
-          box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-          margin-top: 10px;
-        }
-
-        .badge-desh {
-          background: rgba(217, 119, 6, 0.95);
-        }
-
-        .badge-videsh {
-          background: rgba(2, 132, 199, 0.95);
+          background: linear-gradient(180deg, rgba(9, 30, 66, 0.15) 0%, rgba(9, 30, 66, 0.85) 100%);
         }
 
         .arch-card-content {
@@ -225,21 +168,16 @@ export default function TourCategories({ onNavigate }) {
         }
 
         .arch-heading {
-          font-size: 30px;
+          font-size: 32px;
           font-weight: 800;
           line-height: 1;
-        }
-
-        .serif-sub {
-          font-family: var(--font-serif-italic);
-          font-style: italic;
-          font-weight: 400;
+          letter-spacing: -0.01em;
         }
 
         .btn-explore {
           border: none;
-          padding: 9px 20px;
-          border-radius: 9999px;
+          padding: 10px 22px;
+          border-radius: 8px;
           font-size: 13px;
           font-weight: 700;
           cursor: pointer;
@@ -265,9 +203,12 @@ export default function TourCategories({ onNavigate }) {
         }
 
         @media (max-width: 720px) {
-          .jaipur-window-grid { flex-direction: column; }
-          .jaipur-arch-card { width: 280px; }
-          .arch-window-frame { height: 300px; }
+          .jaipur-window-section { padding: 40px 0 60px; }
+          .jaipur-window-grid { flex-direction: column; gap: 24px; padding: 0 8px; }
+          .jaipur-arch-card { width: 100%; max-width: 320px; }
+          .arch-window-frame { height: 300px; padding: 24px 20px 24px; }
+          .arch-heading { font-size: 28px; }
+          .btn-explore { padding: 9px 18px; font-size: 12.5px; }
         }
       `}</style>
     </section>

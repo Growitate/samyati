@@ -4,6 +4,7 @@ import HeroSection from './components/HeroSection';
 import TourCategories from './components/TourCategories';
 import PromiseSection from './components/PromiseSection';
 import FeaturedTours from './components/FeaturedTours';
+import ThemeEscapes from './components/ThemeEscapes';
 import LocationMarquee from './components/LocationMarquee';
 import TopDestinations from './components/TopDestinations';
 import ProcessSection from './components/ProcessSection';
@@ -187,14 +188,14 @@ export default function App() {
           onOpenOfferModal={handleOpenOfferModal}
           onSelectDestination={(id) => handleOpenOfferModal(id)}
         />
-        
-        <TourCategories 
-          onNavigate={handleNavigate}
+
+        <PromiseSection 
+          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
         />
         
-        <PromiseSection 
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+        <TourCategories 
+          onNavigate={handleNavigate}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
@@ -202,6 +203,11 @@ export default function App() {
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
           onNavigate={handleNavigate}
+        />
+
+        <ThemeEscapes 
+          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+          onOpenOfferModal={handleOpenOfferModal}
         />
 
         <LocationMarquee />

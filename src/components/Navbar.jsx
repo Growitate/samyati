@@ -305,21 +305,33 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           position: fixed;
           inset: 0;
           background: rgba(0, 0, 0, 0.65);
-          backdrop-filter: blur(4px);
+          backdrop-filter: blur(6px);
           z-index: 200;
           display: flex;
           justify-content: flex-end;
+          animation: fadeInOverlay 0.25s ease forwards;
+        }
+
+        @keyframes fadeInOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         .mobile-menu-drawer {
-          width: 300px;
+          width: 310px;
           max-width: 85vw;
           height: 100%;
           background: #ffffff;
-          padding: 24px;
+          padding: 28px 24px;
           display: flex;
           flex-direction: column;
-          box-shadow: -4px 0 24px rgba(0,0,0,0.2);
+          box-shadow: -4px 0 28px rgba(0,0,0,0.25);
+          animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
         }
 
         .mobile-menu-header {
@@ -327,6 +339,8 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           justify-content: space-between;
           align-items: flex-start;
           margin-bottom: 24px;
+          padding-bottom: 16px;
+          border-bottom: 1px solid #f1f5f9;
         }
 
         .mobile-menu-header .logo-text {
@@ -344,19 +358,24 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .close-btn {
-          background: none;
+          background: #f8fafc;
           border: none;
           cursor: pointer;
-          padding: 6px;
+          padding: 8px;
           border-radius: 50%;
           color: var(--text-dark);
+          transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+          background: #e2e8f0;
         }
 
         .mobile-menu-links {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 8px;
           flex: 1;
         }
 
@@ -366,15 +385,24 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           background: none;
           border: none;
           color: var(--text-dark);
-          font-size: 16px;
+          font-size: 15px;
           font-weight: 600;
-          padding: 8px 0;
+          padding: 12px 14px;
+          border-radius: 12px;
           cursor: pointer;
-          transition: color 0.2s;
+          transition: all 0.2s ease;
         }
 
         .mobile-nav-link:hover, .mobile-nav-link.active {
-          color: #f43f5e;
+          color: #18181b;
+          background: #f8fafc;
+          font-weight: 700;
+        }
+
+        .mobile-nav-link.active {
+          border-left: 3px solid #f43f5e;
+          background: #fff1f2;
+          color: #e11d48;
         }
 
         .mobile-menu-footer {
@@ -390,9 +418,42 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         .show-mobile-only { display: none; }
 
         @media (max-width: 900px) {
+          .navbar-wrapper { padding-top: 14px; }
           .hidden-mobile { display: none; }
           .show-mobile-only { display: inline-flex; }
           .hidden-sm { display: none; }
+          .nav-cta { padding: 6px 12px 6px 14px; font-size: 12px; gap: 6px; }
+          .nav-cta .btn-badge-icon { width: 24px; height: 24px; }
+        }
+
+        @media (max-width: 480px) {
+          .nav-logo .logo-text {
+            font-size: 24px;
+          }
+          .logo-subtag {
+            font-size: 8px;
+          }
+          .nav-cta {
+            padding: 6px 10px 6px 12px;
+            font-size: 11px;
+          }
+          .nav-cta .btn-badge-icon {
+            width: 22px;
+            height: 22px;
+          }
+          .mobile-hamburger-btn {
+            padding: 7px 10px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .nav-cta span:first-child {
+            display: none;
+          }
+          .nav-cta {
+            padding: 6px;
+            border-radius: 50%;
+          }
         }
       `}</style>
     </header>

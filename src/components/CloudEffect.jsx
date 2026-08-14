@@ -110,6 +110,18 @@ export function HeroCloudEffect() {
           animation-delay: 6s;
         }
 
+        @media (max-width: 768px) {
+          .hero-cloud-bottom {
+            height: 60px;
+          }
+          .cloud-svg-mask {
+            height: 55px;
+          }
+          .cloud-puff {
+            display: none;
+          }
+        }
+
         @keyframes floatMist {
           0% {
             transform: translateY(0) scale(1);

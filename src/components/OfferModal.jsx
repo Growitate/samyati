@@ -336,8 +336,12 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
         }
 
         @media (max-width: 600px) {
-          .form-grid { grid-template-columns: 1fr; }
-          .modal-container { padding: 24px; }
+          .modal-backdrop { padding: 12px; }
+          .form-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+          .modal-container { padding: 24px 18px; border-radius: 24px; max-height: 92vh; }
+          .modal-title { font-size: 22px; }
+          .modal-header { margin-bottom: 18px; }
+          .form-input, .form-select { height: 44px; font-size: 14px; }
         }
       `}</style>
     </div>

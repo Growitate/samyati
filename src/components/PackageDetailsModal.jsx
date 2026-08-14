@@ -323,7 +323,13 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
         }
 
         @media (max-width: 600px) {
-          .inc-exc-grid { grid-template-columns: 1fr; }
+          .pkg-hero-banner { height: 210px; }
+          .banner-title { font-size: 20px; left: 16px; right: 16px; bottom: 16px; }
+          .banner-badges { top: 16px; left: 16px; }
+          .pkg-specs-bar { padding: 12px 18px; flex-direction: column; align-items: flex-start; gap: 8px; }
+          .pkg-section { padding: 18px; }
+          .inc-exc-grid { grid-template-columns: 1fr; padding: 18px; gap: 14px; }
+          .pkg-modal-footer { padding: 16px 18px; }
         }
       `}</style>
     </div>

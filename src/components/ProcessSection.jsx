@@ -68,7 +68,7 @@ export default function ProcessSection() {
 
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % PROCESS_STEPS.length);
-    }, 3800);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -192,7 +192,7 @@ export default function ProcessSection() {
           object-fit: cover;
           opacity: 0;
           transform: scale(1.04);
-          transition: opacity 0.8s ease, transform 1.2s ease;
+          transition: opacity 0.3s ease, transform 0.6s ease;
         }
 
         .split-img.active-slide {
@@ -238,7 +238,7 @@ export default function ProcessSection() {
         }
 
         .progress-fill.animating {
-          animation: progressTimer 3.8s linear forwards;
+          animation: progressTimer 1.0s linear forwards;
         }
 
         @keyframes progressTimer {

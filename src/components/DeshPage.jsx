@@ -539,24 +539,27 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
 
         @media (max-width: 768px) {
           .desh-hero-banner {
-            min-height: 400px;
-            padding-bottom: 40px;
+            min-height: 380px;
+            padding-bottom: 30px;
           }
           .hero-main-title {
-            font-size: clamp(54px, 13vw, 84px);
-            margin-bottom: 8px;
+            font-size: clamp(52px, 14vw, 80px);
+            margin-bottom: 6px;
           }
           .hero-sub-paragraph {
             font-size: 13.5px;
-            padding: 0 14px;
+            padding: 0 10px;
           }
           .desh-cards-section {
             margin-top: 10px;
           }
           .row-3, .row-2 { grid-template-columns: 1fr; gap: 16px; }
-          .mental-dest-card { height: 260px; }
+          .mental-dest-card { height: 230px; }
           .card-wide-center { width: 100%; }
-          .drawer-grid { grid-template-columns: 1fr; }
+          .drawer-grid { grid-template-columns: 1fr; gap: 12px; }
+          .dest-drawer-backdrop { padding: 12px; }
+          .dest-drawer-modal { padding: 20px 16px; border-radius: 20px; max-height: 90vh; }
+          .drawer-heading { font-size: 20px; }
         }
       `}</style>
     </div>

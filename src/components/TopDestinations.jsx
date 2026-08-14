@@ -1,19 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { DESTINATIONS } from '../data/travelData';
 
 export default function TopDestinations({ onOpenOfferModal }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const touchStartX = useRef(null);
+  const autoPlayRef = useRef(null);
 
-  const current = DESTINATIONS[currentIndex];
+  // Auto-scroll carousel timer (advances every 4 seconds)
+  useEffect(() => {
+    autoPlayRef.current = setInterval(() => {
+      handleNext();
+    }, 4000);
+
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [currentIndex]);
+
+  const resetTimer = () => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    autoPlayRef.current = setInterval(() => {
+      handleNext();
+    }, 4000);
+  };
 
   const handlePrev = () => {
+    setIsTransitioning(true);
     setCurrentIndex((prev) => (prev === 0 ? DESTINATIONS.length - 1 : prev - 1));
+    setTimeout(() => setIsTransitioning(false), 400);
+    resetTimer();
   };
 
   const handleNext = () => {
+    setIsTransitioning(true);
     setCurrentIndex((prev) => (prev === DESTINATIONS.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsTransitioning(false), 400);
+    resetTimer();
   };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStartX.current) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (diff > 50) {
+      handleNext();
+    } else if (diff < -50) {
+      handlePrev();
+    }
+    touchStartX.current = null;
+  };
+
+  const current = DESTINATIONS[currentIndex];
 
   // Quadratic Bezier arc math: start (30,15), control (450,100), end (870,15)
   const getArcPoint = (t) => {
@@ -56,7 +98,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
 
           <h2 className="destinations-h2">
-            Top <span className="accent-serif">Destinations</span> This Season
+            Top <span className="accent-serif">Escapes</span> for Upcoming Seasons
           </h2>
 
           {/* Dotted Flight Path Arc SVG with Country Flag Nodes */}
@@ -77,7 +119,10 @@ export default function TopDestinations({ onOpenOfferModal }) {
                 <g 
                   key={idx}
                   className={`flag-node-group ${node.isActive ? 'active-node' : ''}`}
-                  onClick={() => setCurrentIndex(node.destIndex)}
+                  onClick={() => {
+                    setCurrentIndex(node.destIndex);
+                    resetTimer();
+                  }}
                   style={{ cursor: 'pointer' }}
                 >
                   {/* Active glowing ring */}
@@ -121,16 +166,25 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
         </div>
 
-        {/* Two-Panel Featured Destination Card */}
-        <div className="card-slider-wrapper">
+        {/* Two-Panel Featured Destination Card Slider */}
+        <div 
+          className="card-slider-wrapper"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <button className="slider-btn btn-prev" onClick={handlePrev} aria-label="Previous destination">
             <ChevronLeft size={20} />
           </button>
 
-          <div className="destination-panel-card">
+          <div className={`destination-panel-card ${isTransitioning ? 'card-animating' : ''}`}>
             {/* Left Photo Panel */}
             <div className="panel-photo-side">
-              <img src={current.image} alt={current.name} className="panel-img" />
+              <img 
+                key={`img-${current.id}`}
+                src={current.image} 
+                alt={current.name} 
+                className="panel-img fade-in-media" 
+              />
               <div className="country-badge">
                 <span className="badge-flag">{current.flag}</span>
                 <span className="badge-name">{current.name}</span>
@@ -151,11 +205,36 @@ export default function TopDestinations({ onOpenOfferModal }) {
                   </span>
                 </button>
               </div>
+
+              {/* Slider Dots Progress Indicator */}
+              <div className="slider-dots-row">
+                {DESTINATIONS.map((d, i) => (
+                  <button
+                    key={d.id}
+                    className={`slider-dot-pill ${i === currentIndex ? 'active' : ''}`}
+                    onClick={() => { setCurrentIndex(i); resetTimer(); }}
+                    aria-label={`Go to ${d.name}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
           <button className="slider-btn btn-next" onClick={handleNext} aria-label="Next destination">
             <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* Mobile Navigation Controls */}
+        <div className="mobile-slider-controls">
+          <button className="mobile-nav-btn" onClick={handlePrev} aria-label="Previous destination">
+            <ChevronLeft size={18} />
+          </button>
+          <span className="mobile-step-pill">
+            {current.flag} Destination {currentIndex + 1} of {DESTINATIONS.length}
+          </span>
+          <button className="mobile-nav-btn" onClick={handleNext} aria-label="Next destination">
+            <ChevronRight size={18} />
           </button>
         </div>
 
@@ -377,6 +456,45 @@ export default function TopDestinations({ onOpenOfferModal }) {
           justify-content: center;
         }
 
+        /* Slider Dots Row */
+        .slider-dots-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 18px;
+        }
+
+        .slider-dot-pill {
+          width: 8px;
+          height: 8px;
+          border-radius: 9999px;
+          background: #e2e8f0;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+
+        .slider-dot-pill.active {
+          width: 24px;
+          background: #b45309;
+        }
+
+        .fade-in-media {
+          animation: fadeSlideIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0.7;
+            transform: scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
         .slider-btn {
           position: absolute;
           width: 40px;
@@ -465,11 +583,54 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .face-flag:first-child { margin-left: 0; }
 
+        .mobile-slider-controls {
+          display: none;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          margin-bottom: 20px;
+        }
+
+        .mobile-nav-btn {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 1px solid rgba(0,0,0,0.1);
+          color: #1a1a1a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .mobile-step-pill {
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(180, 83, 9, 0.2);
+          color: #78350f;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 6px 14px;
+          border-radius: 9999px;
+        }
+
         @media (max-width: 840px) {
-          .destination-panel-card { grid-template-columns: 1fr; }
+          .destinations-section { padding: 45px 0 55px; }
+          .destination-panel-card { grid-template-columns: 1fr; border-radius: 18px; }
           .panel-photo-side { height: 230px; }
-          .panel-info-side { padding: 24px 22px; }
+          .panel-info-side { padding: 24px 20px; }
           .slider-btn { display: none; }
+          .mobile-slider-controls { display: flex; }
+        }
+
+        @media (max-width: 600px) {
+          .flight-path-container { display: none; }
+          .destinations-h2 { font-size: clamp(24px, 6.5vw, 32px); }
+          .panel-title { font-size: 22px; }
+          .panel-desc { font-size: 13px; margin-bottom: 16px; }
+          .btn-pill-dark { width: 100%; justify-content: center; padding: 10px 16px; font-size: 13px; }
+          .facepile-btn { width: 100%; max-width: 320px; justify-content: center; font-size: 12px; padding: 8px 14px; }
         }
       `}</style>
     </section>
