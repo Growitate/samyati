@@ -2,13 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { DESTINATIONS } from '../data/travelData';
 
-export default function TopDestinations({ onOpenOfferModal }) {
+export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const trackRef = useRef(null);
   const cardRefs = useRef([]);
+
+  const handleExploreDestination = (dest) => {
+    if (onNavigate) {
+      const targetPage = (dest.category || '').toLowerCase().includes('inter') ? 'videsh' : 'desh';
+      onNavigate(targetPage);
+    } else if (onOpenOfferModal) {
+      onOpenOfferModal(dest.name);
+    }
+  };
 
   // Calculate actual card scroll step
   const getCardStep = () => {
@@ -206,13 +215,13 @@ export default function TopDestinations({ onOpenOfferModal }) {
                 key={dest.id} 
                 ref={(el) => (cardRefs.current[idx] = el)}
                 className="destination-panel-card"
-                onClick={() => onOpenOfferModal && onOpenOfferModal(dest.name)}
+                onClick={() => handleExploreDestination(dest)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    onOpenOfferModal && onOpenOfferModal(dest.name);
+                    handleExploreDestination(dest);
                   }
                 }}
               >
@@ -244,9 +253,10 @@ export default function TopDestinations({ onOpenOfferModal }) {
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
-                        onOpenOfferModal && onOpenOfferModal(dest.name);
+                        handleExploreDestination(dest);
                       }} 
                       className="btn-pill btn-pill-dark"
+                      title={`Explore all ${dest.name} tours`}
                     >
                       <span>Explore All Tours</span>
                       <span className="btn-badge-icon">

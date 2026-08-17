@@ -214,6 +214,7 @@ export default function App() {
 
         <TopDestinations
           onOpenOfferModal={handleOpenOfferModal}
+          onNavigate={handleNavigate}
         />
 
         <ProcessSection />
