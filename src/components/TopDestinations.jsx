@@ -3,27 +3,39 @@ import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { DESTINATIONS } from '../data/travelData';
 
 export default function TopDestinations({ onOpenOfferModal }) {
-  const [activeNodeIndex, setActiveNodeIndex] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const trackRef = useRef(null);
+  const cardRefs = useRef([]);
 
-  // Auto-scroll loop: advances smoothly every 3.8 seconds by 1 card width
+  // Calculate actual card scroll step
+  const getCardStep = () => {
+    if (cardRefs.current && cardRefs.current[0]) {
+      return cardRefs.current[0].offsetWidth + 24; // card width + gap
+    }
+    return window.innerWidth > 1100 ? 604 : window.innerWidth > 768 ? 544 : 334;
+  };
+
+  // Auto-scroll loop: advances smoothly every 4 seconds when not hovered
   useEffect(() => {
+    if (isHovered) return;
+
     const timer = setInterval(() => {
       if (trackRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
-        const cardStep = 604; // 580px card + 24px gap
+        const step = getCardStep();
         if (scrollLeft + clientWidth >= scrollWidth - 30) {
           trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          trackRef.current.scrollBy({ left: cardStep, behavior: 'smooth' });
+          trackRef.current.scrollBy({ left: step, behavior: 'smooth' });
         }
       }
-    }, 3800);
+    }, 4000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isHovered]);
 
   const handleScrollUpdate = () => {
     if (trackRef.current) {
@@ -31,18 +43,24 @@ export default function TopDestinations({ onOpenOfferModal }) {
       setCanScrollLeft(scrollLeft > 10);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
-      // Estimate active node based on current scroll position
-      const cardStep = 604;
-      const index = Math.round(scrollLeft / cardStep);
-      setActiveNodeIndex(Math.min(Math.max(0, index), DESTINATIONS.length - 1));
+      const step = getCardStep();
+      const index = Math.round(scrollLeft / step);
+      setActiveCardIndex(Math.min(Math.max(0, index), DESTINATIONS.length - 1));
     }
   };
 
+  useEffect(() => {
+    handleScrollUpdate();
+    const handleResize = () => handleScrollUpdate();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleScroll = (direction) => {
     if (trackRef.current) {
-      const cardStep = 604;
+      const step = getCardStep();
       trackRef.current.scrollBy({
-        left: direction === 'left' ? -cardStep : cardStep,
+        left: direction === 'left' ? -step : step,
         behavior: 'smooth'
       });
       setTimeout(handleScrollUpdate, 350);
@@ -51,12 +69,12 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
   const scrollToDestination = (index) => {
     if (trackRef.current) {
-      const cardStep = 604;
+      const step = getCardStep();
       trackRef.current.scrollTo({
-        left: index * cardStep,
+        left: index * step,
         behavior: 'smooth'
       });
-      setActiveNodeIndex(index);
+      setActiveCardIndex(index);
       setTimeout(handleScrollUpdate, 350);
     }
   };
@@ -73,15 +91,21 @@ export default function TopDestinations({ onOpenOfferModal }) {
     };
   };
 
+  // 7 featured milestone nodes mapped to key destinations across the array
+  const KEY_DEST_INDICES = [0, 2, 4, 6, 8, 10, 12]; // Kashmir, Kerala, Rajasthan, Goa, Bali, Switzerland, Maldives
   const tValues = [0.06, 0.20, 0.35, 0.50, 0.65, 0.80, 0.94];
+  
   const arcNodes = tValues.map((t, i) => {
-    const dest = DESTINATIONS[i % DESTINATIONS.length];
+    const destIdx = KEY_DEST_INDICES[i] || i;
+    const dest = DESTINATIONS[destIdx] || DESTINATIONS[0];
     const point = getArcPoint(t);
+    const isNodeActive = Math.abs(activeCardIndex - destIdx) <= 1;
+
     return {
       ...point,
       dest,
-      destIndex: i,
-      isActive: i === (activeNodeIndex % tValues.length)
+      destIndex: destIdx,
+      isActive: isNodeActive
     };
   });
 
@@ -158,7 +182,11 @@ export default function TopDestinations({ onOpenOfferModal }) {
         </div>
 
         {/* Multi-Card Side-by-Side 2-Panel Carousel */}
-        <div className="multi-panel-showcase-wrapper">
+        <div 
+          className="multi-panel-showcase-wrapper"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <button 
             className={`panel-scroll-arrow arrow-left ${!canScrollLeft ? 'disabled' : ''}`} 
             onClick={() => handleScroll('left')} 
@@ -176,6 +204,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
             {DESTINATIONS.map((dest, idx) => (
               <div 
                 key={dest.id} 
+                ref={(el) => (cardRefs.current[idx] = el)}
                 className="destination-panel-card"
                 onClick={() => onOpenOfferModal && onOpenOfferModal(dest.name)}
                 role="button"
@@ -225,21 +254,6 @@ export default function TopDestinations({ onOpenOfferModal }) {
                       </span>
                     </button>
                   </div>
-
-                  {/* Slider Dots Progress Indicator */}
-                  <div className="slider-dots-row">
-                    {DESTINATIONS.map((d, i) => (
-                      <button
-                        key={d.id}
-                        className={`slider-dot-pill ${i === idx ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          scrollToDestination(i);
-                        }}
-                        aria-label={`Go to ${d.name}`}
-                      />
-                    ))}
-                  </div>
                 </div>
               </div>
             ))}
@@ -253,6 +267,19 @@ export default function TopDestinations({ onOpenOfferModal }) {
           >
             <ChevronRight size={20} />
           </button>
+        </div>
+
+        {/* Central Progress Dots Indicator Row */}
+        <div className="carousel-dots-progress-bar">
+          {DESTINATIONS.map((d, i) => (
+            <button
+              key={d.id}
+              className={`carousel-dot-item ${i === activeCardIndex ? 'active' : ''}`}
+              onClick={() => scrollToDestination(i)}
+              aria-label={`Scroll to ${d.name}`}
+              title={d.name}
+            />
+          ))}
         </div>
 
         {/* Supporting Caption */}
@@ -364,7 +391,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
           position: relative;
           width: 100%;
           max-width: 1300px;
-          margin: 0 auto 30px;
+          margin: 0 auto 16px;
           display: flex;
           align-items: center;
         }
@@ -377,7 +404,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
           scroll-snap-type: x mandatory;
-          padding: 14px 8px 24px;
+          padding: 14px 8px 20px;
           scrollbar-width: none;
           -ms-overflow-style: none;
         }
@@ -533,30 +560,6 @@ export default function TopDestinations({ onOpenOfferModal }) {
           color: #ffffff;
         }
 
-        /* Slider Dots Row */
-        .slider-dots-row {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          margin-top: 14px;
-        }
-
-        .slider-dot-pill {
-          width: 7px;
-          height: 7px;
-          border-radius: 9999px;
-          background: #e2e8f0;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          padding: 0;
-        }
-
-        .slider-dot-pill.active {
-          width: 20px;
-          background: #b45309;
-        }
-
         /* Floating Nav Arrows */
         .panel-scroll-arrow {
           position: absolute;
@@ -589,6 +592,35 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .arrow-left { left: -18px; }
         .arrow-right { right: -18px; }
+
+        /* Central Progress Dots Indicator Row */
+        .carousel-dots-progress-bar {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          margin-bottom: 24px;
+        }
+
+        .carousel-dot-item {
+          width: 8px;
+          height: 8px;
+          border-radius: 9999px;
+          background: #d4b3a2;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+
+        .carousel-dot-item:hover {
+          background: #b45309;
+        }
+
+        .carousel-dot-item.active {
+          width: 24px;
+          background: #b45309;
+        }
 
         /* Supporting Caption */
         .destinations-footer {
