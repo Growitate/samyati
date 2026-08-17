@@ -1,66 +1,71 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Settings, ArrowUpRight, ChevronLeft, ChevronRight, Compass } from 'lucide-react';
 import { DESTINATIONS } from '../data/travelData';
 
 export default function TopDestinations({ onOpenOfferModal }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const touchStartX = useRef(null);
-  const autoPlayRef = useRef(null);
+  const [scrollPos, setScrollPos] = useState(0);
+  const [activeNodeIndex, setActiveNodeIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const trackRef = useRef(null);
 
-  // Auto-scroll carousel timer (advances every 4 seconds)
+  // Auto-scroll loop: smoothly advance every 3.5 seconds
   useEffect(() => {
-    autoPlayRef.current = setInterval(() => {
-      handleNext();
-    }, 4000);
+    const timer = setInterval(() => {
+      if (trackRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
+        const cardWidth = 360; // card + gap
+        if (scrollLeft + clientWidth >= scrollWidth - 20) {
+          trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          trackRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
+    }, 3500);
 
-    return () => {
-      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    };
-  }, [currentIndex]);
+    return () => clearInterval(timer);
+  }, []);
 
-  const resetTimer = () => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    autoPlayRef.current = setInterval(() => {
-      handleNext();
-    }, 4000);
-  };
+  const handleScrollUpdate = () => {
+    if (trackRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
-  const handlePrev = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === 0 ? DESTINATIONS.length - 1 : prev - 1));
-    setTimeout(() => setIsTransitioning(false), 400);
-    resetTimer();
-  };
-
-  const handleNext = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === DESTINATIONS.length - 1 ? 0 : prev + 1));
-    setTimeout(() => setIsTransitioning(false), 400);
-    resetTimer();
-  };
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (!touchStartX.current) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (diff > 50) {
-      handleNext();
-    } else if (diff < -50) {
-      handlePrev();
+      // Estimate active node based on current scroll position
+      const cardWidth = 360;
+      const index = Math.round(scrollLeft / cardWidth);
+      setActiveNodeIndex(Math.min(Math.max(0, index), DESTINATIONS.length - 1));
     }
-    touchStartX.current = null;
   };
 
-  const current = DESTINATIONS[currentIndex];
+  const handleScroll = (direction) => {
+    if (trackRef.current) {
+      const cardWidth = 360;
+      trackRef.current.scrollBy({
+        left: direction === 'left' ? -cardWidth * 1.5 : cardWidth * 1.5,
+        behavior: 'smooth'
+      });
+      setTimeout(handleScrollUpdate, 350);
+    }
+  };
 
-  // Quadratic Bezier arc math: start (30,15), control (450,100), end (870,15)
+  const scrollToDestination = (index) => {
+    if (trackRef.current) {
+      const cardWidth = 360;
+      trackRef.current.scrollTo({
+        left: index * cardWidth,
+        behavior: 'smooth'
+      });
+      setActiveNodeIndex(index);
+      setTimeout(handleScrollUpdate, 350);
+    }
+  };
+
+  // Quadratic Bezier arc math
   const getArcPoint = (t) => {
     const p0 = { x: 30, y: 15 };
-    const p1 = { x: 450, y: 100 };
+    const p1 = { x: 450, y: 85 };
     const p2 = { x: 870, y: 15 };
     const oneMinusT = 1 - t;
     return {
@@ -69,20 +74,15 @@ export default function TopDestinations({ onOpenOfferModal }) {
     };
   };
 
-  // 7 nodes along arc
   const tValues = [0.06, 0.20, 0.35, 0.50, 0.65, 0.80, 0.94];
-  const offsetIndices = [-3, -2, -1, 0, 1, 2, 3];
-
-  const visibleNodes = tValues.map((t, i) => {
-    const destIndex = (currentIndex + offsetIndices[i] + DESTINATIONS.length * 10) % DESTINATIONS.length;
-    const dest = DESTINATIONS[destIndex];
+  const arcNodes = tValues.map((t, i) => {
+    const dest = DESTINATIONS[i % DESTINATIONS.length];
     const point = getArcPoint(t);
     return {
       ...point,
-      destIndex,
-      flag: dest.flag,
-      name: dest.name,
-      isActive: i === 3 // Center node is active
+      dest,
+      destIndex: i,
+      isActive: i === (activeNodeIndex % tValues.length)
     };
   });
 
@@ -103,62 +103,54 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
           {/* Dotted Flight Path Arc SVG with Country Flag Nodes */}
           <div className="flight-path-container">
-            <svg viewBox="0 0 900 95" fill="none" className="flight-arc-svg">
-              {/* Swooping curved dashed arc line */}
-              <path
-                d="M 30 15 Q 450 100 870 15"
-                stroke="#d97706"
-                strokeWidth="2.5"
-                strokeDasharray="4 8"
+            <svg viewBox="0 0 900 85" fill="none" className="flight-arc-svg">
+              <path 
+                d="M 30 15 Q 450 85 870 15" 
+                stroke="#d97706" 
+                strokeWidth="2" 
+                strokeDasharray="4 8" 
                 strokeLinecap="round"
-                fill="none"
+                fill="none" 
               />
 
-              {/* Flag nodes positioned along bezier curve */}
-              {visibleNodes.map((node, idx) => (
-                <g
+              {arcNodes.map((node, idx) => (
+                <g 
                   key={idx}
                   className={`flag-node-group ${node.isActive ? 'active-node' : ''}`}
-                  onClick={() => {
-                    setCurrentIndex(node.destIndex);
-                    resetTimer();
-                  }}
+                  onClick={() => scrollToDestination(node.destIndex)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {/* Active glowing ring */}
                   {node.isActive && (
-                    <circle
-                      cx={node.x}
-                      cy={node.y}
-                      r={21}
-                      fill="none"
-                      stroke="#d97706"
-                      strokeWidth="1.5"
+                    <circle 
+                      cx={node.x} 
+                      cy={node.y} 
+                      r={18} 
+                      fill="none" 
+                      stroke="#d97706" 
+                      strokeWidth="1.5" 
                       strokeDasharray="3 3"
                       className="active-pulse-ring"
                     />
                   )}
 
-                  {/* Node Circle */}
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={node.isActive ? 15 : 11}
-                    fill="#ffffff"
-                    stroke={node.isActive ? '#b45309' : '#d4b3a2'}
-                    strokeWidth={node.isActive ? 3 : 2}
+                  <circle 
+                    cx={node.x} 
+                    cy={node.y} 
+                    r={node.isActive ? 13 : 10} 
+                    fill="#ffffff" 
+                    stroke={node.isActive ? '#b45309' : '#d4b3a2'} 
+                    strokeWidth={node.isActive ? 2.5 : 1.5} 
                     className="flag-node-circle"
                   />
 
-                  {/* Flag Icon */}
-                  <text
-                    x={node.x}
-                    y={node.y + (node.isActive ? 5 : 4)}
-                    fontSize={node.isActive ? "14" : "12"}
-                    textAnchor="middle"
+                  <text 
+                    x={node.x} 
+                    y={node.y + (node.isActive ? 4 : 3)} 
+                    fontSize={node.isActive ? "12" : "10"} 
+                    textAnchor="middle" 
                     className="flag-node-emoji"
                   >
-                    {node.flag}
+                    {node.dest.flag}
                   </text>
                 </g>
               ))}
@@ -166,92 +158,94 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
         </div>
 
-        {/* Two-Panel Featured Destination Card Carousel (Sliding side-by-side) */}
-        <div 
-          className="card-slider-wrapper"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <button className="slider-btn btn-prev" onClick={handlePrev} aria-label="Previous destination">
+        {/* Multi-Card Side-by-Side Showcase Carousel */}
+        <div className="multi-card-showcase-wrapper">
+          <button 
+            className={`slider-nav-btn nav-btn-left ${!canScrollLeft ? 'disabled' : ''}`} 
+            onClick={() => handleScroll('left')} 
+            disabled={!canScrollLeft}
+            aria-label="Scroll left"
+          >
             <ChevronLeft size={20} />
           </button>
 
-          <div className="slider-viewport">
-            <div 
-              className="slider-track"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {DESTINATIONS.map((dest, idx) => (
-                <div key={dest.id} className="destination-panel-card">
-                  {/* Left Photo Panel */}
-                  <div className="panel-photo-side">
-                    <img 
-                      src={dest.image} 
-                      alt={dest.name} 
-                      className="panel-img" 
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
-                      }}
-                    />
-                    <div className="country-badge">
-                      <span className="badge-flag">{dest.flag}</span>
-                      <span className="badge-name">{dest.name}</span>
-                    </div>
+          <div 
+            className="dest-cards-scroll-track"
+            ref={trackRef}
+            onScroll={handleScrollUpdate}
+          >
+            {DESTINATIONS.map((dest, idx) => (
+              <div 
+                key={dest.id}
+                className="destination-side-card"
+                onClick={() => onOpenOfferModal && onOpenOfferModal(dest.name)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpenOfferModal && onOpenOfferModal(dest.name);
+                  }
+                }}
+              >
+                {/* Photo Header */}
+                <div className="side-card-photo-box">
+                  <img 
+                    src={dest.image} 
+                    alt={dest.name} 
+                    className="side-card-img" 
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
+                  <div className="side-card-flag-badge">
+                    <span className="side-badge-flag">{dest.flag}</span>
+                    <span className="side-badge-name">{dest.name}</span>
                   </div>
 
-                  {/* Right White Content Panel */}
-                  <div className="panel-info-side">
-                    <span className="tours-count">{dest.category} · {dest.packagesCount} Curated Packages</span>
-                    <h3 className="panel-title">{dest.name}</h3>
-                    <p className="panel-desc">{dest.description}</p>
-                    
-                    <div className="panel-cta-row">
-                      <button onClick={() => onOpenOfferModal(dest.name)} className="btn-pill btn-pill-dark">
-                        <span>Explore All Tours</span>
-                        <span className="btn-badge-icon">
-                          <ArrowUpRight size={15} />
-                        </span>
-                      </button>
-                    </div>
+                  <span className="side-card-pkg-pill">
+                    {dest.packagesCount} Curated Tours
+                  </span>
+                </div>
 
-                    {/* Slider Dots Progress Indicator */}
-                    <div className="slider-dots-row">
-                      {DESTINATIONS.map((d, i) => (
-                        <button
-                          key={d.id}
-                          className={`slider-dot-pill ${i === currentIndex ? 'active' : ''}`}
-                          onClick={() => { setCurrentIndex(i); resetTimer(); }}
-                          aria-label={`Go to ${d.name}`}
-                        />
-                      ))}
-                    </div>
+                {/* Content Body */}
+                <div className="side-card-body-box">
+                  <span className="side-card-category">{dest.category} · {dest.packagesCount} PACKAGES</span>
+                  <h3 className="side-card-title">{dest.name}</h3>
+                  <p className="side-card-desc">{dest.description}</p>
+
+                  <div className="side-card-cta-row">
+                    <button 
+                      className="btn-explore-side"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenOfferModal && onOpenOfferModal(dest.name);
+                      }}
+                    >
+                      <span>Explore All Tours</span>
+                      <span className="side-btn-badge-icon">
+                        <ArrowUpRight size={14} />
+                      </span>
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
-          <button className="slider-btn btn-next" onClick={handleNext} aria-label="Next destination">
+          <button 
+            className={`slider-nav-btn nav-btn-right ${!canScrollRight ? 'disabled' : ''}`} 
+            onClick={() => handleScroll('right')} 
+            disabled={!canScrollRight}
+            aria-label="Scroll right"
+          >
             <ChevronRight size={20} />
           </button>
         </div>
 
-        {/* Mobile Navigation Controls */}
-        <div className="mobile-slider-controls">
-          <button className="mobile-nav-btn" onClick={handlePrev} aria-label="Previous destination">
-            <ChevronLeft size={18} />
-          </button>
-          <span className="mobile-step-pill">
-            {current.flag} Destination {currentIndex + 1} of {DESTINATIONS.length}
-          </span>
-          <button className="mobile-nav-btn" onClick={handleNext} aria-label="Next destination">
-            <ChevronRight size={18} />
-          </button>
-        </div>
-
-        {/* Supporting Caption */}
+        {/* Supporting Caption Footer */}
         <div className="destinations-footer">
           <p className="footer-subcaption">
             From mist-wrapped mountain trails to sun-drenched coastal villages — hand-selected destinations that offer experiences lasting long after you return.
@@ -263,8 +257,10 @@ export default function TopDestinations({ onOpenOfferModal }) {
               <span className="face-flag">🇮🇩</span>
               <span className="face-flag">🇦🇪</span>
               <span className="face-flag">🇨🇭</span>
+              <span className="face-flag">🇹🇭</span>
+              <span className="face-flag">🇲🇻</span>
             </div>
-            <span>View All Destinations & Get Offer</span>
+            <span>View All Destinations & Get Custom Offer</span>
             <span className="btn-badge-icon">
               <ArrowUpRight size={15} />
             </span>
@@ -286,7 +282,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .destinations-header {
           text-align: center;
-          margin-bottom: 12px;
+          margin-bottom: 22px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -311,11 +307,11 @@ export default function TopDestinations({ onOpenOfferModal }) {
         }
 
         .destinations-h2 {
-          font-size: clamp(28px, 4vw, 44px);
+          font-size: clamp(26px, 3.5vw, 42px);
           font-weight: 800;
           color: #1a1a1a;
           letter-spacing: -0.02em;
-          margin: 0 0 6px 0;
+          margin: 0 0 4px 0;
         }
 
         .accent-serif {
@@ -326,7 +322,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .flight-path-container {
           width: 100%;
-          max-width: 820px;
+          max-width: 780px;
           margin: 0 auto;
         }
 
@@ -355,196 +351,211 @@ export default function TopDestinations({ onOpenOfferModal }) {
           100% { transform: rotate(360deg); }
         }
 
-        .card-slider-wrapper {
+        /* Multi-Card Side-by-Side Showcase */
+        .multi-card-showcase-wrapper {
           position: relative;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto 30px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          max-width: 860px;
-          margin: 0 auto 24px;
         }
 
-        .slider-viewport {
-          width: 100%;
-          overflow: hidden;
-          border-radius: 22px;
-          box-shadow: 0 16px 40px rgba(0,0,0,0.07);
-        }
-
-        .slider-track {
+        .dest-cards-scroll-track {
           display: flex;
+          gap: 22px;
           width: 100%;
-          transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          padding: 12px 6px 20px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
         }
 
-        .destination-panel-card {
-          flex: 0 0 100%;
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
+        .dest-cards-scroll-track::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Individual Destination Side-by-Side Card */
+        .destination-side-card {
+          flex: 0 0 340px;
+          width: 340px;
+          scroll-snap-align: start;
           background: #ffffff;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .panel-photo-side {
+        .destination-side-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 36px rgba(74, 56, 40, 0.16);
+        }
+
+        .side-card-photo-box {
           position: relative;
-          height: 310px;
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+          background: #e2e8f0;
         }
 
-        .panel-img {
+        .side-card-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          transition: transform 0.5s ease;
         }
 
-        .country-badge {
+        .destination-side-card:hover .side-card-img {
+          transform: scale(1.06);
+        }
+
+        .side-card-flag-badge {
           position: absolute;
-          top: 16px;
-          left: 16px;
-          background: rgba(255,255,255,0.92);
+          top: 14px;
+          left: 14px;
+          background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(8px);
-          padding: 5px 12px;
+          padding: 4px 10px;
           border-radius: 9999px;
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
           font-weight: 700;
-          font-size: 12px;
+          font-size: 11.5px;
           color: #1a1a1a;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .panel-info-side {
-          padding: 30px 36px;
+        .side-card-pkg-pill {
+          position: absolute;
+          bottom: 12px;
+          right: 12px;
+          background: rgba(15, 23, 42, 0.82);
+          backdrop-filter: blur(6px);
+          color: #ffffff;
+          font-size: 10.5px;
+          font-weight: 700;
+          padding: 3px 9px;
+          border-radius: 9999px;
+        }
+
+        .side-card-body-box {
+          padding: 22px 20px 20px;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          flex: 1;
+          text-align: left;
         }
 
-        .tours-count {
-          font-size: 11px;
-          font-weight: 700;
-          text-transform: uppercase;
+        .side-card-category {
+          font-size: 10.5px;
+          font-weight: 800;
           letter-spacing: 0.08em;
+          text-transform: uppercase;
           color: #b45309;
-          margin-bottom: 8px;
+          margin-bottom: 6px;
         }
 
-        .panel-title {
-          font-size: 26px;
+        .side-card-title {
+          font-size: 20px;
           font-weight: 800;
           color: #1a1a1a;
+          margin-bottom: 8px;
           line-height: 1.2;
-          margin-bottom: 10px;
         }
 
-        .panel-desc {
-          font-size: 13.5px;
-          color: #555555;
-          line-height: 1.6;
-          margin-bottom: 20px;
+        .side-card-desc {
+          font-size: 13px;
+          color: #57534e;
+          line-height: 1.55;
+          margin-bottom: 18px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          flex: 1;
         }
 
-        .panel-cta-row {
+        .side-card-cta-row {
           display: flex;
           align-items: center;
+          padding-top: 12px;
+          border-top: 1px solid #f5f5f4;
         }
 
-        .btn-pill-dark {
+        .btn-explore-side {
           background: #18181b;
           color: #ffffff;
           border: none;
-          padding: 10px 20px;
+          padding: 9px 16px;
           border-radius: 9999px;
-          font-size: 13.5px;
-          font-weight: 600;
+          font-size: 12.5px;
+          font-weight: 700;
           display: inline-flex;
           align-items: center;
-          gap: 10px;
+          gap: 8px;
           cursor: pointer;
           transition: all 0.2s ease;
         }
 
-        .btn-pill-dark:hover {
-          background: #27272a;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        .btn-explore-side:hover {
+          background: #d97706;
+          transform: translateY(-1px);
         }
 
-        .btn-badge-icon {
-          width: 22px;
-          height: 22px;
-          background: rgba(255,255,255,0.2);
+        .side-btn-badge-icon {
+          width: 20px;
+          height: 20px;
           border-radius: 50%;
+          background: rgba(255, 255, 255, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        /* Slider Dots Row */
-        .slider-dots-row {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          margin-top: 18px;
-        }
-
-        .slider-dot-pill {
-          width: 8px;
-          height: 8px;
-          border-radius: 9999px;
-          background: #e2e8f0;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          padding: 0;
-        }
-
-        .slider-dot-pill.active {
-          width: 24px;
-          background: #b45309;
-        }
-
-        .fade-in-media {
-          animation: fadeSlideIn 0.4s ease forwards;
-        }
-
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0.7;
-            transform: scale(0.98);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        .slider-btn {
+        /* Nav Arrow Buttons */
+        .slider-nav-btn {
           position: absolute;
-          width: 40px;
-          height: 40px;
+          width: 42px;
+          height: 42px;
           border-radius: 50%;
           background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.06);
+          border: 1px solid rgba(0,0,0,0.08);
           color: #1a1a1a;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.12);
           z-index: 10;
           transition: all 0.2s ease;
         }
 
-        .slider-btn:hover {
+        .slider-nav-btn:hover:not(.disabled) {
           background: #18181b;
           color: #ffffff;
           transform: scale(1.08);
         }
 
-        .btn-prev { left: -20px; }
-        .btn-next { right: -20px; }
+        .slider-nav-btn.disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
 
+        .nav-btn-left { left: -16px; }
+        .nav-btn-right { right: -16px; }
+
+        /* Supporting Caption */
         .destinations-footer {
           text-align: center;
           display: flex;
@@ -607,53 +618,17 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .face-flag:first-child { margin-left: 0; }
 
-        .mobile-slider-controls {
-          display: none;
-          align-items: center;
-          justify-content: center;
-          gap: 14px;
-          margin-bottom: 20px;
-        }
-
-        .mobile-nav-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.1);
-          color: #1a1a1a;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .mobile-step-pill {
-          background: rgba(255, 255, 255, 0.9);
-          border: 1px solid rgba(180, 83, 9, 0.2);
-          color: #78350f;
-          font-size: 11.5px;
-          font-weight: 700;
-          padding: 6px 14px;
-          border-radius: 9999px;
-        }
-
-        @media (max-width: 840px) {
-          .destinations-section { padding: 45px 0 55px; }
-          .destination-panel-card { grid-template-columns: 1fr; border-radius: 18px; }
-          .panel-photo-side { height: 230px; }
-          .panel-info-side { padding: 24px 20px; }
-          .slider-btn { display: none; }
-          .mobile-slider-controls { display: flex; }
+        @media (max-width: 768px) {
+          .destination-side-card { flex: 0 0 280px; width: 280px; }
+          .side-card-photo-box { height: 175px; }
+          .side-card-title { font-size: 18px; }
+          .nav-btn-left { left: 4px; }
+          .nav-btn-right { right: 4px; }
         }
 
         @media (max-width: 600px) {
           .flight-path-container { display: none; }
           .destinations-h2 { font-size: clamp(24px, 6.5vw, 32px); }
-          .panel-title { font-size: 22px; }
-          .panel-desc { font-size: 13px; margin-bottom: 16px; }
-          .btn-pill-dark { width: 100%; justify-content: center; padding: 10px 16px; font-size: 13px; }
           .facepile-btn { width: 100%; max-width: 320px; justify-content: center; font-size: 12px; padding: 8px 14px; }
         }
       `}</style>
