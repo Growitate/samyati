@@ -168,14 +168,15 @@ export default function ProcessSection() {
         .process-split-container {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 640px;
+          min-height: 480px;
+          max-height: 540px;
         }
 
         .process-left-photo {
           position: relative;
           width: 100%;
           height: 100%;
-          min-height: 480px;
+          min-height: 380px;
           overflow: hidden;
         }
 
@@ -197,17 +198,17 @@ export default function ProcessSection() {
 
         .photo-badge {
           position: absolute;
-          bottom: 30px;
-          left: 30px;
+          bottom: 20px;
+          left: 20px;
           background: rgba(15, 20, 16, 0.85);
           backdrop-filter: blur(8px);
           border: 1px solid rgba(255,255,255,0.15);
-          padding: 8px 18px;
+          padding: 6px 14px;
           border-radius: 9999px;
           display: flex;
           align-items: center;
-          gap: 8px;
-          font-size: 13px;
+          gap: 6px;
+          font-size: 11.5px;
           font-weight: 600;
           z-index: 5;
         }
@@ -221,7 +222,7 @@ export default function ProcessSection() {
           bottom: 0;
           left: 0;
           width: 100%;
-          height: 4px;
+          height: 3px;
           background: rgba(255,255,255,0.2);
           z-index: 10;
         }
@@ -243,22 +244,23 @@ export default function ProcessSection() {
 
         .process-right-panel {
           background-color: #161616;
-          padding: 70px 60px;
+          padding: 40px 48px;
           display: flex;
           align-items: center;
         }
 
         .panel-inner-content {
-          max-width: 480px;
+          max-width: 420px;
           width: 100%;
+          margin: 0 auto;
         }
 
         .process-heading {
-          font-size: clamp(34px, 4.5vw, 54px);
+          font-size: clamp(24px, 3.2vw, 36px);
           font-weight: 800;
           color: #ffffff;
-          line-height: 1.1;
-          margin-bottom: 32px;
+          line-height: 1.15;
+          margin-bottom: 20px;
         }
 
         .accent-serif {
@@ -271,17 +273,17 @@ export default function ProcessSection() {
         .step-indicator-row {
           display: flex;
           align-items: center;
-          margin-bottom: 36px;
+          margin-bottom: 22px;
         }
 
         .step-chip {
-          width: 42px;
-          height: 42px;
+          width: 34px;
+          height: 34px;
           border-radius: 50%;
           border: 1px solid rgba(255,255,255,0.3);
           background: transparent;
           color: #ffffff;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 700;
           display: flex;
           align-items: center;
@@ -294,8 +296,8 @@ export default function ProcessSection() {
           background: #ffffff;
           color: #161616;
           border-color: #ffffff;
-          transform: scale(1.15);
-          box-shadow: 0 0 24px rgba(255,255,255,0.4);
+          transform: scale(1.12);
+          box-shadow: 0 0 18px rgba(255,255,255,0.35);
         }
 
         .step-chip.completed {
@@ -307,7 +309,7 @@ export default function ProcessSection() {
           flex: 1;
           height: 2px;
           background: rgba(255,255,255,0.2);
-          margin: 0 8px;
+          margin: 0 6px;
           transition: background 0.4s ease;
         }
 
@@ -319,16 +321,16 @@ export default function ProcessSection() {
         .starburst-hero-wrapper {
           display: flex;
           justify-content: center;
-          margin-bottom: 28px;
+          margin-bottom: 18px;
         }
 
         .starburst-frame {
-          width: 170px;
-          height: 170px;
+          width: 120px;
+          height: 120px;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 12px;
+          padding: 8px;
           background: radial-gradient(circle, #fbcfe8 0%, #f472b6 100%);
           clip-path: polygon(
             50% 0%, 63% 12%, 81% 6%, 85% 23%, 100% 31%, 95% 48%, 
@@ -336,7 +338,7 @@ export default function ProcessSection() {
             35% 90%, 17% 93%, 14% 75%, 0% 66%, 5% 48%, 
             0% 31%, 15% 23%, 19% 6%, 37% 12%
           );
-          box-shadow: 0 0 35px rgba(244, 114, 182, 0.4);
+          box-shadow: 0 0 24px rgba(244, 114, 182, 0.35);
           transition: transform 0.5s ease;
         }
 
@@ -345,11 +347,11 @@ export default function ProcessSection() {
         }
 
         .badge-circle-photo {
-          width: 120px;
-          height: 120px;
+          width: 84px;
+          height: 84px;
           border-radius: 50%;
           overflow: hidden;
-          border: 3px solid #ffffff;
+          border: 2px solid #ffffff;
         }
 
         .badge-img {
@@ -381,24 +383,29 @@ export default function ProcessSection() {
         }
 
         .step-info-title {
-          font-size: 22px;
+          font-size: 17px;
           font-weight: 800;
           color: #ffffff;
-          margin-bottom: 8px;
+          margin-bottom: 6px;
         }
 
         .step-info-desc {
-          font-size: 14px;
-          color: rgba(255,255,255,0.75);
-          line-height: 1.6;
+          font-size: 12.5px;
+          color: rgba(255,255,255,0.7);
+          line-height: 1.5;
         }
 
         @media (max-width: 900px) {
           .process-split-container {
             grid-template-columns: 1fr;
+            min-height: auto;
+            max-height: none;
+          }
+          .process-left-photo {
+            min-height: 280px;
           }
           .process-right-panel {
-            padding: 50px 24px;
+            padding: 36px 20px;
           }
         }
       `}</style>
