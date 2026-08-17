@@ -43,7 +43,7 @@ const DESH_DESTINATIONS = [
   {
     id: 'madhya-pradesh',
     name: 'Madhya Pradesh',
-    image: 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85',
+    image: 'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1000&q=85',
     tagline: 'The Heart of Incredible India'
   },
   {
