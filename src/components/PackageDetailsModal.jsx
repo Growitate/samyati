@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Clock, Check, XCircle, Star, ArrowUpRight, Calendar, Sparkles } from 'lucide-react';
+import { X, Clock, Check, XCircle, Star, ArrowUpRight, Sparkles } from 'lucide-react';
 
 export default function PackageDetailsModal({ packageData, onClose, onOpenOfferModal }) {
   if (!packageData) return null;
@@ -38,7 +38,7 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
 
           <div className="spec-item">
             <Sparkles size={16} />
-            <span>Starting Price: <strong className="text-price">{packageData.price}</strong> <span className="orig-price">{packageData.originalPrice}</span></span>
+            <span>Starting Price: <strong className="text-price">{packageData.price}</strong> {packageData.originalPrice && <span className="orig-price">{packageData.originalPrice}</span>}</span>
           </div>
         </div>
 
@@ -48,14 +48,14 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
           <p className="overview-text">{packageData.description}</p>
         </div>
 
-        {/* Day-by-Day Itinerary Accordion / Tabs */}
+        {/* Day-by-Day Itinerary List */}
         <div className="pkg-section">
           <h3 className="section-title">Day-by-Day Detailed Itinerary</h3>
-          
+
           <div className="itinerary-list">
             {packageData.itinerary?.map((item, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className={`itinerary-item ${activeDay === idx ? 'open' : ''}`}
                 onClick={() => setActiveDay(idx === activeDay ? -1 : idx)}
               >
@@ -98,11 +98,11 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
 
         {/* Bottom Action Row */}
         <div className="pkg-modal-footer">
-          <button 
+          <button
             onClick={() => {
               onClose();
               onOpenOfferModal(packageData.title);
-            }} 
+            }}
             className="btn-pill btn-pill-dark w-full-cta"
           >
             <span>Get Offer For This Package</span>
@@ -115,9 +115,11 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
 
       <style>{`
         .pkg-modal {
-          max-width: 720px;
+          max-width: 740px;
           padding: 0;
-          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          border-radius: 24px;
         }
 
         .pkg-hero-banner {

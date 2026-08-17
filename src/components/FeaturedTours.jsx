@@ -1,15 +1,48 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Settings, Clock, Star, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PACKAGES } from '../data/travelData';
 
 export default function FeaturedTours({ onSelectPackage, onNavigate }) {
-  const [filterCategory, setFilterCategory] = useState('All');
+  const [filterCategory, setFilterCategory] = useState('Domestic');
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollRef = useRef(null);
 
-  // Filter packages by category ('All', 'Domestic', 'International')
-  const displayPackages = filterCategory === 'All' 
-    ? PACKAGES 
+  // Filter packages by category ('Domestic' or 'International')
+  const displayPackages = filterCategory === 'All'
+    ? PACKAGES
     : PACKAGES.filter((p) => p.category === filterCategory);
+
+  const updateScrollState = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      if (maxScroll > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (scrollLeft / maxScroll) * 100)));
+        setCanScrollLeft(scrollLeft > 10);
+        setCanScrollRight(scrollLeft < maxScroll - 10);
+      } else {
+        setScrollProgress(0);
+        setCanScrollLeft(false);
+        setCanScrollRight(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateScrollState();
+    const handleResize = () => updateScrollState();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [displayPackages]);
+
+  const handleCategoryChange = (category) => {
+    setFilterCategory(category);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleScroll = (direction) => {
     if (scrollRef.current) {
@@ -18,14 +51,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
-    }
-  };
-
-  const handleRedirect = (page) => {
-    if (onNavigate) {
-      onNavigate(page);
-    } else {
-      window.location.hash = page;
+      setTimeout(updateScrollState, 350);
     }
   };
 
@@ -46,19 +72,23 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           </div>
 
           <div className="header-right">
-            {/* Quick Realm Links */}
-            <div className="filter-pill-group">
-              <button 
-                className="filter-btn active"
-                onClick={() => handleRedirect('desh')}
-                title="Explore Desh Domestic Packages"
+            {/* Filter Pill Tabs */}
+            <div className="filter-pill-group" role="tablist">
+              <button
+                className={`filter-btn ${filterCategory === 'Domestic' ? 'active' : ''}`}
+                onClick={() => handleCategoryChange('Domestic')}
+                role="tab"
+                aria-selected={filterCategory === 'Domestic'}
+                title="Explore Domestic Packages"
               >
                 🇮🇳 Domestic
               </button>
-              <button 
-                className="filter-btn active"
-                onClick={() => handleRedirect('videsh')}
-                title="Explore Videsh International Packages"
+              <button
+                className={`filter-btn ${filterCategory === 'International' ? 'active' : ''}`}
+                onClick={() => handleCategoryChange('International')}
+                role="tab"
+                aria-selected={filterCategory === 'International'}
+                title="Explore International Packages"
               >
                 ✈️ International
               </button>
@@ -66,19 +96,21 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
 
             {/* Manual Navigation Arrow Buttons */}
             <div className="carousel-arrows-group">
-              <button 
-                className="carousel-arrow-btn"
+              <button
+                className={`carousel-arrow-btn ${!canScrollLeft ? 'disabled' : ''}`}
                 onClick={() => handleScroll('left')}
                 title="Scroll Left"
                 aria-label="Previous tours"
+                disabled={!canScrollLeft}
               >
                 <ChevronLeft size={20} />
               </button>
-              <button 
-                className="carousel-arrow-btn"
+              <button
+                className={`carousel-arrow-btn ${!canScrollRight ? 'disabled' : ''}`}
                 onClick={() => handleScroll('right')}
                 title="Scroll Right"
                 aria-label="Next tours"
+                disabled={!canScrollRight}
               >
                 <ChevronRight size={20} />
               </button>
@@ -87,17 +119,38 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         </div>
 
         {/* Manual Horizontal Scroll Carousel */}
-        <div className="manual-carousel-container" ref={scrollRef}>
+        <div 
+          className="manual-carousel-container" 
+          ref={scrollRef}
+          onScroll={updateScrollState}
+        >
           <div className="manual-carousel-track">
             {displayPackages.map((tour) => (
-              <div 
-                key={tour.id} 
+              <div
+                key={tour.id}
                 className="tour-card"
-                onClick={() => onSelectPackage(tour)}
+                onClick={() => onSelectPackage && onSelectPackage(tour)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectPackage && onSelectPackage(tour);
+                  }
+                }}
               >
                 {/* Photo Block with Tag */}
                 <div className="card-photo-wrapper">
-                  <img src={tour.image} alt={tour.title} className="card-photo" />
+                  <img 
+                    src={tour.image} 
+                    alt={tour.title} 
+                    className="card-photo" 
+                    loading="lazy" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
                   <span className="category-tag-pill">{tour.destinationName}</span>
                   <div className="rating-badge">
                     <Star size={12} className="star-icon" />
@@ -109,7 +162,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                 <div className="card-body">
                   <h3 className="tour-card-title">{tour.title}</h3>
                   <p className="tour-card-desc">{tour.description}</p>
-                  
+
                   <div className="card-divider" />
 
                   {/* Footer Row */}
@@ -118,7 +171,9 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                       <span className="price-label">Starting From</span>
                       <div className="price-flex">
                         <span className="price-val">{tour.price}</span>
-                        <span className="price-orig">{tour.originalPrice}</span>
+                        {tour.originalPrice && (
+                          <span className="price-orig">{tour.originalPrice}</span>
+                        )}
                       </div>
                     </div>
 
@@ -128,7 +183,15 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                         <span>{tour.duration}</span>
                       </div>
 
-                      <button className="view-details-icon-btn" title="View Day-by-Day Itinerary">
+                      <button 
+                        className="view-details-icon-btn" 
+                        title="View Day-by-Day Itinerary"
+                        aria-label={`View itinerary for ${tour.title}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectPackage && onSelectPackage(tour);
+                        }}
+                      >
                         <Eye size={14} />
                       </button>
                     </div>
@@ -136,6 +199,16 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Carousel Bottom Progress Indicator Bar */}
+        <div className="carousel-bottom-indicator">
+          <div className="carousel-progress-track" title="Scroll Progress">
+            <div 
+              className="carousel-progress-thumb" 
+              style={{ transform: `translateX(${scrollProgress * 0.44}px)` }} 
+            />
           </div>
         </div>
       </div>
@@ -434,6 +507,39 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           background: #0f172a;
           color: #ffffff;
           border-color: #0f172a;
+        }
+
+        .carousel-arrow-btn.disabled {
+          opacity: 0.35;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        /* Carousel Bottom Scroll Indicator */
+        .carousel-bottom-indicator {
+          display: flex;
+          justify-content: center;
+          margin-top: 24px;
+        }
+
+        .carousel-progress-track {
+          width: 80px;
+          height: 6px;
+          background: #e2e8f0;
+          border-radius: 9999px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .carousel-progress-thumb {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 44px;
+          height: 100%;
+          background: #64748b;
+          border-radius: 9999px;
+          transition: transform 0.15s ease-out;
         }
 
         @media (max-width: 768px) {

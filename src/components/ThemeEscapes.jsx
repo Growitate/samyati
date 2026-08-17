@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, Calendar } from 'lucide-react';
 import { PACKAGES } from '../data/travelData';
 
@@ -31,7 +31,7 @@ const ESCAPE_SECTIONS = [
         price: '₹22,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
-        packageId: 'kerala-1'
+        packageId: 'ker-1'
       },
       {
         id: 'kashmir-honeymoon',
@@ -42,7 +42,7 @@ const ESCAPE_SECTIONS = [
         price: '₹28,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80',
-        packageId: 'kashmir-1'
+        packageId: 'kash-1'
       },
       {
         id: 'thailand-honeymoon',
@@ -53,7 +53,7 @@ const ESCAPE_SECTIONS = [
         price: '₹34,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
-        packageId: 'thailand-1'
+        packageId: 'thai-1'
       },
       {
         id: 'maldives-honeymoon',
@@ -64,7 +64,7 @@ const ESCAPE_SECTIONS = [
         price: '₹64,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-        packageId: 'maldives-1'
+        packageId: 'mald-1'
       },
       {
         id: 'rajasthan-honeymoon',
@@ -75,7 +75,7 @@ const ESCAPE_SECTIONS = [
         price: '₹26,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80',
-        packageId: 'rajasthan-1'
+        packageId: 'raj-1'
       }
     ]
   },
@@ -95,7 +95,7 @@ const ESCAPE_SECTIONS = [
         price: '₹34,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
-        packageId: 'thailand-1'
+        packageId: 'thai-1'
       },
       {
         id: 'kashmir-family',
@@ -106,7 +106,7 @@ const ESCAPE_SECTIONS = [
         price: '₹28,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80',
-        packageId: 'kashmir-1'
+        packageId: 'kash-1'
       },
       {
         id: 'kerala-family',
@@ -117,7 +117,7 @@ const ESCAPE_SECTIONS = [
         price: '₹22,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
-        packageId: 'kerala-1'
+        packageId: 'ker-1'
       },
       {
         id: 'ladakh-family',
@@ -128,7 +128,7 @@ const ESCAPE_SECTIONS = [
         price: '₹32,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80',
-        packageId: 'ladakh-1'
+        packageId: 'lad-1'
       },
       {
         id: 'dubai-family',
@@ -139,7 +139,7 @@ const ESCAPE_SECTIONS = [
         price: '₹42,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
-        packageId: 'dubai-1'
+        packageId: 'dub-1'
       },
       {
         id: 'himachal-family',
@@ -150,7 +150,7 @@ const ESCAPE_SECTIONS = [
         price: '₹21,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',
-        packageId: 'himachal-1'
+        packageId: 'him-1'
       }
     ]
   },
@@ -181,7 +181,7 @@ const ESCAPE_SECTIONS = [
         price: '₹22,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
-        packageId: 'kerala-1'
+        packageId: 'ker-1'
       },
       {
         id: 'andaman-beach',
@@ -192,7 +192,7 @@ const ESCAPE_SECTIONS = [
         price: '₹29,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80',
-        packageId: 'andaman-1'
+        packageId: 'and-1'
       },
       {
         id: 'thailand-beach',
@@ -203,7 +203,7 @@ const ESCAPE_SECTIONS = [
         price: '₹34,500',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
-        packageId: 'thailand-1'
+        packageId: 'thai-1'
       },
       {
         id: 'goa-beach',
@@ -225,7 +225,7 @@ const ESCAPE_SECTIONS = [
         price: '₹64,999',
         priceLabel: 'Price on Request',
         image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-        packageId: 'maldives-1'
+        packageId: 'mald-1'
       }
     ]
   }
@@ -233,6 +233,23 @@ const ESCAPE_SECTIONS = [
 
 function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
   const rowScrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const updateScrollState = () => {
+    if (rowScrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = rowScrollRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    updateScrollState();
+    const handleResize = () => updateScrollState();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleScroll = (dir) => {
     if (rowScrollRef.current) {
@@ -241,11 +258,20 @@ function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
         left: dir === 'left' ? -scrollDist : scrollDist,
         behavior: 'smooth'
       });
+      setTimeout(updateScrollState, 350);
     }
   };
 
   const handleCardClick = (item) => {
-    const pkg = PACKAGES.find((p) => p.id === item.packageId);
+    let pkg = PACKAGES.find((p) => p.id === item.packageId);
+    if (!pkg) {
+      // Fallback matching by destination
+      const destKey = item.id.split('-')[0].toLowerCase();
+      pkg = PACKAGES.find((p) => 
+        p.destinationId.toLowerCase() === destKey || 
+        p.destinationName.toLowerCase().includes(destKey)
+      );
+    }
     if (pkg && onSelectPackage) {
       onSelectPackage(pkg);
     } else if (onOpenOfferModal) {
@@ -268,23 +294,26 @@ function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
             <button 
               className="escape-view-all-link"
               onClick={() => onOpenOfferModal ? onOpenOfferModal(section.title.replace('.', '')) : null}
+              title={`Inquire about all ${section.title.replace('.', '')} packages`}
             >
               <span>{section.linkText}</span>
             </button>
 
-            {/* Optional Small Arrows for Row Scrolling */}
+            {/* Navigation Arrow Buttons */}
             <div className="escape-mini-arrows">
               <button 
-                className="mini-arrow-btn" 
+                className={`mini-arrow-btn ${!canScrollLeft ? 'disabled' : ''}`}
                 onClick={() => handleScroll('left')}
-                aria-label="Previous"
+                aria-label="Previous escapes"
+                disabled={!canScrollLeft}
               >
                 <ChevronLeft size={18} />
               </button>
               <button 
-                className="mini-arrow-btn" 
+                className={`mini-arrow-btn ${!canScrollRight ? 'disabled' : ''}`}
                 onClick={() => handleScroll('right')}
-                aria-label="Next"
+                aria-label="Next escapes"
+                disabled={!canScrollRight}
               >
                 <ChevronRight size={18} />
               </button>
@@ -293,17 +322,38 @@ function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
         </div>
 
         {/* Carousel Cards Track */}
-        <div className="escape-carousel-viewport" ref={rowScrollRef}>
+        <div 
+          className="escape-carousel-viewport" 
+          ref={rowScrollRef}
+          onScroll={updateScrollState}
+        >
           <div className="escape-carousel-track">
             {section.items.map((item) => (
               <div 
                 key={item.id} 
                 className="escape-card-item"
                 onClick={() => handleCardClick(item)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCardClick(item);
+                  }
+                }}
               >
                 {/* Photo & Badge */}
                 <div className="escape-card-photo-box">
-                  <img src={item.image} alt={item.title} className="escape-card-img" />
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="escape-card-img" 
+                    loading="lazy" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
                   <div className="escape-duration-badge">
                     <Calendar size={11} className="badge-cal-icon" />
                     <span>{item.duration}</span>
@@ -439,10 +489,16 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
           transition: all 0.2s ease;
         }
 
-        .mini-arrow-btn:hover {
+        .mini-arrow-btn:hover:not(.disabled) {
           background: #102a43;
           color: #ffffff;
           border-color: #102a43;
+        }
+
+        .mini-arrow-btn.disabled {
+          opacity: 0.35;
+          cursor: not-allowed;
+          box-shadow: none;
         }
 
         /* Carousel Scroll Viewport */

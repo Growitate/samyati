@@ -66,14 +66,14 @@ export default function App() {
   if (currentView === 'desh') {
     return (
       <div className="travelio-app samyati-app">
-        <Navbar 
-          onOpenOfferModal={handleOpenOfferModal} 
-          onOpenAdminModal={() => setIsAdminModalOpen(true)} 
+        <Navbar
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
           onNavigate={handleNavigate}
           currentView={currentView}
         />
 
-        <DeshPage 
+        <DeshPage
           onBack={() => handleNavigate('home')}
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
@@ -81,36 +81,36 @@ export default function App() {
 
         <NewsletterBand />
 
-        <Footer 
+        <Footer
           onOpenOfferModal={handleOpenOfferModal}
           onOpenPrivacy={() => setIsPrivacyOpen(true)}
           onOpenTerms={() => setIsTermsOpen(true)}
         />
 
         {/* Interactive Modals */}
-        <OfferModal 
+        <OfferModal
           isOpen={isOfferModalOpen}
           onClose={() => setIsOfferModalOpen(false)}
           initialDestination={offerInitialDest}
         />
 
-        <PackageDetailsModal 
+        <PackageDetailsModal
           packageData={selectedPackage}
           onClose={() => setSelectedPackage(null)}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
-        <AdminPanelModal 
+        <AdminPanelModal
           isOpen={isAdminModalOpen}
           onClose={() => setIsAdminModalOpen(false)}
         />
 
-        <PrivacyModal 
+        <PrivacyModal
           isOpen={isPrivacyOpen}
           onClose={() => setIsPrivacyOpen(false)}
         />
 
-        <TermsModal 
+        <TermsModal
           isOpen={isTermsOpen}
           onClose={() => setIsTermsOpen(false)}
         />
@@ -122,14 +122,14 @@ export default function App() {
   if (currentView === 'videsh') {
     return (
       <div className="travelio-app samyati-app">
-        <Navbar 
-          onOpenOfferModal={handleOpenOfferModal} 
-          onOpenAdminModal={() => setIsAdminModalOpen(true)} 
+        <Navbar
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
           onNavigate={handleNavigate}
           currentView={currentView}
         />
 
-        <VideshPage 
+        <VideshPage
           onBack={() => handleNavigate('home')}
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
@@ -137,36 +137,36 @@ export default function App() {
 
         <NewsletterBand />
 
-        <Footer 
+        <Footer
           onOpenOfferModal={handleOpenOfferModal}
           onOpenPrivacy={() => setIsPrivacyOpen(true)}
           onOpenTerms={() => setIsTermsOpen(true)}
         />
 
         {/* Interactive Modals */}
-        <OfferModal 
+        <OfferModal
           isOpen={isOfferModalOpen}
           onClose={() => setIsOfferModalOpen(false)}
           initialDestination={offerInitialDest}
         />
 
-        <PackageDetailsModal 
+        <PackageDetailsModal
           packageData={selectedPackage}
           onClose={() => setSelectedPackage(null)}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
-        <AdminPanelModal 
+        <AdminPanelModal
           isOpen={isAdminModalOpen}
           onClose={() => setIsAdminModalOpen(false)}
         />
 
-        <PrivacyModal 
+        <PrivacyModal
           isOpen={isPrivacyOpen}
           onClose={() => setIsPrivacyOpen(false)}
         />
 
-        <TermsModal 
+        <TermsModal
           isOpen={isTermsOpen}
           onClose={() => setIsTermsOpen(false)}
         />
@@ -177,42 +177,42 @@ export default function App() {
   // Main Homepage View
   return (
     <div className="travelio-app samyati-app">
-      <Navbar 
-        onOpenOfferModal={handleOpenOfferModal} 
-        onOpenAdminModal={() => setIsAdminModalOpen(true)} 
+      <Navbar
+        onOpenOfferModal={handleOpenOfferModal}
+        onOpenAdminModal={() => setIsAdminModalOpen(true)}
         onNavigate={handleNavigate}
       />
 
       <main>
-        <HeroSection 
+        <HeroSection
           onOpenOfferModal={handleOpenOfferModal}
           onSelectDestination={(id) => handleOpenOfferModal(id)}
         />
 
-        <PromiseSection 
+        <PromiseSection
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
         />
-        
-        <TourCategories 
+
+        <TourCategories
           onNavigate={handleNavigate}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
-        <FeaturedTours 
+        <FeaturedTours
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
           onNavigate={handleNavigate}
         />
 
-        <ThemeEscapes 
+        <ThemeEscapes
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
         <LocationMarquee />
 
-        <TopDestinations 
+        <TopDestinations
           onOpenOfferModal={handleOpenOfferModal}
         />
 
@@ -222,43 +222,43 @@ export default function App() {
 
         <FounderStorySection />
 
-        <WorldCTA 
+        <WorldCTA
           onOpenOfferModal={handleOpenOfferModal}
         />
 
         <NewsletterBand />
       </main>
 
-      <Footer 
+      <Footer
         onOpenOfferModal={handleOpenOfferModal}
         onOpenPrivacy={() => setIsPrivacyOpen(true)}
         onOpenTerms={() => setIsTermsOpen(true)}
       />
 
       {/* Interactive Modals */}
-      <OfferModal 
+      <OfferModal
         isOpen={isOfferModalOpen}
         onClose={() => setIsOfferModalOpen(false)}
         initialDestination={offerInitialDest}
       />
 
-      <PackageDetailsModal 
+      <PackageDetailsModal
         packageData={selectedPackage}
         onClose={() => setSelectedPackage(null)}
         onOpenOfferModal={handleOpenOfferModal}
       />
 
-      <AdminPanelModal 
+      <AdminPanelModal
         isOpen={isAdminModalOpen}
         onClose={() => setIsAdminModalOpen(false)}
       />
 
-      <PrivacyModal 
+      <PrivacyModal
         isOpen={isPrivacyOpen}
         onClose={() => setIsPrivacyOpen(false)}
       />
 
-      <TermsModal 
+      <TermsModal
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
       />

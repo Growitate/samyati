@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, PhoneCall, Calendar, Users, MapPin, Sparkles } from 'lucide-react';
+import { X, Send, CheckCircle2, PhoneCall, Calendar, Users, MapPin, Sparkles, User, Phone, Globe, ShieldCheck, Clock, Award, ChevronDown } from 'lucide-react';
 import { DESTINATIONS, BRAND_INFO } from '../data/travelData';
 
 export default function OfferModal({ isOpen, onClose, initialDestination = '' }) {
@@ -24,326 +24,610 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hi Samyati The World!\nI would like to get an offer for my trip:\n- Name: ${formData.name}\n- Phone: ${formData.phone}\n- Destination: ${formData.destination} (${formData.category})\n- Travellers: ${formData.travellers}\n- Budget: ${formData.budget}\n- Month: ${formData.travelMonth}`
+    `Hi Samyati The World!\nI would like to get a personalized offer for my upcoming trip:\n\n• Traveler Name: ${formData.name}\n• Contact / WhatsApp: ${formData.phone}\n• Category: ${formData.category} Holidays\n• Destination: ${formData.destination}\n• Group Size: ${formData.travellers}\n• Travel Timeframe: ${formData.travelMonth}\n\nPlease share the best available package and itinerary options!`
   );
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container luxury-offer-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Top Decorative Gold Accent Line */}
+        <div className="modal-accent-bar" />
+
         <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
-          <X size={20} />
+          <X size={18} />
         </button>
 
         {!submitted ? (
-          <div>
-            <div className="modal-header">
-              <div className="eyebrow-pill mb-2">
-                <Sparkles size={12} />
-                <span>Samyati The World — Custom Offer</span>
+          <div className="modal-inner-padding">
+            {/* Header */}
+            <div className="modal-header-pro">
+              <div className="concierge-badge">
+                <Sparkles size={13} className="sparkle-icon" />
+                <span>SAMYATI CONCIERGE · CUSTOM TRIP</span>
               </div>
-              <h2 className="modal-title">Get Your Personalized <span className="accent-serif">Offer</span></h2>
-              <p className="modal-sub">Tell us your travel dreams and budget. We will curate a 100% custom itinerary with dedicated human support.</p>
+              
+              <h2 className="modal-title-pro">
+                Get Your Personalized <span className="serif-highlight">Offer</span>
+              </h2>
+              
+              <p className="modal-subtitle-pro">
+                Share your travel vision and group size. Our bespoke travel designers will craft a tailored day-by-day plan with transparent, best-available pricing.
+              </p>
+
+              {/* Trust Value Badges */}
+              <div className="trust-pills-row">
+                <div className="trust-pill-item">
+                  <Clock size={12} className="pill-icon" />
+                  <span>2-Hour Fast Response</span>
+                </div>
+                <div className="trust-pill-item">
+                  <Award size={12} className="pill-icon" />
+                  <span>100% Bespoke Plan</span>
+                </div>
+                <div className="trust-pill-item">
+                  <ShieldCheck size={12} className="pill-icon" />
+                  <span>Best Price Guarantee</span>
+                </div>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="offer-form">
-              <div className="form-grid">
-                {/* Name */}
-                <div className="form-group">
-                  <label className="form-label">Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Aniket Shrivastava"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="form-input"
-                  />
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="pro-offer-form">
+              <div className="pro-form-grid">
+                {/* Full Name */}
+                <div className="pro-input-group">
+                  <label className="pro-label">
+                    <span>Full Name</span>
+                    <span className="req-star">*</span>
+                  </label>
+                  <div className="input-field-wrapper">
+                    <User size={16} className="field-icon" />
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Rahul Sharma"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="pro-input"
+                    />
+                  </div>
                 </div>
 
                 {/* Phone / WhatsApp */}
-                <div className="form-group">
-                  <label className="form-label">Phone / WhatsApp Number *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="e.g. 9589110765"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="form-input"
-                  />
+                <div className="pro-input-group">
+                  <label className="pro-label">
+                    <span>Phone / WhatsApp Number</span>
+                    <span className="req-star">*</span>
+                  </label>
+                  <div className="input-field-wrapper">
+                    <Phone size={16} className="field-icon" />
+                    <input
+                      type="tel"
+                      required
+                      placeholder="e.g. 9876543210"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="pro-input"
+                    />
+                  </div>
                 </div>
 
                 {/* Category Choice */}
-                <div className="form-group">
-                  <label className="form-label">Category</label>
-                  <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="form-select"
-                  >
-                    <option value="Domestic">🇮🇳 Domestic Holidays (7 Destinations)</option>
-                    <option value="International">✈️ International Holidays (7 Destinations)</option>
-                  </select>
+                <div className="pro-input-group">
+                  <label className="pro-label">Holiday Type</label>
+                  <div className="input-field-wrapper select-field-wrapper">
+                    <Globe size={16} className="field-icon" />
+                    <select
+                      value={formData.category}
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      className="pro-select"
+                    >
+                      <option value="Domestic">Desh — Domestic Indian Escapes</option>
+                      <option value="International">Videsh — International World Holidays</option>
+                    </select>
+                    <ChevronDown size={15} className="select-arrow-icon" />
+                  </div>
                 </div>
 
                 {/* Destination Choice */}
-                <div className="form-group">
-                  <label className="form-label">Preferred Destination</label>
-                  <select
-                    value={formData.destination}
-                    onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-                    className="form-select"
-                  >
-                    {DESTINATIONS.filter(d => d.category === formData.category).map(d => (
-                      <option key={d.id} value={d.name}>{d.flag} {d.name} — {d.tagline}</option>
-                    ))}
-                    <option value="Other / Customized">🌍 Other Custom Destination</option>
-                  </select>
+                <div className="pro-input-group">
+                  <label className="pro-label">Preferred Destination</label>
+                  <div className="input-field-wrapper select-field-wrapper">
+                    <MapPin size={16} className="field-icon" />
+                    <select
+                      value={formData.destination}
+                      onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
+                      className="pro-select"
+                    >
+                      {DESTINATIONS.filter(d => d.category === formData.category).map(d => (
+                        <option key={d.id} value={d.name}>{d.flag} {d.name} ({d.tagline})</option>
+                      ))}
+                      <option value="Other / Customized">🌍 Other Custom Destination</option>
+                    </select>
+                    <ChevronDown size={15} className="select-arrow-icon" />
+                  </div>
                 </div>
 
                 {/* Travellers */}
-                <div className="form-group">
-                  <label className="form-label">Number of Travellers</label>
-                  <select
-                    value={formData.travellers}
-                    onChange={(e) => setFormData({ ...formData, travellers: e.target.value })}
-                    className="form-select"
-                  >
-                    <option value="Solo Traveller">Solo Traveller</option>
-                    <option value="Couple (Honeymoon)">Couple / Honeymoon</option>
-                    <option value="Family (3-5 People)">Family (3–5 People)</option>
-                    <option value="Group (6+ People)">Group Departure (6+ People)</option>
-                  </select>
+                <div className="pro-input-group">
+                  <label className="pro-label">Group / Travellers</label>
+                  <div className="input-field-wrapper select-field-wrapper">
+                    <Users size={16} className="field-icon" />
+                    <select
+                      value={formData.travellers}
+                      onChange={(e) => setFormData({ ...formData, travellers: e.target.value })}
+                      className="pro-select"
+                    >
+                      <option value="Solo Traveller">Solo Adventurer (1 Person)</option>
+                      <option value="Couple (Honeymoon)">Couple / Honeymoon (2 Persons)</option>
+                      <option value="Family (3-5 People)">Family Holiday (3–5 Persons)</option>
+                      <option value="Group (6+ People)">Group / Friends Tour (6+ Persons)</option>
+                    </select>
+                    <ChevronDown size={15} className="select-arrow-icon" />
+                  </div>
                 </div>
 
                 {/* Travel Month */}
-                <div className="form-group">
-                  <label className="form-label">Travel Timeframe</label>
-                  <select
-                    value={formData.travelMonth}
-                    onChange={(e) => setFormData({ ...formData, travelMonth: e.target.value })}
-                    className="form-select"
-                  >
-                    <option value="Within 2 Weeks">Within 2 Weeks</option>
-                    <option value="Next Month">Next Month</option>
-                    <option value="In 2-3 Months">In 2–3 Months</option>
-                    <option value="Flexible / Exploring">Flexible Dates</option>
-                  </select>
+                <div className="pro-input-group">
+                  <label className="pro-label">Estimated Travel Time</label>
+                  <div className="input-field-wrapper select-field-wrapper">
+                    <Calendar size={16} className="field-icon" />
+                    <select
+                      value={formData.travelMonth}
+                      onChange={(e) => setFormData({ ...formData, travelMonth: e.target.value })}
+                      className="pro-select"
+                    >
+                      <option value="Within 2 Weeks">Immediate (Within 2 Weeks)</option>
+                      <option value="Next Month">Next Month</option>
+                      <option value="In 2-3 Months">In 2–3 Months</option>
+                      <option value="Flexible / Exploring">Flexible Dates / Still Exploring</option>
+                    </select>
+                    <ChevronDown size={15} className="select-arrow-icon" />
+                  </div>
                 </div>
               </div>
 
-              <button type="submit" className="btn-pill btn-pill-dark w-full-submit">
-                <span>Submit & Get Your Offer</span>
-                <span className="btn-badge-icon">
-                  <Send size={16} />
+              {/* Submit CTA */}
+              <button type="submit" className="pro-submit-btn">
+                <span>Request Custom Itinerary & Offer</span>
+                <span className="submit-arrow-ring">
+                  <Send size={15} />
                 </span>
               </button>
+
+              <p className="privacy-micro-note">
+                <ShieldCheck size={13} className="inline-shield" />
+                <span>Your information is strictly protected. Zero spam or shared data.</span>
+              </p>
             </form>
           </div>
         ) : (
-          <div className="submitted-view">
-            <div className="success-icon-badge">
-              <CheckCircle2 size={36} className="text-emerald-500" />
+          <div className="modal-inner-padding submitted-pro-view">
+            <div className="success-icon-badge-pro">
+              <CheckCircle2 size={40} className="check-success-svg" />
             </div>
 
-            <h3 className="success-title">Offer Request Received!</h3>
-            <p className="success-sub">
-              Thank you, <strong>{formData.name}</strong>! Our travel specialists at <strong>Samyati The World</strong> are curating a custom offer for <strong>{formData.destination}</strong>.
+            <span className="concierge-badge mb-2">
+              <Sparkles size={12} />
+              <span>REQUEST CONFIRMED</span>
+            </span>
+
+            <h3 className="success-title-pro">Offer Request Received!</h3>
+            <p className="success-sub-pro">
+              Thank you, <strong>{formData.name}</strong>. Our dedicated travel planners are preparing your custom vacation proposal for <strong>{formData.destination}</strong>.
             </p>
 
-            <div className="whatsapp-quick-connect">
-              <p className="wa-title">Want instant confirmation on WhatsApp?</p>
+            <div className="summary-ticket-box">
+              <div className="ticket-row">
+                <span className="ticket-lbl">Destination</span>
+                <span className="ticket-val">{formData.destination}</span>
+              </div>
+              <div className="ticket-row">
+                <span className="ticket-lbl">Travel Group</span>
+                <span className="ticket-val">{formData.travellers}</span>
+              </div>
+              <div className="ticket-row">
+                <span className="ticket-lbl">Timeframe</span>
+                <span className="ticket-val">{formData.travelMonth}</span>
+              </div>
+            </div>
+
+            <div className="whatsapp-quick-connect-pro">
+              <div className="wa-prompt-text">
+                <p className="wa-title-pro">Need an instant itinerary quote?</p>
+                <p className="wa-sub-pro">Connect directly with our senior travel specialist on WhatsApp.</p>
+              </div>
+
               <a
                 href={`https://wa.me/91${BRAND_INFO.phone}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-pill btn-pill-emerald"
+                className="btn-whatsapp-action"
               >
-                <PhoneCall size={16} />
+                <PhoneCall size={17} />
                 <span>Chat Instantly on WhatsApp (+91 {BRAND_INFO.phone})</span>
               </a>
             </div>
 
-            <button onClick={onClose} className="btn-pill btn-pill-dark mt-4">
-              <span>Back to Explorer</span>
+            <button onClick={onClose} className="btn-return-pro">
+              <span>Return to Samyati Holidays</span>
             </button>
           </div>
         )}
+
+        <style>{`
+          .luxury-offer-modal {
+            max-width: 640px;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 28px;
+            box-shadow: 0 30px 70px -15px rgba(15, 23, 42, 0.35);
+          }
+
+          .modal-accent-bar {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, #d97706 0%, #f59e0b 35%, #ec4899 70%, #6366f1 100%);
+          }
+
+          .modal-inner-padding {
+            padding: 36px 36px 32px;
+          }
+
+          .modal-header-pro {
+            text-align: center;
+            margin-bottom: 24px;
+          }
+
+          .concierge-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            color: #b45309;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            margin-bottom: 12px;
+          }
+
+          .sparkle-icon {
+            color: #d97706;
+          }
+
+          .modal-title-pro {
+            font-family: var(--font-sans);
+            font-size: clamp(24px, 3.8vw, 30px);
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 10px;
+          }
+
+          .serif-highlight {
+            font-family: var(--font-serif-italic);
+            font-style: italic;
+            font-weight: 600;
+            color: #b45309;
+          }
+
+          .modal-subtitle-pro {
+            font-size: 13.5px;
+            color: #64748b;
+            line-height: 1.55;
+            max-width: 520px;
+            margin: 0 auto 16px;
+          }
+
+          .trust-pills-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+
+          .trust-pill-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 9999px;
+          }
+
+          .pill-icon {
+            color: #0284c7;
+          }
+
+          /* Form Styles */
+          .pro-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 22px;
+          }
+
+          .pro-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+          }
+
+          .pro-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+          }
+
+          .req-star {
+            color: #e11d48;
+          }
+
+          .input-field-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+          }
+
+          .input-field-wrapper:focus-within {
+            background: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3.5px rgba(15, 23, 42, 0.08);
+          }
+
+          .field-icon {
+            position: absolute;
+            left: 12px;
+            color: #94a3b8;
+            pointer-events: none;
+            transition: color 0.2s ease;
+          }
+
+          .input-field-wrapper:focus-within .field-icon {
+            color: #0f172a;
+          }
+
+          .pro-input, .pro-select {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px 0 38px;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13.5px;
+            font-family: var(--font-sans);
+            color: #0f172a;
+            font-weight: 500;
+          }
+
+          .pro-select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            padding-right: 34px;
+          }
+
+          .select-arrow-icon {
+            position: absolute;
+            right: 12px;
+            color: #64748b;
+            pointer-events: none;
+          }
+
+          /* Submit Button */
+          .pro-submit-btn {
+            width: 100%;
+            height: 50px;
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            border-radius: 9999px;
+            font-size: 14.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.35);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+
+          .pro-submit-btn:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -6px rgba(15, 23, 42, 0.45);
+          }
+
+          .submit-arrow-ring {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease;
+          }
+
+          .pro-submit-btn:hover .submit-arrow-ring {
+            transform: translateX(3px) rotate(15deg);
+          }
+
+          .privacy-micro-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin-top: 14px;
+          }
+
+          .inline-shield {
+            color: #10b981;
+          }
+
+          /* Success View */
+          .submitted-pro-view {
+            text-align: center;
+            padding: 40px 32px;
+          }
+
+          .success-icon-badge-pro {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: #ecfdf5;
+            border: 2px solid #a7f3d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+          }
+
+          .check-success-svg {
+            color: #10b981;
+          }
+
+          .success-title-pro {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+          }
+
+          .success-sub-pro {
+            font-size: 13.5px;
+            color: #64748b;
+            line-height: 1.6;
+            max-width: 480px;
+            margin: 0 auto 20px;
+          }
+
+          .summary-ticket-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px 20px;
+            max-width: 460px;
+            margin: 0 auto 24px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+          }
+
+          .ticket-row {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+          }
+
+          .ticket-lbl {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+          }
+
+          .ticket-val {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0f172a;
+          }
+
+          .whatsapp-quick-connect-pro {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #bbf7d0;
+            padding: 20px 22px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+          }
+
+          .wa-title-pro {
+            font-size: 14px;
+            font-weight: 800;
+            color: #166534;
+            margin-bottom: 2px;
+          }
+
+          .wa-sub-pro {
+            font-size: 12px;
+            color: #15803d;
+            margin-bottom: 14px;
+          }
+
+          .btn-whatsapp-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #16a34a;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 11px 24px;
+            border-radius: 9999px;
+            font-size: 13.5px;
+            font-weight: 700;
+            box-shadow: 0 6px 18px rgba(22, 163, 74, 0.3);
+            transition: all 0.2s ease;
+          }
+
+          .btn-whatsapp-action:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+          }
+
+          .btn-return-pro {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .btn-return-pro:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+          }
+
+          @media (max-width: 600px) {
+            .modal-inner-padding { padding: 26px 20px 24px; }
+            .pro-form-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+            .modal-title-pro { font-size: 22px; }
+            .trust-pills-row { gap: 6px; }
+            .trust-pill-item { font-size: 10px; padding: 3px 8px; }
+            .pro-submit-btn { height: 46px; font-size: 13.5px; }
+            .summary-ticket-box { flex-direction: column; gap: 10px; padding: 14px; }
+            .btn-whatsapp-action { width: 100%; font-size: 12.5px; padding: 10px 14px; }
+          }
+        `}</style>
       </div>
-
-      <style>{`
-        .modal-backdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.75);
-          backdrop-filter: blur(6px);
-          z-index: 300;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 20px;
-        }
-
-        .modal-container {
-          position: relative;
-          background: #ffffff;
-          border-radius: 28px;
-          padding: 40px;
-          max-width: 600px;
-          width: 100%;
-          max-height: 90vh;
-          overflow-y: auto;
-          box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-
-        .modal-close-btn {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          background: var(--bg-card);
-          border: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: var(--text-dark);
-          transition: var(--transition-smooth);
-        }
-
-        .modal-close-btn:hover {
-          background: var(--text-dark);
-          color: #ffffff;
-        }
-
-        .modal-header {
-          text-align: center;
-          margin-bottom: 24px;
-        }
-
-        .modal-title {
-          font-size: 28px;
-          font-weight: 800;
-          color: var(--text-dark);
-          line-height: 1.2;
-          margin-top: 8px;
-        }
-
-        .modal-sub {
-          font-size: 13px;
-          color: var(--text-muted);
-          margin-top: 6px;
-        }
-
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-          margin-bottom: 24px;
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-
-        .form-label {
-          font-size: 12px;
-          font-weight: 700;
-          color: var(--text-dark);
-        }
-
-        .form-input, .form-select {
-          padding: 10px 14px;
-          border: 1px solid var(--border-light);
-          border-radius: 12px;
-          font-size: 14px;
-          font-family: var(--font-sans);
-          outline: none;
-          transition: border-color 0.2s;
-        }
-
-        .form-input:focus, .form-select:focus {
-          border-color: var(--text-dark);
-        }
-
-        .w-full-submit {
-          width: 100%;
-          justify-content: center;
-          padding: 14px;
-        }
-
-        /* Submitted View */
-        .submitted-view {
-          text-align: center;
-          padding: 20px 0;
-        }
-
-        .success-icon-badge {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          background: #ecfdf5;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 16px;
-        }
-
-        .success-title {
-          font-size: 24px;
-          font-weight: 800;
-          color: var(--text-dark);
-          margin-bottom: 8px;
-        }
-
-        .success-sub {
-          font-size: 14px;
-          color: var(--text-muted);
-          line-height: 1.5;
-          margin-bottom: 24px;
-        }
-
-        .whatsapp-quick-connect {
-          background: #f0fdf4;
-          border: 1px solid #bbf7d0;
-          padding: 20px;
-          border-radius: 16px;
-          margin-bottom: 16px;
-        }
-
-        .wa-title {
-          font-size: 13px;
-          font-weight: 700;
-          color: #166534;
-          margin-bottom: 10px;
-        }
-
-        .btn-pill-emerald {
-          background: #10b981;
-          color: #ffffff;
-          text-decoration: none;
-          padding: 10px 20px;
-          font-weight: 700;
-          font-size: 13px;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          border-radius: 9999px;
-        }
-
-        @media (max-width: 600px) {
-          .modal-backdrop { padding: 12px; }
-          .form-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
-          .modal-container { padding: 24px 18px; border-radius: 24px; max-height: 92vh; }
-          .modal-title { font-size: 22px; }
-          .modal-header { margin-bottom: 18px; }
-          .form-input, .form-select { height: 44px; font-size: 14px; }
-        }
-      `}</style>
     </div>
   );
 }

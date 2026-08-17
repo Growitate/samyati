@@ -207,7 +207,7 @@ export const PACKAGES = [
     originalPrice: '₹19,500',
     rating: '4.85',
     reviewsCount: 86,
-    image: 'https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=800&q=80',
     description: 'Quick romantic getaway covering Dal Lake houseboats, Sonmarg Thajiwas glacier, and Pahalgam Lidder riverbank walks.',
     itinerary: [
       { day: 1, title: 'Srinagar Arrival & Sunset Shikara', details: 'Check-in to Nigeen Lake premium houseboat.' },
@@ -326,7 +326,7 @@ export const PACKAGES = [
     originalPrice: '₹24,500',
     rating: '4.91',
     reviewsCount: 120,
-    image: 'https://images.unsplash.com/photo-1588096344356-78b7b2ef42fa?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
     description: 'Explore Dalai Lama Monastery in Mcleodganj, tea gardens, Dalhousie heritage, and Khajjiar pine meadows.',
     itinerary: [
       { day: 1, title: 'Arrival in Dharamshala / Mcleodganj', details: 'Visit Namgyal Monastery & St. John Church.' },

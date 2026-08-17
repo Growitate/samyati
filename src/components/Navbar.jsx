@@ -27,7 +27,12 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else if (target === 'contact') {
-      if (onOpenOfferModal) onOpenOfferModal();
+      const el = document.getElementById('contact');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
     }
   };
 

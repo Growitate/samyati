@@ -34,24 +34,25 @@ export default function LocationMarquee() {
         .location-marquee-container {
           background-color: var(--text-dark);
           color: #ffffff;
-          padding: 28px 0;
+          padding: 24px 0;
           user-select: none;
+          overflow: hidden;
         }
 
         .marquee-item {
           display: inline-flex;
           align-items: center;
-          gap: 16px;
-          padding: 0 28px;
+          gap: 14px;
+          padding: 0 20px;
           white-space: nowrap;
         }
 
         .marquee-flag {
-          font-size: 28px;
+          font-size: 24px;
         }
 
         .marquee-name {
-          font-size: clamp(24px, 3.5vw, 36px);
+          font-size: clamp(20px, 3.5vw, 36px);
           font-weight: 800;
           letter-spacing: 0.06em;
           color: #ffffff;
@@ -60,8 +61,15 @@ export default function LocationMarquee() {
 
         .marquee-separator {
           color: #f43f5e;
-          font-size: 24px;
-          margin-left: 12px;
+          font-size: 20px;
+          margin-left: 8px;
+        }
+
+        @media (max-width: 600px) {
+          .location-marquee-container { padding: 16px 0; }
+          .marquee-item { gap: 10px; padding: 0 14px; }
+          .marquee-flag { font-size: 20px; }
+          .marquee-separator { font-size: 16px; margin-left: 6px; }
         }
       `}</style>
     </div>

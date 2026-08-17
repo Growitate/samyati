@@ -428,8 +428,22 @@ export default function AdminPanelModal({ isOpen, onClose }) {
           text-align: right;
         }
 
+        .admin-tabs {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+
+        .admin-tabs::-webkit-scrollbar {
+          display: none;
+        }
+
         @media (max-width: 600px) {
-          .admin-stats-bar { grid-template-columns: 1fr; }
+          .admin-stats-bar { grid-template-columns: 1fr; gap: 8px; }
+          .admin-modal-container { padding: 20px 16px; border-radius: 20px; }
+          .add-dest-form { flex-direction: column; gap: 8px; }
+          .admin-tab { padding: 8px 12px; font-size: 12.5px; white-space: nowrap; }
+          .table-header-flex { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
       `}</style>
     </div>

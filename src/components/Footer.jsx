@@ -25,7 +25,7 @@ const FLAGS = [
 
 export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms }) {
   return (
-    <footer className="footer-wrapper">
+    <footer className="footer-wrapper" id="contact">
       <div className="container">
         {/* Main 4-Column Grid */}
         <div className="footer-grid">
