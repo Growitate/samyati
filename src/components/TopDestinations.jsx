@@ -105,18 +105,18 @@ export default function TopDestinations({ onOpenOfferModal }) {
           <div className="flight-path-container">
             <svg viewBox="0 0 900 95" fill="none" className="flight-arc-svg">
               {/* Swooping curved dashed arc line */}
-              <path 
-                d="M 30 15 Q 450 100 870 15" 
-                stroke="#d97706" 
-                strokeWidth="2.5" 
-                strokeDasharray="4 8" 
+              <path
+                d="M 30 15 Q 450 100 870 15"
+                stroke="#d97706"
+                strokeWidth="2.5"
+                strokeDasharray="4 8"
                 strokeLinecap="round"
-                fill="none" 
+                fill="none"
               />
 
               {/* Flag nodes positioned along bezier curve */}
               {visibleNodes.map((node, idx) => (
-                <g 
+                <g
                   key={idx}
                   className={`flag-node-group ${node.isActive ? 'active-node' : ''}`}
                   onClick={() => {
@@ -127,35 +127,35 @@ export default function TopDestinations({ onOpenOfferModal }) {
                 >
                   {/* Active glowing ring */}
                   {node.isActive && (
-                    <circle 
-                      cx={node.x} 
-                      cy={node.y} 
-                      r={21} 
-                      fill="none" 
-                      stroke="#d97706" 
-                      strokeWidth="1.5" 
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={21}
+                      fill="none"
+                      stroke="#d97706"
+                      strokeWidth="1.5"
                       strokeDasharray="3 3"
                       className="active-pulse-ring"
                     />
                   )}
 
                   {/* Node Circle */}
-                  <circle 
-                    cx={node.x} 
-                    cy={node.y} 
-                    r={node.isActive ? 15 : 11} 
-                    fill="#ffffff" 
-                    stroke={node.isActive ? '#b45309' : '#d4b3a2'} 
-                    strokeWidth={node.isActive ? 3 : 2} 
+                  <circle
+                    cx={node.x}
+                    cy={node.y}
+                    r={node.isActive ? 15 : 11}
+                    fill="#ffffff"
+                    stroke={node.isActive ? '#b45309' : '#d4b3a2'}
+                    strokeWidth={node.isActive ? 3 : 2}
                     className="flag-node-circle"
                   />
 
                   {/* Flag Icon */}
-                  <text 
-                    x={node.x} 
-                    y={node.y + (node.isActive ? 5 : 4)} 
-                    fontSize={node.isActive ? "14" : "12"} 
-                    textAnchor="middle" 
+                  <text
+                    x={node.x}
+                    y={node.y + (node.isActive ? 5 : 4)}
+                    fontSize={node.isActive ? "14" : "12"}
+                    textAnchor="middle"
                     className="flag-node-emoji"
                   >
                     {node.flag}
@@ -166,7 +166,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
         </div>
 
-        {/* Two-Panel Featured Destination Card Slider */}
+        {/* Two-Panel Featured Destination Card Carousel (Sliding side-by-side) */}
         <div 
           className="card-slider-wrapper"
           onTouchStart={handleTouchStart}
@@ -176,47 +176,60 @@ export default function TopDestinations({ onOpenOfferModal }) {
             <ChevronLeft size={20} />
           </button>
 
-          <div className={`destination-panel-card ${isTransitioning ? 'card-animating' : ''}`}>
-            {/* Left Photo Panel */}
-            <div className="panel-photo-side">
-              <img 
-                key={`img-${current.id}`}
-                src={current.image} 
-                alt={current.name} 
-                className="panel-img fade-in-media" 
-              />
-              <div className="country-badge">
-                <span className="badge-flag">{current.flag}</span>
-                <span className="badge-name">{current.name}</span>
-              </div>
-            </div>
+          <div className="slider-viewport">
+            <div 
+              className="slider-track"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {DESTINATIONS.map((dest, idx) => (
+                <div key={dest.id} className="destination-panel-card">
+                  {/* Left Photo Panel */}
+                  <div className="panel-photo-side">
+                    <img 
+                      src={dest.image} 
+                      alt={dest.name} 
+                      className="panel-img" 
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+                      }}
+                    />
+                    <div className="country-badge">
+                      <span className="badge-flag">{dest.flag}</span>
+                      <span className="badge-name">{dest.name}</span>
+                    </div>
+                  </div>
 
-            {/* Right White Content Panel */}
-            <div className="panel-info-side">
-              <span className="tours-count">{current.category} · {current.packagesCount} Curated Packages</span>
-              <h3 className="panel-title">{current.name}</h3>
-              <p className="panel-desc">{current.description}</p>
-              
-              <div className="panel-cta-row">
-                <button onClick={() => onOpenOfferModal(current.name)} className="btn-pill btn-pill-dark">
-                  <span>Explore All Tours</span>
-                  <span className="btn-badge-icon">
-                    <ArrowUpRight size={15} />
-                  </span>
-                </button>
-              </div>
+                  {/* Right White Content Panel */}
+                  <div className="panel-info-side">
+                    <span className="tours-count">{dest.category} · {dest.packagesCount} Curated Packages</span>
+                    <h3 className="panel-title">{dest.name}</h3>
+                    <p className="panel-desc">{dest.description}</p>
+                    
+                    <div className="panel-cta-row">
+                      <button onClick={() => onOpenOfferModal(dest.name)} className="btn-pill btn-pill-dark">
+                        <span>Explore All Tours</span>
+                        <span className="btn-badge-icon">
+                          <ArrowUpRight size={15} />
+                        </span>
+                      </button>
+                    </div>
 
-              {/* Slider Dots Progress Indicator */}
-              <div className="slider-dots-row">
-                {DESTINATIONS.map((d, i) => (
-                  <button
-                    key={d.id}
-                    className={`slider-dot-pill ${i === currentIndex ? 'active' : ''}`}
-                    onClick={() => { setCurrentIndex(i); resetTimer(); }}
-                    aria-label={`Go to ${d.name}`}
-                  />
-                ))}
-              </div>
+                    {/* Slider Dots Progress Indicator */}
+                    <div className="slider-dots-row">
+                      {DESTINATIONS.map((d, i) => (
+                        <button
+                          key={d.id}
+                          className={`slider-dot-pill ${i === currentIndex ? 'active' : ''}`}
+                          onClick={() => { setCurrentIndex(i); resetTimer(); }}
+                          aria-label={`Go to ${d.name}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -351,14 +364,25 @@ export default function TopDestinations({ onOpenOfferModal }) {
           margin: 0 auto 24px;
         }
 
+        .slider-viewport {
+          width: 100%;
+          overflow: hidden;
+          border-radius: 22px;
+          box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+        }
+
+        .slider-track {
+          display: flex;
+          width: 100%;
+          transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
         .destination-panel-card {
+          flex: 0 0 100%;
+          width: 100%;
           display: grid;
           grid-template-columns: 1fr 1fr;
           background: #ffffff;
-          border-radius: 22px;
-          overflow: hidden;
-          box-shadow: 0 16px 40px rgba(0,0,0,0.07);
-          width: 100%;
         }
 
         .panel-photo-side {
