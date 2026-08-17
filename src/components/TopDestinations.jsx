@@ -482,37 +482,55 @@ export default function TopDestinations({ onOpenOfferModal }) {
         .panel-cta-row {
           display: flex;
           align-items: center;
+          margin-top: auto;
         }
 
         .btn-pill-dark {
-          background: #18181b;
+          background: #0f172a;
           color: #ffffff;
-          border: none;
-          padding: 9px 18px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          padding: 7px 8px 7px 18px;
           border-radius: 9999px;
-          font-size: 12.5px;
-          font-weight: 600;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: -0.01em;
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          justify-content: space-between;
+          gap: 12px;
           cursor: pointer;
-          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+          transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .btn-pill-dark:hover {
-          background: #27272a;
+          background: #000000;
           transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+          border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-pill-dark:active {
+          transform: translateY(0) scale(0.98);
         }
 
         .btn-badge-icon {
-          width: 20px;
-          height: 20px;
-          background: rgba(255,255,255,0.2);
+          width: 26px;
+          height: 26px;
+          background: #ffffff;
+          color: #0f172a;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
+          flex-shrink: 0;
+          transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+
+        .btn-pill-dark:hover .btn-badge-icon {
+          transform: scale(1.08) translate(1px, -1px);
+          background: #d97706;
+          color: #ffffff;
         }
 
         /* Slider Dots Row */

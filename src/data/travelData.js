@@ -58,7 +58,7 @@ export const DESTINATIONS = [
     category: 'Domestic',
     tagline: 'Emerald Turquoise Island Escape',
     flag: '🇮🇳',
-    image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
     description: 'Havelock Radhanagar beach, scuba diving in coral reefs, and limestone cave exploration.',
     packagesCount: 4
   },
