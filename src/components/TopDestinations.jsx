@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Settings, ArrowUpRight, ChevronLeft, ChevronRight, Compass } from 'lucide-react';
+import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { DESTINATIONS } from '../data/travelData';
 
 export default function TopDestinations({ onOpenOfferModal }) {
-  const [scrollPos, setScrollPos] = useState(0);
   const [activeNodeIndex, setActiveNodeIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const trackRef = useRef(null);
 
-  // Auto-scroll loop: smoothly advance every 3.5 seconds
+  // Auto-scroll loop: advances smoothly every 3.8 seconds by 1 card width
   useEffect(() => {
     const timer = setInterval(() => {
       if (trackRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
-        const cardWidth = 360; // card + gap
-        if (scrollLeft + clientWidth >= scrollWidth - 20) {
+        const cardStep = 604; // 580px card + 24px gap
+        if (scrollLeft + clientWidth >= scrollWidth - 30) {
           trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          trackRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+          trackRef.current.scrollBy({ left: cardStep, behavior: 'smooth' });
         }
       }
-    }, 3500);
+    }, 3800);
 
     return () => clearInterval(timer);
   }, []);
@@ -33,17 +32,17 @@ export default function TopDestinations({ onOpenOfferModal }) {
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
       // Estimate active node based on current scroll position
-      const cardWidth = 360;
-      const index = Math.round(scrollLeft / cardWidth);
+      const cardStep = 604;
+      const index = Math.round(scrollLeft / cardStep);
       setActiveNodeIndex(Math.min(Math.max(0, index), DESTINATIONS.length - 1));
     }
   };
 
   const handleScroll = (direction) => {
     if (trackRef.current) {
-      const cardWidth = 360;
+      const cardStep = 604;
       trackRef.current.scrollBy({
-        left: direction === 'left' ? -cardWidth * 1.5 : cardWidth * 1.5,
+        left: direction === 'left' ? -cardStep : cardStep,
         behavior: 'smooth'
       });
       setTimeout(handleScrollUpdate, 350);
@@ -52,9 +51,9 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
   const scrollToDestination = (index) => {
     if (trackRef.current) {
-      const cardWidth = 360;
+      const cardStep = 604;
       trackRef.current.scrollTo({
-        left: index * cardWidth,
+        left: index * cardStep,
         behavior: 'smooth'
       });
       setActiveNodeIndex(index);
@@ -62,7 +61,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
     }
   };
 
-  // Quadratic Bezier arc math
+  // Quadratic Bezier arc math: start (30,15), control (450,85), end (870,15)
   const getArcPoint = (t) => {
     const p0 = { x: 30, y: 15 };
     const p1 = { x: 450, y: 85 };
@@ -104,50 +103,50 @@ export default function TopDestinations({ onOpenOfferModal }) {
           {/* Dotted Flight Path Arc SVG with Country Flag Nodes */}
           <div className="flight-path-container">
             <svg viewBox="0 0 900 85" fill="none" className="flight-arc-svg">
-              <path 
-                d="M 30 15 Q 450 85 870 15" 
-                stroke="#d97706" 
-                strokeWidth="2" 
-                strokeDasharray="4 8" 
+              <path
+                d="M 30 15 Q 450 85 870 15"
+                stroke="#d97706"
+                strokeWidth="2"
+                strokeDasharray="4 8"
                 strokeLinecap="round"
-                fill="none" 
+                fill="none"
               />
 
               {arcNodes.map((node, idx) => (
-                <g 
+                <g
                   key={idx}
                   className={`flag-node-group ${node.isActive ? 'active-node' : ''}`}
                   onClick={() => scrollToDestination(node.destIndex)}
                   style={{ cursor: 'pointer' }}
                 >
                   {node.isActive && (
-                    <circle 
-                      cx={node.x} 
-                      cy={node.y} 
-                      r={18} 
-                      fill="none" 
-                      stroke="#d97706" 
-                      strokeWidth="1.5" 
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={18}
+                      fill="none"
+                      stroke="#d97706"
+                      strokeWidth="1.5"
                       strokeDasharray="3 3"
                       className="active-pulse-ring"
                     />
                   )}
 
-                  <circle 
-                    cx={node.x} 
-                    cy={node.y} 
-                    r={node.isActive ? 13 : 10} 
-                    fill="#ffffff" 
-                    stroke={node.isActive ? '#b45309' : '#d4b3a2'} 
-                    strokeWidth={node.isActive ? 2.5 : 1.5} 
+                  <circle
+                    cx={node.x}
+                    cy={node.y}
+                    r={node.isActive ? 13 : 10}
+                    fill="#ffffff"
+                    stroke={node.isActive ? '#b45309' : '#d4b3a2'}
+                    strokeWidth={node.isActive ? 2.5 : 1.5}
                     className="flag-node-circle"
                   />
 
-                  <text 
-                    x={node.x} 
-                    y={node.y + (node.isActive ? 4 : 3)} 
-                    fontSize={node.isActive ? "12" : "10"} 
-                    textAnchor="middle" 
+                  <text
+                    x={node.x}
+                    y={node.y + (node.isActive ? 4 : 3)}
+                    fontSize={node.isActive ? "12" : "10"}
+                    textAnchor="middle"
                     className="flag-node-emoji"
                   >
                     {node.dest.flag}
@@ -158,26 +157,26 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
         </div>
 
-        {/* Multi-Card Side-by-Side Showcase Carousel */}
-        <div className="multi-card-showcase-wrapper">
+        {/* Multi-Card Side-by-Side 2-Panel Carousel */}
+        <div className="multi-panel-showcase-wrapper">
           <button 
-            className={`slider-nav-btn nav-btn-left ${!canScrollLeft ? 'disabled' : ''}`} 
+            className={`panel-scroll-arrow arrow-left ${!canScrollLeft ? 'disabled' : ''}`} 
             onClick={() => handleScroll('left')} 
             disabled={!canScrollLeft}
-            aria-label="Scroll left"
+            aria-label="Previous destinations"
           >
             <ChevronLeft size={20} />
           </button>
 
           <div 
-            className="dest-cards-scroll-track"
+            className="multi-panel-scroll-track"
             ref={trackRef}
             onScroll={handleScrollUpdate}
           >
             {DESTINATIONS.map((dest, idx) => (
               <div 
-                key={dest.id}
-                className="destination-side-card"
+                key={dest.id} 
+                className="destination-panel-card"
                 onClick={() => onOpenOfferModal && onOpenOfferModal(dest.name)}
                 role="button"
                 tabIndex={0}
@@ -188,47 +187,58 @@ export default function TopDestinations({ onOpenOfferModal }) {
                   }
                 }}
               >
-                {/* Photo Header */}
-                <div className="side-card-photo-box">
-                  <img 
-                    src={dest.image} 
-                    alt={dest.name} 
-                    className="side-card-img" 
-                    loading="lazy"
+                {/* Left Photo Panel */}
+                <div className="panel-photo-side">
+                  <img
+                    src={dest.image}
+                    alt={dest.name}
+                    className="panel-img"
+                    loading={idx < 3 ? "eager" : "lazy"}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
                     }}
                   />
-                  <div className="side-card-flag-badge">
-                    <span className="side-badge-flag">{dest.flag}</span>
-                    <span className="side-badge-name">{dest.name}</span>
+                  <div className="country-badge">
+                    <span className="badge-flag">{dest.flag}</span>
+                    <span className="badge-name">{dest.name}</span>
                   </div>
-
-                  <span className="side-card-pkg-pill">
-                    {dest.packagesCount} Curated Tours
-                  </span>
                 </div>
 
-                {/* Content Body */}
-                <div className="side-card-body-box">
-                  <span className="side-card-category">{dest.category} · {dest.packagesCount} PACKAGES</span>
-                  <h3 className="side-card-title">{dest.name}</h3>
-                  <p className="side-card-desc">{dest.description}</p>
+                {/* Right White Content Panel */}
+                <div className="panel-info-side">
+                  <span className="tours-count">{dest.category} · {dest.packagesCount} CURATED PACKAGES</span>
+                  <h3 className="panel-title">{dest.name}</h3>
+                  <p className="panel-desc">{dest.description}</p>
 
-                  <div className="side-card-cta-row">
+                  <div className="panel-cta-row">
                     <button 
-                      className="btn-explore-side"
                       onClick={(e) => {
                         e.stopPropagation();
                         onOpenOfferModal && onOpenOfferModal(dest.name);
-                      }}
+                      }} 
+                      className="btn-pill btn-pill-dark"
                     >
                       <span>Explore All Tours</span>
-                      <span className="side-btn-badge-icon">
-                        <ArrowUpRight size={14} />
+                      <span className="btn-badge-icon">
+                        <ArrowUpRight size={15} />
                       </span>
                     </button>
+                  </div>
+
+                  {/* Slider Dots Progress Indicator */}
+                  <div className="slider-dots-row">
+                    {DESTINATIONS.map((d, i) => (
+                      <button
+                        key={d.id}
+                        className={`slider-dot-pill ${i === idx ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollToDestination(i);
+                        }}
+                        aria-label={`Go to ${d.name}`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -236,16 +246,16 @@ export default function TopDestinations({ onOpenOfferModal }) {
           </div>
 
           <button 
-            className={`slider-nav-btn nav-btn-right ${!canScrollRight ? 'disabled' : ''}`} 
+            className={`panel-scroll-arrow arrow-right ${!canScrollRight ? 'disabled' : ''}`} 
             onClick={() => handleScroll('right')} 
             disabled={!canScrollRight}
-            aria-label="Scroll right"
+            aria-label="Next destinations"
           >
             <ChevronRight size={20} />
           </button>
         </div>
 
-        {/* Supporting Caption Footer */}
+        {/* Supporting Caption */}
         <div className="destinations-footer">
           <p className="footer-subcaption">
             From mist-wrapped mountain trails to sun-drenched coastal villages — hand-selected destinations that offer experiences lasting long after you return.
@@ -257,10 +267,8 @@ export default function TopDestinations({ onOpenOfferModal }) {
               <span className="face-flag">🇮🇩</span>
               <span className="face-flag">🇦🇪</span>
               <span className="face-flag">🇨🇭</span>
-              <span className="face-flag">🇹🇭</span>
-              <span className="face-flag">🇲🇻</span>
             </div>
-            <span>View All Destinations & Get Custom Offer</span>
+            <span>View All Destinations & Get Offer</span>
             <span className="btn-badge-icon">
               <ArrowUpRight size={15} />
             </span>
@@ -282,7 +290,7 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .destinations-header {
           text-align: center;
-          margin-bottom: 22px;
+          margin-bottom: 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -351,155 +359,139 @@ export default function TopDestinations({ onOpenOfferModal }) {
           100% { transform: rotate(360deg); }
         }
 
-        /* Multi-Card Side-by-Side Showcase */
-        .multi-card-showcase-wrapper {
+        /* Multi-Panel Side-by-Side Track */
+        .multi-panel-showcase-wrapper {
           position: relative;
           width: 100%;
-          max-width: 1200px;
+          max-width: 1300px;
           margin: 0 auto 30px;
           display: flex;
           align-items: center;
         }
 
-        .dest-cards-scroll-track {
+        .multi-panel-scroll-track {
           display: flex;
-          gap: 22px;
+          gap: 24px;
           width: 100%;
           overflow-x: auto;
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
           scroll-snap-type: x mandatory;
-          padding: 12px 6px 20px;
+          padding: 14px 8px 24px;
           scrollbar-width: none;
           -ms-overflow-style: none;
         }
 
-        .dest-cards-scroll-track::-webkit-scrollbar {
+        .multi-panel-scroll-track::-webkit-scrollbar {
           display: none;
         }
 
-        /* Individual Destination Side-by-Side Card */
-        .destination-side-card {
-          flex: 0 0 340px;
-          width: 340px;
+        /* Individual 2-Panel Card inside the multi-card row */
+        .destination-panel-card {
+          flex: 0 0 580px;
+          width: 580px;
           scroll-snap-align: start;
+          display: grid;
+          grid-template-columns: 1.05fr 1fr;
           background: #ffffff;
-          border-radius: 20px;
+          border-radius: 22px;
           overflow: hidden;
-          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+          box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
           border: 1px solid rgba(0, 0, 0, 0.04);
-          display: flex;
-          flex-direction: column;
           cursor: pointer;
           transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .destination-side-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 16px 36px rgba(74, 56, 40, 0.16);
+        .destination-panel-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 42px rgba(74, 56, 40, 0.16);
         }
 
-        .side-card-photo-box {
+        .panel-photo-side {
           position: relative;
-          width: 100%;
-          height: 200px;
-          overflow: hidden;
+          height: 290px;
           background: #e2e8f0;
+          overflow: hidden;
         }
 
-        .side-card-img {
+        .panel-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           transition: transform 0.5s ease;
         }
 
-        .destination-side-card:hover .side-card-img {
-          transform: scale(1.06);
+        .destination-panel-card:hover .panel-img {
+          transform: scale(1.05);
         }
 
-        .side-card-flag-badge {
+        .country-badge {
           position: absolute;
           top: 14px;
           left: 14px;
           background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(8px);
-          padding: 4px 10px;
+          padding: 4px 11px;
           border-radius: 9999px;
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 6px;
           font-weight: 700;
           font-size: 11.5px;
           color: #1a1a1a;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .side-card-pkg-pill {
-          position: absolute;
-          bottom: 12px;
-          right: 12px;
-          background: rgba(15, 23, 42, 0.82);
-          backdrop-filter: blur(6px);
-          color: #ffffff;
-          font-size: 10.5px;
-          font-weight: 700;
-          padding: 3px 9px;
-          border-radius: 9999px;
-        }
-
-        .side-card-body-box {
-          padding: 22px 20px 20px;
+        .panel-info-side {
+          padding: 24px 24px 20px;
           display: flex;
           flex-direction: column;
-          flex: 1;
+          justify-content: center;
           text-align: left;
         }
 
-        .side-card-category {
-          font-size: 10.5px;
+        .tours-count {
+          font-size: 10px;
           font-weight: 800;
-          letter-spacing: 0.08em;
           text-transform: uppercase;
+          letter-spacing: 0.08em;
           color: #b45309;
           margin-bottom: 6px;
         }
 
-        .side-card-title {
-          font-size: 20px;
+        .panel-title {
+          font-size: 22px;
           font-weight: 800;
           color: #1a1a1a;
-          margin-bottom: 8px;
           line-height: 1.2;
+          margin-bottom: 8px;
         }
 
-        .side-card-desc {
-          font-size: 13px;
-          color: #57534e;
+        .panel-desc {
+          font-size: 12.5px;
+          color: #555555;
           line-height: 1.55;
-          margin-bottom: 18px;
+          margin-bottom: 16px;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
           flex: 1;
         }
 
-        .side-card-cta-row {
+        .panel-cta-row {
           display: flex;
           align-items: center;
-          padding-top: 12px;
-          border-top: 1px solid #f5f5f4;
         }
 
-        .btn-explore-side {
+        .btn-pill-dark {
           background: #18181b;
           color: #ffffff;
           border: none;
-          padding: 9px 16px;
+          padding: 9px 18px;
           border-radius: 9999px;
           font-size: 12.5px;
-          font-weight: 700;
+          font-weight: 600;
           display: inline-flex;
           align-items: center;
           gap: 8px;
@@ -507,53 +499,78 @@ export default function TopDestinations({ onOpenOfferModal }) {
           transition: all 0.2s ease;
         }
 
-        .btn-explore-side:hover {
-          background: #d97706;
-          transform: translateY(-1px);
+        .btn-pill-dark:hover {
+          background: #27272a;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        .side-btn-badge-icon {
+        .btn-badge-icon {
           width: 20px;
           height: 20px;
+          background: rgba(255,255,255,0.2);
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
-        /* Nav Arrow Buttons */
-        .slider-nav-btn {
+        /* Slider Dots Row */
+        .slider-dots-row {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-top: 14px;
+        }
+
+        .slider-dot-pill {
+          width: 7px;
+          height: 7px;
+          border-radius: 9999px;
+          background: #e2e8f0;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+
+        .slider-dot-pill.active {
+          width: 20px;
+          background: #b45309;
+        }
+
+        /* Floating Nav Arrows */
+        .panel-scroll-arrow {
           position: absolute;
-          width: 42px;
-          height: 42px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.08);
+          border: 1px solid rgba(0, 0, 0, 0.08);
           color: #1a1a1a;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
           z-index: 10;
           transition: all 0.2s ease;
         }
 
-        .slider-nav-btn:hover:not(.disabled) {
+        .panel-scroll-arrow:hover:not(.disabled) {
           background: #18181b;
           color: #ffffff;
           transform: scale(1.08);
         }
 
-        .slider-nav-btn.disabled {
-          opacity: 0.3;
+        .panel-scroll-arrow.disabled {
+          opacity: 0.25;
           cursor: not-allowed;
           box-shadow: none;
         }
 
-        .nav-btn-left { left: -16px; }
-        .nav-btn-right { right: -16px; }
+        .arrow-left { left: -18px; }
+        .arrow-right { right: -18px; }
 
         /* Supporting Caption */
         .destinations-footer {
@@ -618,12 +635,21 @@ export default function TopDestinations({ onOpenOfferModal }) {
 
         .face-flag:first-child { margin-left: 0; }
 
+        @media (max-width: 1100px) {
+          .destination-panel-card { flex: 0 0 520px; width: 520px; }
+          .panel-photo-side { height: 260px; }
+          .panel-info-side { padding: 20px; }
+          .arrow-left { left: 4px; }
+          .arrow-right { right: 4px; }
+        }
+
         @media (max-width: 768px) {
-          .destination-side-card { flex: 0 0 280px; width: 280px; }
-          .side-card-photo-box { height: 175px; }
-          .side-card-title { font-size: 18px; }
-          .nav-btn-left { left: 4px; }
-          .nav-btn-right { right: 4px; }
+          .destination-panel-card { flex: 0 0 310px; width: 310px; grid-template-columns: 1fr; border-radius: 18px; }
+          .panel-photo-side { height: 190px; }
+          .panel-info-side { padding: 18px; }
+          .panel-title { font-size: 19px; }
+          .arrow-left { left: 2px; }
+          .arrow-right { right: 2px; }
         }
 
         @media (max-width: 600px) {
