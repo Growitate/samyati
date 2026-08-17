@@ -43,7 +43,7 @@ const DESH_DESTINATIONS = [
   {
     id: 'madhya-pradesh',
     name: 'Madhya Pradesh',
-    image: 'https://images.unsplash.com/photo-1600100397608-f010e423b971?auto=format&fit=crop&w=800&q=85',
+    image: 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85',
     tagline: 'The Heart of Incredible India'
   },
   {
@@ -106,7 +106,15 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
                 className="mental-dest-card"
                 onClick={() => setSelectedDest(item)}
               >
-                <img src={item.image} alt={item.name} className="dest-photo" />
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  className="dest-photo" 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
+                  }}
+                />
                 <div className="dest-gradient-mask" />
                 <span className="dest-serif-title">{item.name}</span>
               </div>
@@ -121,7 +129,15 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
                 className="mental-dest-card"
                 onClick={() => setSelectedDest(item)}
               >
-                <img src={item.image} alt={item.name} className="dest-photo" />
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  className="dest-photo" 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
+                  }}
+                />
                 <div className="dest-gradient-mask" />
                 <span className="dest-serif-title">{item.name}</span>
               </div>
@@ -136,7 +152,15 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
                 className="mental-dest-card"
                 onClick={() => setSelectedDest(item)}
               >
-                <img src={item.image} alt={item.name} className="dest-photo" />
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  className="dest-photo" 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85';
+                  }}
+                />
                 <div className="dest-gradient-mask" />
                 <span className="dest-serif-title">{item.name}</span>
               </div>
@@ -149,7 +173,15 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
               className="mental-dest-card card-wide-center"
               onClick={() => setSelectedDest(DESH_DESTINATIONS[7])}
             >
-              <img src={DESH_DESTINATIONS[7].image} alt={DESH_DESTINATIONS[7].name} className="dest-photo" />
+              <img 
+                src={DESH_DESTINATIONS[7].image} 
+                alt={DESH_DESTINATIONS[7].name} 
+                className="dest-photo" 
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85';
+                }}
+              />
               <div className="dest-gradient-mask" />
               <span className="dest-serif-title">{DESH_DESTINATIONS[7].name}</span>
             </div>
