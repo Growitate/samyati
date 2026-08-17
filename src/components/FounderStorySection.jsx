@@ -6,35 +6,21 @@ export default function FounderStorySection() {
   return (
     <section className="founder-story-section" id="story">
       <div className="container">
-        {/* Section Header */}
+        {/* Section Header with Company-Focused Title */}
         <div className="story-header">
           <div className="eyebrow-pill mb-3">
             <Compass className="gear-icon" size={13} />
-            <span>Our Founding Story & Philosophy</span>
+            <span>About Samyati The World</span>
             <Compass className="gear-icon" size={13} />
           </div>
 
           <h2 className="story-h2">
-            Born From College Friendship &<br />
-            A Passion to <span className="accent-serif">Inspire</span>
+            Crafting Meaningful Journeys, <br />
+            <span className="accent-serif">Driven by Purpose</span>
           </h2>
         </div>
 
-        {/* 3 Founders Card Row */}
-        <div className="founders-grid">
-          {BRAND_INFO.founders.map((f, i) => (
-            <div key={i} className="founder-card">
-              <div className="founder-avatar-chip">
-                <Users size={20} />
-              </div>
-              <h3 className="founder-name">{f.name}</h3>
-              <span className="founder-role">{f.role}</span>
-              <div className="founder-badge-mini">Co-Founder</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Story Paragraph Box */}
+        {/* 1. About Narrative Paragraph Box (FIRST) */}
         <div className="story-narrative-card">
           <div className="quote-mark">“</div>
           <p className="narrative-p">
@@ -51,7 +37,21 @@ export default function FounderStorySection() {
           </p>
         </div>
 
-        {/* Mission & Vision 2-Column Split */}
+        {/* 2. Founders Grid (FOLLOWED AFTER) */}
+        <div className="founders-grid">
+          {BRAND_INFO.founders.map((f, i) => (
+            <div key={i} className="founder-card">
+              <div className="founder-avatar-chip">
+                <Users size={20} />
+              </div>
+              <h3 className="founder-name">{f.name}</h3>
+              <span className="founder-role">{f.role}</span>
+              <div className="founder-badge-mini">Co-Founder</div>
+            </div>
+          ))}
+        </div>
+
+        {/* 3. Mission & Vision 2-Column Split */}
         <div className="mission-vision-grid">
           {/* Mission */}
           <div className="mv-card mv-mission">
