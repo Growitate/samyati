@@ -18,6 +18,12 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         <div className="hero-combined-split">
           {/* Left Column: Professionally Aligned Headline, Subhead, Search & Badges */}
           <div className="hero-combined-left">
+            {/* AI USP Glowing Pill Badge */}
+            <a href="#ai-consultant" className="hero-ai-badge-link">
+              <Sparkles size={13} className="text-amber-400" />
+              <span>✨ MAIN USP • Try Instant Samyati AI Travel Advisor →</span>
+            </a>
+
             {/* Headline H1 */}
             <h1 className="hero-combined-title">
               <span className="title-white-bold">Rediscover Yourself</span> <br />
@@ -117,6 +123,32 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+        }
+
+        .hero-ai-badge-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 18px;
+          background: rgba(15, 23, 42, 0.85);
+          backdrop-filter: blur(12px);
+          border: 1.5px solid #d97706;
+          border-radius: 9999px;
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          text-decoration: none;
+          margin-bottom: 20px;
+          box-shadow: 0 4px 20px rgba(217, 119, 6, 0.35);
+          transition: all 0.3s ease;
+        }
+
+        .hero-ai-badge-link:hover {
+          background: #d97706;
+          color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(217, 119, 6, 0.5);
         }
 
         .hero-combined-title {

@@ -74,6 +74,11 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
     }, 700);
   };
 
+  const handlePresetClick = (queryText) => {
+    setCustomInput(queryText);
+    handleConsultAI(realm, vibe, queryText);
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (customInput.trim()) {
@@ -174,12 +179,15 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
               <div className="chatbot-header-bar">
                 <div className="bot-avatar-group">
                   <div className="bot-icon-circle">
-                    <Bot size={20} className="bot-head-icon" />
+                    <Bot size={22} className="bot-head-icon" />
                   </div>
                   <div className="bot-meta">
-                    <h3 className="bot-name">Samyati Travel Advisor</h3>
+                    <div className="bot-title-flex">
+                      <h3 className="bot-name">Samyati Travel Advisor</h3>
+                      <span className="ai-usp-pill">✨ MAIN WEBSITE USP</span>
+                    </div>
                     <span className="bot-status">
-                      <span className="online-dot" /> Instant Itinerary Assistant
+                      <span className="online-dot" /> Live 24/7 Instant Itinerary Assistant
                     </span>
                   </div>
                 </div>
@@ -217,7 +225,24 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                   </div>
                 )}
 
-                {/* Interactive Prompt Chip Controls */}
+                {/* Interactive 1-Tap Quick Action Chips */}
+                <div className="ai-quick-chips-bar">
+                  <span className="quick-chips-label">⚡ 1-Tap Quick Try:</span>
+                  <div className="quick-chips-list">
+                    <button type="button" onClick={() => handlePresetClick('Recommend a 5-day snow trip in Kashmir')} className="ai-chip-pill">
+                      🏔️ Kashmir Snow Trip
+                    </button>
+                    <button type="button" onClick={() => handlePresetClick('Bali 6-day romantic getaway')} className="ai-chip-pill">
+                      🏝️ Bali Getaway
+                    </button>
+                    <button type="button" onClick={() => handlePresetClick('Rajasthan fort and desert safari')} className="ai-chip-pill">
+                      🏰 Rajasthan Forts
+                    </button>
+                    <button type="button" onClick={() => handlePresetClick('Himachal 5-day mountain escape')} className="ai-chip-pill">
+                      ⛰️ Himachal Escapes
+                    </button>
+                  </div>
+                </div>
                 
 
                 {/* AI Recommendation Output Cards */}
@@ -450,73 +475,110 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           transform: translateX(2px);
         }
 
-        /* RIGHT COLUMN: AI CHATBOT CARD */
+        /* RIGHT COLUMN: HIGH-VISIBILITY AI CHATBOT CARD (MAIN WEBSITE USP) */
         .promise-right-col {
           width: 100%;
         }
 
         .chatbot-card-window {
+          position: relative;
           background: #ffffff;
-          border-radius: 24px;
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.07);
-          border: 1px solid #e2e8f0;
+          border-radius: 26px;
+          box-shadow: 
+            0 25px 65px -10px rgba(15, 23, 42, 0.22), 
+            0 0 0 2.5px #d97706, 
+            0 0 35px rgba(217, 119, 6, 0.28);
+          border: none;
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chatbot-card-window:hover {
+          box-shadow: 
+            0 30px 75px -10px rgba(15, 23, 42, 0.28), 
+            0 0 0 2.5px #f59e0b, 
+            0 0 45px rgba(245, 158, 11, 0.38);
         }
 
         .chatbot-header-bar {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 16px 20px;
-          background: #fefce8;
-          border-bottom: 1px solid #e2e8f0;
+          padding: 18px 24px;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .bot-avatar-group {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 14px;
         }
 
         .bot-icon-circle {
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
-          background: #0f172a;
+          background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
           color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
+          box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4);
+          border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .bot-meta {
           display: flex;
           flex-direction: column;
           text-align: left;
+          gap: 2px;
+        }
+
+        .bot-title-flex {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         .bot-name {
-          font-size: 15px;
+          font-size: 16.5px;
           font-weight: 800;
-          color: #0f172a;
+          color: #ffffff;
+          letter-spacing: -0.01em;
+        }
+
+        .ai-usp-pill {
+          background: #d97706;
+          color: #ffffff;
+          font-size: 9.5px;
+          font-weight: 800;
+          padding: 2px 8px;
+          border-radius: 9999px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4);
         }
 
         .bot-status {
           font-size: 12px;
-          color: #64748b;
+          color: #cbd5e1;
           display: flex;
           align-items: center;
           gap: 6px;
+          font-weight: 500;
         }
 
         .online-dot {
-          width: 7px;
-          height: 7px;
+          width: 8px;
+          height: 8px;
           background: #10b981;
           border-radius: 50%;
           display: inline-block;
+          box-shadow: 0 0 8px #10b981;
         }
 
         .chatbot-feed {
@@ -570,15 +632,50 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           font-style: italic;
         }
 
-        /* Controls Area */
-        .chatbot-prompt-controls {
+        /* Quick 1-Tap Action Chips */
+        .ai-quick-chips-bar {
+          margin-top: 8px;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 8px;
           background: #fefce8;
-          padding: 16px;
+          border: 1px solid #fef08a;
+          padding: 12px 14px;
           border-radius: 16px;
-          border: 1px solid #e2e8f0;
+        }
+
+        .quick-chips-label {
+          font-size: 11px;
+          font-weight: 800;
+          color: #b45309;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .quick-chips-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        .ai-chip-pill {
+          background: #ffffff;
+          border: 1px solid #cbd5e1;
+          color: #1e293b;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 5px 12px;
+          border-radius: 9999px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .ai-chip-pill:hover {
+          background: #0f172a;
+          color: #ffffff;
+          border-color: #0f172a;
+          transform: translateY(-1px);
         }
 
         .prompt-group {
@@ -729,8 +826,8 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         /* Input Form Bar */
         .chatbot-input-bar {
           display: flex;
-          gap: 8px;
-          padding: 12px 16px;
+          gap: 10px;
+          padding: 14px 18px;
           background: #fefce8;
           border-top: 1px solid #e2e8f0;
         }
@@ -739,23 +836,31 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           flex: 1;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
           background: #ffffff;
-          border: 1px solid #cbd5e1;
+          border: 2px solid #cbd5e1;
           border-radius: 9999px;
-          padding: 0 14px;
+          padding: 0 16px;
+          transition: all 0.25s ease;
+        }
+
+        .chat-input-wrapper:focus-within {
+          border-color: #d97706;
+          box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.25);
         }
 
         .chat-input-icon {
-          color: #94a3b8;
+          color: #d97706;
         }
 
         .chat-text-input {
           width: 100%;
           border: none;
           outline: none;
-          font-size: 13px;
-          padding: 10px 0;
+          font-size: 13.5px;
+          font-weight: 600;
+          color: #0f172a;
+          padding: 11px 0;
           font-family: inherit;
           background: transparent;
         }
@@ -763,20 +868,23 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .chat-send-btn {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          background: #0f172a;
+          gap: 8px;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: #ffffff;
           border: none;
-          padding: 10px 18px;
+          padding: 11px 22px;
           border-radius: 9999px;
-          font-size: 12.5px;
-          font-weight: 700;
+          font-size: 13px;
+          font-weight: 800;
           cursor: pointer;
-          transition: background 0.2s;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
         }
 
         .chat-send-btn:hover {
-          background: #1e293b;
+          background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
         }
 
         .ai-card-footer-caption {
