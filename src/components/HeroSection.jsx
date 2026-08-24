@@ -86,18 +86,6 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           overflow: hidden;
         }
 
-        .hero-combined-section::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 80px;
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 60%, #ffffff 100%);
-          pointer-events: none;
-          z-index: 2;
-        }
-
         .hero-combined-overlay {
           position: absolute;
           inset: 0;
