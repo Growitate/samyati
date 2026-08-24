@@ -18,12 +18,6 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         <div className="hero-combined-split">
           {/* Left Column: Professionally Aligned Headline, Subhead, Search & Badges */}
           <div className="hero-combined-left">
-            {/* AI USP Glowing Pill Badge */}
-            <a href="#ai-consultant" className="hero-ai-badge-link">
-              <Sparkles size={13} className="text-amber-400" />
-              <span>✨ MAIN USP • Try Instant Samyati AI Travel Advisor →</span>
-            </a>
-
             {/* Headline H1 */}
             <h1 className="hero-combined-title">
               <span className="title-white-bold">Rediscover Yourself</span> <br />
