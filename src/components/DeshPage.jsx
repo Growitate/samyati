@@ -80,9 +80,13 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
       {/* HERO BANNER WITH FAMOUS TAJ MAHAL HERITAGE BACKGROUND */}
       <section className="desh-hero-banner">
         <img 
-          src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2000&q=85" 
-          alt="Famous Taj Mahal Agra Heritage Banner" 
+          src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2000&q=90" 
+          alt="Famous Taj Mahal Golden Hour Heritage Banner" 
           className="hero-bg-img" 
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2000&q=85';
+          }}
         />
         <div className="hero-bg-overlay" />
 
@@ -305,11 +309,11 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         /* HERO BANNER WITH CLEAN ARTWORK BACKGROUND */
         .desh-hero-banner {
           position: relative;
-          min-height: auto;
+          min-height: 380px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          padding-bottom: 40px;
+          justify-content: center;
+          padding-bottom: 50px;
         }
 
         .hero-bg-img {
@@ -318,7 +322,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center 30%;
+          object-position: center 40%;
         }
 
         .hero-bg-overlay {

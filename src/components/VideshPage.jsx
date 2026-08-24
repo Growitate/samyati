@@ -84,15 +84,15 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
 
   return (
     <div className="videsh-page-fixed">
-      {/* HERO BANNER WITH FAMOUS EIFFEL TOWER VIDESH BACKGROUND */}
+      {/* HERO BANNER WITH BREATHTAKING SANTORINI GREECE VIDESH BACKGROUND */}
       <section className="videsh-hero-banner">
         <img 
-          src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=2000&q=90" 
-          alt="Famous Eiffel Tower Paris Landmark Banner" 
+          src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=90" 
+          alt="Breathtaking Santorini Greece Panoramic Sunset Banner" 
           className="videsh-hero-bg-img" 
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=85';
+            e.target.src = 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=2000&q=85';
           }}
         />
         <div className="videsh-hero-bg-overlay" />
@@ -265,11 +265,11 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         /* HERO BANNER WITH VIDESH WORLD LANDMARKS BACKGROUND */
         .videsh-hero-banner {
           position: relative;
-          min-height: auto;
+          min-height: 380px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
-          padding-bottom: 40px;
+          justify-content: center;
+          padding-bottom: 50px;
         }
 
         .videsh-hero-bg-img {
@@ -278,7 +278,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center 30%;
+          object-position: center 40%;
         }
 
         .videsh-hero-bg-overlay {
