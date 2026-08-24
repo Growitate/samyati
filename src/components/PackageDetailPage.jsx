@@ -1738,20 +1738,26 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         </div>
       )}
 
-      {/* 5. BOTTOM ADVENTUROUS BANNER MATCHING SCREENSHOT */}
+      {/* 5. BOTTOM ADVENTUROUS FLOATING BANNER */}
       <div className="bottom-adventurous-banner">
-        <div className="container max-w-content flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <img src={galleryImages[0]} alt="Adventure" className="adventurous-thumb" />
-            <div>
-              <h3 className="adventurous-title">Start your Adventurous Trip with Samyati The World</h3>
-              <p className="adventurous-sub">Handcrafted itineraries, luxury stays, and 24/7 dedicated support.</p>
+        <div className="container max-w-content">
+          <div className="adventurous-card-box">
+            <div className="adventurous-left">
+              <div className="adventurous-thumb-wrapper">
+                <img src={galleryImages[0]} alt="Adventure" className="adventurous-thumb" />
+                <div className="thumb-sparkle-badge">✦</div>
+              </div>
+              <div>
+                <h3 className="adventurous-title">Start your Adventurous Trip with Samyati The World</h3>
+                <p className="adventurous-sub">Handcrafted itineraries, luxury stays, and 24/7 dedicated support.</p>
+              </div>
             </div>
-          </div>
 
-          <button onClick={() => onOpenOfferModal()} className="btn-pro-plan-now">
-            PLAN NOW
-          </button>
+            <button onClick={() => onOpenOfferModal()} className="btn-pro-plan-now">
+              <span>PLAN NOW</span>
+              <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -3094,49 +3100,100 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           color: #64748b;
         }
 
-        /* Bottom Adventurous Banner */
+        /* Bottom Adventurous Floating Card Banner */
         .bottom-adventurous-banner {
-          background: #0f172a;
+          padding: 40px 0 50px;
+          background-color: #fefce8;
+        }
+
+        .adventurous-card-box {
+          position: relative;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          border-radius: 24px;
+          padding: 32px 40px;
           color: #ffffff;
-          padding: 32px 0;
-          border-top: 1px solid #1e293b;
+          box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .adventurous-left {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .adventurous-thumb-wrapper {
+          position: relative;
+          width: 72px;
+          height: 72px;
+          flex-shrink: 0;
         }
 
         .adventurous-thumb {
-          width: 70px;
-          height: 70px;
-          border-radius: 12px;
+          width: 100%;
+          height: 100%;
+          border-radius: 16px;
           object-fit: cover;
+          border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .thumb-sparkle-badge {
+          position: absolute;
+          top: -6px;
+          right: -6px;
+          background: #d97706;
+          color: #ffffff;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          font-size: 11px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .adventurous-title {
-          font-size: 20px;
+          font-size: clamp(17px, 2vw, 22px);
           font-weight: 800;
+          color: #ffffff;
           margin-bottom: 4px;
+          letter-spacing: -0.01em;
         }
 
         .adventurous-sub {
           font-size: 13.5px;
-          color: #94a3b8;
+          color: #cbd5e1;
+          font-weight: 500;
         }
 
         .btn-pro-plan-now {
           background: #ffffff;
           color: #0f172a;
           border: none;
-          font-size: 14px;
+          font-size: 13.5px;
           font-weight: 800;
-          padding: 12px 28px;
+          padding: 13px 28px;
           border-radius: 9999px;
           cursor: pointer;
           transition: all 0.25s ease;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
         }
 
         .btn-pro-plan-now:hover {
           background: #fefce8;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+          color: #b45309;
         }
 
         @media (max-width: 990px) {
