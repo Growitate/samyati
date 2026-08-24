@@ -1758,7 +1758,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
       <style>{`
         .package-detail-page-full {
           min-height: 100vh;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           padding-bottom: 0;
         }
 

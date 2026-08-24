@@ -89,7 +89,7 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
       <style>{`
         .jaipur-window-section {
           padding: 60px 0 80px;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
         }
 
         .jaipur-header {

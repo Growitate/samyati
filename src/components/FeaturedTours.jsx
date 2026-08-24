@@ -216,7 +216,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
       <style>{`
         .featured-section {
           padding: 90px 0;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           overflow: hidden;
         }
 

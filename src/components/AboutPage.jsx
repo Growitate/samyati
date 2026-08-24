@@ -392,7 +392,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         .about-page-wrapper {
           position: relative;
           min-height: 100vh;
-          background: #fef9c3;
+          background: #f8fafc;
           color: #0f172a;
           font-family: var(--font-sans);
         }

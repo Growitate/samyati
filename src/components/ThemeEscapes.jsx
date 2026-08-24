@@ -394,7 +394,7 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
 
       <style>{`
         .theme-escapes-wrapper-section {
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           padding: 70px 0 80px;
           display: flex;
           flex-direction: column;

@@ -241,7 +241,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
       <style>{`
         .desh-page-fixed {
           position: relative;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           min-height: 100vh;
           color: #2d2319;
           padding-bottom: 80px;

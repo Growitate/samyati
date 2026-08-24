@@ -33,7 +33,7 @@ export function HeroCloudEffect() {
              C1140,80 1220,50 1300,75 
              C1370,100 1410,130 1440,120 
              L1440,220 Z" 
-          fill="#fef9c3" 
+          fill="#f8fafc" 
           fillOpacity="0.65"
         />
 
@@ -50,7 +50,7 @@ export function HeroCloudEffect() {
              C1230,110 1290,75 1350,95 
              C1400,115 1425,140 1440,150 
              L1440,220 Z" 
-          fill="#fef9c3" 
+          fill="#f8fafc" 
         />
       </svg>
 
@@ -164,7 +164,7 @@ export function FooterCloudEffect() {
              C1260,100 1330,70 1400,90 
              C1425,100 1435,110 1440,115 
              L1440,0 Z" 
-          fill="#fef9c3" 
+          fill="#f8fafc" 
         />
       </svg>
 

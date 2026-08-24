@@ -1,33 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, PhoneCall, Mail, MapPin, MessageSquare, Clock, Send, ShieldCheck, Check, Sparkles, Star, Headset, Copy, ChevronDown, ChevronUp, UserCheck, Zap, Globe2 } from 'lucide-react';
 import { BRAND_INFO } from '../data/travelData';
-import FaqSection from './FaqSection';
 
 const POPULAR_DESTINATIONS = [
   'Kashmir', 'Kerala', 'Bali', 'Dubai', 'Switzerland', 'Maldives', 'Himachal', 'Rajasthan'
-];
-
-const FAQS = [
-  {
-    q: "How fast will I receive my customized itinerary quote?",
-    a: "Our senior travel specialists prepare day-by-day customized itineraries with accurate hotel and transport pricing within 30 minutes to 2 hours during business hours (9:30 AM – 8:30 PM IST)."
-  },
-  {
-    q: "Is there any fee for requesting a custom trip plan?",
-    a: "No, request proposals and custom itinerary creation are 100% free with zero obligation and zero hidden charges."
-  },
-  {
-    q: "Can I modify hotels, dates, or activities after getting a quote?",
-    a: "Absolutely! We offer unlimited itinerary revisions until every detail—from boutique resort choices to private vehicle pacing—matches your exact vision."
-  },
-  {
-    q: "Do you provide on-tour assistance during our vacation?",
-    a: "Yes! Every Samyati traveller gets a dedicated human concierge on WhatsApp and phone for 24/7 real-time support throughout your entire journey."
-  },
-  {
-    q: "What payment modes are accepted?",
-    a: "We accept all major Credit/Debit Cards, UPI, Net Banking, and Bank Transfers with official GST tax invoices for full security and compliance."
-  }
 ];
 
 export default function ContactPage({ onBack, onOpenOfferModal }) {
@@ -398,15 +374,12 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           </div>
         </div>
 
-        {/* 4. FREQUENTLY ASKED QUESTIONS (FAQ) */}
-        <FaqSection onOpenOfferModal={onOpenOfferModal} />
-
       </div>
 
       <style>{`
         .contact-page-wrapper {
           min-height: 100vh;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           padding-bottom: 80px;
           font-family: var(--font-sans);
           color: #0f172a;

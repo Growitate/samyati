@@ -316,7 +316,7 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
       <style>{`
         .destinations-section {
           position: relative;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           padding: 55px 0 65px;
           overflow: hidden;
         }

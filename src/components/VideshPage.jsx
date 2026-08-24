@@ -255,7 +255,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
       <style>{`
         .videsh-page-fixed {
           position: relative;
-          background-color: #fef9c3;
+          background-color: #f8fafc;
           min-height: 100vh;
           color: #0f172a;
           padding-bottom: 80px;
