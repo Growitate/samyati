@@ -376,7 +376,8 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         .desh-cards-section {
           position: relative;
           z-index: 10;
-          margin-top: -50px;
+          padding-top: 36px;
+          margin-top: 0;
         }
 
         .max-w-cards {
@@ -387,8 +388,8 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
 
         .card-row {
           display: grid;
-          gap: 20px;
-          margin-bottom: 20px;
+          gap: 24px;
+          margin-bottom: 24px;
         }
 
         .row-3 {

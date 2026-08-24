@@ -420,7 +420,8 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         .videsh-cards-section {
           position: relative;
           z-index: 10;
-          margin-top: -20px;
+          padding-top: 36px;
+          margin-top: 0;
         }
 
         .max-w-videsh {

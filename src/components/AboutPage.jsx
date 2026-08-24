@@ -543,7 +543,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
           border-bottom: 1px solid #e2e8f0;
           padding: 24px 0;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-          margin-top: -30px;
+          margin-top: 36px;
           position: relative;
           z-index: 20;
           border-radius: 16px;
