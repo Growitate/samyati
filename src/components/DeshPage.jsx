@@ -251,11 +251,11 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         /* HERO BANNER WITH CLEAN ARTWORK BACKGROUND */
         .desh-hero-banner {
           position: relative;
-          min-height: 500px;
+          min-height: auto;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
-          padding-bottom: 60px;
+          padding-bottom: 40px;
         }
 
         .hero-bg-img {
@@ -376,7 +376,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         .desh-cards-section {
           position: relative;
           z-index: 10;
-          padding-top: 36px;
+          padding-top: 48px;
           margin-top: 0;
         }
 

@@ -265,11 +265,11 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         /* HERO BANNER WITH VIDESH WORLD LANDMARKS BACKGROUND */
         .videsh-hero-banner {
           position: relative;
-          min-height: 480px;
+          min-height: auto;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
-          padding-bottom: 50px;
+          padding-bottom: 40px;
         }
 
         .videsh-hero-bg-img {
@@ -420,7 +420,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         .videsh-cards-section {
           position: relative;
           z-index: 10;
-          padding-top: 36px;
+          padding-top: 48px;
           margin-top: 0;
         }
 
