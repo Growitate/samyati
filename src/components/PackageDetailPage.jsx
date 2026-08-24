@@ -706,6 +706,10 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
             {/* A Beautiful Trail Across Destination (Itinerary Section Matching Image 2) */}
             <div id="itinerary-section" className="detail-card-box">
+              <div className="itinerary-pill-badge mb-3">
+                <span>Itinerary</span>
+              </div>
+
               <div className="trail-header-row flex items-center justify-between w-full mb-4">
                 <h2 className="trail-section-title text-2xl font-bold text-slate-900 m-0 p-0">
                   A Beautiful Trail Across {packageData.destinationName || 'Kashmir'}
@@ -2047,6 +2051,20 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           padding: 4px 12px;
           border-radius: 9999px;
           margin-bottom: 8px;
+        }
+
+        .itinerary-pill-badge {
+          display: inline-flex;
+          align-items: center;
+          background: #f1f5f9;
+          color: #0f172a;
+          font-size: 13px;
+          font-weight: 700;
+          padding: 5px 16px;
+          border-radius: 9999px;
+          border: 1px solid #e2e8f0;
+          letter-spacing: -0.01em;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
         }
 
         .package-faq-accordion-list {
