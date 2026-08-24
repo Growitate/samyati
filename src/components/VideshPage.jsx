@@ -284,7 +284,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         .videsh-hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.45) 60%, rgba(248, 250, 252, 0.95) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.25) 100%);
           pointer-events: none;
         }
 

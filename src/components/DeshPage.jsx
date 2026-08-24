@@ -270,7 +270,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         .hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(246, 242, 234, 0.95) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.25) 100%);
           pointer-events: none;
         }
 
