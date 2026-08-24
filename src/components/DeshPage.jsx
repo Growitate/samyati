@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Bell, ArrowLeft, X, Clock, Star, ArrowUpRight } from 'lucide-react';
+import { Menu, Bell, ArrowLeft, X, Clock, Star, ArrowUpRight, Plane } from 'lucide-react';
 import { PACKAGES } from '../data/travelData';
 
 // 8 Featured Desh Destinations matching reference layout
@@ -44,13 +44,13 @@ const DESH_DESTINATIONS = [
     id: 'madhya-pradesh',
     name: 'Madhya Pradesh',
     image: 'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1000&q=85',
-    tagline: 'The Heart of Incredible India'
+    tagline: 'Heart of Incredible India'
   },
   {
     id: 'udaipur',
     name: 'Udaipur',
     image: 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85',
-    tagline: 'City of Lakes & Venetian Palaces'
+    tagline: 'City of Lakes & Palaces'
   }
 ];
 
@@ -111,25 +111,51 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
       <section className="desh-cards-section">
         <div className="container max-w-cards">
           
+          {/* Section Divider Header with Flight Trace */}
+          <div className="desh-section-header">
+            <div className="header-title-flex">
+              <span className="star-accent">✦</span>
+              <h2 className="desh-section-heading">TOP DESTINATIONS</h2>
+              <span className="star-accent">✦</span>
+            </div>
+
+            {/* Flight Path Graphic */}
+            <div className="flight-path-decoration">
+              <svg viewBox="0 0 120 30" className="flight-line-svg">
+                <path d="M5,25 Q60,-5 115,20" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+              </svg>
+              <Plane size={14} className="flight-plane-icon" />
+            </div>
+          </div>
+
           {/* Row 1: 3 Columns (Agra, Kerala, Varanasi) */}
           <div className="card-row row-3">
             {DESH_DESTINATIONS.slice(0, 3).map((item) => (
               <div 
                 key={item.id} 
-                className="mental-dest-card"
+                className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
-                <img 
-                  src={item.image} 
-                  alt={item.name} 
-                  className="dest-photo" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
-                  }}
-                />
-                <div className="dest-gradient-mask" />
-                <span className="dest-serif-title">{item.name}</span>
+                <div className="card-photo-wrapper">
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="dest-photo" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
+                </div>
+                <div className="desh-card-footer">
+                  <div>
+                    <h3 className="desh-card-title">{item.name}</h3>
+                    <p className="desh-card-tagline">{item.tagline}</p>
+                  </div>
+                  <span className="btn-card-explore" title="Explore Packages">
+                    <ArrowUpRight size={16} />
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -139,20 +165,29 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
             {DESH_DESTINATIONS.slice(3, 5).map((item) => (
               <div 
                 key={item.id} 
-                className="mental-dest-card"
+                className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
-                <img 
-                  src={item.image} 
-                  alt={item.name} 
-                  className="dest-photo" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
-                  }}
-                />
-                <div className="dest-gradient-mask" />
-                <span className="dest-serif-title">{item.name}</span>
+                <div className="card-photo-wrapper photo-wide">
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="dest-photo" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
+                </div>
+                <div className="desh-card-footer">
+                  <div>
+                    <h3 className="desh-card-title">{item.name}</h3>
+                    <p className="desh-card-tagline">{item.tagline}</p>
+                  </div>
+                  <span className="btn-card-explore" title="Explore Packages">
+                    <ArrowUpRight size={16} />
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -162,20 +197,29 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
             {DESH_DESTINATIONS.slice(5, 7).map((item) => (
               <div 
                 key={item.id} 
-                className="mental-dest-card"
+                className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
-                <img 
-                  src={item.image} 
-                  alt={item.name} 
-                  className="dest-photo" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85';
-                  }}
-                />
-                <div className="dest-gradient-mask" />
-                <span className="dest-serif-title">{item.name}</span>
+                <div className="card-photo-wrapper photo-wide">
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="dest-photo" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85';
+                    }}
+                  />
+                </div>
+                <div className="desh-card-footer">
+                  <div>
+                    <h3 className="desh-card-title">{item.name}</h3>
+                    <p className="desh-card-tagline">{item.tagline}</p>
+                  </div>
+                  <span className="btn-card-explore" title="Explore Packages">
+                    <ArrowUpRight size={16} />
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -183,20 +227,29 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           {/* Row 4: Single Centered Card (Udaipur) */}
           <div className="card-row row-center">
             <div 
-              className="mental-dest-card card-wide-center"
+              className="desh-dest-card card-wide-center"
               onClick={() => handleCardClick(DESH_DESTINATIONS[7])}
             >
-              <img 
-                src={DESH_DESTINATIONS[7].image} 
-                alt={DESH_DESTINATIONS[7].name} 
-                className="dest-photo" 
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85';
-                }}
-              />
-              <div className="dest-gradient-mask" />
-              <span className="dest-serif-title">{DESH_DESTINATIONS[7].name}</span>
+              <div className="card-photo-wrapper photo-wide">
+                <img 
+                  src={DESH_DESTINATIONS[7].image} 
+                  alt={DESH_DESTINATIONS[7].name} 
+                  className="dest-photo" 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85';
+                  }}
+                />
+              </div>
+              <div className="desh-card-footer">
+                <div>
+                  <h3 className="desh-card-title">{DESH_DESTINATIONS[7].name}</h3>
+                  <p className="desh-card-tagline">{DESH_DESTINATIONS[7].tagline}</p>
+                </div>
+                <span className="btn-card-explore" title="Explore Packages">
+                  <ArrowUpRight size={16} />
+                </span>
+              </div>
             </div>
           </div>
 
@@ -238,6 +291,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         </div>
       )}
 
+      {/* Styled JSX */}
       <style>{`
         .desh-page-fixed {
           position: relative;
@@ -280,44 +334,6 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           max-width: 980px;
           margin: 0 auto;
           padding: 0 20px;
-        }
-
-        /* Nav Bar */
-        .desh-nav-bar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 24px 0 10px;
-        }
-
-        .nav-icon-btn {
-          background: rgba(255, 255, 255, 0.75);
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(180, 83, 9, 0.2);
-          color: #2d2319;
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-
-        .nav-icon-btn:hover {
-          background: #ffffff;
-          transform: scale(1.05);
-        }
-
-        .lotus-emblem-center {
-          width: 44px;
-          height: 36px;
-        }
-
-        .lotus-svg {
-          width: 100%;
-          height: 100%;
         }
 
         /* Hero Title */
@@ -367,10 +383,6 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           margin: 12px auto 0;
           line-height: 1.55;
         }
-          max-width: 520px;
-          margin: 14px auto 0;
-          line-height: 1.6;
-        }
 
         /* CARDS SECTION */
         .desh-cards-section {
@@ -386,10 +398,53 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           padding: 0 20px;
         }
 
+        /* Section Header Divider */
+        .desh-section-header {
+          position: relative;
+          text-align: center;
+          margin-bottom: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .header-title-flex {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .desh-section-heading {
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.25em;
+          color: #475569;
+          text-transform: uppercase;
+        }
+
+        .flight-path-decoration {
+          position: absolute;
+          right: 40px;
+          top: -10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .flight-line-svg {
+          width: 80px;
+          height: 24px;
+        }
+
+        .flight-plane-icon {
+          color: #947249;
+          transform: rotate(15deg);
+          margin-left: -6px;
+        }
+
         .card-row {
           display: grid;
-          gap: 24px;
-          margin-bottom: 24px;
+          gap: 20px;
+          margin-bottom: 20px;
         }
 
         .row-3 {
@@ -409,20 +464,32 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           width: 55%;
         }
 
-        /* Destination Card */
-        .mental-dest-card {
-          position: relative;
-          height: 250px;
-          border-radius: 18px;
+        /* Destination Card matching Videsh layout */
+        .desh-dest-card {
+          background: #ffffff;
+          border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.05);
           cursor: pointer;
           transition: transform 0.35s ease, box-shadow 0.35s ease;
+          border: 1px solid rgba(226, 232, 240, 0.8);
+          display: flex;
+          flex-direction: column;
         }
 
-        .mental-dest-card:hover {
+        .desh-dest-card:hover {
           transform: translateY(-6px);
-          box-shadow: 0 18px 40px rgba(45, 35, 25, 0.2);
+          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+        }
+
+        .card-photo-wrapper {
+          width: 100%;
+          height: 210px;
+          overflow: hidden;
+        }
+
+        .photo-wide {
+          height: 240px;
         }
 
         .dest-photo {
@@ -432,35 +499,61 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           transition: transform 0.5s ease;
         }
 
-        .mental-dest-card:hover .dest-photo {
+        .desh-dest-card:hover .dest-photo {
           transform: scale(1.06);
         }
 
-        .dest-gradient-mask {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%);
+        .desh-card-footer {
+          padding: 16px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #ffffff;
+          gap: 12px;
         }
 
-        .dest-serif-title {
-          position: absolute;
-          bottom: 18px;
-          left: 20px;
-          color: #ffffff;
-          font-family: var(--font-serif-italic);
-          font-size: 26px;
+        .desh-card-title {
+          font-size: 17px;
+          font-weight: 800;
+          color: #0f172a;
+          margin-bottom: 2px;
+          letter-spacing: -0.01em;
+        }
+
+        .desh-card-tagline {
+          font-size: 12px;
+          color: #64748b;
           font-weight: 500;
-          z-index: 10;
-          text-shadow: 0 2px 6px rgba(0,0,0,0.4);
         }
 
-        /* Drawer Modal */
+        .btn-card-explore {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          color: #0f172a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: all 0.25s ease;
+        }
+
+        .desh-dest-card:hover .btn-card-explore {
+          background: #0f172a;
+          color: #ffffff;
+          border-color: #0f172a;
+          transform: rotate(45deg);
+        }
+
+        /* Drawer Backdrop Modal */
         .dest-drawer-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.65);
+          background: rgba(15, 23, 42, 0.6);
           backdrop-filter: blur(4px);
-          z-index: 200;
+          z-index: 1000;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -519,18 +612,18 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
 
         .drawer-item-card {
           background: #fdfbf7;
+          border: 1px solid #efe8da;
           border-radius: 16px;
           overflow: hidden;
-          border: 1px solid #eae5db;
-          cursor: pointer;
           display: flex;
           flex-direction: column;
-          transition: transform 0.2s;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .drawer-item-card:hover {
           transform: translateY(-3px);
-          border-color: #b45309;
+          box-shadow: 0 10px 24px rgba(45,35,25,0.1);
         }
 
         .drawer-item-img {
@@ -540,7 +633,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
         }
 
         .drawer-item-body {
-          padding: 14px;
+          padding: 16px;
           display: flex;
           flex-direction: column;
           flex: 1;
@@ -550,67 +643,50 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
           font-size: 11px;
           font-weight: 700;
           color: #b45309;
+          margin-bottom: 4px;
         }
 
         .drawer-item-name {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 800;
           color: #2d2319;
-          margin-top: 2px;
+          margin-bottom: 6px;
         }
 
         .drawer-item-desc {
           font-size: 12px;
-          color: #786958;
-          margin-top: 4px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+          color: #786c5e;
+          line-height: 1.4;
+          margin-bottom: 14px;
+          flex: 1;
         }
 
         .drawer-item-footer {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-top: auto;
-          padding-top: 10px;
+          border-top: 1px solid #efe8da;
+          padding-top: 12px;
         }
 
         .drawer-item-price {
           font-size: 15px;
-          color: #b45309;
+          color: #1e293b;
         }
 
         .btn-view-link {
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 700;
-          color: #2d2319;
+          color: #b45309;
         }
 
         @media (max-width: 768px) {
-          .desh-hero-banner {
-            min-height: 380px;
-            padding-bottom: 30px;
+          .row-3, .row-2, .drawer-grid {
+            grid-template-columns: 1fr;
           }
-          .hero-main-title {
-            font-size: clamp(52px, 14vw, 80px);
-            margin-bottom: 6px;
+          .card-wide-center {
+            width: 100%;
           }
-          .hero-sub-paragraph {
-            font-size: 13.5px;
-            padding: 0 10px;
-          }
-          .desh-cards-section {
-            margin-top: 10px;
-          }
-          .row-3, .row-2 { grid-template-columns: 1fr; gap: 16px; }
-          .mental-dest-card { height: 230px; }
-          .card-wide-center { width: 100%; }
-          .drawer-grid { grid-template-columns: 1fr; gap: 12px; }
-          .dest-drawer-backdrop { padding: 12px; }
-          .dest-drawer-modal { padding: 20px 16px; border-radius: 20px; max-height: 90vh; }
-          .drawer-heading { font-size: 20px; }
         }
       `}</style>
     </div>
