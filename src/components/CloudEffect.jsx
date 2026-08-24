@@ -33,7 +33,7 @@ export function HeroCloudEffect() {
              C1140,80 1220,50 1300,75 
              C1370,100 1410,130 1440,120 
              L1440,220 Z" 
-          fill="#ffffff" 
+          fill="#fef9c3" 
           fillOpacity="0.65"
         />
 
@@ -50,7 +50,7 @@ export function HeroCloudEffect() {
              C1230,110 1290,75 1350,95 
              C1400,115 1425,140 1440,150 
              L1440,220 Z" 
-          fill="#ffffff" 
+          fill="#fef9c3" 
         />
       </svg>
 
@@ -164,7 +164,7 @@ export function FooterCloudEffect() {
              C1260,100 1330,70 1400,90 
              C1425,100 1435,110 1440,115 
              L1440,0 Z" 
-          fill="#ffffff" 
+          fill="#fef9c3" 
         />
       </svg>
 
@@ -172,7 +172,7 @@ export function FooterCloudEffect() {
         .footer-cloud-top {
           top: 0;
           bottom: auto;
-          height: 160px;
+          height: 60px;
         }
 
         .cloud-svg-top-mask {
@@ -180,29 +180,29 @@ export function FooterCloudEffect() {
           top: 0;
           left: 0;
           width: 100%;
-          height: 140px;
+          height: 50px;
         }
 
         .footer-puff-left {
-          width: 440px;
-          height: 200px;
-          top: -50px;
-          left: -60px;
+          width: 300px;
+          height: 100px;
+          top: -30px;
+          left: -40px;
         }
 
         .footer-puff-center {
-          width: 500px;
-          height: 180px;
-          top: -40px;
+          width: 350px;
+          height: 90px;
+          top: -25px;
           left: 40%;
           transform: translateX(-50%);
         }
 
         .footer-puff-right {
-          width: 460px;
-          height: 220px;
-          top: -50px;
-          right: -70px;
+          width: 320px;
+          height: 110px;
+          top: -30px;
+          right: -40px;
         }
       `}</style>
     </div>

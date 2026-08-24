@@ -1,160 +1,194 @@
 import React, { useState } from 'react';
-import { Search, Settings, Compass, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import { HeroCloudEffect } from './CloudEffect';
+import { Compass, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
-    onOpenOfferModal(searchQuery);
+    onOpenOfferModal(searchQuery || 'Custom Trip');
   };
 
   return (
-    <section className="hero-container">
-      {/* Dark Overlay Gradient */}
-      <div className="hero-overlay" />
+    <section className="hero-combined-section">
+      {/* Translucent Soft Vignette Overlay */}
+      <div className="hero-combined-overlay" />
 
-      {/* Main Content */}
-      <div className="container hero-content">
-        {/* Headline H1 */}
-        <h1 className="hero-headline">
-          Rediscover Yourself<br />
-          With Every <span className="accent-serif">Journey</span>
-        </h1>
+      <div className="container hero-combined-container">
+        <div className="hero-combined-split">
+          {/* Left Column: Professionally Aligned Headline, Subhead, Search & Badges */}
+          <div className="hero-combined-left">
+            {/* Headline H1 */}
+            <h1 className="hero-combined-title">
+              <span className="title-white-bold">Rediscover Yourself</span> <br />
+              <span className="title-white-bold">With Every </span>
+              <span className="title-teal-italic">Journey</span>
+            </h1>
 
-        {/* Subhead Paragraph */}
-        <p className="hero-subhead">
-          plan domestic & international trips with handpicked stays, smooth transfers, sightseeing, and complete travel support from consultation to return.
-        </p>
+            {/* Subhead Paragraph */}
+            <p className="hero-combined-subhead">
+              Handcrafted domestic & international journeys with luxury stays, smooth transfers, and 24/7 dedicated support.
+            </p>
 
-        {/* Search Bar Pill & CTA */}
-        <form onSubmit={handleSearch} className="hero-search-form">
-          <div className="hero-search-pill">
-            <div className="search-input-group">
-              <Compass size={18} className="search-icon-left" />
-              <input
-                type="text"
-                placeholder="Where do you want to travel? (e.g. Kashmir, Bali, Dubai, Maldives...)"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input"
-              />
+            {/* Quick Search Bar Pill */}
+            <form onSubmit={handleSearch} className="hero-combined-search-form">
+              <div className="hero-combined-search-pill">
+                <div className="search-input-wrapper">
+                  <Compass size={18} className="search-icon-left" />
+                  <input
+                    type="text"
+                    placeholder="Search e.g. Kashmir, Bali, Dubai..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input-field"
+                  />
+                </div>
+
+                <button type="submit" className="search-submit-btn-dark">
+                  <span>Get Your Offer</span>
+                  <ArrowRight size={15} />
+                </button>
+              </div>
+            </form>
+
+            {/* Trust Badges Bar */}
+            <div className="hero-combined-trust-bar">
+              <div className="trust-item">
+                <ShieldCheck size={14} className="text-emerald-400" />
+                <span>100% Customized Trips</span>
+              </div>
+              <div className="trust-item">
+                <Sparkles size={14} className="text-amber-300" />
+                <span>14 Handpicked Destinations</span>
+              </div>
+              <div className="trust-item">
+                <ShieldCheck size={14} className="text-emerald-400" />
+                <span>Dedicated Human Support</span>
+              </div>
             </div>
+          </div>
 
-            <button type="submit" className="search-submit-btn">
-              <span>Get Your Offer</span>
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </form>
 
-        {/* Trust Badges Bar */}
-        <div className="hero-trust-bar">
-          <div className="trust-item">
-            <ShieldCheck size={14} className="text-emerald-400" />
-            <span>100% Customized Trips</span>
-          </div>
-          <div className="trust-item">
-            <Sparkles size={14} className="text-amber-300" />
-            <span>14 Handpicked Destinations</span>
-          </div>
-          <div className="trust-item">
-            <ShieldCheck size={14} className="text-emerald-400" />
-            <span>Dedicated Human Support</span>
-          </div>
         </div>
       </div>
 
-      {/* Volumetric Fluffy Cloud Effect */}
-      <HeroCloudEffect />
-
       <style>{`
-        .hero-container {
+        .hero-combined-section {
           position: relative;
-          min-height: 740px;
-          background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85');
+          min-height: 720px;
+          background-image: url('/hero-bright-mountain.jpg');
           background-size: cover;
-          background-position: center bottom;
+          background-position: center center;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          padding-top: 130px;
-          padding-bottom: 140px;
+          padding-top: 110px;
+          padding-bottom: 120px;
           overflow: hidden;
         }
 
-        .hero-overlay {
+        .hero-combined-section::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 80px;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 60%, #ffffff 100%);
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .hero-combined-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            180deg, 
-            rgba(15, 20, 16, 0.8) 0%, 
-            rgba(15, 20, 16, 0.5) 60%, 
-            rgba(15, 20, 16, 0.25) 100%
-          );
+          background: 
+            radial-gradient(ellipse at 35% 35%, rgba(254, 243, 199, 0.22) 0%, rgba(0, 0, 0, 0) 70%),
+            linear-gradient(90deg, rgba(16, 24, 34, 0.82) 0%, rgba(16, 24, 34, 0.5) 52%, rgba(0, 0, 0, 0.05) 100%),
+            linear-gradient(180deg, rgba(16, 24, 34, 0.28) 0%, rgba(0, 0, 0, 0) 50%, rgba(16, 24, 34, 0.25) 100%);
           z-index: 1;
         }
 
-        .hero-content {
+        .hero-combined-container {
           position: relative;
-          z-index: 10;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+          z-index: 20;
+          width: 100%;
         }
 
-        .hero-eyebrow-wrapper {
+        .hero-combined-split {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          position: relative;
+          min-height: 490px;
+          transform: translateY(-35px);
+        }
+
+        .hero-combined-left {
+          max-width: 720px;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-combined-title {
+          font-size: clamp(38px, 5.4vw, 70px);
+          line-height: 1.1;
+          letter-spacing: -0.02em;
           margin-bottom: 24px;
         }
 
-        .hero-headline {
+        .title-white-bold {
           color: #ffffff;
-          font-size: clamp(38px, 5.8vw, 74px);
+          font-family: var(--font-sans);
           font-weight: 800;
-          line-height: 1.08;
-          letter-spacing: -0.02em;
-          margin-bottom: 20px;
-          text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+          text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
         }
 
-        .hero-subhead {
+        .title-teal-italic {
+          color: #2dd4bf;
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 600;
+          text-shadow: 0 0 24px rgba(45, 212, 191, 0.45), 0 4px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-combined-subhead {
           color: rgba(255, 255, 255, 0.92);
-          font-size: clamp(15px, 1.8vw, 18px);
+          font-size: clamp(15px, 1.7vw, 18px);
           font-weight: 400;
-          max-width: 600px;
-          line-height: 1.6;
-          margin-bottom: 36px;
+          line-height: 1.65;
+          max-width: 540px;
+          margin-bottom: 30px;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
         }
 
         /* Search Form Pill */
-        .hero-search-form {
+        .hero-combined-search-form {
           width: 100%;
-          max-width: 620px;
-          margin-bottom: 24px;
+          max-width: 580px;
+          margin-bottom: 26px;
         }
 
-        .hero-search-pill {
+        .hero-combined-search-pill {
           display: flex;
           align-items: center;
           justify-content: space-between;
           background: #ffffff;
-          border-radius: var(--radius-pill);
-          padding: 6px 8px 6px 20px;
-          box-shadow: 0 14px 40px rgba(0,0,0,0.3);
-          transition: var(--transition-smooth);
+          border-radius: 9999px;
+          padding: 5px 6px 5px 18px;
+          box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+          transition: all 0.25s ease;
         }
 
-        .hero-search-pill:focus-within {
-          box-shadow: 0 16px 44px rgba(0,0,0,0.4), 0 0 0 3px rgba(255,255,255,0.4);
+        .hero-combined-search-pill:focus-within {
+          box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(45, 212, 191, 0.5);
         }
 
-        .search-input-group {
+        .search-input-wrapper {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
           flex: 1;
         }
 
@@ -162,45 +196,46 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           color: #9ca3af;
         }
 
-        .search-input {
+        .search-input-field {
           border: none;
           outline: none;
           width: 100%;
-          font-size: 15px;
+          font-size: 14px;
           font-family: var(--font-sans);
-          color: var(--text-dark);
+          color: #141613;
           background: transparent;
         }
 
-        .search-submit-btn {
+        .search-submit-btn-dark {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
-          padding: 12px 24px;
-          border-radius: var(--radius-pill);
-          background-color: var(--text-dark);
+          gap: 6px;
+          padding: 11px 22px;
+          border-radius: 9999px;
+          background-color: #141613;
           color: #ffffff;
           border: none;
-          font-size: 14px;
+          font-size: 13.5px;
           font-weight: 700;
           cursor: pointer;
-          transition: var(--transition-smooth);
+          transition: all 0.25s ease;
           white-space: nowrap;
         }
 
-        .search-submit-btn:hover {
+        .search-submit-btn-dark:hover {
           background-color: #272a25;
           transform: translateY(-1px);
         }
 
         /* Trust Bar */
-        .hero-trust-bar {
+        .hero-combined-trust-bar {
           display: flex;
           align-items: center;
-          gap: 24px;
-          color: rgba(255,255,255,0.85);
-          font-size: 12px;
+          gap: 20px;
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 12.5px;
           font-weight: 600;
+          flex-wrap: wrap;
         }
 
         .trust-item {
@@ -209,116 +244,110 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           gap: 6px;
         }
 
-        /* Vehicle Graphic */
-        .hero-vehicle-wrapper {
-          position: absolute;
-          bottom: 25px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 5;
-          width: 320px;
-          max-width: 80vw;
-          pointer-events: none;
+        /* Right Callout Feature */
+        .hero-combined-right-callout {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding-bottom: 45px;
         }
 
-        .hero-vehicle-img {
-          width: 100%;
-          height: 140px;
-          object-fit: cover;
-          border-radius: 20px 20px 0 0;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-          mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+        .callout-eyebrow-gold {
+          color: #f59e0b;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.4);
         }
 
-        /* Cloud Transition Band */
-        .cloud-transition-band {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 4;
-          line-height: 0;
-          pointer-events: none;
+        .callout-gold-bar-box {
+          border-left: 2px solid #f59e0b;
+          padding-left: 16px;
         }
 
-        .cloud-svg {
-          width: 100%;
-          height: 110px;
+        .callout-title-text {
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(24px, 2.8vw, 36px);
+          font-weight: 500;
+          color: #ffffff;
+          line-height: 1.2;
+          letter-spacing: -0.01em;
+          text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 990px) {
+          .hero-combined-split {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 32px;
+            min-height: auto;
+            transform: none;
+          }
+          .hero-combined-right-callout {
+            align-self: flex-start;
+            padding-bottom: 0;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+          }
         }
 
         @media (max-width: 768px) {
-          .hero-container {
-            min-height: 600px;
-            padding-top: 100px;
-            padding-bottom: 90px;
+          .hero-combined-section {
+            min-height: 100vh;
+            padding-top: 140px;
+            padding-bottom: 200px;
           }
-          .hero-headline {
-            font-size: clamp(28px, 7.5vw, 42px);
-            margin-bottom: 14px;
-          }
-          .hero-subhead {
-            font-size: 13.5px;
-            padding: 0 6px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-          }
-          .hero-search-form {
-            padding: 0;
+          .hero-combined-title {
+            font-size: clamp(32px, 8.2vw, 44px);
             margin-bottom: 16px;
+            line-height: 1.12;
           }
-          .hero-search-pill {
-            flex-direction: column;
-            padding: 8px;
-            border-radius: 18px;
+          .hero-combined-subhead {
+            font-size: 14.5px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+          }
+          .hero-combined-search-form {
+            max-width: 100%;
+            margin-bottom: 22px;
+          }
+          .hero-combined-search-pill {
+            flex-direction: row;
+            padding: 4px 5px 4px 14px;
+            border-radius: 9999px;
+            gap: 6px;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          }
+          .search-input-wrapper {
+            width: auto;
+            flex: 1;
+            padding: 4px 0;
             gap: 8px;
           }
-          .search-input-group {
-            width: 100%;
-            padding: 6px 8px;
+          .search-icon-left {
+            width: 16px;
+            height: 16px;
           }
-          .search-input {
-            font-size: 13px;
+          .search-input-field {
+            font-size: 12.5px;
           }
-          .search-submit-btn {
-            width: 100%;
-            justify-content: center;
-            padding: 11px 18px;
-            border-radius: 12px;
-            font-size: 13.5px;
-          }
-          .hero-trust-bar {
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px 8px;
-            font-size: 11px;
-            padding: 0 4px;
-            position: relative;
-            z-index: 10;
-            margin-top: 8px;
-          }
-          .trust-item {
-            background: rgba(15, 20, 16, 0.85);
-            backdrop-filter: blur(10px);
-            color: #ffffff;
-            padding: 5px 12px;
+          .search-submit-btn-dark {
+            width: auto;
+            padding: 9px 15px;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            font-size: 12.5px;
+            font-weight: 800;
+            background: #0f172a;
+            white-space: nowrap;
           }
-        }
-
-        @media (max-width: 480px) {
-          .hero-container {
-            padding-top: 90px;
-            padding-bottom: 85px;
-          }
-          .hero-headline {
-            font-size: clamp(26px, 7.5vw, 34px);
-          }
-          .trust-item {
-            font-size: 10.5px;
-            padding: 4px 10px;
+          .hero-combined-trust-bar {
+            gap: 10px 16px;
+            font-size: 12px;
+            margin-bottom: 24px;
           }
         }
       `}</style>

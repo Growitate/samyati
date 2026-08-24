@@ -160,7 +160,7 @@ export const PACKAGES = [
     originalPrice: '₹24,000',
     rating: '4.9',
     reviewsCount: 142,
-    image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
     description: 'Experience Dal Lake luxury houseboats, Mughal gardens of Srinagar, and snow slopes of Gulmarg with private driver support.',
     itinerary: [
       { day: 1, title: 'Arrival in Srinagar & Dal Lake Shikara Ride', details: 'Welcome at Srinagar Airport. Transfer to luxury Dal Lake houseboat. Evening romantic Shikara ride during golden hour.' },
@@ -725,24 +725,77 @@ export const PACKAGES = [
     destinationId: 'ladakh',
     destinationName: 'Ladakh',
     category: 'Domestic',
-    title: 'Pangong Lake, Khardung La & Nubra Camel Expedition',
+    title: 'Ladakh High-Pass Escape: A Group Journey Beyond the Clouds',
     duration: '6D / 5N',
-    price: '₹21,500',
-    originalPrice: '₹28,000',
+    price: '₹12,999',
+    originalPrice: '₹18,999',
     rating: '4.95',
-    reviewsCount: 180,
-    image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80',
-    description: 'Cross Khardung La pass (17,982 ft), sleep in Nubra sand dunes, marvel at 3-Idiots Pangong Tso blue lake, and Magnetic Hill.',
-    itinerary: [
-      { day: 1, title: 'Leh Airport Arrival & Acclimatization Day', details: 'Check-in hotel. Complete rest for high-altitude acclimatization.' },
-      { day: 2, title: 'Leh Local Sightseeing & Magnetic Hill', details: 'Hall of Fame, Magnetic Hill, Confluence of Indus & Zanskar rivers, Shanti Stupa.' },
-      { day: 3, title: 'Leh to Nubra Valley via Khardung La', details: 'Cross Khardung La pass. Visit Diskit Monastery & double-hump camel ride at Hunder sand dunes.' },
-      { day: 4, title: 'Nubra Valley to Pangong Lake via Shyok', details: 'Drive along Shyok River to Pangong Tso. Check-in lakeside luxury camp.' },
-      { day: 5, title: 'Pangong Tso to Leh via Chang La Pass', details: 'Sunrise at Pangong Lake. Cross Chang La (17,590 ft) & visit Thiksey Monastery.' },
-      { day: 6, title: 'Departure from Leh Airport', details: 'Early morning transfer to Leh airport.' }
+    reviewsCount: 240,
+    image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=800&q=80'
     ],
-    inclusions: ['5 Nights Hotel & Lakeside Tented Camp', 'Breakfast & Dinner', 'Inner Line Permits & Wildlife Fees', 'Oxygen Cylinder in SUV', 'Private Non-AC SUV (Innova/Xylo)'],
-    exclusions: ['Airfare', 'Camel ride charges']
+    description: 'Traverse dramatic mountain passes, peaceful monasteries, and azure high-altitude lakes. From Leh to Nubra Valley and Pangong Tso, experience the raw beauty of Ladakh with handpicked stays and expert local guides.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Leh & Acclimatization',
+        description: 'Arrive at Kushok Bakula Rimpoche Airport, Leh (3,500m). Meet our representative and transfer to your hotel. Rest for the entire day to acclimate to high altitude. Evening walk around Leh Local Market.',
+        highlights: ['Airport Pickup', 'High-Altitude Acclimatization', 'Evening Leh Market Walk']
+      },
+      {
+        day: 2,
+        title: 'Leh Local Sightseeing & Hall of Fame',
+        description: 'Visit Shey Palace, Thiksey Monastery, Hemis Gompa, and the Hall of Fame war museum. Experience sunset over Shanti Stupa with panoramic views of Leh Valley.',
+        highlights: ['Thiksey Monastery', 'Hemis Gompa', 'Hall of Fame', 'Shanti Stupa Sunset']
+      },
+      {
+        day: 3,
+        title: 'Leh to Nubra Valley via Khardung La Pass (5,359m)',
+        description: 'Drive over Khardung La, one of the world\'s highest motorable roads. Descend into Nubra Valley, visit Diskit Monastery, and enjoy double-hump Bactrian camel rides at Hunder Sand Dunes.',
+        highlights: ['Khardung La Pass (5,359m)', 'Diskit Monastery', 'Hunder Bactrian Camel Safari']
+      },
+      {
+        day: 4,
+        title: 'Nubra Valley to Pangong Tso Lake via Shyok River',
+        description: 'Drive along the scenic Shyok River to Pangong Tso (4,250m). Check into luxury lakeside glamping tents. Watch the lake change shades of blue as the sun sets.',
+        highlights: ['Shyok River Drive', 'Pangong Tso Glamping', 'Sunset Lake Views']
+      },
+      {
+        day: 5,
+        title: 'Pangong Tso to Leh via Chang La Pass (5,360m)',
+        description: 'Witness a spectacular sunrise over Pangong Lake. Drive back to Leh via Chang La Pass. Visit Rancho\'s School (Druk White Lotus) en route. Evening free for shopping.',
+        highlights: ['Pangong Sunrise', 'Chang La Pass Crossing', 'Rancho\'s School Visit']
+      },
+      {
+        day: 6,
+        title: 'Breakfast & Departure Transfer from Leh',
+        description: 'Savor breakfast at hotel, check out, and transfer to Leh Airport with unforgettable high-pass memories.',
+        highlights: ['Hotel Buffet Breakfast', 'Leh Airport Departure Transfer']
+      }
+    ],
+    inclusions: [
+      'Accommodation in 4★ Leh hotels & luxury glamping tents in Nubra & Pangong',
+      'Daily buffet breakfast & chef\'s special dinner at all stays',
+      'Private non-AC vehicle (Innova / Xylo / Tempo Traveler) for all transfers & sightseeing',
+      'Inner Line Permits & Ladakh Environment Protection Fee',
+      'Airport pickup and drop transfers in Leh',
+      'Double-hump Bactrian camel ride voucher at Hunder Sand Dunes',
+      'Emergency oxygen cylinder in cab for high altitude safety',
+      'All driver allowances, toll, parking, and fuel charges',
+      '24/7 dedicated Samyati ground team support in Leh'
+    ],
+    exclusions: [
+      'Airfare to and from Leh',
+      'Monument & monastery entry tickets',
+      'Personal expenses, laundry, driver tips, and beverages',
+      'Monastery festival entry permits or camera permits',
+      'Travel insurance & emergency medical evacuation expenses',
+      'Unforeseen road blockages, landslide, or weather delay costs'
+    ]
   },
   {
     id: 'lad-2',

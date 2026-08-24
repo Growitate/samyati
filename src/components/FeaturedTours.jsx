@@ -93,113 +93,113 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
                 ✈️ International
               </button>
             </div>
-
-            {/* Manual Navigation Arrow Buttons */}
-            <div className="carousel-arrows-group">
-              <button
-                className={`carousel-arrow-btn ${!canScrollLeft ? 'disabled' : ''}`}
-                onClick={() => handleScroll('left')}
-                title="Scroll Left"
-                aria-label="Previous tours"
-                disabled={!canScrollLeft}
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <button
-                className={`carousel-arrow-btn ${!canScrollRight ? 'disabled' : ''}`}
-                onClick={() => handleScroll('right')}
-                title="Scroll Right"
-                aria-label="Next tours"
-                disabled={!canScrollRight}
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Manual Horizontal Scroll Carousel */}
-        <div 
-          className="manual-carousel-container" 
-          ref={scrollRef}
-          onScroll={updateScrollState}
-        >
-          <div className="manual-carousel-track">
-            {displayPackages.map((tour) => (
-              <div
-                key={tour.id}
-                className="tour-card"
-                onClick={() => onSelectPackage && onSelectPackage(tour)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onSelectPackage && onSelectPackage(tour);
-                  }
-                }}
-              >
-                {/* Photo Block with Tag */}
-                <div className="card-photo-wrapper">
-                  <img 
-                    src={tour.image} 
-                    alt={tour.title} 
-                    className="card-photo" 
-                    loading="lazy" 
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
-                    }}
-                  />
-                  <span className="category-tag-pill">{tour.destinationName}</span>
-                  <div className="rating-badge">
-                    <Star size={12} className="star-icon" />
-                    <span>{tour.rating} ({tour.reviewsCount})</span>
-                  </div>
-                </div>
+        {/* Carousel Container with Left & Right Side Arrows */}
+        <div className="featured-carousel-relative-wrapper">
+          <button
+            className={`featured-side-btn side-btn-left ${!canScrollLeft ? 'disabled' : ''}`}
+            onClick={() => handleScroll('left')}
+            title="Scroll Left"
+            aria-label="Previous tours"
+            disabled={!canScrollLeft}
+          >
+            <ChevronLeft size={20} />
+          </button>
 
-                {/* Light Gray Card Body */}
-                <div className="card-body">
-                  <h3 className="tour-card-title">{tour.title}</h3>
-                  <p className="tour-card-desc">{tour.description}</p>
-
-                  <div className="card-divider" />
-
-                  {/* Footer Row */}
-                  <div className="card-footer">
-                    <div className="price-block">
-                      <span className="price-label">Starting From</span>
-                      <div className="price-flex">
-                        <span className="price-val">{tour.price}</span>
-                        {tour.originalPrice && (
-                          <span className="price-orig">{tour.originalPrice}</span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="card-action-right">
-                      <div className="duration-badge">
-                        <Clock size={12} />
-                        <span>{tour.duration}</span>
-                      </div>
-
-                      <button 
-                        className="view-details-icon-btn" 
-                        title="View Day-by-Day Itinerary"
-                        aria-label={`View itinerary for ${tour.title}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectPackage && onSelectPackage(tour);
-                        }}
-                      >
-                        <Eye size={14} />
-                      </button>
+          <div 
+            className="manual-carousel-container" 
+            ref={scrollRef}
+            onScroll={updateScrollState}
+          >
+            <div className="manual-carousel-track">
+              {displayPackages.map((tour) => (
+                <div
+                  key={tour.id}
+                  className="tour-card"
+                  onClick={() => onSelectPackage && onSelectPackage(tour)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      if (onSelectPackage) onSelectPackage(tour);
+                    }
+                  }}
+                >
+                  {/* Photo Block with Tag */}
+                  <div className="card-photo-wrapper">
+                    <img 
+                      src={tour.image} 
+                      alt={tour.title} 
+                      className="card-photo" 
+                      loading="lazy" 
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80';
+                      }}
+                    />
+                    <span className="category-tag-pill">{tour.destinationName}</span>
+                    <div className="rating-badge">
+                      <Star size={12} className="star-icon" />
+                      <span>{tour.rating} ({tour.reviewsCount})</span>
                     </div>
                   </div>
+
+                  {/* Light Gray Card Body */}
+                  <div className="card-body">
+                    <h3 className="tour-card-title">{tour.title}</h3>
+                    <p className="tour-card-desc">{tour.description}</p>
+
+                    <div className="card-divider" />
+
+                    {/* Footer Row */}
+                    <div className="card-footer">
+                      <div className="price-block">
+                        <span className="price-label">Starting From</span>
+                        <div className="price-flex">
+                          <span className="price-val">{tour.price}</span>
+                          {tour.originalPrice && (
+                            <span className="price-orig">{tour.originalPrice}</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="card-action-right">
+                        <div className="duration-badge">
+                          <Clock size={12} />
+                          <span>{tour.duration}</span>
+                        </div>
+
+                        <button 
+                          className="view-details-icon-btn" 
+                          title="View Day-by-Day Itinerary"
+                          aria-label={`View itinerary for ${tour.title}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (onSelectPackage) onSelectPackage(tour);
+                          }}
+                        >
+                          <Eye size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          <button
+            className={`featured-side-btn side-btn-right ${!canScrollRight ? 'disabled' : ''}`}
+            onClick={() => handleScroll('right')}
+            title="Scroll Right"
+            aria-label="Next tours"
+            disabled={!canScrollRight}
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
 
         {/* Carousel Bottom Progress Indicator Bar */}
@@ -216,8 +216,57 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
       <style>{`
         .featured-section {
           padding: 90px 0;
-          background-color: #ffffff;
+          background-color: #fef9c3;
           overflow: hidden;
+        }
+
+        .featured-carousel-relative-wrapper {
+          position: relative;
+        }
+
+        .featured-side-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 25;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #ffffff;
+          color: var(--text-dark);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .featured-side-btn.side-btn-left {
+          left: -22px;
+        }
+
+        .featured-side-btn.side-btn-right {
+          right: -22px;
+        }
+
+        .featured-side-btn:hover:not(.disabled) {
+          background: var(--text-dark);
+          color: #ffffff;
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .featured-side-btn.disabled {
+          opacity: 0.25;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        @media (max-width: 1024px) {
+          .featured-side-btn.side-btn-left { left: 4px; }
+          .featured-side-btn.side-btn-right { right: 4px; }
         }
 
         .featured-header {

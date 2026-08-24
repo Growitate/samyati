@@ -55,8 +55,17 @@ const VIDESH_DESTINATIONS = [
   }
 ];
 
-export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }) {
+export default function VideshPage({ onBack, onSelectPackage, onSelectDestination, onOpenOfferModal }) {
   const [selectedDest, setSelectedDest] = useState(null);
+
+  const handleCardClick = (item) => {
+    const destObj = { ...item, category: 'International' };
+    if (onSelectDestination) {
+      onSelectDestination(destObj);
+    } else {
+      setSelectedDest(item);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,9 +84,17 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
 
   return (
     <div className="videsh-page-fixed">
-      {/* HERO BANNER WITH VIDESH WORLD LANDMARKS BACKGROUND */}
+      {/* HERO BANNER WITH FAMOUS EIFFEL TOWER VIDESH BACKGROUND */}
       <section className="videsh-hero-banner">
-        <img src="/videsh-bg.png" alt="Videsh World Landmarks Background" className="videsh-hero-bg-img" />
+        <img 
+          src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=85" 
+          alt="Famous Eiffel Tower Paris Landmark Banner" 
+          className="videsh-hero-bg-img" 
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=85';
+          }}
+        />
         <div className="videsh-hero-bg-overlay" />
 
         <div className="container relative-videsh-z">
@@ -128,7 +145,7 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
               <div 
                 key={item.id} 
                 className="videsh-dest-card"
-                onClick={() => setSelectedDest(item)}
+                onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper">
                   <img src={item.image} alt={item.name} className="videsh-card-photo" />
@@ -154,7 +171,7 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
               <div 
                 key={item.id} 
                 className="videsh-dest-card"
-                onClick={() => setSelectedDest(item)}
+                onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper">
                   <img src={item.image} alt={item.name} className="videsh-card-photo" />
@@ -178,7 +195,7 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
           <div className="videsh-card-row row-center">
             <div 
               className="videsh-dest-card card-wide-center"
-              onClick={() => setSelectedDest(VIDESH_DESTINATIONS[6])}
+              onClick={() => handleCardClick(VIDESH_DESTINATIONS[6])}
             >
               <div className="card-photo-wrapper photo-wide">
                 <img src={VIDESH_DESTINATIONS[6].image} alt={VIDESH_DESTINATIONS[6].name} className="videsh-card-photo" />
@@ -238,7 +255,7 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
       <style>{`
         .videsh-page-fixed {
           position: relative;
-          background-color: #f8fafc;
+          background-color: #fef9c3;
           min-height: 100vh;
           color: #0f172a;
           padding-bottom: 80px;
@@ -261,15 +278,13 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center top;
-          mask-image: linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.4) 82%, transparent 100%);
-          -webkit-mask-image: linear-gradient(180deg, #000 60%, rgba(0, 0, 0, 0.4) 82%, transparent 100%);
+          object-position: center 30%;
         }
 
         .videsh-hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(248, 250, 252, 0.1) 0%, rgba(248, 250, 252, 0.3) 55%, rgba(248, 250, 252, 0.95) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.45) 60%, rgba(248, 250, 252, 0.95) 100%);
           pointer-events: none;
         }
 
@@ -362,7 +377,8 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
           font-family: var(--font-serif-italic);
           font-size: clamp(72px, 12vw, 110px);
           font-weight: 400;
-          color: #1e2b48;
+          color: #ffffff;
+          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
           line-height: 0.95;
           letter-spacing: -0.02em;
           margin-bottom: 8px;
@@ -377,24 +393,27 @@ export default function VideshPage({ onBack, onSelectPackage, onOpenOfferModal }
         }
 
         .videsh-star-accent {
-          color: #947249;
-          font-size: 11px;
+          color: #fcd34d;
+          font-size: 12px;
         }
 
         .videsh-caption-text {
-          font-size: 11px;
+          font-size: 11.5px;
           font-weight: 800;
           letter-spacing: 0.25em;
-          color: #78644e;
+          color: #fef08a;
           text-transform: uppercase;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         .videsh-hero-desc {
-          font-size: 14px;
-          color: #475569;
-          max-width: 520px;
+          font-size: 14.5px;
+          color: #f1f5f9;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+          max-width: 540px;
           margin: 0 auto;
-          line-height: 1.5;
+          line-height: 1.55;
+          font-weight: 500;
         }
 
         /* CARDS SECTION */

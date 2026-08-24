@@ -316,11 +316,7 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
       <style>{`
         .destinations-section {
           position: relative;
-          background-color: #faece1;
-          background-image: url('/curated-destinations-bg.png');
-          background-size: 100% 100%;
-          background-position: center center;
-          background-repeat: no-repeat;
+          background-color: #fef9c3;
           padding: 55px 0 65px;
           overflow: hidden;
         }

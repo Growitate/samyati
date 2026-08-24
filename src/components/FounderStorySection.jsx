@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sparkles, Heart, Target, Compass, Users } from 'lucide-react';
+import { Sparkles, Heart, Target, Compass, ArrowUpRight } from 'lucide-react';
 import { BRAND_INFO } from '../data/travelData';
 
-export default function FounderStorySection() {
+export default function FounderStorySection({ onNavigate }) {
   return (
     <section className="founder-story-section" id="story">
       <div className="container">
@@ -37,21 +37,7 @@ export default function FounderStorySection() {
           </p>
         </div>
 
-        {/* 2. Founders Grid (FOLLOWED AFTER) */}
-        <div className="founders-grid">
-          {BRAND_INFO.founders.map((f, i) => (
-            <div key={i} className="founder-card">
-              <div className="founder-avatar-chip">
-                <Users size={20} />
-              </div>
-              <h3 className="founder-name">{f.name}</h3>
-              <span className="founder-role">{f.role}</span>
-              <div className="founder-badge-mini">Co-Founder</div>
-            </div>
-          ))}
-        </div>
-
-        {/* 3. Mission & Vision 2-Column Split */}
+        {/* 2. Mission & Vision 2-Column Split */}
         <div className="mission-vision-grid">
           {/* Mission */}
           <div className="mv-card mv-mission">
@@ -77,9 +63,40 @@ export default function FounderStorySection() {
             </div>
           </div>
         </div>
+
+        {/* 4. View More About Us Button */}
+        <div className="story-cta-box">
+          <button 
+            onClick={() => onNavigate ? onNavigate('about') : (window.location.hash = '#about')} 
+            className="btn-pill btn-pill-dark btn-story-more"
+          >
+            <span>View More About Us</span>
+            <span className="btn-badge-icon">
+              <ArrowUpRight size={16} />
+            </span>
+          </button>
+        </div>
       </div>
 
       <style>{`
+        .story-cta-box {
+          display: flex;
+          justify-content: center;
+          margin-top: 44px;
+        }
+
+        .btn-story-more {
+          padding: 12px 14px 12px 28px;
+          font-size: 15px;
+          font-weight: 700;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        .btn-story-more:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+        }
+
         .founder-story-section {
           padding: 100px 0;
           background-color: var(--bg-card);
@@ -91,6 +108,8 @@ export default function FounderStorySection() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
+          width: 100%;
         }
 
         .mb-3 { margin-bottom: 12px; }
@@ -101,6 +120,7 @@ export default function FounderStorySection() {
           color: var(--text-dark);
           line-height: 1.18;
           margin-top: 8px;
+          text-align: center;
         }
 
         /* Founders Grid */
@@ -258,9 +278,21 @@ export default function FounderStorySection() {
         }
 
         @media (max-width: 768px) {
-          .founders-grid { grid-template-columns: 1fr; }
-          .mission-vision-grid { grid-template-columns: 1fr; }
-          .story-narrative-card { padding: 30px 24px; }
+          .founder-story-section { padding: 48px 0; }
+          .story-header { margin-bottom: 28px; }
+          .story-h2 { font-size: clamp(24px, 6.5vw, 32px); }
+          .story-narrative-card { padding: 22px 18px; border-radius: 20px; margin-bottom: 24px; }
+          .quote-mark { font-size: 45px; top: -12px; left: 14px; }
+          .narrative-p { font-size: 13.5px; line-height: 1.6; margin-bottom: 12px; }
+          .highlight-quote { font-size: 14px; padding: 12px 14px; border-left-width: 3px; }
+          .founders-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+          .mission-vision-grid { grid-template-columns: 1fr; gap: 16px; }
+          .mv-card { padding: 18px 16px; gap: 14px; border-radius: 18px; }
+          .mv-icon-wrapper { width: 40px; height: 40px; }
+          .mv-title { font-size: 16px; margin-bottom: 6px; }
+          .mv-desc { font-size: 12.5px; line-height: 1.55; }
+          .story-cta-box { margin-top: 28px; }
+          .btn-story-more { padding: 10px 14px 10px 22px; font-size: 13.5px; }
         }
       `}</style>
     </section>

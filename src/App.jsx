@@ -16,19 +16,23 @@ import Footer from './components/Footer';
 
 import DeshPage from './components/DeshPage';
 import VideshPage from './components/VideshPage';
+import AboutPage from './components/AboutPage';
+import ContactPage from './components/ContactPage';
+import DestinationDetailPage from './components/DestinationDetailPage';
+import PackageDetailPage from './components/PackageDetailPage';
 
 import OfferModal from './components/OfferModal';
-import PackageDetailsModal from './components/PackageDetailsModal';
 import AdminPanelModal from './components/AdminPanelModal';
 import { PrivacyModal, TermsModal } from './components/LegalModals';
 
 export default function App() {
-  // Current view: 'home' | 'desh' | 'videsh'
+  // Current view: 'home' | 'about' | 'contact' | 'desh' | 'videsh'
   const [currentView, setCurrentView] = useState('home');
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [offerInitialDest, setOfferInitialDest] = useState('');
-  const [selectedPackage, setSelectedPackage] = useState(null);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
@@ -41,6 +45,10 @@ export default function App() {
         setCurrentView('desh');
       } else if (hash === '#videsh') {
         setCurrentView('videsh');
+      } else if (hash === '#about') {
+        setCurrentView('about');
+      } else if (hash === '#contact') {
+        setCurrentView('contact');
       } else {
         setCurrentView('home');
       }
@@ -53,6 +61,8 @@ export default function App() {
 
   const handleNavigate = (view) => {
     setCurrentView(view);
+    setSelectedDestination(null);
+    setSelectedPackage(null);
     window.location.hash = view === 'home' ? '' : view;
     window.scrollTo(0, 0);
   };
@@ -62,7 +72,58 @@ export default function App() {
     setIsOfferModalOpen(true);
   };
 
-  // Dedicated Desh Page View
+  // 1. Dedicated Package Detail Page View (Highest Priority when package selected)
+  if (selectedPackage) {
+    return (
+      <div className="travelio-app samyati-app">
+        <Navbar
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
+          onNavigate={handleNavigate}
+          currentView={currentView}
+        />
+
+        <PackageDetailPage
+          packageData={selectedPackage}
+          onBack={() => setSelectedPackage(null)}
+          onOpenOfferModal={handleOpenOfferModal}
+        />
+
+        <NewsletterBand />
+
+        <Footer
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
+          onOpenTerms={() => setIsTermsOpen(true)}
+          onNavigate={handleNavigate}
+        />
+
+        {/* Interactive Modals */}
+        <OfferModal
+          isOpen={isOfferModalOpen}
+          onClose={() => setIsOfferModalOpen(false)}
+          initialDestination={offerInitialDest}
+        />
+
+        <AdminPanelModal
+          isOpen={isAdminModalOpen}
+          onClose={() => setIsAdminModalOpen(false)}
+        />
+
+        <PrivacyModal
+          isOpen={isPrivacyOpen}
+          onClose={() => setIsPrivacyOpen(false)}
+        />
+
+        <TermsModal
+          isOpen={isTermsOpen}
+          onClose={() => setIsTermsOpen(false)}
+        />
+      </div>
+    );
+  }
+
+  // 2. Dedicated Desh Page View
   if (currentView === 'desh') {
     return (
       <div className="travelio-app samyati-app">
@@ -73,11 +134,21 @@ export default function App() {
           currentView={currentView}
         />
 
-        <DeshPage
-          onBack={() => handleNavigate('home')}
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-          onOpenOfferModal={handleOpenOfferModal}
-        />
+        {selectedDestination ? (
+          <DestinationDetailPage
+            destination={selectedDestination}
+            onBack={() => setSelectedDestination(null)}
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
+        ) : (
+          <DeshPage
+            onBack={() => handleNavigate('home')}
+            onSelectDestination={(dest) => setSelectedDestination(dest)}
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
+        )}
 
         <NewsletterBand />
 
@@ -85,6 +156,7 @@ export default function App() {
           onOpenOfferModal={handleOpenOfferModal}
           onOpenPrivacy={() => setIsPrivacyOpen(true)}
           onOpenTerms={() => setIsTermsOpen(true)}
+          onNavigate={handleNavigate}
         />
 
         {/* Interactive Modals */}
@@ -92,12 +164,6 @@ export default function App() {
           isOpen={isOfferModalOpen}
           onClose={() => setIsOfferModalOpen(false)}
           initialDestination={offerInitialDest}
-        />
-
-        <PackageDetailsModal
-          packageData={selectedPackage}
-          onClose={() => setSelectedPackage(null)}
-          onOpenOfferModal={handleOpenOfferModal}
         />
 
         <AdminPanelModal
@@ -118,7 +184,7 @@ export default function App() {
     );
   }
 
-  // Dedicated Videsh Page View
+  // 3. Dedicated Videsh Page View
   if (currentView === 'videsh') {
     return (
       <div className="travelio-app samyati-app">
@@ -129,11 +195,21 @@ export default function App() {
           currentView={currentView}
         />
 
-        <VideshPage
-          onBack={() => handleNavigate('home')}
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-          onOpenOfferModal={handleOpenOfferModal}
-        />
+        {selectedDestination ? (
+          <DestinationDetailPage
+            destination={selectedDestination}
+            onBack={() => setSelectedDestination(null)}
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
+        ) : (
+          <VideshPage
+            onBack={() => handleNavigate('home')}
+            onSelectDestination={(dest) => setSelectedDestination(dest)}
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
+        )}
 
         <NewsletterBand />
 
@@ -141,6 +217,7 @@ export default function App() {
           onOpenOfferModal={handleOpenOfferModal}
           onOpenPrivacy={() => setIsPrivacyOpen(true)}
           onOpenTerms={() => setIsTermsOpen(true)}
+          onNavigate={handleNavigate}
         />
 
         {/* Interactive Modals */}
@@ -148,12 +225,6 @@ export default function App() {
           isOpen={isOfferModalOpen}
           onClose={() => setIsOfferModalOpen(false)}
           initialDestination={offerInitialDest}
-        />
-
-        <PackageDetailsModal
-          packageData={selectedPackage}
-          onClose={() => setSelectedPackage(null)}
-          onOpenOfferModal={handleOpenOfferModal}
         />
 
         <AdminPanelModal
@@ -174,66 +245,172 @@ export default function App() {
     );
   }
 
-  // Main Homepage View
+  // 4. Dedicated About Page View
+  if (currentView === 'about') {
+    return (
+      <div className="travelio-app samyati-app">
+        <Navbar
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
+          onNavigate={handleNavigate}
+          currentView={currentView}
+        />
+
+        <AboutPage
+          onBack={() => handleNavigate('home')}
+          onOpenOfferModal={handleOpenOfferModal}
+        />
+
+        <NewsletterBand />
+
+        <Footer
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
+          onOpenTerms={() => setIsTermsOpen(true)}
+        />
+
+        {/* Interactive Modals */}
+        <OfferModal
+          isOpen={isOfferModalOpen}
+          onClose={() => setIsOfferModalOpen(false)}
+          initialDestination={offerInitialDest}
+        />
+
+        <AdminPanelModal
+          isOpen={isAdminModalOpen}
+          onClose={() => setIsAdminModalOpen(false)}
+        />
+
+        <PrivacyModal
+          isOpen={isPrivacyOpen}
+          onClose={() => setIsPrivacyOpen(false)}
+        />
+
+        <TermsModal
+          isOpen={isTermsOpen}
+          onClose={() => setIsTermsOpen(false)}
+        />
+      </div>
+    );
+  }
+
+  // 5. Dedicated Contact Us Page View
+  if (currentView === 'contact') {
+    return (
+      <div className="travelio-app samyati-app">
+        <Navbar
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
+          onNavigate={handleNavigate}
+          currentView={currentView}
+        />
+
+        <ContactPage
+          onBack={() => handleNavigate('home')}
+          onOpenOfferModal={handleOpenOfferModal}
+        />
+
+        <NewsletterBand />
+
+        <Footer
+          onOpenOfferModal={handleOpenOfferModal}
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
+          onOpenTerms={() => setIsTermsOpen(true)}
+          onNavigate={handleNavigate}
+        />
+
+        {/* Interactive Modals */}
+        <OfferModal
+          isOpen={isOfferModalOpen}
+          onClose={() => setIsOfferModalOpen(false)}
+          initialDestination={offerInitialDest}
+        />
+
+        <AdminPanelModal
+          isOpen={isAdminModalOpen}
+          onClose={() => setIsAdminModalOpen(false)}
+        />
+
+        <PrivacyModal
+          isOpen={isPrivacyOpen}
+          onClose={() => setIsPrivacyOpen(false)}
+        />
+
+        <TermsModal
+          isOpen={isTermsOpen}
+          onClose={() => setIsTermsOpen(false)}
+        />
+      </div>
+    );
+  }
+
+  // 6. Main Landing Page View
   return (
     <div className="travelio-app samyati-app">
       <Navbar
         onOpenOfferModal={handleOpenOfferModal}
         onOpenAdminModal={() => setIsAdminModalOpen(true)}
         onNavigate={handleNavigate}
+        currentView={currentView}
       />
 
-      <main>
-        <HeroSection
-          onOpenOfferModal={handleOpenOfferModal}
-          onSelectDestination={(id) => handleOpenOfferModal(id)}
-        />
-
-        <PromiseSection
+      {selectedDestination ? (
+        <DestinationDetailPage
+          destination={selectedDestination}
+          onBack={() => setSelectedDestination(null)}
           onSelectPackage={(pkg) => setSelectedPackage(pkg)}
           onOpenOfferModal={handleOpenOfferModal}
         />
+      ) : (
+        <>
+          <HeroSection
+            onOpenOfferModal={handleOpenOfferModal}
+            onSelectDestination={(dest) => setSelectedDestination(dest)}
+          />
 
-        <TourCategories
-          onNavigate={handleNavigate}
-          onOpenOfferModal={handleOpenOfferModal}
-        />
+          <TourCategories
+            onSelectCategory={(view) => handleNavigate(view)}
+            onNavigate={(view) => handleNavigate(view)}
+          />
 
-        <FeaturedTours
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-          onOpenOfferModal={handleOpenOfferModal}
-          onNavigate={handleNavigate}
-        />
+          <PromiseSection />
 
-        <ThemeEscapes
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-          onOpenOfferModal={handleOpenOfferModal}
-        />
+          <FeaturedTours
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
 
-        <LocationMarquee />
+          <ThemeEscapes
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
 
-        <TopDestinations
-          onOpenOfferModal={handleOpenOfferModal}
-          onNavigate={handleNavigate}
-        />
+          <LocationMarquee />
 
-        <ProcessSection />
+          <TopDestinations
+            onSelectDestination={(dest) => setSelectedDestination(dest)}
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+          />
 
-        <StatsSection />
+          <ProcessSection />
 
-        <FounderStorySection />
+          <StatsSection />
 
-        <WorldCTA
-          onOpenOfferModal={handleOpenOfferModal}
-        />
+          <FounderStorySection />
 
-        <NewsletterBand />
-      </main>
+          <WorldCTA
+            onOpenOfferModal={handleOpenOfferModal}
+          />
+        </>
+      )}
+
+      <NewsletterBand />
 
       <Footer
         onOpenOfferModal={handleOpenOfferModal}
         onOpenPrivacy={() => setIsPrivacyOpen(true)}
         onOpenTerms={() => setIsTermsOpen(true)}
+        onNavigate={handleNavigate}
       />
 
       {/* Interactive Modals */}
@@ -241,12 +418,6 @@ export default function App() {
         isOpen={isOfferModalOpen}
         onClose={() => setIsOfferModalOpen(false)}
         initialDestination={offerInitialDest}
-      />
-
-      <PackageDetailsModal
-        packageData={selectedPackage}
-        onClose={() => setSelectedPackage(null)}
-        onOpenOfferModal={handleOpenOfferModal}
       />
 
       <AdminPanelModal

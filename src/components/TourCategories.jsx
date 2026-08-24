@@ -1,7 +1,21 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
-export default function TourCategories({ onNavigate }) {
+export default function TourCategories({ onSelectCategory, onNavigate }) {
+  const handleDeshClick = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (onNavigate) onNavigate('desh');
+    if (onSelectCategory) onSelectCategory('desh');
+    window.location.hash = '#desh';
+  };
+
+  const handleVideshClick = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (onNavigate) onNavigate('videsh');
+    if (onSelectCategory) onSelectCategory('videsh');
+    window.location.hash = '#videsh';
+  };
+
   return (
     <section className="jaipur-window-section" id="categories">
       <div className="container">
@@ -17,7 +31,7 @@ export default function TourCategories({ onNavigate }) {
           {/* Desh Card */}
           <div 
             className="jaipur-arch-card card-desh-arch"
-            onClick={() => onNavigate('desh')}
+            onClick={handleDeshClick}
           >
             <div className="arch-window-frame">
               <img 
@@ -31,7 +45,10 @@ export default function TourCategories({ onNavigate }) {
               <div className="arch-card-content">
                 <h3 className="arch-heading">Desh</h3>
 
-                <button className="btn-explore btn-explore-desh">
+                <button 
+                  className="btn-explore btn-explore-desh"
+                  onClick={handleDeshClick}
+                >
                   <span>Explore Packages</span>
                   <ArrowUpRight size={15} />
                 </button>
@@ -42,7 +59,7 @@ export default function TourCategories({ onNavigate }) {
           {/* Videsh Card */}
           <div 
             className="jaipur-arch-card card-videsh-arch"
-            onClick={() => onNavigate('videsh')}
+            onClick={handleVideshClick}
           >
             <div className="arch-window-frame">
               <img 
@@ -56,7 +73,10 @@ export default function TourCategories({ onNavigate }) {
               <div className="arch-card-content">
                 <h3 className="arch-heading">Videsh</h3>
 
-                <button className="btn-explore btn-explore-videsh">
+                <button 
+                  className="btn-explore btn-explore-videsh"
+                  onClick={handleVideshClick}
+                >
                   <span>Explore Packages</span>
                   <ArrowUpRight size={15} />
                 </button>
@@ -69,7 +89,7 @@ export default function TourCategories({ onNavigate }) {
       <style>{`
         .jaipur-window-section {
           padding: 60px 0 80px;
-          background-color: #ffffff;
+          background-color: #fef9c3;
         }
 
         .jaipur-header {
@@ -203,12 +223,15 @@ export default function TourCategories({ onNavigate }) {
         }
 
         @media (max-width: 720px) {
-          .jaipur-window-section { padding: 40px 0 60px; }
-          .jaipur-window-grid { flex-direction: column; gap: 24px; padding: 0 8px; }
-          .jaipur-arch-card { width: 100%; max-width: 320px; }
-          .arch-window-frame { height: 300px; padding: 24px 20px 24px; }
-          .arch-heading { font-size: 28px; }
-          .btn-explore { padding: 9px 18px; font-size: 12.5px; }
+          .jaipur-window-section { padding: 32px 0 44px; }
+          .jaipur-header { margin-bottom: 24px; }
+          .jaipur-title { font-size: clamp(24px, 6vw, 30px); }
+          .jaipur-window-grid { flex-direction: column; gap: 16px; padding: 0 16px; }
+          .jaipur-arch-card { width: 100%; max-width: 100%; }
+          .arch-window-frame { height: 210px; border-radius: 20px; padding: 20px 16px 16px; }
+          .arch-card-content { gap: 10px; }
+          .arch-heading { font-size: 24px; }
+          .btn-explore { padding: 8px 16px; font-size: 12px; border-radius: 9999px; }
         }
       `}</style>
     </section>

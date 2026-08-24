@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mail, Check, ArrowRight } from 'lucide-react';
-import { FooterCloudEffect } from './CloudEffect';
 
 export default function NewsletterBand() {
   const [email, setEmail] = useState('');
@@ -17,9 +16,6 @@ export default function NewsletterBand() {
     <section className="newsletter-band" id="newsletter">
       {/* Dark Overlay Gradient */}
       <div className="newsletter-overlay" />
-
-      {/* Volumetric Cloud Effect Above Footer */}
-      <FooterCloudEffect />
 
       <div className="container newsletter-content">
         <h2 className="newsletter-heading">
@@ -68,7 +64,7 @@ export default function NewsletterBand() {
           background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=85');
           background-size: cover;
           background-position: center;
-          padding: 120px 0 100px;
+          padding: 60px 0 50px;
           text-align: center;
           overflow: hidden;
         }
@@ -198,15 +194,43 @@ export default function NewsletterBand() {
         }
 
         @media (max-width: 640px) {
+          .newsletter-band {
+            padding: 50px 0 45px;
+          }
+          .newsletter-heading {
+            font-size: clamp(24px, 6.5vw, 32px);
+            line-height: 1.18;
+            margin-bottom: 20px;
+          }
           .compound-email-pill {
-            flex-direction: column;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 20px;
+            flex-direction: row;
+            gap: 6px;
+            padding: 4px 5px 4px 14px;
+            border-radius: 9999px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+          }
+          .email-input-group {
+            gap: 8px;
+            padding: 4px 0;
+          }
+          .email-icon {
+            width: 16px;
+            height: 16px;
+          }
+          .email-input {
+            font-size: 12.5px;
           }
           .subscribe-btn {
-            width: 100%;
-            justify-content: center;
+            width: auto;
+            padding: 9px 15px;
+            border-radius: 9999px;
+            font-size: 12.5px;
+            font-weight: 800;
+            white-space: nowrap;
+          }
+          .newsletter-microcopy {
+            font-size: 11.5px;
+            margin-top: 4px;
           }
         }
       `}</style>

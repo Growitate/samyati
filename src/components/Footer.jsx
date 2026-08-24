@@ -34,13 +34,13 @@ const TOP_INTERNATIONAL = [
   { name: 'Singapore Marina Bay & Sentosa', dest: 'Singapore' },
 ];
 
-export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms }) {
+export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, onNavigate }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="footer-wrapper" id="contact">
+    <footer className="footer-wrapper">
       {/* Top Pre-Footer Trust Bar */}
       <div className="footer-trust-strip">
         <div className="container">
@@ -94,11 +94,11 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms })
           {/* Column 1: Brand & Philosophy */}
           <div className="footer-col-pro brand-col-pro">
             <a href="#" className="footer-logo-pro" onClick={(e) => { e.preventDefault(); scrollToTop(); }}>
-              <span className="logo-text-pro">Samyati</span>
-              <div className="logo-accent-plane-pro">
-                <Plane size={15} />
-              </div>
-              <span className="logo-subtag-pro">THE WORLD</span>
+              <img 
+                src="/samyati-logo.png" 
+                alt="Samyati The World" 
+                className="footer-brand-logo-img" 
+              />
             </a>
             
             <p className="brand-desc-pro">
@@ -180,6 +180,7 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms })
               <li><a href="#curated-escapes" className="footer-link-tag">Honeymoon & Family Themes</a></li>
               <li><a href="#story" className="footer-link-tag">Our Founders' Story</a></li>
               <li><a href="#process" className="footer-link-tag">Our 4-Step Trip Process</a></li>
+              <li><button onClick={() => onNavigate ? onNavigate('contact') : (window.location.hash = '#contact')} className="footer-link-btn">Contact Us Page</button></li>
               <li><button onClick={onOpenPrivacy} className="footer-link-btn">Privacy Policy</button></li>
               <li><button onClick={onOpenTerms} className="footer-link-btn">Terms & Booking Conditions</button></li>
             </ul>
@@ -361,37 +362,23 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms })
         }
 
         .footer-logo-pro {
-          position: relative;
-          display: inline-flex;
-          flex-direction: column;
-          align-items: flex-start;
+          display: inline-block;
           text-decoration: none;
-          color: #ffffff;
-          margin-bottom: 14px;
+          margin-bottom: 12px;
         }
 
-        .logo-text-pro {
-          font-family: var(--font-serif-italic);
-          font-size: 34px;
-          font-weight: 700;
-          line-height: 1;
-          color: #ffffff;
+        .footer-brand-logo-img {
+          height: 52px;
+          width: auto;
+          max-width: 200px;
+          object-fit: contain;
+          display: block;
+          filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4));
+          transition: transform 0.25s ease;
         }
 
-        .logo-accent-plane-pro {
-          position: absolute;
-          top: -2px;
-          right: -14px;
-          color: #f97316;
-          transform: rotate(25deg);
-        }
-
-        .logo-subtag-pro {
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.28em;
-          color: #f97316;
-          margin-top: 4px;
+        .footer-brand-logo-img:hover {
+          transform: scale(1.03);
         }
 
         .brand-desc-pro {
@@ -675,11 +662,42 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms })
         }
 
         @media (max-width: 680px) {
-          .trust-strip-grid { grid-template-columns: 1fr; gap: 16px; }
-          .footer-grid-pro { grid-template-columns: 1fr; gap: 28px; }
-          .footer-bottom-pro { flex-direction: column; gap: 16px; text-align: center; }
-          .bottom-left-pro { text-align: center; }
-          .bottom-right-pro { justify-content: center; }
+          .footer-wrapper { padding-top: 0; }
+          .footer-trust-strip { padding: 20px 0; }
+          .trust-strip-grid { grid-template-columns: 1fr 1fr; gap: 14px 10px; }
+          .trust-strip-item { gap: 8px; }
+          .trust-icon-box { width: 34px; height: 34px; flex-shrink: 0; }
+          .trust-strip-title { font-size: 12px; }
+          .trust-strip-desc { font-size: 10.5px; }
+
+          .footer-main-content { padding-top: 36px; padding-bottom: 28px; }
+          .footer-grid-pro { grid-template-columns: 1fr; gap: 24px; text-align: left; }
+          .footer-col-pro { align-items: flex-start; }
+          .brand-desc-pro { font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+          .accreditation-row { gap: 6px; margin-bottom: 18px; }
+          .btn-pill-footer-cta { width: 100%; justify-content: center; }
+          
+          .footer-col-title { font-size: 15px; margin-bottom: 12px; }
+          .footer-links-pro { gap: 8px; }
+          .footer-link-btn, .footer-link-tag { font-size: 13px; text-align: left; }
+          
+          .contact-card-pro { padding: 16px; border-radius: 14px; gap: 12px; }
+          .contact-row-pro { gap: 10px; }
+          .contact-value-pro { font-size: 12.5px; }
+
+          .footer-bottom-pro { 
+            flex-direction: column; 
+            gap: 14px; 
+            text-align: center; 
+            align-items: center; 
+            padding-top: 20px;
+          }
+          .bottom-left-pro { text-align: center; align-items: center; gap: 4px; }
+          .copyright-text { font-size: 11.5px; }
+          .crafted-text { font-size: 10.5px; }
+          .bottom-right-pro { flex-direction: column; gap: 10px; align-items: center; width: 100%; }
+          .social-links-group { justify-content: center; }
+          .btn-back-to-top { width: 100%; max-width: 200px; justify-content: center; }
         }
       `}</style>
     </footer>

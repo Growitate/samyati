@@ -38,6 +38,7 @@ const PROCESS_STEPS = [
 
 export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const sectionRef = useRef(null);
 
   // Reset activeStep to 0 (Step 01) whenever section scrolls into viewport
@@ -61,14 +62,16 @@ export default function ProcessSection() {
     };
   }, []);
 
-  // Continuous Auto Slideshow Loop (does not stop on hover)
+  // Continuous Auto Slideshow Loop (pauses when hovered)
   useEffect(() => {
+    if (isPaused) return;
+
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % PROCESS_STEPS.length);
-    }, 1500);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused]);
 
   const current = PROCESS_STEPS[activeStep];
 
@@ -77,6 +80,8 @@ export default function ProcessSection() {
       ref={sectionRef}
       className="process-section" 
       id="process"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       <div className="process-split-container">
         {/* Left Photo Half with Smooth Fade Transition */}
@@ -97,8 +102,8 @@ export default function ProcessSection() {
           {/* Auto Slideshow Progress Bar */}
           <div className="slideshow-progress-bar">
             <div 
-              key={activeStep} 
-              className="progress-fill animating" 
+              key={activeStep + (isPaused ? '-paused' : '')} 
+              className={`progress-fill ${isPaused ? 'paused' : 'animating'}`} 
             />
           </div>
         </div>
@@ -234,7 +239,11 @@ export default function ProcessSection() {
         }
 
         .progress-fill.animating {
-          animation: progressTimer 1.5s linear forwards;
+          animation: progressTimer 3s linear forwards;
+        }
+
+        .progress-fill.paused {
+          width: 100%;
         }
 
         @keyframes progressTimer {

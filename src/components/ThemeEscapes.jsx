@@ -298,35 +298,25 @@ function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
             >
               <span>{section.linkText}</span>
             </button>
-
-            {/* Navigation Arrow Buttons */}
-            <div className="escape-mini-arrows">
-              <button 
-                className={`mini-arrow-btn ${!canScrollLeft ? 'disabled' : ''}`}
-                onClick={() => handleScroll('left')}
-                aria-label="Previous escapes"
-                disabled={!canScrollLeft}
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button 
-                className={`mini-arrow-btn ${!canScrollRight ? 'disabled' : ''}`}
-                onClick={() => handleScroll('right')}
-                aria-label="Next escapes"
-                disabled={!canScrollRight}
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Carousel Cards Track */}
-        <div 
-          className="escape-carousel-viewport" 
-          ref={rowScrollRef}
-          onScroll={updateScrollState}
-        >
+        {/* Carousel Cards Track with Left & Right Side Arrows */}
+        <div className="escape-carousel-relative-wrapper">
+          <button 
+            className={`escape-side-btn side-btn-left ${!canScrollLeft ? 'disabled' : ''}`}
+            onClick={() => handleScroll('left')}
+            aria-label="Previous escapes"
+            disabled={!canScrollLeft}
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <div 
+            className="escape-carousel-viewport" 
+            ref={rowScrollRef}
+            onScroll={updateScrollState}
+          >
           <div className="escape-carousel-track">
             {section.items.map((item) => (
               <div 
@@ -375,9 +365,19 @@ function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
             ))}
           </div>
         </div>
+
+        <button 
+          className={`escape-side-btn side-btn-right ${!canScrollRight ? 'disabled' : ''}`}
+          onClick={() => handleScroll('right')}
+          aria-label="Next escapes"
+          disabled={!canScrollRight}
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
@@ -394,7 +394,7 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
 
       <style>{`
         .theme-escapes-wrapper-section {
-          background-color: #fbf9f5;
+          background-color: #fef9c3;
           padding: 70px 0 80px;
           display: flex;
           flex-direction: column;
@@ -403,6 +403,56 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
 
         .theme-escape-row-block {
           position: relative;
+        }
+
+        .escape-carousel-relative-wrapper {
+          position: relative;
+        }
+
+        .escape-side-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 25;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #ffffff;
+          color: #102a43;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .escape-side-btn.side-btn-left {
+          left: -22px;
+        }
+
+        .escape-side-btn.side-btn-right {
+          right: -22px;
+        }
+
+        .escape-side-btn:hover:not(.disabled) {
+          background: #102a43;
+          color: #ffffff;
+          border-color: #102a43;
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .escape-side-btn.disabled {
+          opacity: 0.25;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        @media (max-width: 1024px) {
+          .escape-side-btn.side-btn-left { left: 4px; }
+          .escape-side-btn.side-btn-right { right: 4px; }
         }
 
         .escape-row-header {

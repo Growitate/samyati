@@ -3,14 +3,14 @@ import { X, Plus, Edit, Trash2, ShieldCheck, Database, Layers, Package, FileText
 import { DESTINATIONS, PACKAGES } from '../data/travelData';
 
 export default function AdminPanelModal({ isOpen, onClose }) {
-  if (!isOpen) return null;
-
   const [activeTab, setActiveTab] = useState('destinations');
   const [destinationsList, setDestinationsList] = useState(DESTINATIONS);
   const [packagesList, setPackagesList] = useState(PACKAGES);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newDestName, setNewDestName] = useState('');
   const [newDestCat, setNewDestCat] = useState('Domestic');
+
+  if (!isOpen) return null;
 
   const handleAddDestination = (e) => {
     e.preventDefault();

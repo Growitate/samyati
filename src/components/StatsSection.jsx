@@ -93,11 +93,7 @@ export default function StatsSection() {
       <style>{`
         .stats-section {
           position: relative;
-          background-color: #fef7d8;
-          background-image: url('/journey-numbers-bg.png');
-          background-size: 100% 100%;
-          background-position: center center;
-          background-repeat: no-repeat;
+          background-color: #fef9c3;
           padding-top: 80px;
           padding-bottom: 0;
           overflow: hidden;

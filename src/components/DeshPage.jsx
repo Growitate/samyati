@@ -54,8 +54,17 @@ const DESH_DESTINATIONS = [
   }
 ];
 
-export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) {
+export default function DeshPage({ onBack, onSelectPackage, onSelectDestination, onOpenOfferModal }) {
   const [selectedDest, setSelectedDest] = useState(null);
+
+  const handleCardClick = (item) => {
+    const destObj = { ...item, category: 'Domestic' };
+    if (onSelectDestination) {
+      onSelectDestination(destObj);
+    } else {
+      setSelectedDest(item);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,9 +77,13 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
 
   return (
     <div className="desh-page-fixed">
-      {/* HERO BANNER WITH CLEAN ARCH ARTWORK BACKGROUND */}
+      {/* HERO BANNER WITH FAMOUS TAJ MAHAL HERITAGE BACKGROUND */}
       <section className="desh-hero-banner">
-        <img src="/desh-bg.jpg" alt="Indian Palace Clean Background Arch" className="hero-bg-img" />
+        <img 
+          src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2000&q=85" 
+          alt="Famous Taj Mahal Agra Heritage Banner" 
+          className="hero-bg-img" 
+        />
         <div className="hero-bg-overlay" />
 
         <div className="container relative-hero-z">
@@ -104,7 +117,7 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
               <div 
                 key={item.id} 
                 className="mental-dest-card"
-                onClick={() => setSelectedDest(item)}
+                onClick={() => handleCardClick(item)}
               >
                 <img 
                   src={item.image} 
@@ -127,7 +140,7 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
               <div 
                 key={item.id} 
                 className="mental-dest-card"
-                onClick={() => setSelectedDest(item)}
+                onClick={() => handleCardClick(item)}
               >
                 <img 
                   src={item.image} 
@@ -150,7 +163,7 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
               <div 
                 key={item.id} 
                 className="mental-dest-card"
-                onClick={() => setSelectedDest(item)}
+                onClick={() => handleCardClick(item)}
               >
                 <img 
                   src={item.image} 
@@ -171,7 +184,7 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
           <div className="card-row row-center">
             <div 
               className="mental-dest-card card-wide-center"
-              onClick={() => setSelectedDest(DESH_DESTINATIONS[7])}
+              onClick={() => handleCardClick(DESH_DESTINATIONS[7])}
             >
               <img 
                 src={DESH_DESTINATIONS[7].image} 
@@ -228,7 +241,7 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
       <style>{`
         .desh-page-fixed {
           position: relative;
-          background-color: #f6f2ea;
+          background-color: #fef9c3;
           min-height: 100vh;
           color: #2d2319;
           padding-bottom: 80px;
@@ -251,15 +264,13 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center top;
-          mask-image: linear-gradient(180deg, #000 55%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
-          -webkit-mask-image: linear-gradient(180deg, #000 55%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
+          object-position: center 30%;
         }
 
         .hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(246, 242, 234, 0) 0%, rgba(246, 242, 234, 0.05) 45%, rgba(246, 242, 234, 0.6) 80%, #f6f2ea 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(246, 242, 234, 0.95) 100%);
           pointer-events: none;
         }
 
@@ -319,7 +330,8 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
           font-family: var(--font-serif-italic);
           font-size: clamp(72px, 12vw, 110px);
           font-weight: 400;
-          color: #2d2319;
+          color: #ffffff;
+          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
           line-height: 0.9;
           letter-spacing: -0.02em;
           margin-bottom: 12px;
@@ -333,22 +345,28 @@ export default function DeshPage({ onBack, onSelectPackage, onOpenOfferModal }) 
         }
 
         .star-accent {
-          color: #b45309;
-          font-size: 11px;
+          color: #fcd34d;
+          font-size: 12px;
         }
 
         .sub-caption-text {
-          font-size: 11px;
+          font-size: 11.5px;
           font-weight: 800;
           letter-spacing: 0.25em;
-          color: #8c7355;
+          color: #fef08a;
           text-transform: uppercase;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         .hero-sub-paragraph {
-          font-size: 15px;
+          font-size: 14.5px;
           font-weight: 500;
-          color: #6b5c4d;
+          color: #f1f5f9;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+          max-width: 540px;
+          margin: 12px auto 0;
+          line-height: 1.55;
+        }
           max-width: 520px;
           margin: 14px auto 0;
           line-height: 1.6;

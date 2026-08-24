@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X, Plane } from 'lucide-react';
 
 export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate, currentView = 'home' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNav = (target) => {
     setMobileMenuOpen(false);
@@ -19,82 +33,75 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
       else window.location.hash = '#videsh';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (target === 'about') {
-      if (currentView !== 'home' && onNavigate) {
-        onNavigate('home');
-      }
-      setTimeout(() => {
-        const el = document.getElementById('story') || document.getElementById('process');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      if (onNavigate) onNavigate('about');
+      else window.location.hash = '#about';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (target === 'contact') {
-      const el = document.getElementById('contact');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      }
+      if (onNavigate) onNavigate('contact');
+      else window.location.hash = '#contact';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   return (
-    <header className="navbar-wrapper">
+    <header className={`navbar-wrapper ${scrolled ? 'scrolled' : ''} ${currentView !== 'home' ? 'solid-header' : ''}`}>
       <div className="container">
         <nav className="navbar-content">
           {/* Left: Brand Logo */}
           <div className="nav-zone-left">
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); handleNav('home'); }} 
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); handleNav('home'); }}
               className="nav-logo"
             >
-              <span className="logo-text">Samyati</span>
-              <div className="logo-accent-plane">
-                <Plane size={14} className="plane-icon" />
-              </div>
-              <span className="logo-subtag">THE WORLD</span>
+              <img 
+                src="/samyati-logo.png" 
+                alt="Samyati The World" 
+                className="brand-logo-img" 
+              />
             </a>
           </div>
 
           {/* Center: Simple Navigation Links Pill (Desktop) */}
           <div className="nav-zone-center hidden-mobile">
             <div className="nav-center-links">
-              <button 
-                onClick={() => handleNav('home')} 
+              <button
+                onClick={() => handleNav('home')}
                 className={`nav-link-btn ${currentView === 'home' ? 'active' : ''}`}
               >
                 Home
               </button>
-              <button 
-                onClick={() => handleNav('desh')} 
+              <button
+                onClick={() => handleNav('about')}
+                className={`nav-link-btn ${currentView === 'about' ? 'active' : ''}`}
+              >
+                About
+              </button>
+              <button
+                onClick={() => handleNav('contact')}
+                className={`nav-link-btn ${currentView === 'contact' ? 'active' : ''}`}
+              >
+                Contact Us
+              </button>
+              <button
+                onClick={() => handleNav('desh')}
                 className={`nav-link-btn ${currentView === 'desh' ? 'active' : ''}`}
               >
                 Desh
               </button>
-              <button 
-                onClick={() => handleNav('videsh')} 
+              <button
+                onClick={() => handleNav('videsh')}
                 className={`nav-link-btn ${currentView === 'videsh' ? 'active' : ''}`}
               >
                 Videsh
-              </button>
-              <button 
-                onClick={() => handleNav('about')} 
-                className="nav-link-btn"
-              >
-                About
-              </button>
-              <button 
-                onClick={() => handleNav('contact')} 
-                className="nav-link-btn"
-              >
-                Contact
               </button>
             </div>
           </div>
 
           {/* Right: CTA Button */}
           <div className="nav-zone-right">
-            <button 
-              onClick={() => onOpenOfferModal()} 
+            <button
+              onClick={() => onOpenOfferModal()}
               className="btn-pill btn-pill-white nav-cta"
             >
               <span>Get Your Offer</span>
@@ -104,8 +111,8 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
             </button>
 
             {/* Hamburger Toggle (Mobile Only) */}
-            <button 
-              className="mobile-hamburger-btn show-mobile-only" 
+            <button
+              className="mobile-hamburger-btn show-mobile-only"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Navigation"
             >
@@ -113,73 +120,94 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
             </button>
           </div>
         </nav>
+      </div>
 
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
-            <div className="mobile-menu-drawer" onClick={(e) => e.stopPropagation()}>
-              <div className="mobile-menu-header">
-                <div>
-                  <span className="logo-text">Samyati</span>
-                  <p className="drawer-subtag">THE WORLD</p>
-                </div>
-                <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>
-                  <X size={20} />
+      {/* Mobile Menu Drawer (Fixed Root Level) */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
+          <div className="mobile-menu-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <a 
+                href="#" 
+                onClick={(e) => { e.preventDefault(); handleNav('home'); setMobileMenuOpen(false); }}
+                className="nav-logo"
+              >
+                <img 
+                  src="/samyati-logo.png" 
+                  alt="Samyati The World" 
+                  className="brand-logo-img-drawer" 
+                />
+              </a>
+              <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <ul className="mobile-menu-links">
+              <li>
+                <button onClick={() => handleNav('home')} className={`mobile-nav-link ${currentView === 'home' ? 'active' : ''}`}>
+                  Home
                 </button>
-              </div>
-
-              <ul className="mobile-menu-links">
-                <li>
-                  <button onClick={() => handleNav('home')} className={`mobile-nav-link ${currentView === 'home' ? 'active' : ''}`}>
-                    Home
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => handleNav('desh')} className={`mobile-nav-link ${currentView === 'desh' ? 'active' : ''}`}>
-                    Desh (Domestic Tours)
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => handleNav('videsh')} className={`mobile-nav-link ${currentView === 'videsh' ? 'active' : ''}`}>
-                    Videsh (International Tours)
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => handleNav('about')} className="mobile-nav-link">
-                    About Us
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => handleNav('contact')} className="mobile-nav-link">
-                    Contact & Planning
-                  </button>
-                </li>
-              </ul>
-
-              <div className="mobile-menu-footer">
-                <button 
-                  className="btn-pill btn-pill-dark w-full" 
-                  onClick={() => { setMobileMenuOpen(false); onOpenOfferModal(); }}
-                >
-                  <span>Get Your Offer</span>
-                  <span className="btn-badge-icon">
-                    <ArrowUpRight size={16} />
-                  </span>
+              </li>
+              <li>
+                <button onClick={() => handleNav('about')} className={`mobile-nav-link ${currentView === 'about' ? 'active' : ''}`}>
+                  About Us
                 </button>
-              </div>
+              </li>
+              <li>
+                <button onClick={() => handleNav('contact')} className={`mobile-nav-link ${currentView === 'contact' ? 'active' : ''}`}>
+                  Contact Us
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('desh')} className={`mobile-nav-link ${currentView === 'desh' ? 'active' : ''}`}>
+                  Desh (Domestic Tours)
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('videsh')} className={`mobile-nav-link ${currentView === 'videsh' ? 'active' : ''}`}>
+                  Videsh (International Tours)
+                </button>
+              </li>
+            </ul>
+
+            <div className="mobile-menu-footer">
+              <button
+                className="btn-pill btn-pill-dark w-full"
+                onClick={() => { setMobileMenuOpen(false); onOpenOfferModal(); }}
+              >
+                <span>Get Your Offer</span>
+                <span className="btn-badge-icon">
+                  <ArrowUpRight size={16} />
+                </span>
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <style>{`
         .navbar-wrapper {
-          position: absolute;
+          position: fixed;
           top: 0;
           left: 0;
           right: 0;
-          z-index: 100;
-          padding-top: 20px;
+          z-index: 1000;
+          padding-top: 16px;
+          padding-bottom: 14px;
+          background: transparent;
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar-wrapper.scrolled,
+        .navbar-wrapper.solid-header {
+          padding-top: 10px;
+          padding-bottom: 10px;
+          background: rgba(15, 23, 42, 0.92);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
 
         .navbar-content {
@@ -195,72 +223,71 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .nav-logo {
-          position: relative;
           display: inline-flex;
-          flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
           text-decoration: none;
-          color: #ffffff;
         }
 
-        .nav-logo .logo-text {
-          font-family: var(--font-serif-italic);
-          font-size: 34px;
-          font-weight: 700;
-          line-height: 1;
+        .brand-logo-img {
+          height: 48px;
+          width: auto;
+          max-width: 180px;
+          object-fit: contain;
+          transition: transform 0.25s ease;
+          display: block;
+          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
         }
 
-        .logo-accent-plane {
-          position: absolute;
-          top: -2px;
-          right: -12px;
-          color: #f97316;
-          transform: rotate(25deg);
+        .brand-logo-img:hover {
+          transform: scale(1.04);
         }
 
-        .logo-subtag {
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.25em;
-          color: #fbe09b;
-          margin-top: 1px;
+        .brand-logo-img-drawer {
+          height: 40px;
+          width: auto;
+          object-fit: contain;
         }
 
-        /* Center Navigation Pill Bar */
+        /* Luxury Light Glassmorphism Center Navigation Capsule */
         .nav-center-links {
           display: flex;
           align-items: center;
           gap: 4px;
-          background: rgba(0, 0, 0, 0.45);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          padding: 5px 8px;
+          background: rgba(255, 255, 255, 0.72);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.85);
+          padding: 5px 6px;
           border-radius: 9999px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 2px 8px rgba(0, 0, 0, 0.04),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         .nav-link-btn {
           background: transparent;
           border: none;
-          color: rgba(255, 255, 255, 0.85);
-          font-size: 14px;
+          color: #334155;
+          font-size: 13.5px;
           font-weight: 600;
-          padding: 8px 18px;
+          padding: 7px 18px;
           border-radius: 9999px;
           cursor: pointer;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           display: inline-flex;
           align-items: center;
         }
 
         .nav-link-btn:hover {
-          color: #ffffff;
-          background: rgba(255, 255, 255, 0.18);
+          color: #0f172a;
+          background: rgba(15, 23, 42, 0.06);
         }
 
         .nav-link-btn.active {
           color: #ffffff;
-          background: rgba(255, 255, 255, 0.28);
+          background: #0f172a;
+          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
           font-weight: 700;
         }
 
@@ -307,13 +334,19 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
 
         /* Mobile Drawer */
         .mobile-menu-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.65);
-          backdrop-filter: blur(6px);
-          z-index: 200;
-          display: flex;
-          justify-content: flex-end;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          background: rgba(15, 23, 42, 0.78) !important;
+          backdrop-filter: blur(12px) !important;
+          -webkit-backdrop-filter: blur(12px) !important;
+          z-index: 999999 !important;
+          display: flex !important;
+          justify-content: flex-end !important;
           animation: fadeInOverlay 0.25s ease forwards;
         }
 
@@ -323,15 +356,17 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .mobile-menu-drawer {
-          width: 310px;
-          max-width: 85vw;
-          height: 100%;
-          background: #ffffff;
-          padding: 28px 24px;
-          display: flex;
-          flex-direction: column;
-          box-shadow: -4px 0 28px rgba(0,0,0,0.25);
+          width: 320px !important;
+          max-width: 85vw !important;
+          height: 100vh !important;
+          background: #ffffff !important;
+          padding: 28px 24px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          box-shadow: -10px 0 35px rgba(0, 0, 0, 0.4) !important;
           animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          position: relative !important;
+          z-index: 1000000 !important;
         }
 
         @keyframes slideInRight {
@@ -423,41 +458,29 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         .show-mobile-only { display: none; }
 
         @media (max-width: 900px) {
-          .navbar-wrapper { padding-top: 14px; }
-          .hidden-mobile { display: none; }
-          .show-mobile-only { display: inline-flex; }
-          .hidden-sm { display: none; }
-          .nav-cta { padding: 6px 12px 6px 14px; font-size: 12px; gap: 6px; }
-          .nav-cta .btn-badge-icon { width: 24px; height: 24px; }
+          .navbar-wrapper { padding-top: 12px; padding-bottom: 12px; }
+          .hidden-mobile { display: none !important; }
+          .show-mobile-only { display: inline-flex !important; }
+          .hidden-sm { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+          .nav-cta { display: none !important; }
         }
 
         @media (max-width: 480px) {
           .nav-logo .logo-text {
-            font-size: 24px;
+            font-size: 22px;
           }
           .logo-subtag {
             font-size: 8px;
           }
-          .nav-cta {
-            padding: 6px 10px 6px 12px;
-            font-size: 11px;
-          }
-          .nav-cta .btn-badge-icon {
-            width: 22px;
-            height: 22px;
-          }
           .mobile-hamburger-btn {
-            padding: 7px 10px;
-          }
-        }
-
-        @media (max-width: 360px) {
-          .nav-cta span:first-child {
-            display: none;
-          }
-          .nav-cta {
-            padding: 6px;
-            border-radius: 50%;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
           }
         }
       `}</style>
