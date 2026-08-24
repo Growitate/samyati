@@ -846,41 +846,6 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
               </div>
             </div>
 
-            {/* 5 Package-Specific FAQs Accordion Section */}
-            <div id="faq-section" className="detail-card-box faq-card-box">
-              <div className="faq-box-header">
-                <span className="faq-eyebrow-pill">Got Questions?</span>
-                <h2 className="card-box-title">Frequently Asked Questions</h2>
-                <p className="card-box-paragraph">Everything you need to know about booking <strong>{packageData.title}</strong>.</p>
-              </div>
-
-              <div className="package-faq-accordion-list">
-                {packageFaqs.map((faq, idx) => {
-                  const isOpen = openFaqIdx === idx;
-                  return (
-                    <div key={idx} className={`pkg-faq-item ${isOpen ? 'open' : ''}`}>
-                      <button 
-                        type="button"
-                        className="pkg-faq-question-btn" 
-                        onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
-                      >
-                        <span className="faq-q-text">{faq.q}</span>
-                        <span className="faq-toggle-icon">
-                          {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                        </span>
-                      </button>
-
-                      {isOpen && (
-                        <div className="pkg-faq-answer-body">
-                          <p>{faq.a}</p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Quick Quote Inquiry Form Block */}
             <div id="inquiry-section" className="detail-card-box form-card-box">
               <h2 className="card-box-title">Get a Free Custom Price Quote</h2>
@@ -956,6 +921,41 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   </button>
                 </form>
               )}
+            </div>
+
+            {/* 5 Package-Specific FAQs Accordion Section */}
+            <div id="faq-section" className="detail-card-box faq-card-box">
+              <div className="faq-box-header">
+                <span className="faq-eyebrow-pill">Got Questions?</span>
+                <h2 className="card-box-title">Frequently Asked Questions</h2>
+                <p className="card-box-paragraph">Everything you need to know about booking <strong>{packageData.title}</strong>.</p>
+              </div>
+
+              <div className="package-faq-accordion-list">
+                {packageFaqs.map((faq, idx) => {
+                  const isOpen = openFaqIdx === idx;
+                  return (
+                    <div key={idx} className={`pkg-faq-item ${isOpen ? 'open' : ''}`}>
+                      <button 
+                        type="button"
+                        className="pkg-faq-question-btn" 
+                        onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
+                      >
+                        <span className="faq-q-text">{faq.q}</span>
+                        <span className="faq-toggle-icon">
+                          {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                        </span>
+                      </button>
+
+                      {isOpen && (
+                        <div className="pkg-faq-answer-body">
+                          <p>{faq.a}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
