@@ -87,7 +87,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
       {/* HERO BANNER WITH FAMOUS EIFFEL TOWER VIDESH BACKGROUND */}
       <section className="videsh-hero-banner">
         <img 
-          src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=85" 
+          src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=2000&q=90" 
           alt="Famous Eiffel Tower Paris Landmark Banner" 
           className="videsh-hero-bg-img" 
           onError={(e) => {
@@ -284,7 +284,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         .videsh-hero-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.25) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
           pointer-events: none;
         }
 
