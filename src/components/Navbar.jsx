@@ -398,7 +398,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .close-btn {
-          background: #f8fafc;
+          background: #fefce8;
           border: none;
           cursor: pointer;
           padding: 8px;
@@ -435,7 +435,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
 
         .mobile-nav-link:hover, .mobile-nav-link.active {
           color: #18181b;
-          background: #f8fafc;
+          background: #fefce8;
           font-weight: 700;
         }
 

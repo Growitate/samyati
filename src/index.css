@@ -6,13 +6,13 @@
   /* Spec Palette */
   --bg-dark: #0f1410;
   --bg-dark-panel: #1A1B16;
-  --bg-pale-yellow: #f8fafc;
+  --bg-pale-yellow: #fefce8;
   --bg-eyebrow-yellow: #FBEFA6;
-  --bg-butter: #f8fafc;
+  --bg-butter: #fefce8;
   --bg-pink: #F9D6DE;
   --bg-peach: #FFE0CE;
   --bg-light-blue: #D9E9F7;
-  --bg-card: #f8fafc;
+  --bg-card: #ffffff;
   --text-dark: #141613;
   --text-muted: #666C75;
   --text-light: #F3F4F6;
@@ -33,13 +33,13 @@ html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
   color: var(--text-dark);
-  background-color: #f8fafc;
+  background-color: #fefce8;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
   overflow-x: hidden;
-  background-color: #f8fafc;
+  background-color: #fefce8;
 }
 
 /* Container */

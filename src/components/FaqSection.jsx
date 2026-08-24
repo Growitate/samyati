@@ -113,7 +113,7 @@ export default function FaqSection({ onOpenOfferModal }) {
       <style>{`
         .faq-section-wrapper {
           padding: 85px 0;
-          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+          background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%);
           border-top: 1px solid #f1f5f9;
           border-bottom: 1px solid #e2e8f0;
           font-family: var(--font-sans);
@@ -213,7 +213,7 @@ export default function FaqSection({ onOpenOfferModal }) {
           width: 32px;
           height: 32px;
           border-radius: 50%;
-          background: #f8fafc;
+          background: #fefce8;
           display: flex;
           align-items: center;
           justify-content: center;

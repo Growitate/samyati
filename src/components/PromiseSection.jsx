@@ -281,7 +281,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
       <style>{`
         .promise-ai-section {
           position: relative;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           padding: 85px 0 95px;
           border-top: 1px solid #e2e8f0;
           border-bottom: 1px solid #e2e8f0;
@@ -470,7 +470,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           align-items: center;
           justify-content: space-between;
           padding: 16px 20px;
-          background: #f8fafc;
+          background: #fefce8;
           border-bottom: 1px solid #e2e8f0;
         }
 
@@ -547,7 +547,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         }
 
         .chat-msg-content {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           padding: 12px 16px;
           border-radius: 14px;
@@ -575,7 +575,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           display: flex;
           flex-direction: column;
           gap: 12px;
-          background: #f8fafc;
+          background: #fefce8;
           padding: 16px;
           border-radius: 16px;
           border: 1px solid #e2e8f0;
@@ -731,7 +731,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           display: flex;
           gap: 8px;
           padding: 12px 16px;
-          background: #f8fafc;
+          background: #fefce8;
           border-top: 1px solid #e2e8f0;
         }
 

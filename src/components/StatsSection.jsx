@@ -93,7 +93,7 @@ export default function StatsSection() {
       <style>{`
         .stats-section {
           position: relative;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           padding-top: 80px;
           padding-bottom: 0;
           overflow: hidden;

@@ -381,7 +381,7 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
             position: relative;
             display: flex;
             align-items: center;
-            background: #f8fafc;
+            background: #fefce8;
             border: 1.5px solid #e2e8f0;
             border-radius: 12px;
             transition: all 0.2s ease;
@@ -525,7 +525,7 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
           }
 
           .summary-ticket-box {
-            background: #f8fafc;
+            background: #fefce8;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 16px 20px;
@@ -612,7 +612,7 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
           }
 
           .btn-return-pro:hover {
-            background: #f8fafc;
+            background: #fefce8;
             border-color: #cbd5e1;
           }
 

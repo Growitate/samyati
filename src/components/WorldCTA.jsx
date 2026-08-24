@@ -308,7 +308,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
         .world-cta-section {
           position: relative;
           padding: 60px 0 50px;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           overflow: hidden;
         }
 

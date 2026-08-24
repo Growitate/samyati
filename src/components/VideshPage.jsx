@@ -255,7 +255,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
       <style>{`
         .videsh-page-fixed {
           position: relative;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           min-height: 100vh;
           color: #0f172a;
           padding-bottom: 80px;
@@ -640,7 +640,7 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
         }
 
         .drawer-item-card {
-          background: #f8fafc;
+          background: #fefce8;
           border-radius: 16px;
           overflow: hidden;
           border: 1px solid #e2e8f0;

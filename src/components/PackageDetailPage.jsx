@@ -1758,7 +1758,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
       <style>{`
         .package-detail-page-full {
           min-height: 100vh;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           padding-bottom: 0;
         }
 
@@ -1770,7 +1770,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
         /* Top Header */
         .pkg-page-top-header {
-          background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+          background: linear-gradient(180deg, #fefce8 0%, #f1f5f9 100%);
           padding-top: 125px;
           padding-bottom: 28px;
           border-bottom: 1px solid #e2e8f0;
@@ -1800,7 +1800,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .btn-top-back:hover {
-          background: #f8fafc;
+          background: #fefce8;
           border-color: #94a3b8;
           transform: translateX(-2px);
         }
@@ -2053,7 +2053,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           border: 1px solid #e2e8f0;
           border-radius: 14px;
           overflow: hidden;
-          background: #f8fafc;
+          background: #fefce8;
           transition: all 0.2s ease;
         }
 
@@ -2409,7 +2409,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           padding: 6px 14px;
           border-radius: 9999px;
@@ -2549,7 +2549,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         .stay-card-item {
           display: flex;
           gap: 14px;
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           border-radius: 14px;
           padding: 12px;
@@ -2795,7 +2795,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .people-selector-box {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           border-radius: 12px;
           padding: 12px;
@@ -2862,7 +2862,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           padding: 0 12px;
           border-radius: 12px;
           border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          background: #fefce8;
           font-size: 13px;
           font-weight: 600;
           color: #0f172a;
@@ -2888,7 +2888,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           padding: 0 12px;
           border-radius: 12px;
           border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          background: #fefce8;
           font-size: 13px;
           font-weight: 700;
           letter-spacing: 0.05em;
@@ -3012,7 +3012,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .btn-pro-get-quote-sub:hover {
-          background: #f8fafc;
+          background: #fefce8;
           border-color: #94a3b8;
           color: #0f172a;
         }
@@ -3067,7 +3067,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .related-tour-item:hover {
-          background: #f8fafc;
+          background: #fefce8;
         }
 
         .related-tour-thumb {
@@ -3134,7 +3134,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .btn-pro-plan-now:hover {
-          background: #f8fafc;
+          background: #fefce8;
           transform: translateY(-2px);
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
@@ -3249,7 +3249,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           border-radius: 16px;
           padding: 8px 16px;
@@ -3333,7 +3333,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           font-size: 14px;
           font-family: inherit;
           outline: none;
-          background: #f8fafc;
+          background: #fefce8;
           color: #0f172a;
           transition: all 0.2s ease;
         }
@@ -3350,7 +3350,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .counter-item {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1.5px solid #e2e8f0;
           border-radius: 14px;
           padding: 12px 16px;
@@ -3406,7 +3406,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
         .hotel-tier-card {
           border: 1.5px solid #e2e8f0;
-          background: #f8fafc;
+          background: #fefce8;
           border-radius: 14px;
           padding: 16px;
           cursor: pointer;
@@ -3463,7 +3463,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
         .addon-chip-card {
           border: 1.5px solid #e2e8f0;
-          background: #f8fafc;
+          background: #fefce8;
           border-radius: 12px;
           padding: 12px 14px;
           display: flex;
@@ -3575,7 +3575,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           align-items: flex-start;
           gap: 14px;
           cursor: pointer;
-          background: #f8fafc;
+          background: #fefce8;
           transition: all 0.25s ease;
           position: relative;
         }
@@ -3652,7 +3652,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
         /* Gateway Container */
         .payment-gateway-container {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1.5px solid #e2e8f0;
           border-radius: 18px;
           padding: 22px;
@@ -3825,7 +3825,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #f8fafc;
+          background: #fefce8;
           border: 1.5px solid #e2e8f0;
           padding: 10px 14px;
           border-radius: 12px;
@@ -4000,7 +4000,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         }
 
         .voucher-body-card {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1.5px solid #e2e8f0;
           border-radius: 18px;
           padding: 20px;

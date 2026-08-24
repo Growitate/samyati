@@ -87,7 +87,7 @@ export default function BlogSection() {
       <style>{`
         .blog-section {
           padding: 100px 0;
-          background-color: #f8fafc;
+          background-color: #fefce8;
         }
 
         .blog-header {

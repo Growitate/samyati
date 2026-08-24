@@ -216,7 +216,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
       <style>{`
         .featured-section {
           padding: 90px 0;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           overflow: hidden;
         }
 
@@ -381,7 +381,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         .tour-card {
           flex: 0 0 350px;
           width: 350px;
-          background-color: var(--bg-card, #f8fafc);
+          background-color: var(--bg-card, #ffffff);
           border-radius: var(--radius-card, 20px);
           overflow: hidden;
           box-shadow: 0 4px 18px rgba(0,0,0,0.04);

@@ -392,7 +392,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         .about-page-wrapper {
           position: relative;
           min-height: 100vh;
-          background: #f8fafc;
+          background: #fefce8;
           color: #0f172a;
           font-family: var(--font-sans);
         }
@@ -659,7 +659,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         }
 
         .milestone-step-item {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           border-radius: 16px;
           padding: 18px 20px;

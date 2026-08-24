@@ -156,7 +156,7 @@ export default function TestimonialsSection() {
       <style>{`
         .testimonials-section {
           padding: 100px 0;
-          background-color: #f8fafc;
+          background-color: #fefce8;
         }
 
         .stories-header-split {

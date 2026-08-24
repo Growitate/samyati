@@ -379,7 +379,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
       <style>{`
         .contact-page-wrapper {
           min-height: 100vh;
-          background-color: #f8fafc;
+          background-color: #fefce8;
           padding-bottom: 80px;
           font-family: var(--font-sans);
           color: #0f172a;
@@ -618,7 +618,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #f8fafc;
+          background: #fefce8;
           border: 1px solid #e2e8f0;
           padding: 8px 12px;
           border-radius: 12px;
@@ -779,7 +779,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         .quick-chips-wrapper {
           margin-bottom: 28px;
           padding: 16px 20px;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          background: linear-gradient(135deg, #fefce8 0%, #f1f5f9 100%);
           border: 1px solid #e2e8f0;
           border-radius: 16px;
         }
@@ -855,7 +855,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           font-family: inherit;
           outline: none;
           transition: all 0.25s ease;
-          background: #f8fafc;
+          background: #fefce8;
           color: #0f172a;
         }
         .form-input:focus {
@@ -876,7 +876,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         }
 
         .budget-radio-btn {
-          background: #f8fafc;
+          background: #fefce8;
           border: 1.5px solid #e2e8f0;
           color: #475569;
           font-size: 12.5px;
@@ -1012,7 +1012,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           align-items: center;
           gap: 12px;
           padding: 10px;
-          background: #f8fafc;
+          background: #fefce8;
           border-radius: 12px;
           border: 1px solid #f1f5f9;
         }
