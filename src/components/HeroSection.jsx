@@ -75,14 +75,14 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
       <style>{`
         .hero-combined-section {
           position: relative;
-          min-height: 720px;
+          min-height: 690px;
           background-image: url('/hero-bright-mountain.jpg');
           background-size: cover;
-          background-position: center center;
+          background-position: center 25%;
           display: flex;
           align-items: center;
-          padding-top: 110px;
-          padding-bottom: 120px;
+          padding-top: 45px;
+          padding-bottom: 110px;
           overflow: hidden;
         }
 
@@ -108,7 +108,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           justify-content: space-between;
           position: relative;
           min-height: 490px;
-          transform: translateY(-35px);
+          transform: translateY(-110px);
         }
 
         .hero-combined-left {
@@ -147,9 +147,9 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
 
         .hero-combined-title {
           font-size: clamp(38px, 5.4vw, 70px);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          margin-bottom: 24px;
+          line-height: 1.25;
+          letter-spacing: -0.01em;
+          margin-bottom: 28px;
         }
 
         .title-white-bold {
@@ -171,9 +171,10 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           color: rgba(255, 255, 255, 0.92);
           font-size: clamp(15px, 1.7vw, 18px);
           font-weight: 400;
-          line-height: 1.65;
-          max-width: 540px;
-          margin-bottom: 30px;
+          line-height: 1.8;
+          letter-spacing: 0.02em;
+          max-width: 560px;
+          margin-bottom: 36px;
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
         }
 
@@ -181,7 +182,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         .hero-combined-search-form {
           width: 100%;
           max-width: 580px;
-          margin-bottom: 26px;
+          margin-bottom: 34px;
         }
 
         .hero-combined-search-pill {
@@ -245,10 +246,11 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         .hero-combined-trust-bar {
           display: flex;
           align-items: center;
-          gap: 20px;
-          color: rgba(255, 255, 255, 0.9);
+          gap: 28px;
+          color: rgba(255, 255, 255, 0.92);
           font-size: 12.5px;
           font-weight: 600;
+          letter-spacing: 0.03em;
           flex-wrap: wrap;
         }
 
@@ -310,23 +312,29 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
 
         @media (max-width: 768px) {
           .hero-combined-section {
-            min-height: 100vh;
-            padding-top: 140px;
-            padding-bottom: 200px;
+            min-height: 85vh;
+            padding-top: 55px;
+            padding-bottom: 130px;
+            background-position: center 20%;
+          }
+          .hero-combined-left {
+            transform: translateY(-40px);
           }
           .hero-combined-title {
             font-size: clamp(32px, 8.2vw, 44px);
-            margin-bottom: 16px;
-            line-height: 1.12;
+            margin-bottom: 22px;
+            line-height: 1.25;
+            letter-spacing: 0.01em;
           }
           .hero-combined-subhead {
             font-size: 14.5px;
-            margin-bottom: 24px;
-            line-height: 1.6;
+            margin-bottom: 28px;
+            line-height: 1.75;
+            letter-spacing: 0.02em;
           }
           .hero-combined-search-form {
             max-width: 100%;
-            margin-bottom: 22px;
+            margin-bottom: 28px;
           }
           .hero-combined-search-pill {
             flex-direction: row;

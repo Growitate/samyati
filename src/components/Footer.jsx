@@ -237,7 +237,7 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
               © {new Date().getFullYear()} Samyati World Private Limited · All Rights Reserved.
             </span>
             <span className="crafted-text">
-              Crafted with <Heart size={12} className="inline text-rose-500 fill-rose-500 mx-1" /> for unforgettable journeys.
+              Crafted with <Heart size={12} className="inline text-rose-500 fill-rose-500 mx-1" /> for unforgettable journeys. Built by <a href="https://growitate.com" target="_blank" rel="noreferrer" className="growitate-link">Growitate</a>
             </span>
           </div>
 
@@ -368,9 +368,9 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
         }
 
         .footer-brand-logo-img {
-          height: 52px;
+          height: 105px;
           width: auto;
-          max-width: 200px;
+          max-width: 340px;
           object-fit: contain;
           display: block;
           filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4));
@@ -601,6 +601,18 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
         .crafted-text {
           font-size: 11px;
           color: rgba(255, 255, 255, 0.4);
+        }
+
+        .growitate-link {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          font-weight: 600;
+          transition: color 0.2s ease;
+        }
+
+        .growitate-link:hover {
+          color: #38bdf8;
         }
 
         .bottom-right-pro {

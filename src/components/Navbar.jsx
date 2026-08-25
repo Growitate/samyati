@@ -214,7 +214,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 60px;
+          height: 88px;
         }
 
         .nav-zone-left {
@@ -229,9 +229,9 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .brand-logo-img {
-          height: 48px;
+          height: 95px;
           width: auto;
-          max-width: 180px;
+          max-width: 320px;
           object-fit: contain;
           transition: transform 0.25s ease;
           display: block;
@@ -243,7 +243,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .brand-logo-img-drawer {
-          height: 40px;
+          height: 70px;
           width: auto;
           object-fit: contain;
         }

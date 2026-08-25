@@ -9,6 +9,7 @@ import LocationMarquee from './components/LocationMarquee';
 import TopDestinations from './components/TopDestinations';
 import ProcessSection from './components/ProcessSection';
 import StatsSection from './components/StatsSection';
+import TestimonialsSection from './components/TestimonialsSection';
 import FounderStorySection from './components/FounderStorySection';
 import WorldCTA from './components/WorldCTA';
 import NewsletterBand from './components/NewsletterBand';
@@ -395,6 +396,8 @@ export default function App() {
           <ProcessSection />
 
           <StatsSection />
+
+          <TestimonialsSection />
 
           <FounderStorySection />
 

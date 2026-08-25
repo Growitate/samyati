@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Settings, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { DESTINATIONS } from '../data/travelData';
 
@@ -49,12 +49,15 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
   const handleScrollUpdate = () => {
     if (trackRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
-      setCanScrollLeft(scrollLeft > 10);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      const leftOverflow = scrollLeft > 10;
+      const rightOverflow = scrollLeft < scrollWidth - clientWidth - 10;
+
+      setCanScrollLeft((prev) => (prev !== leftOverflow ? leftOverflow : prev));
+      setCanScrollRight((prev) => (prev !== rightOverflow ? rightOverflow : prev));
 
       const step = getCardStep();
-      const index = Math.round(scrollLeft / step);
-      setActiveCardIndex(Math.min(Math.max(0, index), DESTINATIONS.length - 1));
+      const index = Math.min(Math.max(0, Math.round(scrollLeft / step)), DESTINATIONS.length - 1);
+      setActiveCardIndex((prev) => (prev !== index ? index : prev));
     }
   };
 
@@ -88,35 +91,23 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
     }
   };
 
-  // Quadratic Bezier arc math: start (30,15), control (450,85), end (870,15)
-  const getArcPoint = (t) => {
+  // Static arc nodes — computed once, never re-computed on scroll/state change
+  const arcNodes = useMemo(() => {
+    const tValues = [0.06, 0.20, 0.35, 0.50, 0.65, 0.80, 0.94];
+    const KEY_DEST_INDICES = [0, 2, 4, 6, 8, 10, 12];
     const p0 = { x: 30, y: 15 };
     const p1 = { x: 450, y: 85 };
     const p2 = { x: 870, y: 15 };
-    const oneMinusT = 1 - t;
-    return {
-      x: oneMinusT * oneMinusT * p0.x + 2 * oneMinusT * t * p1.x + t * t * p2.x,
-      y: oneMinusT * oneMinusT * p0.y + 2 * oneMinusT * t * p1.y + t * t * p2.y
-    };
-  };
 
-  // 7 featured milestone nodes mapped to key destinations across the array
-  const KEY_DEST_INDICES = [0, 2, 4, 6, 8, 10, 12]; // Kashmir, Kerala, Rajasthan, Goa, Bali, Switzerland, Maldives
-  const tValues = [0.06, 0.20, 0.35, 0.50, 0.65, 0.80, 0.94];
-  
-  const arcNodes = tValues.map((t, i) => {
-    const destIdx = KEY_DEST_INDICES[i] || i;
-    const dest = DESTINATIONS[destIdx] || DESTINATIONS[0];
-    const point = getArcPoint(t);
-    const isNodeActive = Math.abs(activeCardIndex - destIdx) <= 1;
-
-    return {
-      ...point,
-      dest,
-      destIndex: destIdx,
-      isActive: isNodeActive
-    };
-  });
+    return tValues.map((t, i) => {
+      const oneMinusT = 1 - t;
+      const x = oneMinusT * oneMinusT * p0.x + 2 * oneMinusT * t * p1.x + t * t * p2.x;
+      const y = oneMinusT * oneMinusT * p0.y + 2 * oneMinusT * t * p1.y + t * t * p2.y;
+      const destIdx = KEY_DEST_INDICES[i] || i;
+      const dest = DESTINATIONS[destIdx] || DESTINATIONS[0];
+      return { x, y, dest, destIndex: destIdx };
+    });
+  }, []); // empty deps — truly static, never re-runs
 
   return (
     <section className="destinations-section" id="destinations">
@@ -138,81 +129,50 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
             <svg viewBox="0 0 900 85" fill="none" className="flight-arc-svg">
               <path
                 d="M 30 15 Q 450 85 870 15"
-                stroke="#d97706"
+                stroke="rgba(217, 119, 6, 0.45)"
                 strokeWidth="2"
-                strokeDasharray="4 8"
                 strokeLinecap="round"
                 fill="none"
               />
 
               {arcNodes.map((node, idx) => (
-                <g
+                <circle
                   key={idx}
-                  className={`flag-node-group ${node.isActive ? 'active-node' : ''}`}
-                  onClick={() => scrollToDestination(node.destIndex)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {node.isActive && (
-                    <circle
-                      cx={node.x}
-                      cy={node.y}
-                      r={18}
-                      fill="none"
-                      stroke="#d97706"
-                      strokeWidth="1.5"
-                      strokeDasharray="3 3"
-                      className="active-pulse-ring"
-                    />
-                  )}
-
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={node.isActive ? 13 : 10}
-                    fill="#ffffff"
-                    stroke={node.isActive ? '#b45309' : '#d4b3a2'}
-                    strokeWidth={node.isActive ? 2.5 : 1.5}
-                    className="flag-node-circle"
-                  />
-
-                  <text
-                    x={node.x}
-                    y={node.y + (node.isActive ? 4 : 3)}
-                    fontSize={node.isActive ? "12" : "10"}
-                    textAnchor="middle"
-                    className="flag-node-emoji"
-                  >
-                    {node.dest.flag}
-                  </text>
-                </g>
+                  cx={node.x}
+                  cy={node.y}
+                  r={11}
+                  fill="#ffffff"
+                  stroke="#d4b3a2"
+                  strokeWidth="1.5"
+                />
               ))}
             </svg>
           </div>
         </div>
 
         {/* Multi-Card Side-by-Side 2-Panel Carousel */}
-        <div 
+        <div
           className="multi-panel-showcase-wrapper"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <button 
-            className={`panel-scroll-arrow arrow-left ${!canScrollLeft ? 'disabled' : ''}`} 
-            onClick={() => handleScroll('left')} 
+          <button
+            className={`panel-scroll-arrow arrow-left ${!canScrollLeft ? 'disabled' : ''}`}
+            onClick={() => handleScroll('left')}
             disabled={!canScrollLeft}
             aria-label="Previous destinations"
           >
             <ChevronLeft size={20} />
           </button>
 
-          <div 
+          <div
             className="multi-panel-scroll-track"
             ref={trackRef}
             onScroll={handleScrollUpdate}
           >
             {DESTINATIONS.map((dest, idx) => (
-              <div 
-                key={dest.id} 
+              <div
+                key={dest.id}
                 ref={(el) => (cardRefs.current[idx] = el)}
                 className="destination-panel-card"
                 onClick={() => handleExploreDestination(dest)}
@@ -250,11 +210,11 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
                   <p className="panel-desc">{dest.description}</p>
 
                   <div className="panel-cta-row">
-                    <button 
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleExploreDestination(dest);
-                      }} 
+                      }}
                       className="btn-pill btn-pill-dark"
                       title={`Explore all ${dest.name} tours`}
                     >
@@ -269,9 +229,9 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
             ))}
           </div>
 
-          <button 
-            className={`panel-scroll-arrow arrow-right ${!canScrollRight ? 'disabled' : ''}`} 
-            onClick={() => handleScroll('right')} 
+          <button
+            className={`panel-scroll-arrow arrow-right ${!canScrollRight ? 'disabled' : ''}`}
+            onClick={() => handleScroll('right')}
             disabled={!canScrollRight}
             aria-label="Next destinations"
           >
@@ -374,22 +334,7 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
         }
 
         .flag-node-circle {
-          transition: all 0.3s ease;
           filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));
-        }
-
-        .flag-node-group:hover .flag-node-circle {
-          transform: scale(1.15);
-          stroke: #b45309;
-        }
-
-        .active-pulse-ring {
-          animation: spinPulse 6s linear infinite;
-        }
-
-        @keyframes spinPulse {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
         }
 
         /* Multi-Panel Side-by-Side Track */

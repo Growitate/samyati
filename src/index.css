@@ -59,6 +59,19 @@ body {
   padding: 0 0.15em;
 }
 
+/* Reduce motion for users who prefer it (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Eyebrow Pill */
 .eyebrow-pill {
   display: inline-flex;
