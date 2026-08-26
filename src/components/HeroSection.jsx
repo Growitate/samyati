@@ -20,7 +20,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           <div className="hero-combined-left">
             {/* Headline H1 */}
             <h1 className="hero-combined-title">
-              <span className="title-white-bold">Rediscover Yourself</span> <br />
+              <span className="title-white-bold">Rediscover Yourself </span>
               <span className="title-white-bold">With Every </span>
               <span className="title-teal-italic">Journey</span>
             </h1>
@@ -81,8 +81,8 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           background-position: center 25%;
           display: flex;
           align-items: center;
-          padding-top: 45px;
-          padding-bottom: 110px;
+          padding-top: 70px;
+          padding-bottom: 80px;
           overflow: hidden;
         }
 
@@ -108,11 +108,12 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           justify-content: space-between;
           position: relative;
           min-height: 490px;
-          transform: translateY(-110px);
+          transform: translateY(-25px);
         }
 
         .hero-combined-left {
-          max-width: 720px;
+          max-width: 1000px;
+          width: 100%;
           text-align: left;
           display: flex;
           flex-direction: column;
@@ -146,10 +147,12 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         }
 
         .hero-combined-title {
-          font-size: clamp(38px, 5.4vw, 70px);
-          line-height: 1.25;
-          letter-spacing: -0.01em;
-          margin-bottom: 28px;
+          font-size: clamp(38px, 5.2vw, 70px);
+          line-height: 1.38;
+          letter-spacing: 0.035em;
+          word-spacing: 0.08em;
+          transform: translateY(35px);
+          margin-bottom: 20px;
         }
 
         .title-white-bold {
@@ -165,23 +168,30 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           font-style: italic;
           font-weight: 600;
           text-shadow: 0 0 24px rgba(45, 212, 191, 0.45), 0 4px 24px rgba(0, 0, 0, 0.6);
+          margin-left: 0.2em;
         }
 
         .hero-combined-subhead {
-          color: rgba(255, 255, 255, 0.92);
-          font-size: clamp(15px, 1.7vw, 18px);
+          color: rgba(255, 255, 255, 0.94);
+          font-size: clamp(16px, 1.85vw, 20px);
           font-weight: 400;
-          line-height: 1.8;
-          letter-spacing: 0.02em;
-          max-width: 560px;
-          margin-bottom: 36px;
+          line-height: 1.9;
+          letter-spacing: 0.04em;
+          word-spacing: 0.04em;
+          max-width: 900px;
+          width: 100%;
+          margin-top: 8px;
+          transform: translateY(30px);
+          margin-bottom: 28px;
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
         }
 
         /* Search Form Pill */
         .hero-combined-search-form {
           width: 100%;
-          max-width: 580px;
+          max-width: 680px;
+          margin-top: 18px;
+          transform: translateY(4px);
           margin-bottom: 34px;
         }
 
@@ -252,6 +262,8 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           font-weight: 600;
           letter-spacing: 0.03em;
           flex-wrap: wrap;
+          margin-top: 16px;
+          transform: translateY(12px);
         }
 
         .trust-item {
@@ -318,7 +330,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
             background-position: center 20%;
           }
           .hero-combined-left {
-            transform: translateY(-40px);
+            transform: translateY(0px);
           }
           .hero-combined-title {
             font-size: clamp(32px, 8.2vw, 44px);

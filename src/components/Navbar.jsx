@@ -54,10 +54,10 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
               onClick={(e) => { e.preventDefault(); handleNav('home'); }}
               className="nav-logo"
             >
-              <img 
-                src="/samyati-logo.png" 
-                alt="Samyati The World" 
-                className="brand-logo-img" 
+              <img
+                src="/samyati-logo.png"
+                alt="Samyati The World"
+                className="brand-logo-img"
               />
             </a>
           </div>
@@ -127,15 +127,15 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
           <div className="mobile-menu-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="mobile-menu-header">
-              <a 
-                href="#" 
+              <a
+                href="#"
                 onClick={(e) => { e.preventDefault(); handleNav('home'); setMobileMenuOpen(false); }}
                 className="nav-logo"
               >
-                <img 
-                  src="/samyati-logo.png" 
-                  alt="Samyati The World" 
-                  className="brand-logo-img-drawer" 
+                <img
+                  src="/samyati-logo.png"
+                  alt="Samyati The World"
+                  className="brand-logo-img-drawer"
                 />
               </a>
               <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>
@@ -214,7 +214,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 88px;
+          height: 74px;
         }
 
         .nav-zone-left {
@@ -229,9 +229,9 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .brand-logo-img {
-          height: 95px;
+          height: 72px;
           width: auto;
-          max-width: 320px;
+          max-width: 250px;
           object-fit: contain;
           transition: transform 0.25s ease;
           display: block;

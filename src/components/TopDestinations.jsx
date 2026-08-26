@@ -127,24 +127,46 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
           {/* Dotted Flight Path Arc SVG with Country Flag Nodes */}
           <div className="flight-path-container">
             <svg viewBox="0 0 900 85" fill="none" className="flight-arc-svg">
+              <defs>
+                <linearGradient id="flightArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#f59e0b" />
+                  <stop offset="25%" stopColor="#ea580c" />
+                  <stop offset="50%" stopColor="#d97706" />
+                  <stop offset="75%" stopColor="#ea580c" />
+                  <stop offset="100%" stopColor="#f59e0b" />
+                </linearGradient>
+                <filter id="arcGlow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="2.5" floodColor="#d97706" floodOpacity="0.35" />
+                </filter>
+              </defs>
+
               <path
                 d="M 30 15 Q 450 85 870 15"
-                stroke="rgba(217, 119, 6, 0.45)"
-                strokeWidth="2"
+                stroke="url(#flightArcGrad)"
+                strokeWidth="4"
                 strokeLinecap="round"
                 fill="none"
+                filter="url(#arcGlow)"
               />
 
               {arcNodes.map((node, idx) => (
-                <circle
-                  key={idx}
-                  cx={node.x}
-                  cy={node.y}
-                  r={11}
-                  fill="#ffffff"
-                  stroke="#d4b3a2"
-                  strokeWidth="1.5"
-                />
+                <g key={idx}>
+                  <circle
+                    cx={node.x}
+                    cy={node.y}
+                    r={11}
+                    fill="#ffffff"
+                    stroke="#d97706"
+                    strokeWidth="2.5"
+                    className="flag-node-circle"
+                  />
+                  <circle
+                    cx={node.x}
+                    cy={node.y}
+                    r={4.5}
+                    fill="#d97706"
+                  />
+                </g>
               ))}
             </svg>
           </div>
@@ -654,7 +676,7 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
         }
 
         @media (max-width: 600px) {
-          .flight-path-container { display: none; }
+          .flight-path-container { display: block; max-width: 100%; margin: 6px auto 10px; }
           .destinations-h2 { font-size: clamp(24px, 6.5vw, 32px); }
           .facepile-btn { width: 100%; max-width: 320px; justify-content: center; font-size: 12px; padding: 8px 14px; }
         }
