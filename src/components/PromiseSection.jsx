@@ -104,8 +104,9 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
             </div>
 
             <h2 className="promise-h2-title">
-              From “where next?” <br />
-              to a real plan.
+              From “Where <br />
+              Next?” <br />
+              To A Real Plan
             </h2>
 
             <p className="promise-header-sub">
@@ -316,13 +317,13 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         }
 
         .promise-h2-title {
-          font-size: clamp(32px, 3.5vw, 48px);
-          font-weight: 800;
+          font-size: clamp(34px, 4vw, 52px);
+          font-weight: 900;
           color: #0f172a;
-          line-height: 1.18;
-          margin-top: 12px;
-          margin-bottom: 16px;
-          letter-spacing: -0.02em;
+          line-height: 1.14;
+          margin-top: 14px;
+          margin-bottom: 18px;
+          letter-spacing: -0.025em;
         }
 
         .promise-h2-title .accent-serif,
@@ -918,8 +919,9 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         @media (max-width: 768px) {
           .hidden-desktop-br { display: block; }
           .promise-h2-title {
-            font-size: clamp(25px, 6.8vw, 32px) !important;
-            line-height: 1.25 !important;
+            font-size: clamp(26px, 7vw, 36px) !important;
+            font-weight: 900 !important;
+            line-height: 1.18 !important;
             margin-bottom: 14px !important;
           }
           .eyebrow-pill-gold {
