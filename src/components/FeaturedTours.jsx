@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Settings, Clock, Star, Eye, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
+import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tiltEffect';
 
 export default function FeaturedTours({ onSelectPackage, onNavigate }) {
+  const { packages: PACKAGES } = usePackages();
   const [filterCategory, setFilterCategory] = useState('Domestic');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -67,7 +69,8 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
               <Settings className="gear-icon" size={12} />
             </div>
             <h2 className="section-h2">
-              Packages <span className="accent-serif">Crafted</span> Around<br />Your Travel Style
+              <span className="h2-line">Packages <span className="accent-serif">Crafted</span></span>{' '}
+              <span className="h2-line">Around Your Travel Style</span>
             </h2>
           </div>
 
@@ -117,8 +120,10 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
               {displayPackages.map((tour) => (
                 <div
                   key={tour.id}
-                  className="tour-card"
+                  className="tour-card tilt-card"
                   onClick={() => onSelectPackage && onSelectPackage(tour)}
+                  onMouseMove={(e) => handleCardMouseMove(e, 7)}
+                  onMouseLeave={handleCardMouseLeave}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -280,10 +285,26 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         .mb-2 { margin-bottom: 10px; }
 
         .section-h2 {
-          font-size: clamp(30px, 4vw, 48px);
+          font-size: clamp(32px, 4.2vw, 50px);
           font-weight: 800;
           color: var(--text-dark);
           line-height: 1.15;
+          letter-spacing: -0.02em;
+        }
+
+        .section-h2 .h2-line {
+          display: inline;
+        }
+
+        .section-h2 .accent-serif {
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 700;
+          font-size: 1.18em;
+          color: #d97706;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+          display: inline-block;
         }
 
         .header-right {
@@ -592,9 +613,17 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
         }
 
         @media (max-width: 768px) {
-          .featured-section { padding: 60px 0; }
+          .featured-section { padding: 48px 0; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+          .section-h2 {
+            font-size: clamp(23px, 6.2vw, 34px);
+            line-height: 1.22;
+          }
+          .section-h2 .h2-line {
+            display: block;
+          }
           .header-right { width: 100%; justify-content: flex-start; }
+          .featured-side-btn { display: none; }
           .tour-card { flex: 0 0 285px; width: 285px; }
           .card-photo-wrapper { height: 190px; }
           .card-body { padding: 18px 16px; }

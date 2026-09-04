@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, PhoneCall, Mail, MapPin, MessageSquare, Clock, Send, ShieldCheck, Check, Sparkles, Star, Headset, Copy, ChevronDown, ChevronUp, UserCheck, Zap, Globe2 } from 'lucide-react';
 import { BRAND_INFO } from '../data/travelData';
+import { scrollTo } from '../smoothScroll';
+import { handleCardMouseMove, handleCardMouseLeave } from '../utils/tiltEffect';
 
 const POPULAR_DESTINATIONS = [
-  'Kashmir', 'Kerala', 'Bali', 'Dubai', 'Switzerland', 'Maldives', 'Himachal', 'Rajasthan'
+  'Kashmir', 'Kerala', 'Bali', 'Vietnam', 'Thailand', 'Dubai', 'Switzerland', 'Maldives', 'Himachal', 'Rajasthan'
 ];
 
 export default function ContactPage({ onBack, onOpenOfferModal }) {
@@ -24,7 +26,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
   const [openFaq, setOpenFaq] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
   }, []);
 
   const handleSelectChip = (dest) => {
@@ -74,7 +76,8 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
             </div>
 
             <h1 className="contact-hero-title">
-              Get in Touch with Our <span className="gold-serif">Travel Specialists</span>
+              Get in Touch with Our <br className="hero-title-break" />
+              <span className="gold-serif">Travel Specialists</span>
             </h1>
 
             <p className="contact-hero-subtitle">
@@ -111,7 +114,11 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         {/* DIRECT CONTACT CHANNELS (4 CARDS) */}
         <div className="contact-channels-grid">
           {/* Phone Card */}
-          <div className="channel-card card-phone">
+          <div 
+            className="channel-card card-phone tilt-card"
+            onMouseMove={(e) => handleCardMouseMove(e, 8)}
+            onMouseLeave={handleCardMouseLeave}
+          >
             <div className="channel-header">
               <div className="channel-icon-box bg-amber-500/10 text-amber-500 border-amber-500/20">
                 <PhoneCall size={22} />
@@ -141,7 +148,11 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           </div>
 
           {/* WhatsApp Card */}
-          <div className="channel-card card-whatsapp">
+          <div 
+            className="channel-card card-whatsapp tilt-card"
+            onMouseMove={(e) => handleCardMouseMove(e, 8)}
+            onMouseLeave={handleCardMouseLeave}
+          >
             <div className="channel-header">
               <div className="channel-icon-box bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
                 <MessageSquare size={22} />
@@ -168,7 +179,11 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           </div>
 
           {/* Email Card */}
-          <div className="channel-card card-email">
+          <div 
+            className="channel-card card-email tilt-card"
+            onMouseMove={(e) => handleCardMouseMove(e, 8)}
+            onMouseLeave={handleCardMouseLeave}
+          >
             <div className="channel-header">
               <div className="channel-icon-box bg-sky-500/10 text-sky-500 border-sky-500/20">
                 <Mail size={22} />
@@ -388,7 +403,12 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         /* 1. LUXURY DARK HERO BANNER */
         .contact-hero-banner {
           position: relative;
-          background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #172554 100%);
+          background: #0f172a;
+          background-image: 
+            linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%),
+            url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2000&q=85');
+          background-size: cover;
+          background-position: center;
           padding-top: 135px;
           padding-bottom: 60px;
           overflow: hidden;
@@ -402,20 +422,35 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           filter: blur(80px);
           pointer-events: none;
           opacity: 0.25;
+          will-change: transform;
         }
         .orb-1 {
-          width: 350px;
-          height: 350px;
+          width: 380px;
+          height: 380px;
           background: #f59e0b;
           top: -80px;
           left: 10%;
+          animation: floatOrb1 12s ease-in-out infinite alternate;
         }
         .orb-2 {
-          width: 400px;
-          height: 400px;
+          width: 420px;
+          height: 420px;
           background: #3b82f6;
           bottom: -100px;
           right: 5%;
+          animation: floatOrb2 16s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatOrb1 {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+          50% { transform: translate(45px, 35px) scale(1.1); opacity: 0.35; }
+          100% { transform: translate(-25px, 55px) scale(0.95); opacity: 0.2; }
+        }
+
+        @keyframes floatOrb2 {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+          50% { transform: translate(-55px, -45px) scale(1.15); opacity: 0.35; }
+          100% { transform: translate(35px, -25px) scale(0.9); opacity: 0.2; }
         }
 
         .relative-z {
@@ -447,7 +482,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         }
         .btn-top-back:hover {
           background: rgba(255, 255, 255, 0.2);
-          transform: translateX(-3px);
+          transform: translateX(-4px);
           border-color: rgba(255, 255, 255, 0.35);
         }
 
@@ -476,41 +511,74 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          background: rgba(245, 158, 11, 0.12);
-          border: 1px solid rgba(245, 158, 11, 0.3);
+          background: rgba(217, 119, 6, 0.15);
+          border: 1px solid rgba(251, 191, 36, 0.35);
           color: #fef08a;
-          padding: 5px 16px;
-          border-radius: 9999px;
           font-size: 11.5px;
           font-weight: 800;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.12em;
+          padding: 7px 20px;
+          border-radius: 9999px;
           text-transform: uppercase;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
           margin-bottom: 18px;
+          animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .eyebrow-pill svg {
+          animation: headsetPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes headsetPulse {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6)); }
         }
 
         .contact-hero-title {
-          font-size: clamp(32px, 4vw, 52px);
+          font-size: clamp(34px, 5vw, 56px);
           font-weight: 800;
-          line-height: 1.18;
+          line-height: 1.15;
           color: #ffffff;
-          margin-bottom: 16px;
-          letter-spacing: -0.02em;
+          margin-top: 14px;
+          margin-bottom: 20px;
+          letter-spacing: -0.025em;
+          text-align: center;
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
         }
 
         .gold-serif {
-          font-family: var(--font-serif-italic);
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          font-weight: 600;
-          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+          font-weight: 700;
+          font-size: 1.18em;
+          display: inline-block;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef08a 100%);
+          background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+          color: #f59e0b;
+          animation: goldShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes goldShimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         .contact-hero-subtitle {
-          font-size: 16px;
-          color: rgba(255, 255, 255, 0.78);
-          line-height: 1.6;
-          margin-bottom: 32px;
+          font-size: 17.5px;
+          color: #cbd5e1;
+          line-height: 1.7;
+          margin-bottom: 34px;
+          max-width: 740px;
+          margin-left: auto;
+          margin-right: auto;
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
         }
 
         .hero-trust-chips-row {
@@ -519,19 +587,41 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           justify-content: center;
           flex-wrap: wrap;
           gap: 12px;
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
         }
 
         .hero-trust-chip {
           display: inline-flex;
           align-items: center;
-          gap: 7px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          padding: 6px 14px;
+          gap: 8px;
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          padding: 9px 20px;
           border-radius: 9999px;
-          font-size: 12px;
+          font-size: 13.5px;
           font-weight: 600;
-          color: rgba(255, 255, 255, 0.9);
+          color: #f1f5f9;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-trust-chip:hover {
+          background: rgba(255, 255, 255, 0.16);
+          border-color: rgba(251, 191, 36, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(28px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         /* 2. MAIN CONTAINER & CONTACT CHANNELS GRID */
@@ -554,12 +644,34 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
           display: flex;
           flex-direction: column;
-          transition: all 0.3s ease;
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          animation: cardFadeScale 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+
+        .card-phone { animation-delay: 0.1s; }
+        .card-whatsapp { animation-delay: 0.22s; }
+        .card-email { animation-delay: 0.34s; }
+
+        @keyframes cardFadeScale {
+          from {
+            opacity: 0;
+            transform: translateY(32px) scale(0.96);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
         .channel-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+          transform: translateY(-8px) scale(1.015);
+          box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
           border-color: #cbd5e1;
+        }
+
+        .channel-card:hover .channel-icon-box {
+          transform: scale(1.12) rotate(6deg);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .channel-header {
@@ -577,6 +689,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           align-items: center;
           justify-content: center;
           border: 1px solid;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .channel-badge {
@@ -586,7 +699,12 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           border-radius: 9999px;
           text-transform: uppercase;
           letter-spacing: 0.03em;
+          transition: transform 0.25s ease;
         }
+        .channel-card:hover .channel-badge {
+          transform: scale(1.06);
+        }
+
         .badge-green { background: #ecfdf5; color: #059669; }
         .badge-emerald { background: #d1fae5; color: #047857; }
         .badge-sky { background: #e0f2fe; color: #0284c7; }
@@ -623,6 +741,11 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           padding: 8px 12px;
           border-radius: 12px;
           margin-bottom: 16px;
+          transition: border-color 0.25s ease, background 0.25s ease;
+        }
+        .channel-card:hover .channel-value-row {
+          border-color: #cbd5e1;
+          background: #ffffff;
         }
 
         .channel-number, .channel-email {
@@ -644,11 +767,12 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          transition: all 0.2s;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-copy-chip:hover {
           background: #0f172a;
           color: #ffffff;
+          transform: scale(1.05);
         }
 
         .channel-action-btn {
@@ -662,7 +786,17 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           font-size: 13px;
           font-weight: 700;
           text-decoration: none;
-          transition: all 0.25s ease;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .channel-action-btn svg {
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .channel-action-btn:hover svg {
+          transform: translateX(4px) scale(1.15);
         }
 
         .btn-call {
@@ -671,7 +805,8 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         }
         .btn-call:hover {
           background: #1e293b;
-          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+          box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+          transform: translateY(-2px);
         }
 
         .btn-whatsapp {
@@ -680,7 +815,8 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         }
         .btn-whatsapp:hover {
           background: #059669;
-          box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+          transform: translateY(-2px);
         }
 
         .btn-email {
@@ -689,7 +825,8 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
         }
         .btn-email:hover {
           background: #0369a1;
-          box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+          box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+          transform: translateY(-2px);
         }
 
         .hq-hours-tag {
@@ -719,6 +856,13 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
           border: 1px solid #e2e8f0;
           overflow: hidden;
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+          transition: box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .contact-form-card:hover {
+          box-shadow: 0 28px 60px rgba(15, 23, 42, 0.1);
+          border-color: #cbd5e1;
         }
 
         .contact-form-card::before {
@@ -728,7 +872,14 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+          background: linear-gradient(90deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+          background-size: 200% 100%;
+          animation: gradientFlow 4s linear infinite;
+        }
+
+        @keyframes gradientFlow {
+          0% { background-position: 0% 0%; }
+          100% { background-position: 200% 0%; }
         }
 
         .form-card-header {
@@ -766,6 +917,21 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           padding: 6px 14px;
           border-radius: 9999px;
           box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08);
+          animation: pulseGlowPill 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlowPill {
+          0%, 100% { box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08); border-color: #fef08a; }
+          50% { box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25); border-color: #f59e0b; }
+        }
+
+        .response-time-pill svg {
+          animation: zapPulse 1.8s infinite;
+        }
+
+        @keyframes zapPulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.3); opacity: 0.85; }
         }
 
         .form-subheading {
@@ -782,6 +948,10 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           background: linear-gradient(135deg, #fefce8 0%, #f1f5f9 100%);
           border: 1px solid #e2e8f0;
           border-radius: 16px;
+          transition: border-color 0.25s ease;
+        }
+        .quick-chips-wrapper:hover {
+          border-color: #cbd5e1;
         }
 
         .chips-label {
@@ -811,18 +981,26 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           padding: 6px 14px;
           border-radius: 9999px;
           cursor: pointer;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .chip-btn:hover {
           background: #f1f5f9;
           border-color: #94a3b8;
+          transform: translateY(-2px) scale(1.04);
         }
         .chip-btn.active {
           background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
           color: #ffffff;
           border-color: #d97706;
           font-weight: 700;
-          box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+          box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+          animation: springPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes springPop {
+          0% { transform: scale(0.9); }
+          50% { transform: scale(1.08); }
+          100% { transform: scale(1); }
         }
 
         .contact-form-grid {
@@ -854,14 +1032,15 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           font-size: 14px;
           font-family: inherit;
           outline: none;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
           background: #fefce8;
           color: #0f172a;
         }
         .form-input:focus {
           background: #ffffff;
           border-color: #d97706;
-          box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.12);
+          box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.16), 0 4px 14px rgba(217, 119, 6, 0.1);
+          transform: translateY(-1px);
         }
         .form-input.textarea {
           resize: vertical;
@@ -885,18 +1064,20 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           border-radius: 12px;
           cursor: pointer;
           text-align: center;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .budget-radio-btn:hover {
           background: #ffffff;
           border-color: #cbd5e1;
+          transform: translateY(-2px);
         }
         .budget-radio-btn.active {
           background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
           color: #ffffff;
           border-color: #d97706;
           font-weight: 700;
-          box-shadow: 0 4px 14px rgba(217, 119, 6, 0.22);
+          box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+          animation: springPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .btn-pro-submit-form {
@@ -906,7 +1087,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           align-items: center;
           justify-content: center;
           gap: 10px;
-          background: #0f172a;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: #ffffff;
           border: none;
           font-size: 14px;
@@ -918,11 +1099,26 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
           margin-top: 10px;
+          position: relative;
+          overflow: hidden;
         }
+
+        .btn-pro-submit-form svg {
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .btn-pro-submit-form:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 32px rgba(15, 23, 42, 0.35);
-          background: #1e293b;
+          transform: translateY(-3px) scale(1.01);
+          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.35);
+          background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .btn-pro-submit-form:hover svg {
+          transform: translateX(6px) scale(1.15);
+        }
+
+        .btn-pro-submit-form:active {
+          transform: translateY(0) scale(0.98);
         }
 
         /* Success Alert */
@@ -932,6 +1128,31 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           background: #ecfdf5;
           border: 1px solid #a7f3d0;
           padding: 24px;
+          border-radius: 18px;
+          animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes successPop {
+          0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .success-icon-ring {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: #d1fae5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          animation: ringPulse 1.8s infinite alternate;
+        }
+
+        @keyframes ringPulse {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+          100% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
           border-radius: 18px;
         }
 
@@ -1285,8 +1506,35 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
             grid-template-columns: 1fr;
             gap: 6px !important;
           }
+          .contact-hero-banner {
+            padding: 125px 16px 45px 16px !important;
+          }
+          .contact-hero-title {
+            font-size: clamp(24px, 6.5vw, 30px) !important;
+            line-height: 1.2 !important;
+            margin-bottom: 12px !important;
+          }
+          .contact-hero-subtitle {
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+            margin-bottom: 20px !important;
+          }
           .hero-trust-chips-row {
-            flex-direction: column;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px 8px !important;
+            width: 100% !important;
+          }
+          .hero-trust-chip {
+            padding: 4px 10px !important;
+            font-size: 11px !important;
+            border-radius: 9999px !important;
+            width: auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
           }
           .form-card-header {
             flex-direction: column;

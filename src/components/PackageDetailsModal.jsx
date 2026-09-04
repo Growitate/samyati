@@ -53,19 +53,38 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
           <h3 className="section-title">Day-by-Day Detailed Itinerary</h3>
 
           <div className="itinerary-list">
-            {packageData.itinerary?.map((item, idx) => (
-              <div
-                key={idx}
-                className={`itinerary-item ${activeDay === idx ? 'open' : ''}`}
-                onClick={() => setActiveDay(idx === activeDay ? -1 : idx)}
-              >
-                <div className="item-header">
-                  <span className="day-chip">Day {item.day}</span>
-                  <h4 className="day-title">{item.title}</h4>
+            {packageData.itinerary?.map((item, idx) => {
+              const dayPoints = Array.isArray(item.points) && item.points.length > 0
+                ? item.points
+                : (item.description || item.details || '')
+                    .split(/(?<=[.!?])\s+|\r?\n/)
+                    .map(s => s.trim().replace(/^[-•*]\s*/, ''))
+                    .filter(s => s.length > 0);
+
+              return (
+                <div
+                  key={idx}
+                  className={`itinerary-item ${activeDay === idx ? 'open' : ''}`}
+                  onClick={() => setActiveDay(idx === activeDay ? -1 : idx)}
+                >
+                  <div className="item-header">
+                    <span className="day-chip">Day {item.day}</span>
+                    <h4 className="day-title">{item.title}</h4>
+                  </div>
+                  {dayPoints.length > 0 ? (
+                    <ul className="modal-itinerary-points" style={{ paddingLeft: '20px', marginTop: '10px', marginBottom: '6px', listStyleType: 'disc' }}>
+                      {dayPoints.map((pt, pIdx) => (
+                        <li key={pIdx} style={{ fontSize: '13.5px', color: '#475569', marginBottom: '5px', lineHeight: '1.55' }}>
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="day-details">{item.details || item.description}</p>
+                  )}
                 </div>
-                <p className="day-details">{item.details}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -95,6 +114,69 @@ export default function PackageDetailsModal({ packageData, onClose, onOpenOfferM
             </ul>
           </div>
         </div>
+
+        {/* Hotel Options & Pricing Matrix (if present in package) */}
+        {packageData.hotelPricingOptions && packageData.hotelPricingOptions.length > 0 && (
+          <div className="pkg-section" style={{ marginTop: '16px' }}>
+            <h3 className="section-title">Hotel Details & Group Rates</h3>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '13px',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1px solid #e2e8f0'
+              }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
+                    <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '600' }}>Hotel & Room</th>
+                    <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '600' }}>02 PAX</th>
+                    <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '600' }}>04 PAX</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {packageData.hotelPricingOptions.map((opt, idx) => {
+                    const formatHotelType = (name) => {
+                      if (!name) return 'Standard Hotel';
+                      const lower = name.toLowerCase();
+                      if (lower.includes('5 star') || lower.includes('5-star') || lower.includes('05 star') || lower.includes('05-star')) {
+                        if (lower.includes('villa')) return '05 Star Hotel & Private Pool Villa';
+                        return '05 Star Hotel';
+                      }
+                      if (lower.includes('4 star') || lower.includes('4-star') || lower.includes('04 star') || lower.includes('04-star')) {
+                        if (lower.includes('villa')) return '04 Star Hotel & Private Pool Villa';
+                        return '04 Star Hotel';
+                      }
+                      if (lower.includes('3 star') || lower.includes('3-star') || lower.includes('03 star') || lower.includes('03-star')) {
+                        if (lower.includes('villa')) return '03 Star Hotel & Private Pool Villa';
+                        return '03 Star Hotel';
+                      }
+                      return name;
+                    };
+
+                    return (
+                      <tr key={idx} style={{
+                        borderBottom: '1px solid #e2e8f0',
+                        backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f8fafc'
+                      }}>
+                        <td style={{ padding: '12px 14px' }}>
+                          <strong style={{ color: '#0f172a', display: 'block', fontSize: '13.5px' }}>{formatHotelType(opt.hotelName)}</strong>
+                        </td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '700', color: '#0284c7' }}>
+                          {opt.price2Pax}
+                        </td>
+                        <td style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '700', color: '#16a34a' }}>
+                          {opt.price4Pax}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
         {/* Bottom Action Row */}
         <div className="pkg-modal-footer">

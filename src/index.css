@@ -30,16 +30,81 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-family: var(--font-sans);
   color: var(--text-dark);
   background-color: #fefce8;
   -webkit-font-smoothing: antialiased;
 }
 
+/* Lenis Smooth Scroll Global Styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   overflow-x: hidden;
   background-color: #fefce8;
+}
+
+/* Global 3D Tilt & Cursor Spotlight Card Styles */
+.tilt-card {
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+/* Global Smooth Section Reveal Animation on Load & Scroll */
+section.reveal-init,
+.reveal-section.reveal-init,
+.contact-channels-grid.reveal-init,
+.contact-form-card.reveal-init,
+.contact-faq-section.reveal-init {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+section.is-revealed,
+.reveal-section.is-revealed,
+.contact-channels-grid.is-revealed,
+.contact-form-card.is-revealed,
+.contact-faq-section.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Container */

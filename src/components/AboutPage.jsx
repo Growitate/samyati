@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Compass, Heart, Target, Users, ArrowUpRight, ShieldCheck, Sparkles, CheckCircle2, Star, Clock, Award, MapPin, PhoneCall, Globe, Check } from 'lucide-react';
 import { BRAND_INFO } from '../data/travelData';
+import { scrollTo } from '../smoothScroll';
 
 export default function AboutPage({ onBack, onOpenOfferModal }) {
+  useEffect(() => {
+    scrollTo(0, { immediate: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
   return (
     <div className="about-page-wrapper">
 
@@ -491,9 +499,22 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         .hero-gold-italic {
           font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+          font-weight: 700;
+          font-size: 1.18em;
+          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef08a 100%);
+          background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+          animation: goldShimmer 4s ease-in-out infinite;
+          display: inline-block;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+        }
+
+        @keyframes goldShimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         .about-hero-lead {
@@ -1132,7 +1153,16 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         .gold-serif-accent {
           font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          color: #f59e0b;
+          font-weight: 700;
+          font-size: 1.18em;
+          display: inline-block;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef08a 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: goldShimmer 4s ease-in-out infinite;
         }
 
         .cta-sub {

@@ -17,9 +17,10 @@ import {
   MessageSquare,
   CheckCircle2
 } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
 
 export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   const [realm, setRealm] = useState('Domestic');
   const [vibe, setVibe] = useState('Mountains & Snow');
   const [customInput, setCustomInput] = useState('');
@@ -95,79 +96,42 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         {/* EXECUTIVE 2-COLUMN SPLIT DASHBOARD LAYOUT */}
         <div className="promise-split-dashboard">
           
-          {/* LEFT COLUMN: Header, 4 Pillar Cards & Human Support CTA */}
+          {/* LEFT COLUMN: Header, Description & Topic Tags from Img 1 */}
           <div className="promise-left-col">
             <div className="eyebrow-pill-gold mb-3">
               <Sparkles size={13} className="text-amber-600 flex-shrink-0" />
-              <span>HOW SAMYATI WORKS</span>
+              <span>MEET YOUR AI TRAVEL COMPANION</span>
             </div>
 
             <h2 className="promise-h2-title">
-              Smart Travel Concierge <br className="hidden-desktop-br" />
-              <span className="accent-serif">— Built Around You</span>
+              From “where next?” <br />
+              to a real plan.
             </h2>
 
             <p className="promise-header-sub">
-              Use our Smart AI Assistant to match destinations by <strong>Realm</strong> & <strong>Vibe</strong>, 
-              or explore our 4 brand promises for a 100% personalized, transparent, and stress-free journey.
+              Ask naturally, just as you would message a travel expert. You get destination guidance, a suggested itinerary and direct links to relevant Samyati packages.
             </p>
 
-            {/* 4 Feature Pillar Cards Grid (2x2 Grid) */}
-            <div className="promise-pillars-grid">
-              <div className="pillar-card">
-                <div className="pillar-icon bg-amber-500/10 text-amber-600 border-amber-500/20">
-                  <Sliders size={20} />
-                </div>
-                <div className="pillar-text">
-                  <h4 className="pillar-title">100% Tailored</h4>
-                  <p className="pillar-desc">Customized to your exact budget & pacing</p>
-                </div>
-              </div>
-
-              <div className="pillar-card">
-                <div className="pillar-icon bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
-                  <ShieldCheck size={20} />
-                </div>
-                <div className="pillar-text">
-                  <h4 className="pillar-title">Zero Hidden Costs</h4>
-                  <p className="pillar-desc">Transparent itemized GST tax invoices</p>
-                </div>
-              </div>
-
-              <div className="pillar-card">
-                <div className="pillar-icon bg-sky-500/10 text-sky-600 border-sky-500/20">
-                  <UserCheck size={20} />
-                </div>
-                <div className="pillar-text">
-                  <h4 className="pillar-title">24/7 Human Concierge</h4>
-                  <p className="pillar-desc">Dedicated on-tour support on WhatsApp</p>
-                </div>
-              </div>
-
-              <div className="pillar-card">
-                <div className="pillar-icon bg-purple-500/10 text-purple-600 border-purple-500/20">
-                  <Bot size={20} />
-                </div>
-                <div className="pillar-text">
-                  <h4 className="pillar-title">Instant AI Match</h4>
-                  <p className="pillar-desc">Smart day-by-day itinerary suggestions</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Human Concierge Direct Contact Strip */}
-            <div className="human-concierge-strip">
-              <div className="concierge-meta">
-                <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-                <span>Prefer human assistance over AI?</span>
-              </div>
-              <button 
-                onClick={() => onOpenOfferModal ? onOpenOfferModal('Human Concierge Consultation') : (window.location.hash = '#contact')} 
-                className="btn-direct-concierge"
-              >
-                <span>Talk to Human Specialist</span>
-                <ArrowRight size={14} />
-              </button>
+            {/* Topic Filter Pills */}
+            <div className="ai-topic-pills-wrap">
+              {[
+                'Best travel time',
+                'Ideal duration',
+                'Photo locations',
+                'Attractions',
+                'Weather',
+                'Local tips',
+                'Day-wise itinerary'
+              ].map((topic) => (
+                <button
+                  key={topic}
+                  type="button"
+                  onClick={() => handlePresetClick(topic)}
+                  className="ai-topic-pill"
+                >
+                  {topic}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -361,18 +325,53 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           letter-spacing: -0.02em;
         }
 
+        .promise-h2-title .accent-serif,
         .accent-serif {
           font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif !important;
           font-style: italic !important;
-          font-weight: 600 !important;
+          font-weight: 700 !important;
+          font-size: 1.18em !important;
           color: #d97706 !important;
+          vertical-align: baseline;
+          letter-spacing: -0.01em;
+          display: inline-block;
         }
 
         .promise-header-sub {
           font-size: 15.5px;
           color: #475569;
           line-height: 1.65;
-          margin-bottom: 32px;
+          margin-bottom: 24px;
+        }
+
+        .ai-topic-pills-wrap {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 4px;
+          max-width: 540px;
+        }
+
+        .ai-topic-pill {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          color: #334155;
+          font-size: 13px;
+          font-weight: 600;
+          padding: 8px 18px;
+          border-radius: 9999px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          font-family: var(--font-sans);
+        }
+
+        .ai-topic-pill:hover {
+          background: #0f172a;
+          color: #ffffff;
+          border-color: #0f172a;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(15, 23, 42, 0.15);
         }
 
         /* 4 Pillars Cards Grid (2x2) */

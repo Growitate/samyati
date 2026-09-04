@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, MapPin, CheckCircle2, XCircle, Calendar, Sparkles, ShieldCheck, PhoneCall, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Share2, Star, Send, Image as ImageIcon, Check, Building2, Utensils, Car, Compass, CreditCard, QrCode, Users, Lock, Download, Printer, Plus, Minus, ArrowRight, MessageSquare, Wallet, Tag } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
+import { scrollTo } from '../smoothScroll';
 
 export default function PackageDetailPage({ packageData, onBack, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   const [activeDayIdx, setActiveDayIdx] = useState(0);
   const [isExpandAll, setIsExpandAll] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
@@ -117,7 +119,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
   }, [packageData]);
 
   // Parse numeric price safely if price comes as a string e.g. "₹17,900" or 17900
@@ -252,13 +254,67 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=800&q=80'
       ];
     }
-    if (dest.includes('maldives')) {
+    if (dest.includes('vietnam') || dest.includes('hanoi') || dest.includes('da nang') || dest.includes('halong') || dest.includes('saigon') || dest.includes('hoi an')) {
       return [
-        'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=800&q=80',
+        mainImg || 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('sri lanka') || dest.includes('colombo') || dest.includes('kandy') || dest.includes('bentota')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('kazakhstan') || dest.includes('almaty') || dest.includes('charyn') || dest.includes('kolsai')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('uzbekistan') || dest.includes('tashkent') || dest.includes('samarkand') || dest.includes('bukhara')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('georgia') || dest.includes('tbilisi') || dest.includes('kazbegi') || dest.includes('gudauri')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('malaysia') || dest.includes('kuala lumpur') || dest.includes('genting') || dest.includes('langkawi')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80'
+      ];
+    }
+    if (dest.includes('dubai') || dest.includes('uae') || dest.includes('burj')) {
+      return [
+        mainImg || 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'
       ];
     }
 
@@ -499,9 +555,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
     setActiveTab(tabName);
     const el = document.getElementById(id);
     if (el) {
-      const yOffset = -120;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      scrollTo(el, { offset: -120 });
     }
   };
 
@@ -534,43 +588,43 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
         {/* Desktop 5-Photo Grid View (visible > 768px) */}
         <div className="pkg-gallery-grid pkg-gallery-grid-desktop">
           <div className="gallery-main-item" onClick={() => { setLightboxIndex(0); setIsLightboxOpen(true); }}>
-            <img 
-              src={galleryImages[0]} 
-              alt="Featured Main View" 
-              className="gallery-img-fit" 
+            <img
+              src={galleryImages[0]}
+              alt="Featured Main View"
+              className="gallery-img-fit"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85'; }}
             />
           </div>
           <div className="gallery-side-grid">
             <div className="gallery-side-item" onClick={() => { setLightboxIndex(1); setIsLightboxOpen(true); }}>
-              <img 
-                src={galleryImages[1]} 
-                alt="Gallery Detail 1" 
-                className="gallery-img-fit" 
+              <img
+                src={galleryImages[1]}
+                alt="Gallery Detail 1"
+                className="gallery-img-fit"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=800&q=80'; }}
               />
             </div>
             <div className="gallery-side-item" onClick={() => { setLightboxIndex(2); setIsLightboxOpen(true); }}>
-              <img 
-                src={galleryImages[2]} 
-                alt="Gallery Detail 2" 
-                className="gallery-img-fit" 
+              <img
+                src={galleryImages[2]}
+                alt="Gallery Detail 2"
+                className="gallery-img-fit"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80'; }}
               />
             </div>
             <div className="gallery-side-item" onClick={() => { setLightboxIndex(3); setIsLightboxOpen(true); }}>
-              <img 
-                src={galleryImages[3]} 
-                alt="Gallery Detail 3" 
-                className="gallery-img-fit" 
+              <img
+                src={galleryImages[3]}
+                alt="Gallery Detail 3"
+                className="gallery-img-fit"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80'; }}
               />
             </div>
             <div className="gallery-side-item photo-overlay-item" onClick={() => { setLightboxIndex(4); setIsLightboxOpen(true); }}>
-              <img 
-                src={galleryImages[4] || galleryImages[0]} 
-                alt="Gallery Detail 4" 
-                className="gallery-img-fit" 
+              <img
+                src={galleryImages[4] || galleryImages[0]}
+                alt="Gallery Detail 4"
+                className="gallery-img-fit"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80'; }}
               />
               <div className="view-more-photos-overlay">
@@ -583,21 +637,21 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
         {/* Mobile Interactive Sideways Swiping Carousel Slider */}
         <div className="pkg-gallery-mobile-wrapper">
-          <div 
+          <div
             className="pkg-gallery-mobile-slider"
             ref={mobileSliderRef}
             onScroll={handleMobileSliderScroll}
           >
             {galleryImages.map((imgUrl, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="mobile-slide-item"
                 onClick={() => { setLightboxIndex(idx); setIsLightboxOpen(true); }}
               >
-                <img 
-                  src={imgUrl} 
-                  alt={`Destination view ${idx + 1}`} 
-                  className="mobile-slide-img" 
+                <img
+                  src={imgUrl}
+                  alt={`Destination view ${idx + 1}`}
+                  className="mobile-slide-img"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85'; }}
                 />
               </div>
@@ -611,7 +665,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           </div>
 
           {/* Floating Bottom-Left "View All 5 Photos" Pill */}
-          <button 
+          <button
             className="mobile-view-all-pill"
             onClick={() => { setLightboxIndex(mobileActiveImg); setIsLightboxOpen(true); }}
           >
@@ -621,7 +675,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
           {/* Overlay Navigation Chevrons for Mobile (Tap or Swipe) */}
           {mobileActiveImg > 0 && (
-            <button 
+            <button
               className="mobile-slider-nav-btn prev"
               onClick={handlePrevMobileSlide}
               aria-label="Previous photo"
@@ -630,7 +684,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
             </button>
           )}
           {mobileActiveImg < galleryImages.length - 1 && (
-            <button 
+            <button
               className="mobile-slider-nav-btn next"
               onClick={handleNextMobileSlide}
               aria-label="Next photo"
@@ -665,9 +719,6 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
             </button>
             <button className={`tab-btn ${activeTab === 'inclusions' ? 'active' : ''}`} onClick={() => scrollToSection('inclusions-section', 'inclusions')}>
               Inclusions & Exclusions
-            </button>
-            <button className={`tab-btn ${activeTab === 'stays' ? 'active' : ''}`} onClick={() => scrollToSection('stays-section', 'stays')}>
-              Stays & Hotels
             </button>
             <button className={`tab-btn ${activeTab === 'faqs' ? 'active' : ''}`} onClick={() => scrollToSection('faq-section', 'faqs')}>
               Package FAQs
@@ -776,8 +827,27 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
                         {isOpen && (
                           <div className="day-accordion-content pl-14 pr-4 pb-4 pt-1">
-                            <p className="day-accordion-desc text-[14px] text-slate-600 leading-relaxed">{dayItem.description}</p>
-                            {dayItem.highlights && (
+                            {(() => {
+                              const dayPoints = Array.isArray(dayItem.points) && dayItem.points.length > 0
+                                ? dayItem.points
+                                : (dayItem.description || dayItem.details || '')
+                                    .split(/(?<=[.!?])\s+|\r?\n/)
+                                    .map(s => s.trim().replace(/^[-•*]\s*/, ''))
+                                    .filter(s => s.length > 0);
+
+                              return dayPoints.length > 0 ? (
+                                <ul className="day-points-bullet-list list-disc pl-5 my-2 space-y-1.5 text-[14px] text-slate-700">
+                                  {dayPoints.map((pt, i) => (
+                                    <li key={i} className="leading-relaxed">
+                                      {pt}
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <p className="day-accordion-desc text-[14px] text-slate-600 leading-relaxed">{dayItem.description}</p>
+                              );
+                            })()}
+                            {dayItem.highlights && dayItem.highlights.length > 0 && (
                               <div className="day-hl-tags-wrapper flex gap-2 flex-wrap mt-3">
                                 {dayItem.highlights.map((hl, i) => (
                                   <span key={i} className="hl-item-tag text-xs font-semibold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md">✦ {hl}</span>
@@ -801,54 +871,112 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                 <div className="includes-col-box">
                   <h3 className="sub-box-heading text-emerald-800">✓ What's Included</h3>
                   <ul className="check-list-items">
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Accommodation in handpicked 4★/5★ luxury resorts & hotels</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Daily buffet breakfast & chef's special dinner</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Private AC sedan / SUV transfers & sightseeing</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Airport / Railway station pickup & drop</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> All driver allowances, toll, & parking charges</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Inner line permits & wildlife entry permits</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Complimentary welcome drinks & mineral water bottles</li>
-                    <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> 24/7 dedicated human concierge assistance on trip</li>
+                    {(packageData.inclusions && packageData.inclusions.length > 0) ? (
+                      packageData.inclusions.map((item, idx) => (
+                        <li key={idx}><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> {item}</li>
+                      ))
+                    ) : (
+                      <>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Accommodation in handpicked 4★/5★ luxury resorts & hotels</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Daily buffet breakfast & chef's special dinner</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Private AC sedan / SUV transfers & sightseeing</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Airport / Railway station pickup & drop</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> All driver allowances, toll, & parking charges</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Inner line permits & wildlife entry permits</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> Complimentary welcome drinks & mineral water bottles</li>
+                        <li><CheckCircle2 size={15} className="text-emerald-600 flex-shrink-0" /> 24/7 dedicated human concierge assistance on trip</li>
+                      </>
+                    )}
                   </ul>
                 </div>
 
                 <div className="excludes-col-box">
                   <h3 className="sub-box-heading text-rose-800">✕ Exclusions</h3>
                   <ul className="cross-list-items">
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Airfare / Train tickets unless explicitly requested</li>
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Personal expenses, laundry, and driver tips</li>
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Monument entry tickets & camera permits</li>
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Optional adventure activities (zipline, rafting, ATV)</li>
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Travel insurance & medical emergency expenses</li>
-                    <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Anything not explicitly mentioned under Inclusions</li>
+                    {(packageData.exclusions && packageData.exclusions.length > 0) ? (
+                      packageData.exclusions.map((item, idx) => (
+                        <li key={idx}><XCircle size={15} className="text-rose-600 flex-shrink-0" /> {item}</li>
+                      ))
+                    ) : (
+                      <>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Airfare / Train tickets unless explicitly requested</li>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Personal expenses, laundry, and driver tips</li>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Monument entry tickets & camera permits</li>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Optional adventure activities (zipline, rafting, ATV)</li>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Travel insurance & medical emergency expenses</li>
+                        <li><XCircle size={15} className="text-rose-600 flex-shrink-0" /> Anything not explicitly mentioned under Inclusions</li>
+                      </>
+                    )}
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* Stays & Accommodation Section */}
-            <div id="stays-section" className="detail-card-box">
-              <h2 className="card-box-title">Handpicked Stays & Accommodations</h2>
-              <p className="card-box-paragraph">We partner exclusively with top-rated 4★/5★ boutique resorts to ensure total comfort and hospitality.</p>
+            {/* Hotel Options & Pricing Matrix (if present in package) */}
+            {packageData.hotelPricingOptions && packageData.hotelPricingOptions.length > 0 && (
+              <div className="detail-card-box">
+                <h2 className="card-box-title">Hotel Categories & Package Pricing</h2>
+                <p className="card-box-paragraph" style={{ marginBottom: '16px' }}>Rates are per person based on double sharing occupancy and total group PAX size.</p>
 
-              <div className="stays-cards-grid">
-                {stayAccommodations.map((stay, idx) => (
-                  <div key={idx} className="stay-card-item">
-                    <img src={stay.image} alt={stay.name} className="stay-card-img" />
-                    <div className="stay-card-info">
-                      <span className="stay-rating-badge">{stay.rating}</span>
-                      <h4 className="stay-name">{stay.name}</h4>
-                      <p className="stay-location"><MapPin size={12} /> {stay.location}</p>
-                      <div className="stay-amenities-row">
-                        {stay.amenities.map((am, i) => (
-                          <span key={i} className="stay-am-chip">✓ {am}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{
+                    width: '100%',
+                    borderCollapse: 'collapse',
+                    textAlign: 'left',
+                    fontSize: '14px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    border: '1px solid #e2e8f0'
+                  }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
+                        <th style={{ padding: '12px 16px', fontWeight: '700' }}>Hotel Name & Category</th>
+                        <th style={{ padding: '12px 16px', fontWeight: '700', textAlign: 'center' }}>02 PAX Rate</th>
+                        <th style={{ padding: '12px 16px', fontWeight: '700', textAlign: 'center' }}>04 PAX Rate</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {packageData.hotelPricingOptions.map((opt, idx) => {
+                        const formatHotelType = (name) => {
+                          if (!name) return 'Standard Hotel';
+                          const lower = name.toLowerCase();
+                          if (lower.includes('5 star') || lower.includes('5-star') || lower.includes('05 star') || lower.includes('05-star')) {
+                            if (lower.includes('villa')) return '05 Star Hotel & Private Pool Villa';
+                            return '05 Star Hotel';
+                          }
+                          if (lower.includes('4 star') || lower.includes('4-star') || lower.includes('04 star') || lower.includes('04-star')) {
+                            if (lower.includes('villa')) return '04 Star Hotel & Private Pool Villa';
+                            return '04 Star Hotel';
+                          }
+                          if (lower.includes('3 star') || lower.includes('3-star') || lower.includes('03 star') || lower.includes('03-star')) {
+                            if (lower.includes('villa')) return '03 Star Hotel & Private Pool Villa';
+                            return '03 Star Hotel';
+                          }
+                          return name;
+                        };
+
+                        return (
+                          <tr key={idx} style={{
+                            borderBottom: '1px solid #e2e8f0',
+                            backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f8fafc'
+                          }}>
+                            <td style={{ padding: '14px 16px' }}>
+                              <strong style={{ color: '#0f172a', display: 'block', fontSize: '15px' }}>{formatHotelType(opt.hotelName)}</strong>
+                            </td>
+                            <td style={{ padding: '14px 16px', textAlign: 'center', fontWeight: '700', color: '#0284c7' }}>
+                              {opt.price2Pax} / person
+                            </td>
+                            <td style={{ padding: '14px 16px', textAlign: 'center', fontWeight: '700', color: '#16a34a' }}>
+                              {opt.price4Pax} / person
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Quick Quote Inquiry Form Block */}
             <div id="inquiry-section" className="detail-card-box form-card-box">
@@ -940,9 +1068,9 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   const isOpen = openFaqIdx === idx;
                   return (
                     <div key={idx} className={`pkg-faq-item ${isOpen ? 'open' : ''}`}>
-                      <button 
+                      <button
                         type="button"
-                        className="pkg-faq-question-btn" 
+                        className="pkg-faq-question-btn"
                         onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
                       >
                         <span className="faq-q-text">{faq.q}</span>
@@ -973,11 +1101,15 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                 </div>
               )}
 
-              <form 
+              <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  setIsDirectBookingModalOpen(true);
-                }} 
+                  if (onOpenOfferModal) {
+                    onOpenOfferModal(packageData.title);
+                  } else {
+                    setIsDirectBookingModalOpen(true);
+                  }
+                }}
                 className="booking-form-wrapper"
               >
                 <div className="card-pricing-block">
@@ -997,60 +1129,6 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   )}
                 </div>
 
-                {/* Field 1: Choose Number of People */}
-                <div className="form-field-group">
-                  <label className="form-field-label">
-                    <Users size={15} className="field-icon-amber" />
-                    <span>Choose Number of People</span>
-                  </label>
-                  <div className="people-selector-box">
-                    <div className="people-counter-row">
-                      <span className="people-counter-label">Adults (12+ yrs)</span>
-                      <div className="counter-controls-group">
-                        <button 
-                          type="button"
-                          onClick={() => setAdults(Math.max(1, adults - 1))} 
-                          className="cnt-btn"
-                          aria-label="Decrease Adults"
-                        >
-                          <Minus size={13} />
-                        </button>
-                        <span className="cnt-val">{adults}</span>
-                        <button 
-                          type="button"
-                          onClick={() => setAdults(adults + 1)} 
-                          className="cnt-btn"
-                          aria-label="Increase Adults"
-                        >
-                          <Plus size={13} />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="people-counter-row border-top">
-                      <span className="people-counter-label">Children (5-11 yrs)</span>
-                      <div className="counter-controls-group">
-                        <button 
-                          type="button"
-                          onClick={() => setChildren(Math.max(0, children - 1))} 
-                          className="cnt-btn"
-                          aria-label="Decrease Children"
-                        >
-                          <Minus size={13} />
-                        </button>
-                        <span className="cnt-val">{children}</span>
-                        <button 
-                          type="button"
-                          onClick={() => setChildren(children + 1)} 
-                          className="cnt-btn"
-                          aria-label="Increase Children"
-                        >
-                          <Plus size={13} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Field 2: Choose Travel Date */}
                 <div className="form-field-group">
@@ -1068,61 +1146,15 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   />
                 </div>
 
-                {/* Field 3: Apply Coupon If Any */}
-                <div className="form-field-group">
-                  <label className="form-field-label">
-                    <Tag size={15} className="field-icon-amber" />
-                    <span>Apply Coupon Code</span>
-                  </label>
-                  <div className="coupon-input-wrapper">
-                    <input
-                      type="text"
-                      placeholder="e.g. SAMYATI10"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      className="coupon-text-field"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleApplyCoupon}
-                      className="btn-apply-coupon"
-                    >
-                      {appliedCoupon ? 'Applied' : 'Apply'}
-                    </button>
-                  </div>
-                  {couponMsg && (
-                    <div className={`coupon-status-msg ${couponMsg.type}`}>
-                      {couponMsg.text}
-                    </div>
-                  )}
-                  {!couponMsg && !appliedCoupon && (
-                    <div className="coupon-hint-text">
-                      Try: <span onClick={() => setCouponCode('SAMYATI10')}>SAMYATI10</span> or <span onClick={() => setCouponCode('EARLYBIRD')}>EARLYBIRD</span>
-                    </div>
-                  )}
-                </div>
 
-                {/* Live Amount Due Summary */}
-                <div className="sticky-amount-due-highlight">
-                  <span className="due-lbl">Due Now (25% Token):</span>
-                  <strong className="due-val">₹{advanceTokenAmount.toLocaleString('en-IN')}</strong>
-                </div>
-
-                {/* Field 4: Book Now Button */}
+                {/* Request Button */}
                 <button
                   type="submit"
                   className="btn-pro-instant-book"
                 >
-                  BOOK NOW →
+                  REQUEST A QUOTE →
                 </button>
               </form>
-
-              <button
-                onClick={() => onOpenOfferModal(packageData.title)}
-                className="btn-pro-get-quote-sub"
-              >
-                Request Custom Quote
-              </button>
 
               <div className="trust-guarantee-list">
                 <div className="tg-item">
@@ -1702,20 +1734,20 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
             </button>
 
             <div className="lightbox-main-stage">
-              <button 
+              <button
                 className="btn-lightbox-nav prev"
                 onClick={() => setLightboxIndex((lightboxIndex - 1 + galleryImages.length) % galleryImages.length)}
               >
                 <ChevronLeft size={24} />
               </button>
 
-              <img 
-                src={galleryImages[lightboxIndex]} 
-                alt={`Photo ${lightboxIndex + 1}`} 
-                className="lightbox-active-img" 
+              <img
+                src={galleryImages[lightboxIndex]}
+                alt={`Photo ${lightboxIndex + 1}`}
+                className="lightbox-active-img"
               />
 
-              <button 
+              <button
                 className="btn-lightbox-nav next"
                 onClick={() => setLightboxIndex((lightboxIndex + 1) % galleryImages.length)}
               >
@@ -1729,7 +1761,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
 
             <div className="lightbox-thumbs-row">
               {galleryImages.map((imgUrl, idx) => (
-                <img 
+                <img
                   key={idx}
                   src={imgUrl}
                   alt={`Thumbnail ${idx + 1}`}
@@ -2501,6 +2533,20 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           color: #475569;
           line-height: 1.6;
           padding-top: 14px;
+        }
+
+        .day-points-bullet-list {
+          list-style-type: disc;
+          padding-left: 20px;
+          margin-top: 10px;
+          margin-bottom: 8px;
+        }
+
+        .day-points-bullet-list li {
+          font-size: 14px;
+          color: #475569;
+          line-height: 1.6;
+          margin-bottom: 6px;
         }
 
         .day-hl-tags-wrapper {

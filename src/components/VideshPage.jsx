@@ -1,61 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Globe, ArrowRight, X, Clock, Star, ArrowUpRight, Compass, Plane } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { Menu, Bell, ArrowLeft, ArrowRight, X, Clock, Star, ArrowUpRight, Plane, Globe } from 'lucide-react';
+import { usePackages } from '../context/PackageContext';
+import { scrollTo } from '../smoothScroll';
 
-// 7 Featured Videsh Destinations matching the uploaded reference layout mockup
+// 8 Featured Videsh Destinations matching reference layout
 const VIDESH_DESTINATIONS = [
   {
-    id: 'greece',
-    name: 'Greece',
-    image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Santorini Domes & Aegean Sea',
+    id: 'bali',
+    name: 'Bali',
+    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Island of Gods, Ubud Stays & Coral Beaches',
     category: 'International'
   },
   {
-    id: 'switzerland',
-    name: 'Switzerland',
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Alpine Peaks & Lakes',
+    id: 'thailand',
+    name: 'Thailand',
+    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Bangkok Temples, Phuket & Coral Islands',
+    category: 'International'
+  },
+  {
+    id: 'vietnam',
+    name: 'Vietnam',
+    image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Ha Long Bay, Golden Bridge & Lanterns',
+    category: 'International'
+  },
+  {
+    id: 'singapore',
+    name: 'Singapore',
+    image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Marina Bay Sands, Sentosa & Night Safari',
+    category: 'International'
+  },
+  {
+    id: 'kazakhstan',
+    name: 'Kazakhstan',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Almaty Kok Tobe, Shymbulak & Charyn Canyon',
+    category: 'International'
+  },
+  {
+    id: 'malaysia',
+    name: 'Malaysia',
+    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Petronas Towers, Batu Caves & Langkawi',
     category: 'International'
   },
   {
     id: 'dubai',
     name: 'Dubai',
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Burj Khalifa & Futuristic Skyline',
-    category: 'International'
-  },
-  {
-    id: 'paris',
-    name: 'Paris',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=85',
-    tagline: 'City of Romance & Eiffel Tower',
-    category: 'International'
-  },
-  {
-    id: 'bali',
-    name: 'Bali',
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Tropical Villas & Sacred Gates',
-    category: 'International'
-  },
-  {
-    id: 'new-york',
-    name: 'New York',
-    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Statue of Liberty & Manhattan',
-    category: 'International'
-  },
-  {
-    id: 'maldives',
-    name: 'Maldives',
-    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1000&q=85',
-    tagline: 'Overwater Villas & Turquoise Lagoons',
+    tagline: 'Burj Khalifa, Desert Safari & Luxury Escapes',
     category: 'International'
   }
 ];
 
 export default function VideshPage({ onBack, onSelectPackage, onSelectDestination, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   const [selectedDest, setSelectedDest] = useState(null);
 
   const handleCardClick = (item) => {
@@ -68,31 +70,31 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
   }, []);
 
   // Filter packages matching selected destination or general international
   const activePackages = selectedDest
     ? PACKAGES.filter(p => 
         p.category === 'International' && 
-        (p.destinationName.toLowerCase().includes(selectedDest.name.toLowerCase()) || 
-         p.title.toLowerCase().includes(selectedDest.name.toLowerCase()))
+        (((p.destinationName || '').toLowerCase().includes(selectedDest.name.toLowerCase())) || 
+         ((p.title || '').toLowerCase().includes(selectedDest.name.toLowerCase())))
       ).concat(
-        PACKAGES.filter(p => p.category === 'International' && !p.destinationName.toLowerCase().includes(selectedDest.name.toLowerCase()))
+        PACKAGES.filter(p => p.category === 'International' && !(p.destinationName || '').toLowerCase().includes(selectedDest.name.toLowerCase()))
       ).slice(0, 4)
     : [];
 
   return (
     <div className="videsh-page-fixed">
-      {/* HERO BANNER WITH BREATHTAKING SANTORINI GREECE VIDESH BACKGROUND */}
+      {/* HERO BANNER WITH BREATHTAKING GLOBAL VIDESH BACKGROUND */}
       <section className="videsh-hero-banner">
         <img 
-          src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2000&q=90" 
-          alt="Breathtaking Santorini Greece Panoramic Sunset Banner" 
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=90" 
+          alt="Breathtaking International World Travel Panoramic Banner" 
           className="videsh-hero-bg-img" 
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=2000&q=85';
+            e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2000&q=85';
           }}
         />
         <div className="videsh-hero-bg-overlay" />
@@ -139,16 +141,24 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
             </div>
           </div>
 
-          {/* Row 1: 3 Columns (Greece, Switzerland, Dubai) */}
-          <div className="videsh-card-row row-3">
-            {VIDESH_DESTINATIONS.slice(0, 3).map((item) => (
+          {/* All Destinations Grid */}
+          <div className="videsh-dest-grid">
+            {VIDESH_DESTINATIONS.map((item) => (
               <div 
                 key={item.id} 
                 className="videsh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper">
-                  <img src={item.image} alt={item.name} className="videsh-card-photo" />
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="videsh-card-photo" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
                 </div>
 
                 <div className="videsh-card-footer">
@@ -163,55 +173,6 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Row 2: 3 Columns (Paris, Bali, New York) */}
-          <div className="videsh-card-row row-3">
-            {VIDESH_DESTINATIONS.slice(3, 6).map((item) => (
-              <div 
-                key={item.id} 
-                className="videsh-dest-card"
-                onClick={() => handleCardClick(item)}
-              >
-                <div className="card-photo-wrapper">
-                  <img src={item.image} alt={item.name} className="videsh-card-photo" />
-                </div>
-
-                <div className="videsh-card-footer">
-                  <div className="videsh-card-text">
-                    <h3 className="videsh-card-title">{item.name}</h3>
-                    <span className="videsh-card-caption">Explore</span>
-                  </div>
-
-                  <div className="card-arrow-ring">
-                    <ArrowRight size={14} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Row 3: Single Centered Wide Card (Maldives) */}
-          <div className="videsh-card-row row-center">
-            <div 
-              className="videsh-dest-card card-wide-center"
-              onClick={() => handleCardClick(VIDESH_DESTINATIONS[6])}
-            >
-              <div className="card-photo-wrapper photo-wide">
-                <img src={VIDESH_DESTINATIONS[6].image} alt={VIDESH_DESTINATIONS[6].name} className="videsh-card-photo" />
-              </div>
-
-              <div className="videsh-card-footer">
-                <div className="videsh-card-text">
-                  <h3 className="videsh-card-title">{VIDESH_DESTINATIONS[6].name}</h3>
-                  <span className="videsh-card-caption">Explore</span>
-                </div>
-
-                <div className="card-arrow-ring">
-                  <ArrowRight size={14} />
-                </div>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -473,24 +434,24 @@ export default function VideshPage({ onBack, onSelectPackage, onSelectDestinatio
           margin-left: -6px;
         }
 
-        /* Card Rows */
-        .videsh-card-row {
+        /* Destinations Grid */
+        .videsh-dest-grid {
           display: grid;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-
-        .row-3 {
           grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          margin-bottom: 28px;
         }
 
-        .row-center {
-          display: flex;
-          justify-content: center;
+        @media (max-width: 900px) {
+          .videsh-dest-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
-        .card-wide-center {
-          width: 100%;
+        @media (max-width: 580px) {
+          .videsh-dest-grid {
+            grid-template-columns: 1fr;
+          }
         }
 
         /* Destination Card */

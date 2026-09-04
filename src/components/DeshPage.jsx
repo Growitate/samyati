@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Bell, ArrowLeft, X, Clock, Star, ArrowUpRight, Plane } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
+import { scrollTo } from '../smoothScroll';
 
-// 8 Featured Desh Destinations matching reference layout
+// Featured Desh Destinations matching reference layout
 const DESH_DESTINATIONS = [
   {
-    id: 'agra',
-    name: 'Agra',
-    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=85',
-    tagline: 'City of Love & Taj Mahal'
-  },
-  {
-    id: 'kerala',
-    name: 'Kerala',
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Gods Own Country'
-  },
-  {
-    id: 'varanasi',
-    name: 'Varanasi',
-    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Spiritual Capital of India'
+    id: 'kashmir',
+    name: 'Kashmir',
+    image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Paradise on Earth'
   },
   {
     id: 'himachal',
@@ -29,32 +18,39 @@ const DESH_DESTINATIONS = [
     tagline: 'Valley of the Gods'
   },
   {
+    id: 'kerala',
+    name: 'Kerala',
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Gods Own Country'
+  },
+  {
     id: 'rajasthan',
     name: 'Rajasthan',
     image: 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=800&q=85',
     tagline: 'Land of Royal Forts'
   },
   {
-    id: 'goa',
-    name: 'Goa',
-    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=85',
-    tagline: 'Pearl of the Orient'
+    id: 'andaman',
+    name: 'Andaman Islands',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85',
+    tagline: 'Emerald Turquoise Island Escape'
   },
   {
-    id: 'madhya-pradesh',
-    name: 'Madhya Pradesh',
-    image: 'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1000&q=85',
-    tagline: 'Heart of Incredible India'
+    id: 'northeast',
+    name: 'North East',
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=85',
+    tagline: 'Paradise Unexplored & Seven Sisters'
   },
   {
-    id: 'udaipur',
-    name: 'Udaipur',
-    image: 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85',
-    tagline: 'City of Lakes & Palaces'
+    id: 'uttar-pradesh',
+    name: 'Uttar Pradesh',
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Spiritual Capital & Heritage of India'
   }
 ];
 
 export default function DeshPage({ onBack, onSelectPackage, onSelectDestination, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   const [selectedDest, setSelectedDest] = useState(null);
 
   const handleCardClick = (item) => {
@@ -67,7 +63,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
   }, []);
 
   // Filter packages for selected destination
@@ -79,10 +75,10 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
     <div className="desh-page-fixed">
       {/* HERO BANNER WITH FAMOUS TAJ MAHAL HERITAGE BACKGROUND */}
       <section className="desh-hero-banner">
-        <img 
-          src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2000&q=90" 
-          alt="Famous Taj Mahal Golden Hour Heritage Banner" 
-          className="hero-bg-img" 
+        <img
+          src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2000&q=90"
+          alt="Famous Taj Mahal Golden Hour Heritage Banner"
+          className="hero-bg-img"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2000&q=85';
@@ -114,7 +110,7 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
       {/* DESTINATION CARDS GRID SECTION */}
       <section className="desh-cards-section">
         <div className="container max-w-cards">
-          
+
           {/* Section Divider Header with Flight Trace */}
           <div className="desh-section-header">
             <div className="header-title-flex">
@@ -132,19 +128,19 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
             </div>
           </div>
 
-          {/* Row 1: 3 Columns (Agra, Kerala, Varanasi) */}
+          {/* Row 1: 3 Columns (Kashmir, Himachal Pradesh, Kerala) */}
           <div className="card-row row-3">
             {DESH_DESTINATIONS.slice(0, 3).map((item) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="dest-photo" 
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="dest-photo"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
@@ -164,22 +160,22 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
             ))}
           </div>
 
-          {/* Row 2: 2 Columns (Himachal Pradesh, Rajasthan) */}
+          {/* Row 2: 2 Columns (Rajasthan, Andaman Islands) */}
           <div className="card-row row-2">
             {DESH_DESTINATIONS.slice(3, 5).map((item) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper photo-wide">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="dest-photo" 
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="dest-photo"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80';
+                      e.target.src = 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=800&q=80';
                     }}
                   />
                 </div>
@@ -196,22 +192,22 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
             ))}
           </div>
 
-          {/* Row 3: 2 Columns (Goa, Madhya Pradesh) */}
+          {/* Row 3: 2 Columns (North East, Varanasi) */}
           <div className="card-row row-2">
             {DESH_DESTINATIONS.slice(5, 7).map((item) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="desh-dest-card"
                 onClick={() => handleCardClick(item)}
               >
                 <div className="card-photo-wrapper photo-wide">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="dest-photo" 
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="dest-photo"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = 'https://images.unsplash.com/photo-1606298246186-08868ab77562?auto=format&fit=crop&w=1000&q=85';
+                      e.target.src = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=85';
                     }}
                   />
                 </div>
@@ -226,35 +222,6 @@ export default function DeshPage({ onBack, onSelectPackage, onSelectDestination,
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Row 4: Single Centered Card (Udaipur) */}
-          <div className="card-row row-center">
-            <div 
-              className="desh-dest-card card-wide-center"
-              onClick={() => handleCardClick(DESH_DESTINATIONS[7])}
-            >
-              <div className="card-photo-wrapper photo-wide">
-                <img 
-                  src={DESH_DESTINATIONS[7].image} 
-                  alt={DESH_DESTINATIONS[7].name} 
-                  className="dest-photo" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1000&q=85';
-                  }}
-                />
-              </div>
-              <div className="desh-card-footer">
-                <div>
-                  <h3 className="desh-card-title">{DESH_DESTINATIONS[7].name}</h3>
-                  <p className="desh-card-tagline">{DESH_DESTINATIONS[7].tagline}</p>
-                </div>
-                <span className="btn-card-explore" title="Explore Packages">
-                  <ArrowUpRight size={16} />
-                </span>
-              </div>
-            </div>
           </div>
 
         </div>

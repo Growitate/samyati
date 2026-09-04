@@ -330,17 +330,23 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
         }
 
         .destinations-h2 {
-          font-size: clamp(26px, 3.5vw, 42px);
+          font-size: clamp(30px, 4vw, 48px);
           font-weight: 800;
-          color: #1a1a1a;
+          color: var(--text-dark, #141613);
           letter-spacing: -0.02em;
-          margin: 0 0 4px 0;
+          margin: 0 0 6px 0;
         }
 
+        .destinations-h2 .accent-serif,
         .accent-serif {
-          font-family: 'Playfair Display', Georgia, serif;
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          font-weight: 500;
+          font-weight: 700;
+          font-size: 1.18em;
+          color: #d97706;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+          display: inline-block;
         }
 
         .flight-path-container {

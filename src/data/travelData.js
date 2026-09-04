@@ -20,7 +20,7 @@ export const DESTINATIONS = [
     flag: '🇮🇳',
     image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',
     description: 'Manali adventure passes, Solang snow sports, Kasol river trails, and Dharamshala peace.',
-    packagesCount: 4
+    packagesCount: 5
   },
   {
     id: 'kerala',
@@ -72,6 +72,26 @@ export const DESTINATIONS = [
     description: 'Pangong Tso blue lake, Khardung La motorbiking, and Nubra Valley double-hump camel safari.',
     packagesCount: 4
   },
+  {
+    id: 'uttar-pradesh',
+    name: 'Uttar Pradesh',
+    category: 'Domestic',
+    tagline: 'Spiritual Capital & Heritage of India',
+    flag: '🇮🇳',
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=85',
+    description: 'Kashi Vishwanath sacred darshan, Ganga Aarti at Dashashwamedh Ghat, Prayagraj Triveni Sangam & Ayodhya Shri Ram Janmabhoomi.',
+    packagesCount: 3
+  },
+  {
+    id: 'northeast',
+    name: 'North East',
+    category: 'Domestic',
+    tagline: 'Paradise Unexplored & Seven Sisters',
+    flag: '🇮🇳',
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    description: 'Living root bridges of Meghalaya, Kaziranga rhinos, Tawang snow monasteries, and tea garden valleys.',
+    packagesCount: 4
+  },
 
   // --- INTERNATIONAL DESTINATIONS (7) ---
   {
@@ -85,34 +105,14 @@ export const DESTINATIONS = [
     packagesCount: 4
   },
   {
-    id: 'dubai',
-    name: 'Dubai',
-    category: 'International',
-    tagline: 'City of Gold & Futuristic Marvels',
-    flag: '🇦🇪',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
-    description: 'Burj Khalifa observation deck, desert 4x4 dune bashing, and Palm Jumeirah luxury yachting.',
-    packagesCount: 4
-  },
-  {
     id: 'thailand',
     name: 'Thailand',
     category: 'International',
     tagline: 'Land of Smiles & Tropical Bays',
     flag: '🇹🇭',
     image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
-    description: 'Phuket Phi Phi island speedboats, Bangkok grand palaces, and Krabi sunset rock climbing.',
-    packagesCount: 4
-  },
-  {
-    id: 'switzerland',
-    name: 'Switzerland & Alps',
-    category: 'International',
-    tagline: 'Alpine Wonder & Crystal Lakes',
-    flag: '🇨🇭',
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=800&q=80',
-    description: 'Jungfraujoch Top of Europe, Lucerne wooden bridge, and Glacier Express panorama trains.',
-    packagesCount: 4
+    description: 'Bangkok Golden Buddha, Pattaya Coral Island, Phuket, Krabi & James Bond Island.',
+    packagesCount: 6
   },
   {
     id: 'vietnam',
@@ -121,317 +121,1781 @@ export const DESTINATIONS = [
     tagline: 'Heritage, Dragons & Emerald Waters',
     flag: '🇻🇳',
     image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
-    description: 'Ha Long Bay overnight luxury junk boat cruise, Hoi An lantern streets, and Da Nang Golden Bridge.',
-    packagesCount: 4
-  },
-  {
-    id: 'maldives',
-    name: 'Maldives',
-    category: 'International',
-    tagline: 'Ultimate Overwater Villa Luxury',
-    flag: '🇲🇻',
-    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-    description: 'Private overwater bungalows, coral reef sea turtle snorkeling, and candlelit beach dinners.',
-    packagesCount: 4
+    description: 'Ha Long Bay, Da Nang Golden Bridge, Hoi An, Mekong Delta & Ho Chi Minh City.',
+    packagesCount: 6
   },
   {
     id: 'singapore',
-    name: 'Singapore & Malaysia',
+    name: 'Singapore',
     category: 'International',
-    tagline: 'Modern Metropolis & Rainforests',
+    tagline: 'Modern Metropolis & Island Wonders',
     flag: '🇸🇬',
     image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80',
-    description: 'Marina Bay Sands light show, Universal Studios Sentosa, and Kuala Lumpur Twin Towers.',
-    packagesCount: 4
+    description: 'Marina Bay Sands SkyPark, Night Safari, Sentosa Island & Gardens by the Bay.',
+    packagesCount: 2
+  },
+  {
+    id: 'kazakhstan',
+    name: 'Kazakhstan',
+    category: 'International',
+    tagline: 'Almaty Peaks & Charyn Canyon',
+    flag: '🇰🇿',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
+    description: 'Almaty Kok Tobe cable car, Shymbulak ski slopes, Medeu rink, and majestic Charyn Canyon.',
+    packagesCount: 5
+  },
+  {
+    id: 'malaysia',
+    name: 'Malaysia',
+    category: 'International',
+    tagline: 'Modern Skylines & Rainforest Wonders',
+    flag: '🇲🇾',
+    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80',
+    description: 'Petronas Twin Towers, Batu Caves rainbow steps, Genting Highlands cable car, and Langkawi island beaches.',
+    packagesCount: 7
+  },
+  {
+    id: 'dubai',
+    name: 'Dubai',
+    category: 'International',
+    tagline: 'Futuristic Skylines & Golden Desert Safaris',
+    flag: '🇦🇪',
+    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
+    description: 'Burj Khalifa, Dubai Marina yacht cruises, exhilarating red dune Desert Safari with BBQ dinner, and luxury shopping.',
+    packagesCount: 1
   }
 ];
 
 // --- 56 PACKAGES (4 PER DESTINATION) ---
 export const PACKAGES = [
-  // --- KASHMIR PACKAGES (4) ---
+  // --- KASHMIR PACKAGES ---
   {
-    id: 'kash-1',
+    id: 'kash-srinagar-srinagar-5d',
     destinationId: 'kashmir',
     destinationName: 'Kashmir',
     category: 'Domestic',
-    title: 'Kashmir Valley Enchantment & Shikara Dreams',
+    title: 'Kashmir 05 Days Itinerary Srinagar to Srinagar',
     duration: '5D / 4N',
-    price: '₹18,500',
-    originalPrice: '₹24,000',
-    rating: '4.9',
-    reviewsCount: 142,
-    image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
-    description: 'Experience Dal Lake luxury houseboats, Mughal gardens of Srinagar, and snow slopes of Gulmarg with private driver support.',
-    itinerary: [
-      { day: 1, title: 'Arrival in Srinagar & Dal Lake Shikara Ride', details: 'Welcome at Srinagar Airport. Transfer to luxury Dal Lake houseboat. Evening romantic Shikara ride during golden hour.' },
-      { day: 2, title: 'Srinagar to Gulmarg Gondola Experience', details: 'Drive to Gulmarg. Ride Asia’s highest Gondola cable car up to Phase 2 snow peak. Try skiing or snow sledding.' },
-      { day: 3, title: 'Gulmarg to Pahalgam Valley of Shepherds', details: 'Scenic drive to Pahalgam along saffron fields & Lidder River. Visit Betaab Valley and Chandanwari.' },
-      { day: 4, title: 'Pahalgam Pony Trek to Baisaran Valley', details: 'Explore "Mini Switzerland" Baisaran on pony. Return to Srinagar for Mughal Garden tour (Nishat & Shalimar).' },
-      { day: 5, title: 'Souvenir Shopping & Departure', details: 'Shop for Kashmiri Pashmina shawls, saffron, and dry fruits. Airport drop with lifelong memories.' }
+    price: '₹8,700',
+    originalPrice: '₹11,200',
+    rating: '4.96',
+    reviewsCount: 180,
+    image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['Luxury Houseboat (1N) + 4-Star Hotels (3N)', 'Daily Breakfast & Buffet Dinner', 'Private Airport Transfers & All Sightseeing (Cab)', 'Shikara Ride on Dal Lake (1 Hour)', '24/7 Samyati Human Support'],
-    exclusions: ['Gondola Tickets / Pony Rides', 'Airfare / Train tickets', 'Personal laundry & tips']
+    description: 'An unforgettable 05-day Kashmir circuit starting and ending in Srinagar. Explore Shankaracharya Temple, Nishat and Shalimar Mughal Gardens, full-day Sonamarg mountain valley excursion, Lidder River in Pahalgam, snow meadows of Gulmarg, and a traditional Dal Lake Shikara ride with authentic houseboat stay.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Srinagar + Local Sightseeing',
+        description: 'Arrival at Srinagar Airport / Railway Station. Pickup and transfer to accommodation. Visit Shankaracharya Temple. Explore Chashme Shahi, Pari Mahal, Nishat Garden and Shalimar Garden. Visit Tulip Garden (subject to seasonal opening), Hazratbal Dargah and Hari Parbat. Overnight stay in Srinagar.',
+        highlights: [
+          'Airport / Railway Pickup & Transfer',
+          'Shankaracharya Temple Visit',
+          'Mughal Gardens (Nishat & Shalimar)',
+          'Pari Mahal & Chashme Shahi',
+          'Hazratbal Dargah & Hari Parbat',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sonamarg Day Excursion',
+        description: 'Breakfast at accommodation. Proceed for a full-day excursion to Sonamarg – Meadow of Gold. Enjoy scenic Sindh River and majestic mountain landscapes. Optional pony ride to Thajiwas Glacier and Zero Point / Zojila Pass at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast at Accommodation',
+          'Full Day Sonamarg Valley Excursion',
+          'Scenic Sindh River Views',
+          'Thajiwas Glacier & Zojila Pass (Optional)',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Pahalgam Day Excursion',
+        description: 'Breakfast and proceed towards Pahalgam. En route visit Pampore Saffron Fields, Awantipora Ruins and Martand Sun Temple / Apple Valley. Enjoy scenic Lidder River and pine-covered landscapes. Optional visit to Aru Valley, Betaab Valley and Chandanwari by local union cab at own cost. Return to Srinagar for dinner and overnight stay.',
+        highlights: [
+          'Breakfast & Scenic Drive to Pahalgam',
+          'Pampore Saffron Fields & Awantipora Ruins',
+          'Lidder River & Pine Valley',
+          'Betaab Valley & Aru Valley (Optional)',
+          'Dinner & Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Gulmarg Day Excursion',
+        description: 'Breakfast and proceed to Gulmarg – Meadow of Flowers. Explore scenic surroundings, Maharaja Hari Singh Palace, Shiv Temple, Golf Course, Church, Strawberry Valley and Children\'s Park. Optional Gondola / Cable Car ride at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast & Drive to Gulmarg',
+          'Meadow of Flowers Viewpoints',
+          'Maharaja Palace & Historic Church',
+          'Optional Gondola Cable Car Ride',
+          'Overnight Stay in Srinagar Houseboat/Hotel'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        description: 'Breakfast and check-out. Transfer to Srinagar Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Accommodation',
+          'Check-out',
+          'Transfer to Srinagar Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Srinagar hotel.",
+      "01 night's accommodation in houseboat.",
+      'Accommodation on double / triple sharing basis as per requirement.',
+      'Daily breakfast and dinner.',
+      'Welcome drink on arrival.',
+      'Complimentary 01-hour Shikara Ride.',
+      'Srinagar Airport / Railway Station pickup and drop.',
+      'Private cab for the complete tour as per itinerary.',
+      'Vehicle options: Sedan / Ertiga / Scorpio / Tempo, as confirmed.',
+      'Srinagar local sightseeing.',
+      'Sonamarg day excursion.',
+      'Pahalgam day excursion.',
+      'Gulmarg day excursion.',
+      'Toll charges.',
+      'Parking charges.',
+      'Driver allowance.',
+      '24x7 customer support.'
+    ],
+    exclusions: [
+      'Airfare, train fare and ferry charges.',
+      'Lunch and meals not specifically mentioned.',
+      'Entrance fees and monument tickets.',
+      'Local guide charges.',
+      'Gondola / Cable Car tickets in Gulmarg.',
+      'Pony rides in Gulmarg, Pahalgam or Sonamarg.',
+      'Zero Point / Zojila Pass excursion charges.',
+      'Local union vehicle charges in Pahalgam, Gulmarg or Sonamarg wherever outside vehicles are restricted.',
+      'Adventure activities such as skiing, safari, paragliding or other rides.',
+      'Personal expenses such as laundry, shopping, telephone bills and tips.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any increase in transport, hotel or operational costs due to road closures, strikes, natural calamities, fuel-price changes or political disturbances.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 11,200',
+        price4Pax: 'INR 8,700'
+      }
+    ]
   },
   {
-    id: 'kash-2',
+    id: 'kash-jammu-jammu-6d',
     destinationId: 'kashmir',
     destinationName: 'Kashmir',
     category: 'Domestic',
-    title: 'Gulmarg Powder Snow Ski & Gondola Special',
+    title: 'Kashmir 06 Days Itinerary Jammu to Jammu',
     duration: '6D / 5N',
-    price: '₹24,900',
-    originalPrice: '₹32,000',
-    rating: '5.0',
-    reviewsCount: 98,
-    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
-    description: 'An extended snow adventure in Gulmarg with Phase 1 & 2 Gondola tickets, Pahalgam Lidder rafting, and Sonmarg glaciers.',
-    itinerary: [
-      { day: 1, title: 'Srinagar Arrival & Houseboat Stay', details: 'Check-in to luxury houseboat. Relax with hot Kashmiri Kahwa tea.' },
-      { day: 2, title: 'Full Day Gulmarg Phase 2 Cable Car Peak', details: 'High-altitude snow panorama and ski coaching.' },
-      { day: 3, title: 'Gulmarg to Sonmarg Meadow of Gold', details: 'Explore Thajiwas Glacier on horse riding.' },
-      { day: 4, title: 'Sonmarg to Pahalgam River Rafting', details: 'Lidder river white water adventure and evening riverside bonfire.' },
-      { day: 5, title: 'Pahalgam to Srinagar Heritage Tour', details: 'Visit Hazratbal Shrine and Jama Masjid.' },
-      { day: 6, title: 'Departure from Srinagar', details: 'Transfer to Srinagar Airport.' }
-    ],
-    inclusions: ['5 Nights Hotel & Houseboat Accommodation', 'Breakfast & Dinner', 'Private Cab for all days', 'Gondola Phase 1 Included'],
-    exclusions: ['Airfare', 'Camera fees', 'Personal expenses']
-  },
-  {
-    id: 'kash-3',
-    destinationId: 'kashmir',
-    destinationName: 'Kashmir',
-    category: 'Domestic',
-    title: 'Sonmarg Glaciers & Pahalgam Romance Special',
-    duration: '4D / 3N',
-    price: '₹14,990',
-    originalPrice: '₹19,500',
-    rating: '4.85',
-    reviewsCount: 86,
-    image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=800&q=80',
-    description: 'Quick romantic getaway covering Dal Lake houseboats, Sonmarg Thajiwas glacier, and Pahalgam Lidder riverbank walks.',
-    itinerary: [
-      { day: 1, title: 'Srinagar Arrival & Sunset Shikara', details: 'Check-in to Nigeen Lake premium houseboat.' },
-      { day: 2, title: 'Sonmarg Glacier Day Excursion', details: 'Drive to Sonmarg, visit Sindh river & snow points.' },
-      { day: 3, title: 'Pahalgam Valley & Betaab Valley Excursion', details: 'Visit Aru Valley and Lidder river.' },
-      { day: 4, title: 'Srinagar Gardens & Airport Drop', details: 'Chashme Shahi garden & transfer to airport.' }
-    ],
-    inclusions: ['3 Nights Stay with Meal Plan (MAP)', 'All Private Car Transfers', 'Shikara Ride'],
-    exclusions: ['Flight fare', 'Pony charges']
-  },
-  {
-    id: 'kash-4',
-    destinationId: 'kashmir',
-    destinationName: 'Kashmir',
-    category: 'Domestic',
-    title: 'Grand Kashmir & Ladakh High Pass Overland Trail',
-    duration: '8D / 7N',
-    price: '₹34,500',
-    originalPrice: '₹45,000',
-    rating: '4.95',
-    reviewsCount: 110,
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',
-    description: 'Ultimate overland adventure connecting Srinagar, Kargil War Memorial, Leh, Pangong Tso, and Nubra Valley.',
-    itinerary: [
-      { day: 1, title: 'Srinagar Arrival', details: 'Houseboat stay in Srinagar.' },
-      { day: 2, title: 'Srinagar to Kargil via Zoji La Pass', details: 'Cross Drass (2nd coldest inhabited place) & Kargil War Memorial.' },
-      { day: 3, title: 'Kargil to Leh via Lamayuru Monastery', details: 'Visit Moonland & Magnetic Hill.' },
-      { day: 4, title: 'Leh to Nubra Valley via Khardung La', details: 'World’s highest motorable pass ride & Hunder Sand Dunes.' },
-      { day: 5, title: 'Nubra to Pangong Tso Blue Lake', details: 'Overnight lakefront tent camping.' },
-      { day: 6, title: 'Pangong Tso back to Leh', details: 'Cross Chang La pass & Shey Palace.' },
-      { day: 7, title: 'Leh Monastery & Local Market', details: 'Shanti Stupa & shopping.' },
-      { day: 8, title: 'Departure from Leh Airport', details: 'Fly home with memories.' }
-    ],
-    inclusions: ['7 Nights Deluxe Hotels & Tents', 'Breakfast & Dinner', 'Inland SUV / Tempo Traveler', 'Inner Line Permits'],
-    exclusions: ['Airfare', 'Monastery entry fees']
-  },
-
-  // --- HIMACHAL PACKAGES (4) ---
-  {
-    id: 'him-1',
-    destinationId: 'himachal',
-    destinationName: 'Himachal Pradesh',
-    category: 'Domestic',
-    title: 'Manali Snow Thrills & Solang Valley Adventure',
-    duration: '5D / 4N',
-    price: '₹12,800',
+    price: '₹12,400',
     originalPrice: '₹17,000',
-    rating: '4.88',
-    reviewsCount: 215,
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80',
-    description: 'Explore Hadimba Temple, Solang Valley paragliding, Atal Tunnel, and Kasol Manikaran Sahib.',
-    itinerary: [
-      { day: 1, title: 'Arrival in Manali & Local Sightseeing', details: 'Check-in hotel. Visit Hadimba Temple, Vashisht Hot Springs, and Mall Road.' },
-      { day: 2, title: 'Solang Valley & Atal Tunnel Adventure', details: 'Zipline, quad biking, paragliding in Solang Valley. Drive through engineering marvel Atal Tunnel.' },
-      { day: 3, title: 'Kasol & Manikaran Sahib Day Trip', details: 'Parvati river walk, cafe hopping in Kasol, hot springs at Manikaran Sahib.' },
-      { day: 4, title: 'Naggar Castle & River Rafting in Kullu', details: 'Explore Naggar Castle art gallery & white water rafting in Beas River.' },
-      { day: 5, title: 'Departure from Manali', details: 'Shopping at Mall Road & transfer to Volvo/Private cab.' }
+    rating: '4.97',
+    reviewsCount: 195,
+    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['4 Nights Hotel Stay', 'Breakfast & Dinner', 'Private Cab for Sightseeing', 'Kullu Rafting Voucher'],
-    exclusions: ['Paragliding/Adventure sports costs', 'Personal expenses']
+    description: 'A comprehensive 06-day Jammu-to-Jammu / Katra circuit. Journey from the foothills into Kashmir valley with Srinagar Mughal gardens, Dal Lake Shikara ride, Gulmarg snow meadows, Sonamarg golden glaciers, and an overnight riverside stay in picturesque Pahalgam.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Jammu to Srinagar',
+        description: 'Arrival at Jammu / Katra. Meet & greet and proceed to Srinagar by private vehicle. Enjoy scenic drive towards Srinagar through mountain highways. Check-in on arrival. Overnight stay in Srinagar.',
+        highlights: [
+          'Jammu / Katra Meet & Greet',
+          'Scenic Mountain Drive to Srinagar',
+          'Hotel Check-in & Leisure',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Srinagar Local Sightseeing',
+        description: 'Breakfast at the hotel. Visit Dal Lake, Shankaracharya Temple, Botanical Garden, Chashme Shahi, Pari Mahal, Nishat Garden and Shalimar Garden. Visit Hari Parbat, Badamwari Garden, and Tulip Garden (if operational). Overnight stay in Srinagar.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Dal Lake & Shankaracharya Temple',
+          'Mughal Gardens (Nishat, Shalimar & Pari Mahal)',
+          'Botanical Garden & Hari Parbat',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gulmarg Day Excursion',
+        description: 'Breakfast and proceed to Gulmarg – Meadow of Flowers. Explore scenic viewpoints, Shiv Temple, Maharaja Hari Singh Palace, Golf Course, Church, Strawberry Valley and Children\'s Park. Optional Gondola / Cable Car Ride at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast & Drive to Gulmarg',
+          'Meadow of Flowers & Viewpoints',
+          'Maharaja Palace & Historic Church',
+          'Optional Gondola Ride Phase 1 & 2',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Sonamarg Day Excursion',
+        description: 'Breakfast and proceed to Sonamarg – Meadow of Gold. Enjoy scenic Sindh River and mountain surroundings. Optional pony ride to Thajiwas Glacier and Zero Point / Zojila Pass at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Full-Day Sonamarg Valley Excursion',
+          'Sindh River Valley Landscapes',
+          'Thajiwas Glacier & Zojila Pass (Optional)',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Srinagar to Pahalgam',
+        description: 'Breakfast and hotel check-out. Proceed to Pahalgam. En route visit Bat Factory, Pampore Saffron Fields, Apple Valley and Awantipora Ruins / Martand Sun Temple. Enjoy scenic Lidder River. Optional visit to Aru Valley, Betaab Valley and Chandanwari by union cab. Dinner and overnight stay in Pahalgam.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Pampore Saffron Fields & Bat Factory',
+          'Lidder River Valley Sightseeing',
+          'Betaab & Aru Valley (Optional)',
+          'Dinner & Overnight Stay in Pahalgam'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure – Jammu / Katra / Udhampur Drop',
+        description: 'Breakfast and hotel check-out. Proceed to Jammu / Katra / Udhampur. Drop at Airport / Railway Station as per confirmed departure point. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Scenic Drive to Jammu / Katra / Udhampur',
+          'Drop at Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      'Traditional welcome on arrival.',
+      'Jammu / Katra pickup and departure drop.',
+      'Welcome drink on arrival.',
+      "03 nights' accommodation in Srinagar.",
+      "01 night's accommodation in houseboat.",
+      "01 night's accommodation in Pahalgam.",
+      'Accommodation on double / triple sharing basis.',
+      '05 breakfasts and 05 dinners.',
+      'Complimentary 01-hour Shikara Ride.',
+      'Private vehicle for the complete tour as per itinerary.',
+      'Vehicle options: Sedan / Ertiga / Scorpio / Tempo Traveller, as confirmed.',
+      'Srinagar local sightseeing.',
+      'Gulmarg day excursion.',
+      'Sonamarg day excursion.',
+      'Srinagar to Pahalgam transfer and sightseeing.',
+      'Toll charges.',
+      'Parking charges.',
+      'Driver allowance.',
+      '24x7 customer support.'
+    ],
+    exclusions: [
+      'Airfare, train fare and ferry charges.',
+      'Personal expenses such as laundry, shopping, telephone bills and tips.',
+      'Entrance fees and monument tickets.',
+      'Local guide charges.',
+      'Meals not specifically mentioned under inclusions.',
+      'Gondola / Cable Car tickets.',
+      'Pony rides in Gulmarg, Pahalgam or Sonamarg.',
+      'Zero Point / Zojila Pass excursion charges.',
+      'Local union vehicle charges in Pahalgam, Gulmarg or Sonamarg wherever outside vehicles are restricted.',
+      'Adventure activities such as skiing, safari, rides or paragliding.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any increase in transport, hotel or operational costs due to road closures, strikes, natural calamities, fuel-price changes or political disturbances.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 17,000',
+        price4Pax: 'INR 12,400'
+      }
+    ]
   },
   {
-    id: 'him-2',
-    destinationId: 'himachal',
-    destinationName: 'Himachal Pradesh',
+    id: 'kash-srinagar-srinagar-6d',
+    destinationId: 'kashmir',
+    destinationName: 'Kashmir',
     category: 'Domestic',
-    title: 'Kasol, Tosh & Parvati Valley Backpacking Trail',
-    duration: '4D / 3N',
-    price: '₹9,990',
-    originalPrice: '₹14,000',
-    rating: '4.92',
-    reviewsCount: 178,
-    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80',
-    description: 'Youthful trek & cafe retreat in Kasol, Tosh wooden villages, Manikaran, and Riverside camping.',
-    itinerary: [
-      { day: 1, title: 'Arrival in Kasol & Parvati River Camp', details: 'Riverside wooden stay & Israeli cafe lunch.' },
-      { day: 2, title: 'Tosh Village Waterfall Hike', details: 'Trek up to Tosh waterfall & enjoy mountain sunset.' },
-      { day: 3, title: 'Chalal Village Walk & Manikaran Sahib', details: 'Pine forest walk to Chalal and hot spring bath.' },
-      { day: 4, title: 'Departure from Kasol', details: 'Souvenir shopping and evening return.' }
-    ],
-    inclusions: ['3 Nights Stays in Riverside Camps & Cafes', 'Breakfast & Dinner', 'Guide for Tosh Hike'],
-    exclusions: ['Travel to Kasol', 'Beverages & personal tips']
-  },
-  {
-    id: 'him-3',
-    destinationId: 'himachal',
-    destinationName: 'Himachal Pradesh',
-    category: 'Domestic',
-    title: 'Shimla & Manali Romantic Pine Retreat',
+    title: 'Kashmir 06 Days Itinerary Srinagar to Srinagar',
     duration: '6D / 5N',
-    price: '₹16,500',
-    originalPrice: '₹22,000',
-    rating: '4.87',
-    reviewsCount: 154,
-    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=800&q=80',
-    description: 'Classic honeymoon circuit covering Shimla Ridge, Kufri yak rides, Kullu Valley, and Manali snow points.',
-    itinerary: [
-      { day: 1, title: 'Arrival in Shimla', details: 'Mall Road strolling & Christ Church Visit.' },
-      { day: 2, title: 'Kufri Snow Point Excursion', details: 'Horse riding, adventure park & Himalayan Zoo.' },
-      { day: 3, title: 'Shimla to Manali via Kullu Valley', details: 'Visit Pandoh Dam & Kullu shawl factory.' },
-      { day: 4, title: 'Manali Local Sightseeing', details: 'Hadimba temple, Club House, Vashisht.' },
-      { day: 5, title: 'Solang Valley Snow Trip', details: 'Snow games & cable car.' },
-      { day: 6, title: 'Departure from Manali', details: 'Transfer for onward journey.' }
+    price: '₹10,900',
+    originalPrice: '₹13,800',
+    rating: '4.98',
+    reviewsCount: 210,
+    image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['5 Nights Hotel Stay', 'Breakfast & Dinner', 'Private Taxi for all 6 days'],
-    exclusions: ['Airfare', 'Horse ride charges']
+    description: 'An enchanting 06-day Kashmir vacation starting and ending in Srinagar. Includes comprehensive Srinagar Mughal gardens, full-day Sonamarg excursion, Gulmarg meadow of flowers, overnight stay in Pahalgam along Lidder River, and an authentic Dal Lake houseboat night with a Shikara ride.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Srinagar + Local Sightseeing',
+        description: 'Arrival at Srinagar Airport. Meet & greet and transfer to the hotel. Visit Shankaracharya Temple, Chashme Shahi, Pari Mahal, Nishat Garden and Shalimar Garden. Visit Hazratbal Dargah, Hari Parbat, and Tulip Garden (subject to seasonal opening). Overnight stay in Srinagar.',
+        highlights: [
+          'Srinagar Airport Meet & Greet',
+          'Shankaracharya Temple & Pari Mahal',
+          'Mughal Gardens (Nishat & Shalimar)',
+          'Hazratbal Dargah & Hari Parbat',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sonamarg Day Excursion',
+        description: 'Breakfast and proceed to Sonamarg – Meadow of Gold. Enjoy the scenic Sindh River and mountain landscapes. Optional pony ride to Thajiwas Glacier and Zero Point / Zojila Pass at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Full-Day Sonamarg Excursion',
+          'Sindh River & Alpine Landscapes',
+          'Thajiwas Glacier & Zojila Pass (Optional)',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gulmarg Day Excursion',
+        description: 'Breakfast and proceed to Gulmarg – Meadow of Flowers. Enjoy the scenic mountain surroundings. Visit Mohinishwar Shivalaya Shiv Temple. Optional Gondola / Cable Car Ride at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Breakfast & Drive to Gulmarg',
+          'Meadow of Flowers Viewpoints',
+          'Mohinishwar Shivalaya Temple',
+          'Optional Gondola Cable Car Ride',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Srinagar to Pahalgam',
+        description: 'Breakfast and hotel check-out. Proceed to Pahalgam. En route visit Pampore Saffron Fields, Apple Valley, Bat Factory and Awantipora Ruins / Martand Sun Temple. Enjoy scenic Lidder River. Optional visit to Aru Valley, Betaab Valley and Chandanwari by union cab. Dinner and overnight stay in Pahalgam.',
+        highlights: [
+          'Breakfast & Scenic Drive to Pahalgam',
+          'Saffron Fields & Apple Orchards',
+          'Lidder River & Pine Forests',
+          'Betaab Valley & Chandanwari (Optional)',
+          'Dinner & Overnight Stay in Pahalgam'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Pahalgam to Srinagar + Houseboat Stay',
+        description: 'Breakfast and hotel check-out. Optional pony ride and local Pahalgam sightseeing (Pahalgam Valley, Kashmir Valley, Old Shikargah, Mamaleshwar Temple). Proceed to Srinagar and check in to the houseboat. Enjoy a 01-hour Shikara Ride on Dal Lake. Overnight stay in Srinagar Houseboat.',
+        highlights: [
+          'Breakfast & Pahalgam Sightseeing',
+          'Drive back to Srinagar',
+          'Check-in to Deluxe Houseboat',
+          'Romantic 01-Hour Shikara Ride',
+          'Overnight Stay in Srinagar Houseboat'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        description: 'Breakfast and check-out. Private transfer to Srinagar Airport. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast in Houseboat & Check-out',
+          'Private Transfer to Srinagar Airport',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      'Traditional welcome on arrival.',
+      'Srinagar Airport pickup and drop.',
+      'Welcome drink on arrival.',
+      "03 nights' accommodation in Srinagar.",
+      "01 night's accommodation in Pahalgam.",
+      "01 night's accommodation in Srinagar Houseboat.",
+      'Accommodation on double / triple sharing basis as per requirement.',
+      '05 breakfasts and 05 dinners.',
+      'Complimentary 01-hour Shikara Ride.',
+      'Private cab for the complete tour as per itinerary.',
+      'Vehicle options: Sedan / Ertiga / Scorpio / Tempo, as confirmed.',
+      'Srinagar local sightseeing.',
+      'Sonamarg day excursion.',
+      'Gulmarg day excursion.',
+      'Srinagar to Pahalgam transfer and sightseeing.',
+      'Pahalgam to Srinagar transfer.',
+      'Toll charges.',
+      'Parking charges.',
+      'Driver allowance.',
+      '24x7 customer support.'
+    ],
+    exclusions: [
+      'Airfare, train fare and ferry charges.',
+      'Personal expenses such as laundry, shopping, telephone bills and tips.',
+      'Entrance fees and monument tickets.',
+      'Local guide charges.',
+      'Meals not specifically mentioned under inclusions.',
+      'Gondola / Cable Car tickets.',
+      'Pony rides in Pahalgam, Gulmarg or Sonamarg.',
+      'Zero Point / Zojila Pass excursion charges.',
+      'Local union vehicle charges in Pahalgam, Gulmarg or Sonamarg wherever outside vehicles are restricted.',
+      'Adventure activities such as skiing, safari, rides or paragliding.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any increase in transport, hotel or operational costs due to road closures, strikes, natural calamities, fuel-price changes or political disturbances.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 13,800',
+        price4Pax: 'INR 10,900'
+      }
+    ]
   },
   {
-    id: 'him-4',
-    destinationId: 'himachal',
-    destinationName: 'Himachal Pradesh',
+    id: 'kash-srinagar-srinagar-7d',
+    destinationId: 'kashmir',
+    destinationName: 'Kashmir',
     category: 'Domestic',
-    title: 'Dharamshala, Dalhousie & Khajjiar Mini-Switzerland',
-    duration: '6D / 5N',
-    price: '₹17,900',
-    originalPrice: '₹24,500',
-    rating: '4.91',
-    reviewsCount: 120,
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
-    description: 'Explore Dalai Lama Monastery in Mcleodganj, tea gardens, Dalhousie heritage, and Khajjiar pine meadows.',
-    itinerary: [
-      { day: 1, title: 'Arrival in Dharamshala / Mcleodganj', details: 'Visit Namgyal Monastery & St. John Church.' },
-      { day: 2, title: 'Mcleodganj Local & Bhagsu Waterfall', details: 'Bhagsunag temple, waterfall trek & local Tibetan market.' },
-      { day: 3, title: 'Dharamshala to Dalhousie Drive', details: 'Scenic mountain drive via Jot.' },
-      { day: 4, title: 'Khajjiar Mini Switzerland Day Trip', details: 'Zorbing, pine forest walks, and lake picnics.' },
-      { day: 5, title: 'Dalhousie Local & Dainkund Peak', details: 'Panjpulla stream & Dainkund peak trek.' },
-      { day: 6, title: 'Departure from Pathankot / Chakki Bank', details: 'Drop at railway station/airport.' }
+    title: 'Kashmir 07 Days Itinerary Srinagar to Srinagar',
+    duration: '7D / 6N',
+    price: '₹14,000',
+    originalPrice: '₹17,200',
+    rating: '4.99',
+    reviewsCount: 235,
+    image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['5 Nights Deluxe Hotel Stays', 'Breakfast & Dinner', 'Dedicated SUV/Sedan cab'],
-    exclusions: ['Train/Airfare', 'Adventure activity charges']
+    description: 'A grand 07-day immersive Kashmir holiday. Includes 3 nights in Srinagar covering all historic Mughal Gardens and temples, full-day excursions to Sonamarg and Gulmarg, an extended 2-night stay in Pahalgam exploring Lidder River and alpine valleys, and an overnight Dal Lake houseboat stay.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Srinagar + Local Sightseeing',
+        description: 'Arrival at Srinagar Airport / Railway Station. Pickup and transfer to the hotel. Visit Shankaracharya Temple, Mughal Gardens (Nishat, Shalimar & Chashme Shahi), Pari Mahal, Hazratbal Dargah, and Tulip Garden (subject to seasonal opening). Overnight stay in Srinagar.',
+        highlights: [
+          'Airport / Station Pickup & Transfer',
+          'Shankaracharya Temple & Pari Mahal',
+          'Mughal Gardens (Nishat & Shalimar)',
+          'Hazratbal Dargah Visit',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Gulmarg Day Excursion',
+        description: 'Proceed for a full-day trip to Gulmarg – Meadow of Flowers. Enjoy scenic mountain surroundings and explore major local attractions. Optional Gondola / Cable Car Ride at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Full-Day Gulmarg Excursion',
+          'Meadow of Flowers & Viewpoints',
+          'Scenic Mountain Landscapes',
+          'Optional Gondola Cable Car Ride',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Sonamarg Day Excursion',
+        description: 'Proceed for a full-day excursion to Sonamarg – Meadow of Gold. Enjoy scenic Sindh River and mountain views. Optional pony ride to Thajiwas Glacier and Zero Point / Zojila Pass at own cost. Return to Srinagar for overnight stay.',
+        highlights: [
+          'Full-Day Sonamarg Excursion',
+          'Sindh River Valley Landscapes',
+          'Thajiwas Glacier & Zojila Pass (Optional)',
+          'Overnight Stay in Srinagar'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Srinagar to Pahalgam',
+        description: 'Check-out and proceed to Pahalgam. En route visit Pampore Saffron Fields, Apple Valley and Awantipora Ruins / Martand Sun Temple. Enjoy scenic Lidder River and pine-covered landscapes. Hotel check-in on arrival. Overnight stay in Pahalgam.',
+        highlights: [
+          'Drive to Pahalgam Valley',
+          'Pampore Saffron Fields & Apple Valley',
+          'Awantipora Ruins / Martand Sun Temple',
+          'Lidder River Landscape',
+          'Overnight Stay in Pahalgam'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Pahalgam Local Sightseeing',
+        description: 'Explore the beautiful surroundings of Pahalgam. Optional visit to Aru Valley, Betaab Valley and Chandanwari by local union vehicle. Visit Mamaleshwar Temple and nearby scenic areas. Optional pony ride at own cost. Overnight stay in Pahalgam.',
+        highlights: [
+          'Full Day Pahalgam Exploration',
+          'Aru Valley & Betaab Valley (Optional)',
+          'Chandanwari Snow Point (Optional)',
+          'Mamaleshwar Ancient Temple',
+          'Overnight Stay in Pahalgam'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Pahalgam to Srinagar + Houseboat Stay',
+        description: 'Check-out and proceed to Srinagar. Check in to the houseboat. Enjoy a relaxing Shikara Ride on Dal Lake, if included in the final package. Free time to enjoy the authentic houseboat experience. Overnight stay in Srinagar Houseboat.',
+        highlights: [
+          'Scenic Return Drive to Srinagar',
+          'Check-in to Deluxe Houseboat',
+          'Dal Lake Shikara Ride',
+          'Leisure Houseboat Experience',
+          'Overnight Stay in Srinagar Houseboat'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        description: 'Check-out from the houseboat. Transfer to Srinagar Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast in Houseboat & Check-out',
+          'Transfer to Airport / Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Srinagar.",
+      "02 nights' accommodation in Pahalgam.",
+      "01 night's accommodation in Srinagar Houseboat.",
+      'Airport / Railway Station pickup and drop.',
+      'Private cab for transfers and sightseeing as per itinerary.',
+      'Srinagar local sightseeing.',
+      'Gulmarg day excursion.',
+      'Sonamarg day excursion.',
+      'Srinagar–Pahalgam–Srinagar transfers.',
+      'Pahalgam sightseeing as permitted by local vehicle regulations.',
+      'Driver allowance and fuel charges as per the confirmed package.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Meals unless specifically included in the final package.',
+      'Gondola / Cable Car tickets.',
+      'Pony rides.',
+      'Zero Point / Zojila Pass excursion charges.',
+      'Local union vehicle charges in Pahalgam, Gulmarg or Sonamarg.',
+      'Entry fees and monument tickets.',
+      'Adventure activities.',
+      'Personal expenses.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 17,200',
+        price4Pax: 'INR 14,000'
+      }
+    ]
   },
 
-  // --- KERALA PACKAGES (4) ---
+  // --- HIMACHAL PACKAGES ---
   {
-    id: 'ker-1',
-    destinationId: 'kerala',
-    destinationName: 'Kerala',
+    id: 'him-manali-3d',
+    destinationId: 'himachal',
+    destinationName: 'Himachal Pradesh',
     category: 'Domestic',
-    title: 'Munnar Mist, Alleppey Houseboat & Cochin Heritage',
+    title: 'Himachal 03 Days Itinerary Manali (with Sissu, Atal Tunnel & Solang Valley)',
+    duration: '3D / 2N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.95',
+    reviewsCount: 185,
+    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A refreshing 03-day Himalayan getaway to Manali from Delhi by luxury Volvo. Explore Hadimba Devi Temple, Vashisht Hot Springs, Mall Road, drive through the iconic Atal Tunnel to picturesque Sissu Village in Lahaul Valley, enjoy Solang Valley snow adventure activities, and explore scenic Kullu Valley.',
+    itinerary: [
+      {
+        day: 0,
+        title: 'Delhi to Manali',
+        description: 'Board the overnight Volvo bus from Delhi. Overnight journey to Manali enjoying the scenic climb into the Himalayas.',
+        highlights: [
+          'Board Overnight Volvo Bus from Delhi',
+          'Comfortable Overnight Travel'
+        ]
+      },
+      {
+        day: 1,
+        title: 'Arrival in Manali + Local Sightseeing',
+        description: 'Arrival in Manali. Transfer to the hotel and check-in. Visit ancient Hadimba Devi Temple, historic Vashisht Temple & Hot Water Springs, explore vibrant Mall Road, and visit Tibetan Monastery and nearby local attractions. Overnight stay in Manali.',
+        highlights: [
+          'Arrival in Manali & Hotel Transfer',
+          'Hadimba Devi Temple Visit',
+          'Vashisht Temple & Hot Water Springs',
+          'Mall Road & Tibetan Monastery Stroll',
+          'Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sissu + Atal Tunnel + Solang Valley Excursion',
+        description: 'Breakfast at the hotel. Proceed for a full-day excursion. Drive through the engineering marvel Atal Tunnel. Visit scenic Sissu Village and nearby viewpoints in Lahaul Valley. Continue to Solang Valley for optional adventure sports at own cost. Return to Manali. Overnight stay in Manali.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Drive through Atal Tunnel',
+          'Sissu Village & Lahaul Valley Viewpoints',
+          'Solang Valley Adventure & Snow Points',
+          'Return & Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kullu Valley Excursion + Departure',
+        description: 'Breakfast and hotel check-out. Proceed for Kullu Valley sightseeing, visiting major attractions and local shawl shopping areas as per time availability. Later transfer to the Volvo boarding point and board the overnight Volvo bus to Delhi.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Kullu Valley Sightseeing & Shopping',
+          'Transfer to Volvo Boarding Point',
+          'Board Overnight Volvo Bus to Delhi'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in a 03-star hotel.",
+      '02 breakfasts.',
+      'Private cab in Manali for sightseeing as per itinerary.',
+      'Manali local sightseeing.',
+      'Sissu Village, Atal Tunnel & Solang Valley excursion.',
+      'Kullu Valley excursion.',
+      'Volvo bus tickets from Delhi to Manali and Manali to Delhi.',
+      'Local transfers as per the itinerary.'
+    ],
+    exclusions: [
+      'Meals other than breakfast.',
+      'Airfare / train fare.',
+      'Entry tickets and monument charges.',
+      'Adventure activities in Solang Valley.',
+      'Rohtang Pass excursion, permits or special vehicle charges.',
+      'Personal expenses.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+  {
+    id: 'him-manali-shimla-5d',
+    destinationId: 'himachal',
+    destinationName: 'Himachal Pradesh',
+    category: 'Domestic',
+    title: 'Himachal 05 Days Itinerary Manali + Shimla (with Atal Tunnel, Sissu & Kufri)',
     duration: '5D / 4N',
-    price: '₹15,400',
-    originalPrice: '₹20,500',
-    rating: '4.94',
-    reviewsCount: 230,
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
-    description: 'Walk through Munnar tea gardens, Eravikulam Nilgiri Tahr sanctuary, and private Alleppey backwater houseboat cruise.',
-    itinerary: [
-      { day: 1, title: 'Cochin Arrival & Drive to Munnar', details: 'Enroute Cheeyappara & Valara waterfalls.' },
-      { day: 2, title: 'Munnar Tea Estate & Mattupetty Dam', details: 'Visit Eravikulam National Park, Echo Point & Tea Museum.' },
-      { day: 3, title: 'Munnar to Thekkady Spice Plantation', details: 'Periyar wildlife elephant sanctuary & spice plantation walk.' },
-      { day: 4, title: 'Thekkady to Alleppey Houseboat Overnight', details: 'Board private luxury houseboat with traditional Kerala meals.' },
-      { day: 5, title: 'Cochin Sightseeing & Departure', details: 'Chinese Fishing Nets, Fort Kochi & airport drop.' }
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.98',
+    reviewsCount: 220,
+    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['Private Houseboat (1N) + 4-Star Resort (3N)', 'All Meals on Houseboat + Breakfast/Dinner at Resorts', 'Private AC Cab for 5 Days'],
-    exclusions: ['Flight tickets', 'Elephant ride charges']
+    description: 'The ultimate 05-day dual-hill-station experience connecting Manali and Queen of the Hills, Shimla. Experience Hadimba Temple, Mall Road, Atal Tunnel drive to Sissu, Solang Valley adventure, scenic Kullu Valley highway transfer, Kufri snow slopes, Jakhoo Temple, Christ Church, and The Ridge.',
+    itinerary: [
+      {
+        day: 0,
+        title: 'Delhi to Manali',
+        description: 'Board the overnight Volvo bus from Delhi. Overnight journey to Manali.',
+        highlights: [
+          'Board Overnight Volvo Bus from Delhi',
+          'Overnight Journey to Manali'
+        ]
+      },
+      {
+        day: 1,
+        title: 'Arrival in Manali + Local Sightseeing',
+        description: 'Arrival in Manali. Pickup and transfer to the hotel. Hotel check-in and refreshment. Visit Hadimba Devi Temple, Vashisht Temple & Hot Water Springs, Tibetan Monastery, and explore Mall Road. Overnight stay in Manali.',
+        highlights: [
+          'Manali Pickup & Hotel Check-in',
+          'Hadimba Devi & Vashisht Temple Visit',
+          'Tibetan Monastery Exploration',
+          'Mall Road Evening Stroll',
+          'Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sissu + Atal Tunnel + Solang Valley',
+        description: 'Breakfast at the hotel. Proceed for a full-day excursion. Visit Atal Tunnel, explore scenic Sissu Village in Lahaul Valley, visit Solang Valley to enjoy mountain views and optional adventure activities. Return to Manali. Overnight stay in Manali.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Atal Tunnel Drive',
+          'Sissu Village Exploration',
+          'Solang Valley Adventure Activities',
+          'Return & Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Manali to Shimla via Kullu Sightseeing',
+        description: 'Breakfast and hotel check-out. Proceed towards Shimla. En route enjoy Kullu Valley sightseeing and major attractions. Continue to Shimla, hotel check-in on arrival. Overnight stay in Shimla.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Drive towards Shimla',
+          'Kullu Valley En-route Sightseeing',
+          'Hotel Check-in in Shimla',
+          'Overnight Stay in Shimla'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Shimla Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Shimla sightseeing. Visit Kufri, sacred Jakhoo Temple, explore The Ridge, visit historic Christ Church, and enjoy free time at Mall Road. Return to the hotel. Overnight stay in Shimla.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Kufri Pine Viewpoints & Nature',
+          'Jakhoo Temple with Giant Hanuman Statue',
+          'The Ridge & Iconic Christ Church',
+          'Free Time on Shimla Mall Road',
+          'Overnight Stay in Shimla'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Shimla Departure',
+        description: 'Breakfast and hotel check-out. Free time as per the Volvo schedule. Transfer to the Volvo boarding point. Board the overnight Volvo bus to Delhi. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Free Time for Last-Minute Souvenirs',
+          'Transfer to Volvo Boarding Point',
+          'Board Overnight Volvo Bus to Delhi',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in 03-star hotels.",
+      '04 breakfasts.',
+      'Private cab for Manali sightseeing.',
+      'Private cab for Shimla sightseeing.',
+      'Private transfer from Manali to Shimla.',
+      'Manali local sightseeing.',
+      'Sissu Village, Atal Tunnel & Solang Valley excursion.',
+      'Kullu Valley sightseeing en route.',
+      'Shimla local sightseeing.',
+      'Volvo bus ticket from Delhi to Manali.',
+      'Volvo bus ticket from Shimla to Delhi.',
+      'Local transfers as per the itinerary.'
+    ],
+    exclusions: [
+      'Meals other than breakfast.',
+      'Airfare / train fare.',
+      'Entry tickets and monument charges.',
+      'Adventure activities at Solang Valley or Kufri.',
+      'Rohtang Pass excursion, permits or special vehicle charges.',
+      'Personal expenses.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking and toll charges unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
   },
   {
-    id: 'ker-2',
-    destinationId: 'kerala',
-    destinationName: 'Kerala',
+    id: 'him-summer-spiti-8d',
+    destinationId: 'himachal',
+    destinationName: 'Himachal Pradesh',
     category: 'Domestic',
-    title: 'Kovalam Beach, Varkala Cliff & Poovar Island Escape',
-    duration: '4D / 3N',
-    price: '₹13,800',
-    originalPrice: '₹18,000',
-    rating: '4.89',
-    reviewsCount: 165,
-    image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=800&q=80',
-    description: 'Chill on Varkala cliff cafes, Kovalam lighthouse beach, and Poovar Golden Sand backwater mangrove boating.',
-    itinerary: [
-      { day: 1, title: 'Trivandrum Arrival & Kovalam Beach', details: 'Check-in beach resort & sunset at Lighthouse beach.' },
-      { day: 2, title: 'Poovar Island Backwater Boat Safari', details: 'Mangrove forest boat safari to Golden Sand beach where river meets sea.' },
-      { day: 3, title: 'Varkala Cliff & Black Sand Beach Day Trip', details: 'Cliff cafe hopping, Janardhana Swami temple.' },
-      { day: 4, title: 'Trivandrum City Tour & Departure', details: 'Padmanabhaswamy Temple & drop at airport.' }
-    ],
-    inclusions: ['3 Nights Beach Resort Accommodation', 'Breakfast & Dinner', 'Private AC Sedan'],
-    exclusions: ['Airfare', 'Boating entry tickets']
-  },
-  {
-    id: 'ker-3',
-    destinationId: 'kerala',
-    destinationName: 'Kerala',
-    category: 'Domestic',
-    title: 'Wayanad Rainforest & Waterfalls Expedition',
-    duration: '4D / 3N',
-    price: '₹12,900',
-    originalPrice: '₹16,800',
-    rating: '4.86',
-    reviewsCount: 112,
-    image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80',
-    description: 'Chembra heart-shaped lake trek, Banasura Sagar dam zip-line, Edakkal caves, and rainforest treehouse stay.',
-    itinerary: [
-      { day: 1, title: 'Calicut Arrival & Drive to Wayanad', details: 'Check-in rainforest eco-resort.' },
-      { day: 2, title: 'Chembra Peak & Edakkal Caves', details: 'Trek to heart lake & ancient rock carvings.' },
-      { day: 3, title: 'Banasura Sagar Dam & Soochipara Falls', details: 'Speedboating & natural waterfall splash.' },
-      { day: 4, title: 'Wayanad Spice Tour & Departure', details: 'Tea factory visit & Calicut drop.' }
-    ],
-    inclusions: ['3 Nights Rainforest Resort', 'Breakfast & Dinner', 'Private Cab'],
-    exclusions: ['Trek permit fees', 'Personal expenses']
-  },
-  {
-    id: 'ker-4',
-    destinationId: 'kerala',
-    destinationName: 'Kerala',
-    category: 'Domestic',
-    title: 'Complete Kerala Grand Circuit (Munnar, Thekkady, Alleppey, Kovalam)',
-    duration: '7D / 6N',
-    price: '₹22,500',
-    originalPrice: '₹29,000',
-    rating: '4.97',
+    title: 'Himachal 08 Days Itinerary Summer Spiti',
+    duration: '8D / 7N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
     reviewsCount: 198,
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-    description: 'Comprehensive 7-day tour from mist-covered tea hills down to tropical backwaters and southern beaches.',
-    itinerary: [
-      { day: 1, title: 'Cochin to Munnar', details: 'Waterfalls & tea valley drive.' },
-      { day: 2, title: 'Munnar Full Day', details: 'National park & dam.' },
-      { day: 3, title: 'Munnar to Thekkady', details: 'Spice tour & boat safari.' },
-      { day: 4, title: 'Thekkady to Alleppey Houseboat', details: 'Backwater luxury stay.' },
-      { day: 5, title: 'Alleppey to Kovalam', details: 'Kovalam beach sunset.' },
-      { day: 6, title: 'Trivandrum & Kanyakumari Excursion', details: 'Vivekananda Rock Memorial.' },
-      { day: 7, title: 'Departure from Trivandrum', details: 'Airport drop.' }
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['6 Nights Deluxe Accommodation including Houseboat', 'Daily Breakfast & Dinner', 'Private AC Vehicle'],
-    exclusions: ['Airfare', 'Entry tickets']
+    description: 'An exhilarating 08-day Himalayan summer expedition across Kinnaur and Spiti Valley. Journey from Delhi and Shimla through Sangla, Chitkul border village, Kalpa with Kinner Kailash views, Nako Lake, Gue Monastery, 1000-year-old Tabo Monastery, Dhankar, Kaza, Key Monastery, Kibber, Chicham Bridge, Langza, Hikkim, Komic, Kunzum Pass, Chandratal Lake, and Manali Atal Tunnel. *Rates are not valid on blackout dates & valid till Oct-26.',
+    itinerary: [
+      {
+        day: 0,
+        title: 'Delhi to Shimla',
+        description: 'Board the overnight Volvo bus from Delhi. Overnight journey to Shimla.',
+        highlights: [
+          'Board the overnight Volvo bus from Delhi',
+          'Overnight journey to Shimla'
+        ]
+      },
+      {
+        day: 1,
+        title: 'Shimla to Sangla / Chitkul',
+        description: 'Arrival in Shimla. Pickup and proceed towards Sangla / Chitkul. En route visit Kufri and enjoy the scenic Himalayan drive. Pass through Narkanda, Rampur and Kinnaur Valley. Enjoy views of the Sutlej River and mountain landscapes. Overnight stay in Sangla / Chitkul.',
+        highlights: [
+          'Arrival in Shimla',
+          'Pickup and proceed towards Sangla / Chitkul',
+          'En route visit Kufri and enjoy scenic Himalayan drive',
+          'Pass through Narkanda, Rampur and Kinnaur Valley',
+          'Enjoy views of Sutlej River and mountain landscapes',
+          'Overnight stay in Sangla / Chitkul'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sangla / Chitkul to Kalpa / Reckong Peo',
+        description: 'Breakfast and hotel check-out. Explore Chitkul Village, subject to accessibility. Visit Baspa River and scenic Sangla Valley. Visit Kamru Fort, if time permits. Proceed towards Kalpa / Reckong Peo. Visit Suicide Point. Enjoy views of Kinner Kailash Mountain Range. Overnight stay in Kalpa / Reckong Peo.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Explore Chitkul Village, subject to accessibility',
+          'Visit Baspa River and scenic Sangla Valley',
+          'Visit Kamru Fort, if time permits',
+          'Proceed towards Kalpa / Reckong Peo',
+          'Visit Suicide Point',
+          'Enjoy views of Kinner Kailash Mountain Range',
+          'Overnight stay in Kalpa / Reckong Peo'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kalpa / Reckong Peo to Nako / Tabo',
+        description: 'Breakfast and proceed towards Spiti Valley. Drive through Khab Sangam, the confluence of Spiti and Sutlej Rivers. Visit Nako Lake. Explore Nako Village. Visit Gue Monastery / Mummy Village, subject to route and time. Continue to Nako / Tabo. Overnight stay in Nako / Tabo.',
+        highlights: [
+          'Breakfast and proceed towards Spiti Valley',
+          'Drive through Khab Sangam (Spiti & Sutlej Confluence)',
+          'Visit Nako Lake & Explore Nako Village',
+          'Visit Gue Monastery / Mummy Village, subject to route & time',
+          'Continue to Nako / Tabo',
+          'Overnight stay in Nako / Tabo'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Nako / Tabo to Kaza',
+        description: 'Breakfast and check-out. Visit ancient Tabo Monastery and cliff-hanging Dhankar Monastery. Enjoy views of Spiti-Pin River confluence and Pin Valley landscapes. Continue towards Kaza. Overnight stay in Kaza.',
+        highlights: [
+          'Ancient Tabo Monastery Visit',
+          'Cliff-hanging Dhankar Monastery',
+          'Spiti-Pin River Confluence & Valley Views',
+          'Transfer to Kaza',
+          'Overnight stay in Kaza'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Kaza Local Sightseeing',
+        description: 'Breakfast at hotel. Full-day Spiti heritage and high-altitude village tour: visit iconic Key Monastery, Kibber village, spectacular Chicham Bridge (Asia’s highest bridge), Langza Buddha statue & marine fossils, Hikkim (world’s highest post office), and Komic (highest motorable village). Return to Kaza. Overnight stay in Kaza.',
+        highlights: [
+          'Key Monastery Guided Tour',
+          'Kibber Village & Chicham Suspension Bridge',
+          'Langza Giant Buddha Statue & Fossils',
+          'Hikkim World’s Highest Post Office',
+          'Komic Highest Motorable Village',
+          'Overnight stay in Kaza'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Kaza to Chandratal',
+        description: 'Breakfast and proceed towards Chandratal. Drive through Kunzum Pass. Visit Kunzum Mata Temple, subject to road conditions. Continue to Chandratal Lake. Enjoy the scenic high-altitude lake surroundings. Overnight stay in camp near Chandratal.',
+        highlights: [
+          'Breakfast and proceed towards Chandratal',
+          'Drive through Kunzum Pass',
+          'Visit Kunzum Mata Temple, subject to road conditions',
+          'Continue to Chandratal Lake',
+          'Enjoy scenic high-altitude lake surroundings',
+          'Overnight stay in camp near Chandratal'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Chandratal to Manali',
+        description: 'Breakfast and depart from Chandratal. Drive through Batal and Atal Tunnel route, subject to accessibility. Reach Manali. Drop at the Volvo boarding point. Board the overnight Volvo bus to Delhi.',
+        highlights: [
+          'Breakfast and depart from Chandratal',
+          'Drive through Batal and Atal Tunnel route',
+          'Reach Manali',
+          'Drop at Volvo boarding point',
+          'Board overnight Volvo bus to Delhi'
+        ]
+      },
+      {
+        day: 8,
+        title: 'Arrival in Delhi',
+        description: 'Arrival in Delhi. Tour concludes with memorable experiences of Spiti Valley.',
+        highlights: [
+          'Arrival in Delhi',
+          'Tour concludes with memorable experiences of Spiti Valley'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' accommodation in premium hotels/homestays/camps, as per route and availability.",
+      '06 breakfasts.',
+      '06 dinners.',
+      'Private cab for the complete Spiti circuit.',
+      'Summer Spiti: Private cab from Shimla to Manali.',
+      'Delhi to Shimla Volvo bus ticket.',
+      'Summer Spiti: Manali to Delhi Volvo bus ticket.',
+      'Kinnaur Valley sightseeing.',
+      'Sangla / Chitkul sightseeing.',
+      'Kalpa / Reckong Peo sightseeing.',
+      'Nako & Tabo sightseeing.',
+      'Kaza local sightseeing.',
+      'Key Monastery, Kibber, Chicham, Langza, Hikkim and Komic sightseeing.',
+      'Chandratal excursion in Summer Spiti, subject to road opening.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Driver allowance and fuel charges as per confirmed package.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Lunch and meals not specifically mentioned.',
+      'Entry tickets and monument charges.',
+      'Personal expenses.',
+      'Adventure activities.',
+      'Local guide charges.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Parking, toll, permit or local charges unless specifically included in the final package.',
+      'Expenses arising due to road blocks, snowfall, landslides, weather conditions or route diversions.',
+      'Any additional stay or transport required due to road closure or natural conditions.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star hotels/homestays/camps',
+        price2Pax: 'NA (On Request)',
+        price4Pax: 'NA (On Request)'
+      }
+    ]
+  },
+  {
+    id: 'him-winter-spiti-8d',
+    destinationId: 'himachal',
+    destinationName: 'Himachal Pradesh',
+    category: 'Domestic',
+    title: 'Himachal 08 Days Itinerary Winter Spiti',
+    duration: '8D / 7N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 184,
+    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An unforgettable 08-day Winter Spiti Himalayan expedition across Kinnaur and snowy Spiti Valley. Journey from Delhi and Shimla through Sangla, Chitkul, Kalpa with frozen Kinner Kailash views, Nako Lake, Gue Mummy Monastery, Tabo Monastery, Dhankar, Pin Valley, Kaza, Key Monastery, Kibber, Chicham Bridge, Langza, Hikkim, and Komic before the scenic winter return circuit. *Rates are not valid on blackout dates & valid till Oct-26.',
+    itinerary: [
+      {
+        day: 0,
+        title: 'Delhi to Shimla',
+        description: 'Board the overnight Volvo bus from Delhi. Overnight journey to Shimla.',
+        highlights: [
+          'Board the overnight Volvo bus from Delhi',
+          'Overnight journey to Shimla'
+        ]
+      },
+      {
+        day: 1,
+        title: 'Shimla to Sangla / Chitkul',
+        description: 'Arrival in Shimla. Pickup and proceed towards Sangla / Chitkul. En route visit Kufri and enjoy the scenic Himalayan drive. Pass through Narkanda, Rampur and Kinnaur Valley. Enjoy views of the Sutlej River and mountain landscapes. Overnight stay in Sangla / Chitkul.',
+        highlights: [
+          'Arrival in Shimla',
+          'Pickup and proceed towards Sangla / Chitkul',
+          'En route visit Kufri and enjoy scenic Himalayan drive',
+          'Pass through Narkanda, Rampur and Kinnaur Valley',
+          'Enjoy views of Sutlej River and mountain landscapes',
+          'Overnight stay in Sangla / Chitkul'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Sangla / Chitkul to Kalpa / Reckong Peo',
+        description: 'Breakfast and hotel check-out. Explore Chitkul Village, subject to accessibility. Visit Baspa River and scenic Sangla Valley. Visit Kamru Fort, if time permits. Proceed towards Kalpa / Reckong Peo. Visit Suicide Point. Enjoy views of Kinner Kailash Mountain Range. Overnight stay in Kalpa / Reckong Peo.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Explore Chitkul Village, subject to accessibility',
+          'Visit Baspa River and scenic Sangla Valley',
+          'Visit Kamru Fort, if time permits',
+          'Proceed towards Kalpa / Reckong Peo',
+          'Visit Suicide Point',
+          'Enjoy views of Kinner Kailash Mountain Range',
+          'Overnight stay in Kalpa / Reckong Peo'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kalpa / Reckong Peo to Nako / Tabo',
+        description: 'Breakfast and proceed towards Spiti Valley. Drive through Khab Sangam, the confluence of Spiti and Sutlej Rivers. Visit Nako Lake. Explore Nako Village. Visit Gue Monastery / Mummy Village, subject to route and time. Continue to Nako / Tabo. Overnight stay in Nako / Tabo.',
+        highlights: [
+          'Breakfast and proceed towards Spiti Valley',
+          'Drive through Khab Sangam (Spiti & Sutlej Confluence)',
+          'Visit Nako Lake & Explore Nako Village',
+          'Visit Gue Monastery / Mummy Village, subject to route and time',
+          'Continue to Nako / Tabo',
+          'Overnight stay in Nako / Tabo'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Nako / Tabo to Kaza',
+        description: 'Breakfast and hotel check-out. Visit Tabo Monastery, one of the oldest Buddhist monasteries in the region. Visit Dhankar Monastery. Enjoy views of the Spiti–Pin River confluence. Visit Pin Valley, subject to accessibility and time. Continue towards Kaza. Overnight stay in Kaza.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Visit ancient Tabo Monastery',
+          'Visit Dhankar Monastery',
+          'Enjoy views of Spiti–Pin River confluence',
+          'Visit Pin Valley (subject to accessibility)',
+          'Continue towards Kaza & Overnight stay in Kaza'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Kaza Local Sightseeing',
+        description: 'Breakfast at the hotel. Visit Key Monastery. Visit Kibber Village. Explore Chicham Bridge. Visit Langza Village and the Buddha Statue. Visit Hikkim, famous for its high-altitude post office. Visit Komic Village, one of the highest inhabited villages in the region. Return to Kaza. Overnight stay in Kaza.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Visit Key Monastery & Kibber Village',
+          'Explore spectacular Chicham Bridge',
+          'Visit Langza Village & Giant Buddha Statue',
+          'Visit Hikkim World’s Highest Post Office',
+          'Visit Komic Highest Inhabited Village',
+          'Overnight stay in Kaza'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Kaza to Chitkul / Sangla',
+        description: 'Breakfast and begin the return journey towards Kinnaur. Drive through Tabo, Nako and Kinnaur Valley. Enjoy scenic en-route stops as road and weather conditions permit. Overnight stay in Chitkul / Sangla.',
+        highlights: [
+          'Breakfast and begin return journey towards Kinnaur',
+          'Drive through Tabo, Nako and Kinnaur Valley',
+          'Scenic en-route stops as weather permits',
+          'Overnight stay in Chitkul / Sangla'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Chitkul / Sangla to Shimla',
+        description: 'Breakfast and proceed towards Shimla. Drive through Rampur, Narkanda and Kufri. Drop at the Volvo boarding point. Board the overnight Volvo bus to Delhi.',
+        highlights: [
+          'Breakfast and proceed towards Shimla',
+          'Drive through Rampur, Narkanda and Kufri',
+          'Drop at Volvo boarding point',
+          'Board the overnight Volvo bus to Delhi'
+        ]
+      },
+      {
+        day: 8,
+        title: 'Arrival in Delhi',
+        description: 'Arrival in Delhi. Tour concludes with memorable experiences of Spiti Valley.',
+        highlights: [
+          'Arrival in Delhi',
+          'Tour concludes with memorable experiences of Spiti Valley'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' accommodation in premium hotels/homestays/camps, as per route and availability.",
+      '06 breakfasts.',
+      '06 dinners.',
+      'Private cab for the complete Spiti circuit.',
+      'Winter Spiti: Private cab from Shimla to Shimla.',
+      'Delhi to Shimla Volvo bus ticket.',
+      'Winter Spiti: Shimla to Delhi Volvo bus ticket.',
+      'Kinnaur Valley sightseeing.',
+      'Sangla / Chitkul sightseeing.',
+      'Kalpa / Reckong Peo sightseeing.',
+      'Nako & Tabo sightseeing.',
+      'Kaza local sightseeing.',
+      'Key Monastery, Kibber, Chicham, Langza, Hikkim and Komic sightseeing.',
+      'Chandratal excursion in Summer Spiti, subject to road opening.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Driver allowance and fuel charges as per confirmed package.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Lunch and meals not specifically mentioned.',
+      'Entry tickets and monument charges.',
+      'Personal expenses.',
+      'Adventure activities.',
+      'Local guide charges.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Parking, toll, permit or local charges unless specifically included in the final package.',
+      'Expenses arising due to road blocks, snowfall, landslides, weather conditions or route diversions.',
+      'Any additional stay or transport required due to road closure or natural conditions.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star hotels/homestays/camps',
+        price2Pax: 'NA (On Request)',
+        price4Pax: 'NA (On Request)'
+      }
+    ]
+  },
+  {
+    id: 'him-grand-circuit-10d',
+    destinationId: 'himachal',
+    destinationName: 'Himachal Pradesh',
+    category: 'Domestic',
+    title: 'Himachal 10 Days Itinerary Shimla, Manali, Dharamshala, & Dalhousie (Delhi to Amritsar)',
+    duration: '10D / 9N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 260,
+    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'The complete 10-day Grand Himachal road trip from Delhi to Amritsar. Travel seamlessly across Shimla (Kufri & Mall Road), Manali (Hadimba Temple, Atal Tunnel, Sissu & Solang Valley), Dharamshala/McLeodganj (Dalai Lama Temple Complex & Bhagsu), and Dalhousie with Khajjiar (Mini Switzerland of India) before concluding in Amritsar.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Delhi to Shimla',
+        description: 'Pickup from Delhi. Private transfer to Shimla enjoying the scenic drive through the Shivalik and Himalayan hills. Hotel check-in on arrival. Overnight stay in Shimla.',
+        highlights: [
+          'Delhi Pickup & Private Cab Transfer',
+          'Scenic Hill Climb to Shimla',
+          'Hotel Check-in & Relaxation',
+          'Overnight Stay in Shimla'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Shimla Local Sightseeing',
+        description: 'Breakfast at the hotel. Visit Kufri pine viewpoints, sacred Jakhoo Temple, explore The Ridge, historic Christ Church, and enjoy free time at Mall Road. Return to hotel. Overnight stay in Shimla.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Kufri Viewpoint & Nature Walk',
+          'Jakhoo Temple with Giant Hanuman Statue',
+          'The Ridge & Iconic Christ Church',
+          'Overnight Stay in Shimla'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Shimla to Manali via Kullu',
+        description: 'Breakfast and hotel check-out. Proceed towards Manali. En route enjoy Kullu Valley sightseeing and visit Kullu Shawl Factory / local markets. Continue to Manali and check in at hotel. Overnight stay in Manali.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Valley Highway to Manali',
+          'Kullu Valley & Shawl Weaving Centers',
+          'Hotel Check-in in Manali',
+          'Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Manali Local Sightseeing',
+        description: 'Breakfast at the hotel. Visit Hadimba Devi Temple, Vashisht Temple & Hot Water Springs, Tibetan Monastery, Mall Road, and Van Vihar (subject to time). Overnight stay in Manali.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ancient Hadimba Devi Temple',
+          'Vashisht Sulphur Hot Springs',
+          'Tibetan Monastery & Mall Road',
+          'Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Sissu + Atal Tunnel + Solang Valley',
+        description: 'Breakfast at the hotel. Full-day excursion: drive through the engineering marvel Atal Tunnel, visit scenic Sissu Village in Lahaul Valley, and explore Solang Valley for panoramic mountain views and adventure activities. Return to Manali. Overnight stay in Manali.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Atal Tunnel Crossing',
+          'Sissu Village & Lahaul Waterfall',
+          'Solang Valley Snow & Adventure Points',
+          'Overnight Stay in Manali'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Manali to Dharamshala / McLeodganj',
+        description: 'Breakfast and hotel check-out. Proceed towards Dharamshala / McLeodganj through tea estates and Kangra Valley. Hotel check-in on arrival. Overnight stay in Dharamshala / McLeodganj.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Kangra Valley Drive',
+          'Hotel Check-in in McLeodganj',
+          'Overnight Stay in Dharamshala / McLeodganj'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Dharamshala & McLeodganj Sightseeing',
+        description: 'Breakfast at the hotel. Visit Dalai Lama Temple Complex, Bhagsunag Temple, Bhagsu Waterfall, historic St. John in the Wilderness Church, Dal Lake, and explore vibrant McLeodganj Tibetan market. Overnight stay in Dharamshala / McLeodganj.',
+        highlights: [
+          'Dalai Lama Residence & Temple Complex',
+          'Bhagsunag Temple & Waterfall',
+          'St. John in the Wilderness Church',
+          'Tibetan Craft Market & Cafes',
+          'Overnight Stay in Dharamshala / McLeodganj'
+        ]
+      },
+      {
+        day: 8,
+        title: 'Dharamshala / McLeodganj to Dalhousie',
+        description: 'Breakfast and hotel check-out. Proceed to Dalhousie. Hotel check-in on arrival and free time for local exploration and pine walks. Overnight stay in Dalhousie.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Mountain Drive to Colonial Dalhousie',
+          'Hotel Check-in & Evening Walk',
+          'Overnight Stay in Dalhousie'
+        ]
+      },
+      {
+        day: 9,
+        title: 'Dalhousie + Khajjiar Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Dalhousie and Khajjiar sightseeing. Visit Khajjiar (Mini Switzerland of India), Khajji Nag Temple, explore Subhash Baoli, Panchpula streams, and St. John’s Church. Return to hotel. Overnight stay in Dalhousie.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Khajjiar Green Meadow & Lake',
+          'Historic Khajji Nag Temple',
+          'Subhash Baoli & Panchpula',
+          'Overnight Stay in Dalhousie'
+        ]
+      },
+      {
+        day: 10,
+        title: 'Dalhousie to Amritsar Drop',
+        description: 'Breakfast and hotel check-out. Proceed towards Amritsar. Drop at Amritsar Airport / Railway Station / designated location. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Drive to Amritsar',
+          'Drop at Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "09 nights' accommodation in 03-star hotels.",
+      '09 breakfasts.',
+      'Private cab from Delhi to Amritsar for the complete tour.',
+      'Delhi to Shimla transfer.',
+      'Shimla local sightseeing.',
+      'Shimla to Manali transfer via Kullu.',
+      'Manali local sightseeing.',
+      'Sissu, Atal Tunnel & Solang Valley excursion.',
+      'Manali to Dharamshala / McLeodganj transfer.',
+      'Dharamshala & McLeodganj sightseeing.',
+      'Dharamshala / McLeodganj to Dalhousie transfer.',
+      'Dalhousie & Khajjiar sightseeing.',
+      'Dalhousie to Amritsar drop.',
+      'Fuel and driver allowance as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Entry tickets and monument charges.',
+      'Adventure activities at Solang Valley or Khajjiar.',
+      'Rohtang Pass excursion, permits or special vehicle charges.',
+      'Personal expenses.',
+      'Local guide charges.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, toll and state taxes unless specifically included in the final package.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+
+  // --- KERALA PACKAGES (2) ---
+  {
+    id: 'ker-munnar-alleppey-4d',
+    destinationId: 'kerala',
+    destinationName: 'Kerala',
+    category: 'Domestic',
+    title: 'Kerala 04 Days Itinerary: Munnar & Alleppey Houseboat',
+    duration: '4D / 3N',
+    price: '₹8,120',
+    originalPrice: '₹10,935',
+    rating: '4.95',
+    reviewsCount: 146,
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'Explore the mist-laden tea hills of Munnar and cruise through the serene backwaters of Alleppey with an overnight stay in a deluxe sharing houseboat. Includes private sedan transfers from Kochi.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Kochi Arrival – Transfer to Munnar',
+        description: 'Arrival in Kochi. Private transfer to Munnar by Sedan. Enjoy scenic en-route sightseeing with rolling green hills and waterfalls. Hotel check-in and leisure time. Overnight stay in Munnar.',
+        highlights: [
+          'Arrival in Kochi & Sedan Pickup',
+          'Scenic En-Route Mountain Drive',
+          'Hotel Check-in & Leisure Time',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Munnar Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Munnar sightseeing. Visit major attractions as per the scheduled tour including tea gardens, viewpoints, and local highlights. Return to the hotel. Overnight stay in Munnar.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Full Day Munnar Sightseeing',
+          'Tea Plantations & Panoramic Views',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Munnar to Alleppey + Houseboat Stay',
+        description: 'Breakfast and hotel check-out. Private transfer to Alleppey. Check in to the Deluxe Sharing Houseboat. Enjoy backwater cruising and sightseeing. Lunch and dinner included on the houseboat. Overnight stay in Alleppey Houseboat.',
+        highlights: [
+          'Scenic Transfer to Alleppey Backwaters',
+          'Check-in Deluxe Sharing Houseboat',
+          'Backwater Cruising & Sightseeing',
+          'Lunch & Dinner on Houseboat',
+          'Overnight Houseboat Stay'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Alleppey to Kochi',
+        description: 'Breakfast on the houseboat. Check-out and transfer to Kochi. Tour ends with pleasant memories.',
+        highlights: [
+          'Morning Breakfast on Houseboat',
+          'Check-out & Transfer to Kochi',
+          'Kochi Airport / Station Drop',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Munnar.",
+      "01 night's stay in Deluxe Sharing Houseboat in Alleppey.",
+      'CPAI meal plan in Munnar hotel.',
+      'APAI meal plan in Alleppey Houseboat.',
+      'Private Sedan for the complete tour.',
+      'Kochi pickup and drop.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Houseboat AC available from 09:00 PM to 06:00 AM.'
+    ],
+    exclusions: [
+      'Driver tips.',
+      'Parking charges.',
+      'Entry fees and sightseeing tickets.',
+      'Airfare / train fare.',
+      'Personal expenses.',
+      'Optional activities.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 10,935',
+        price4Pax: 'INR 8,120'
+      }
+    ]
+  },
+  {
+    id: 'ker-munnar-thekkady-alleppey-5d',
+    destinationId: 'kerala',
+    destinationName: 'Kerala',
+    category: 'Domestic',
+    title: 'Kerala 05 Days Itinerary: Munnar, Thekkady & Alleppey Houseboat',
+    duration: '5D / 4N',
+    price: '₹9,900',
+    originalPrice: '₹12,900',
+    rating: '4.96',
+    reviewsCount: 168,
+    image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A 05 Days complete Kerala hill & backwater escape covering tea-covered Munnar, aromatic Thekkady spice plantations, and serene Alleppey backwaters with an overnight stay in a deluxe sharing houseboat.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Kochi Arrival – Transfer to Munnar',
+        description: 'Arrival in Kochi. Private transfer to Munnar by Sedan. Enjoy scenic en-route sightseeing with rolling tea plantations, lush hills, and waterfalls. Hotel check-in and leisure time. Overnight stay in Munnar.',
+        highlights: [
+          'Arrival in Kochi & Sedan Pickup',
+          'Scenic Hill Road Sightseeing',
+          'Hotel Check-in & Leisure Time',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Munnar Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Munnar sightseeing. Visit major attractions as per the scheduled tour including tea estates, viewpoints, and nature spots. Return to the hotel. Overnight stay in Munnar.',
+        highlights: [
+          'Buffet Breakfast at Hotel',
+          'Full Day Munnar Sightseeing',
+          'Tea Plantations & Viewpoints',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Munnar to Thekkady + Sightseeing',
+        description: 'Breakfast and hotel check-out. Private transfer to Thekkady. Proceed for local Thekkady sightseeing. Explore major attractions as per the scheduled tour including spice plantations and wildlife landscapes. Overnight stay in Thekkady.',
+        highlights: [
+          'Scenic Transfer to Thekkady',
+          'Local Thekkady Sightseeing',
+          'Spice Plantations Exploration',
+          'Overnight Stay in Thekkady'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Thekkady to Alleppey + Houseboat Stay',
+        description: 'Breakfast and hotel check-out. Private transfer to Alleppey. Check in to the Deluxe Sharing Houseboat. Enjoy backwater cruising and sightseeing. Lunch and dinner included on the houseboat. Overnight stay in Alleppey Houseboat.',
+        highlights: [
+          'Transfer to Alleppey Backwaters',
+          'Check-in Deluxe Sharing Houseboat',
+          'Scenic Backwater Cruise',
+          'Lunch & Dinner on Houseboat',
+          'Overnight Houseboat Stay'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Alleppey to Kochi',
+        description: 'Breakfast on the houseboat. Check-out and transfer to Kochi. The tour ends with pleasant memories.',
+        highlights: [
+          'Morning Breakfast on Houseboat',
+          'Check-out & Transfer to Kochi',
+          'Kochi Airport / Station Drop',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Munnar.",
+      "01 night's accommodation in Thekkady.",
+      "01 night's stay in a Deluxe Sharing Houseboat in Alleppey.",
+      'CPAI meal plan in Munnar and Thekkady hotels.',
+      'APAI meal plan in Alleppey Houseboat.',
+      'Private Sedan for the complete tour.',
+      'Kochi pickup and drop.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Houseboat AC available from 09:00 PM to 06:00 AM.'
+    ],
+    exclusions: [
+      'Driver tips.',
+      'Parking charges.',
+      'Entry fees and sightseeing tickets.',
+      'Airfare / train fare.',
+      'Personal expenses.',
+      'Optional activities and boating charges.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 12,900',
+        price4Pax: 'INR 9,900'
+      }
+    ]
+  },
+  {
+    id: 'ker-cochin-munnar-thekkady-alleppey-6d',
+    destinationId: 'kerala',
+    destinationName: 'Kerala',
+    category: 'Domestic',
+    title: 'Kerala 06 Days Itinerary: Cochin, Munnar, Thekkady & Alleppey Houseboat',
+    duration: '6D / 5N',
+    price: '₹11,700',
+    originalPrice: '₹15,300',
+    rating: '4.98',
+    reviewsCount: 184,
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A 06 Days quintessential Kerala grand tour covering historic Cochin, misty hills of Munnar, wildlife and spice trails of Thekkady, and a serene overnight stay in a deluxe sharing houseboat in Alleppey.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kochi + Kochi Sightseeing',
+        description: 'Arrival in Kochi. Pickup and transfer by private Sedan. Proceed for local Kochi sightseeing. Visit major attractions as per the scheduled tour. Hotel check-in and leisure time. Overnight stay in Kochi.',
+        highlights: [
+          'Arrival in Kochi & Sedan Pickup',
+          'Local Kochi Heritage Sightseeing',
+          'Hotel Check-in & Leisure Time',
+          'Overnight Stay in Kochi'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kochi to Munnar + En-route Sightseeing',
+        description: 'Breakfast at the hotel. Check-out and proceed to Munnar. Enjoy scenic en-route sightseeing with rolling green hills and waterfalls. Hotel check-in on arrival. Overnight stay in Munnar.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Scenic En-Route Mountain Drive',
+          'Hotel Check-in in Munnar',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Munnar Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Munnar sightseeing. Visit major attractions as per the scheduled tour including tea gardens, viewpoints, and nature spots. Return to the hotel. Overnight stay in Munnar.',
+        highlights: [
+          'Buffet Breakfast at Hotel',
+          'Full Day Munnar Sightseeing',
+          'Tea Plantations & Viewpoints',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Munnar to Thekkady + Sightseeing',
+        description: 'Breakfast and hotel check-out. Private transfer to Thekkady. Proceed for local Thekkady sightseeing. Explore major attractions as per the scheduled tour. Overnight stay in Thekkady.',
+        highlights: [
+          'Scenic Transfer to Thekkady',
+          'Local Thekkady Sightseeing',
+          'Spice Plantations Exploration',
+          'Overnight Stay in Thekkady'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Thekkady to Alleppey + Houseboat Stay',
+        description: 'Breakfast and hotel check-out. Private transfer to Alleppey. Check in to the Deluxe Sharing Houseboat. Enjoy backwater cruising and sightseeing. Lunch and dinner included on the houseboat. Overnight stay in Alleppey Houseboat.',
+        highlights: [
+          'Transfer to Alleppey Backwaters',
+          'Check-in Deluxe Sharing Houseboat',
+          'Scenic Backwater Cruise',
+          'Lunch & Dinner on Houseboat',
+          'Overnight Houseboat Stay'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Alleppey to Kochi',
+        description: 'Breakfast on the houseboat. Check-out and transfer to Kochi. Tour ends with pleasant memories.',
+        highlights: [
+          'Morning Breakfast on Houseboat',
+          'Check-out & Transfer to Kochi',
+          'Kochi Airport / Station Drop',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "01 night's accommodation in Kochi.",
+      "02 nights' accommodation in Munnar.",
+      "01 night's accommodation in Thekkady.",
+      "01 night's stay in Deluxe Sharing Houseboat in Alleppey.",
+      'CPAI meal plan in Kochi, Munnar and Thekkady hotels.',
+      'APAI meal plan in Alleppey Houseboat.',
+      'Private Sedan for the complete tour.',
+      'Kochi pickup and drop.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Houseboat AC available from 09:00 PM to 06:00 AM.'
+    ],
+    exclusions: [
+      'Driver tips.',
+      'Parking charges.',
+      'Entry fees and sightseeing tickets.',
+      'Airfare / train fare.',
+      'Personal expenses.',
+      'Optional activities and boating charges.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 15,300',
+        price4Pax: 'INR 11,700'
+      }
+    ]
+  },
+  {
+    id: 'ker-munnar-thekkady-alleppey-kovalam-7d',
+    destinationId: 'kerala',
+    destinationName: 'Kerala',
+    category: 'Domestic',
+    title: 'Kerala 07 Days Itinerary: Munnar, Thekkady, Alleppey & Kovalam',
+    duration: '7D / 6N',
+    price: '₹15,600',
+    originalPrice: '₹20,700',
+    rating: '4.98',
+    reviewsCount: 210,
+    image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An expansive 07 Days Kerala grand holiday covering Munnar tea gardens, Thekkady wildlife & spice hills, an authentic overnight Alleppey deluxe houseboat cruise, and the golden beaches of Kovalam & Trivandrum.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Kochi Arrival – Transfer to Munnar',
+        description: 'Arrival in Kochi. Private transfer to Munnar by Sedan. Enjoy scenic en-route sightseeing. Hotel check-in and leisure time. Overnight stay in Munnar.',
+        highlights: [
+          'Arrival in Kochi & Sedan Pickup',
+          'Scenic En-Route Mountain Drive',
+          'Hotel Check-in & Leisure Time',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Munnar Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for local Munnar sightseeing. Visit major attractions as per the scheduled tour. Return to the hotel. Overnight stay in Munnar.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Full Day Munnar Sightseeing',
+          'Major Attractions & Tea Gardens',
+          'Overnight Stay in Munnar'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Munnar to Thekkady + Sightseeing',
+        description: 'Breakfast and hotel check-out. Private transfer to Thekkady. Proceed for local Thekkady sightseeing. Explore major attractions as per the scheduled tour. Overnight stay in Thekkady.',
+        highlights: [
+          'Private Transfer to Thekkady',
+          'Local Thekkady Sightseeing',
+          'Explore Major Attractions & Spices',
+          'Overnight Stay in Thekkady'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Thekkady to Alleppey + Houseboat Stay',
+        description: 'Breakfast and hotel check-out. Private transfer to Alleppey. Check in to the Deluxe Sharing Houseboat. Enjoy backwater cruising and sightseeing. Lunch and dinner included on the houseboat. Overnight stay in Alleppey Houseboat.',
+        highlights: [
+          'Transfer to Alleppey',
+          'Check-in Deluxe Sharing Houseboat',
+          'Backwater Cruising & Sightseeing',
+          'Lunch & Dinner on Houseboat',
+          'Overnight Stay in Houseboat'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Alleppey to Kovalam + En-route Sightseeing',
+        description: 'Breakfast on the houseboat. Check-out and proceed to Kovalam. Enjoy sightseeing en route. Hotel check-in on arrival. Overnight stay in Kovalam.',
+        highlights: [
+          'Breakfast on Houseboat',
+          'Drive to Kovalam with Sightseeing En Route',
+          'Hotel Check-in on Arrival',
+          'Overnight Stay in Kovalam'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Trivandrum Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for a full-day Trivandrum sightseeing tour. Visit major attractions as per the scheduled tour. Return to Kovalam. Overnight stay in Kovalam.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Full-Day Trivandrum Sightseeing',
+          'Visit Major Attractions',
+          'Overnight Stay in Kovalam'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure – Trivandrum Drop',
+        description: 'Breakfast and hotel check-out. Private transfer to Trivandrum Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Transfer to Trivandrum Airport / Station',
+          'Drop & Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Munnar.",
+      "01 night's accommodation in Thekkady.",
+      "01 night's stay in Deluxe Sharing Houseboat in Alleppey.",
+      "02 nights' accommodation in Kovalam.",
+      'CPAI meal plan in Munnar, Thekkady and Kovalam hotels.',
+      'APAI meal plan in Alleppey Houseboat.',
+      'Private Sedan for the complete tour.',
+      'Kochi pickup and Trivandrum drop.',
+      'Intercity transfers and sightseeing as per itinerary.',
+      'Munnar, Thekkady and Trivandrum sightseeing.',
+      'Houseboat backwater cruise.',
+      'Houseboat AC available from 09:00 PM to 06:00 AM.'
+    ],
+    exclusions: [
+      'Driver tips.',
+      'Parking charges.',
+      'Entry fees and sightseeing tickets.',
+      'Airfare / train fare.',
+      'Personal expenses.',
+      'Optional activities and boating charges.',
+      'Travel insurance.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 20,700',
+        price4Pax: 'INR 15,600'
+      }
+    ]
   },
 
   // --- GOA PACKAGES (4) ---
@@ -528,195 +1992,943 @@ export const PACKAGES = [
     exclusions: ['Airfare', 'Personal expenses']
   },
 
-  // --- RAJASTHAN PACKAGES (4) ---
+  // --- RAJASTHAN PACKAGES ---
   {
-    id: 'raj-1',
+    id: 'raj-jaipur-jaipur-4d',
     destinationId: 'rajasthan',
     destinationName: 'Rajasthan',
     category: 'Domestic',
-    title: 'Jaipur, Jodhpur & Udaipur Royal Forts Trail',
-    duration: '6D / 5N',
-    price: '₹19,800',
-    originalPrice: '₹26,500',
-    rating: '4.93',
-    reviewsCount: 175,
-    image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80',
-    description: 'Amber Fort elephant ride, Jaipur Hawa Mahal, Jodhpur Mehrangarh Fort, and Udaipur Lake Pichola boat cruise.',
-    itinerary: [
-      { day: 1, title: 'Jaipur Pink City Arrival', details: 'Visit City Palace, Jantar Mantar, and Hawa Mahal.' },
-      { day: 2, title: 'Amer Fort & Nahargarh Sunset', details: 'Amer Fort elephant/jeep ride & Nahargarh fort city view.' },
-      { day: 3, title: 'Jaipur to Jodhpur Blue City', details: 'Visit Mehrangarh Fort and Jaswant Thada.' },
-      { day: 4, title: 'Jodhpur to Udaipur City of Lakes', details: 'Enroute Ranakpur Jain Temple.' },
-      { day: 5, title: 'Udaipur City Palace & Lake Pichola Boat Ride', details: 'Boat ride past Lake Palace & Jagmandir.' },
-      { day: 6, title: 'Departure from Udaipur', details: 'Drop at Udaipur airport/station.' }
-    ],
-    inclusions: ['5 Nights Heritage Hotel Stay', 'Breakfast & Dinner', 'Private AC SUV/Sedan', 'Lake Pichola Boat Cruise Ticket'],
-    exclusions: ['Airfare', 'Monument entry fees']
-  },
-  {
-    id: 'raj-2',
-    destinationId: 'rajasthan',
-    destinationName: 'Rajasthan',
-    category: 'Domestic',
-    title: 'Jaisalmer Golden Fort & Sam Sand Dunes Safari',
+    title: 'Rajasthan 04 Days Itinerary Jaipur to Jaipur',
     duration: '4D / 3N',
-    price: '₹13,500',
-    originalPrice: '₹18,000',
+    price: '₹5,500',
+    originalPrice: '₹8,800',
     rating: '4.95',
+    reviewsCount: 160,
+    image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1600850056064-a8b380df8395?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A captivating 04-day royal Rajasthan gateway starting and ending in Jaipur. Discover iconic pink city landmarks including Amer Fort, Sheesh Mahal, Hawa Mahal, City Palace, and Jal Mahal, combined with a full-day holy excursion to Ajmer Sharif Dargah and the sacred Brahma Temple in Pushkar.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Jaipur',
+        description: 'Arrival at Jaipur Airport / Railway Station. Meet & greet and transfer to the hotel. Hotel check-in and leisure time to relax or explore local bazaars. Return to the hotel. Overnight stay in Jaipur.',
+        highlights: [
+          'Jaipur Airport / Railway Meet & Greet',
+          'Hotel Transfer & Check-in',
+          'Leisure Evening & Bazaars',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Jaipur Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit majestic Amer Fort, Shila Devi Temple, explore intricate Sheesh Mahal, and visit historical Panna Meena Ka Kund stepwell. Photo stop at Jal Mahal (Man Sagar Lake), followed by guided tours of City Palace and iconic Hawa Mahal. Return to the hotel. Overnight stay in Jaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Amer Fort & Sheesh Mahal Exploration',
+          'Panna Meena Ka Kund & Shila Devi Temple',
+          'Jal Mahal Photo Stop',
+          'City Palace & Hawa Mahal Visit',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Ajmer & Pushkar Day Excursion',
+        description: 'Breakfast at the hotel. Proceed for a full-day excursion to Ajmer and Pushkar. In Ajmer, visit holy Ajmer Sharif Dargah, historic Adhai Din Ka Jhonpra, and Ana Sagar Lake. Continue to sacred town of Pushkar to visit Pushkar Lake & Ghats, rare Lord Brahma Temple, Rangji Temple, Man Mahal, and optional Savitri Temple (subject to time). Return to Jaipur. Overnight stay in Jaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ajmer Sharif Dargah & Adhai Din Ka Jhonpra',
+          'Ana Sagar Lake Scenic View',
+          'Sacred Pushkar Lake & Holy Ghats',
+          'World-Famous Lord Brahma Temple',
+          'Return & Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        description: 'Breakfast and hotel check-out. Private transfer to Jaipur Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Transfer to Jaipur Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Jaipur.",
+      'Daily breakfast from Day 02.',
+      'Jaipur Airport / Railway Station pickup and drop-off.',
+      'Jaipur local sightseeing.',
+      'Ajmer & Pushkar day excursion.',
+      'Private vehicle for transfers and sightseeing as per itinerary.',
+      'Driver allowance and fuel charges as per confirmed package.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Lunch and dinner.',
+      'Chokhi Dhani entry and dinner charges, unless specifically included.',
+      'Monument and attraction entry tickets.',
+      'Elephant ride or other optional activities at Amer Fort.',
+      'Personal expenses.',
+      'Temple special darshan / VIP darshan charges.',
+      'Parking and toll charges, unless specifically included.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 8,800',
+        price4Pax: 'INR 5,500'
+      }
+    ]
+  },
+  {
+    id: 'raj-udaipur-udaipur-4d',
+    destinationId: 'rajasthan',
+    destinationName: 'Rajasthan',
+    category: 'Domestic',
+    title: 'Rajasthan 04 Days Itinerary Udaipur to Udaipur',
+    duration: '4D / 3N',
+    price: '₹5,100',
+    originalPrice: '₹7,700',
+    rating: '4.96',
     reviewsCount: 145,
-    image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80',
-    description: 'Stay inside Golden Fort, 4x4 desert dune bashing, camel safari, and Kalbeliya folk dance around desert campfire.',
-    itinerary: [
-      { day: 1, title: 'Jaisalmer Arrival & Haveli Tour', details: 'Patwon ki Haveli & Nathmal ki Haveli.' },
-      { day: 2, title: 'Jaisalmer Fort & Drive to Desert Camp', details: 'Explore living fort & check-in luxury desert camp.' },
-      { day: 3, title: 'Camel Safari & Dune Bashing', details: 'Thar desert sunset camel ride & Rajasthani cultural show.' },
-      { day: 4, title: 'Kuldhara Ghost Village & Departure', details: 'Abandoned village walk & airport drop.' }
+    image: 'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['2N Hotel + 1N Desert Tented Camp', 'Breakfast & Rajasthani Buffet Dinner', 'Camel Safari & Cultural Show', 'Private Cab'],
-    exclusions: ['Flight fare', 'Dune bashing extra charges']
+    description: 'An enchanting 04-day royal Udaipur getaway. Explore majestic City Palace, Jagdish Temple, Vintage Car Museum, and serene Lake Pichola, combined with a full-day spiritual and heritage excursion to Shrinathji Temple in Nathdwara, historic Eklingji Temple, and the magnificent Kumbhalgarh Fort.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Udaipur',
+        description: 'Arrival in Udaipur. Pickup and transfer to the hotel. Hotel check-in and leisure time. Rest of the day free for personal activities and exploring local lakefront promenades. Overnight stay in Udaipur.',
+        highlights: [
+          'Udaipur Airport / Railway Pickup & Transfer',
+          'Hotel Check-in & Relaxation',
+          'Leisure Time for Personal Activities',
+          'Overnight Stay in Udaipur'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Udaipur Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit royal City Palace, Jagdish Temple, explore Vintage & Classic Car Museum. Visit Fateh Sagar Lake and photo stop near Nehru Garden, visit Saheliyon Ki Bari and explore Shilpgram arts complex. Evening visit to Lake Pichola with optional boat ride at own cost. Return to the hotel. Overnight stay in Udaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'City Palace & Jagdish Temple',
+          'Vintage & Classic Car Museum',
+          'Fateh Sagar Lake & Saheliyon Ki Bari',
+          'Shilpgram Arts Village & Lake Pichola',
+          'Overnight Stay in Udaipur'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Nathdwara + Eklingji + Kumbhalgarh Excursion',
+        description: 'Breakfast at the hotel. Proceed for a full-day excursion. Visit sacred Shrinathji Temple in Nathdwara and historic Eklingji Temple. Continue to the mighty Kumbhalgarh Fort to explore the fort complex and Badal Mahal with panoramic Aravalli views. Attend Light & Sound Show (subject to schedule). Return to Udaipur. Overnight stay in Udaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Shrinathji Temple (Nathdwara) Darshan',
+          'Historic Eklingji Temple Visit',
+          'Kumbhalgarh Fort & Badal Mahal Exploration',
+          'Aravalli Mountain Panoramas & Light Show',
+          'Return & Overnight Stay in Udaipur'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        description: 'Breakfast at the hotel. Hotel check-out. Private transfer to Udaipur Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Transfer to Udaipur Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Udaipur.",
+      'Daily breakfast, from Day 02.',
+      'Udaipur Airport / Railway Station pickup and drop.',
+      'Private vehicle for transfers and sightseeing as per itinerary.',
+      'Udaipur full-day sightseeing.',
+      'Nathdwara, Eklingji & Kumbhalgarh day excursion.',
+      'Driver allowance and fuel charges as per the confirmed package.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Meals not specifically mentioned.',
+      'Monument and attraction entry tickets.',
+      'Lake Pichola boat ride charges.',
+      'Kumbhalgarh Light & Sound Show ticket.',
+      'Local guide charges.',
+      'Personal expenses.',
+      'Parking and toll charges, unless specifically included.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 7,700',
+        price4Pax: 'INR 5,100'
+      }
+    ]
   },
   {
-    id: 'raj-3',
+    id: 'raj-golden-triangle-6d',
     destinationId: 'rajasthan',
     destinationName: 'Rajasthan',
     category: 'Domestic',
-    title: 'Udaipur Lake Romance & Mount Abu Hill Station',
-    duration: '5D / 4N',
-    price: '₹16,200',
-    originalPrice: '₹21,000',
-    rating: '4.89',
-    reviewsCount: 110,
-    image: 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=800&q=80',
-    description: 'Romantic Lake Pichola boating in Udaipur paired with Nakki Lake and Dilwara Jain Temples in Mount Abu.',
-    itinerary: [
-      { day: 1, title: 'Udaipur Arrival & Saheliyon ki Bari', details: 'Check-in lakeview resort.' },
-      { day: 2, title: 'Udaipur Palace & Sunset Cruise', details: 'City Palace tour & boat ride.' },
-      { day: 3, title: 'Udaipur to Mount Abu Drive', details: 'Visit Sunset point & Nakki Lake boating.' },
-      { day: 4, title: 'Dilwara Temples & Guru Shikhar', details: 'Marble carved temples & highest peak.' },
-      { day: 5, title: 'Departure from Udaipur', details: 'Transfer to Udaipur airport.' }
+    title: 'Rajasthan 06 Days Itinerary Golden Triangle (Delhi, Agra & Jaipur)',
+    duration: '6D / 5N',
+    price: '₹9,800',
+    originalPrice: '₹14,900',
+    rating: '4.98',
+    reviewsCount: 215,
+    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1600850056064-a8b380df8395?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['4 Nights Resort Accommodation', 'Breakfast & Dinner', 'Private Cab'],
-    exclusions: ['Airfare', 'Boating charges']
+    description: 'The classic 06-day Golden Triangle tourist circuit linking Delhi, Agra, and Jaipur. Experience the Mughal grandeur of the Taj Mahal and Agra Fort, historical Delhi landmarks from Qutub Minar to Red Fort and Akshardham Temple, UNESCO World Heritage site Fatehpur Sikri, and royal Rajasthani palaces in the Pink City.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Delhi + Half-Day Sightseeing',
+        description: 'Arrival at Delhi Airport. Pickup and transfer to the hotel. Visit spiritual Akshardham Temple, historic Gurudwara Bangla Sahib, and photo stop at India Gate. Overnight stay in Delhi.',
+        highlights: [
+          'Delhi Airport Pickup & Transfer',
+          'Akshardham Temple Visit',
+          'Gurudwara Bangla Sahib',
+          'India Gate Photo Stop',
+          'Overnight Stay in Delhi'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Delhi Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit Red Fort, Purana Qila, UNESCO-listed Qutub Minar, explore vibrant Chandni Chowk market, India Gate, and Laxmi Narayan Temple / Birla Mandir. Return to the hotel. Overnight stay in Delhi.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Red Fort & Purana Qila',
+          'Qutub Minar & Chandni Chowk',
+          'Birla Mandir & India Gate',
+          'Overnight Stay in Delhi'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Delhi to Agra + Agra Sightseeing',
+        description: 'Breakfast at the hotel. Check-out and proceed to Agra. Hotel check-in on arrival. Visit the world-famous wonder Taj Mahal and magnificent Agra Fort. Return to the hotel. Overnight stay in Agra.',
+        highlights: [
+          'Breakfast & Drive to Agra',
+          'Hotel Check-in',
+          'Iconic Taj Mahal Guided Visit',
+          'Historic Agra Fort Exploration',
+          'Overnight Stay in Agra'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Agra to Jaipur via Fatehpur Sikri',
+        description: 'Breakfast at the hotel. Check-out and proceed towards Jaipur. En route visit UNESCO World Heritage site Fatehpur Sikri, Buland Darwaza, Jodha Bai Palace, Jama Masjid, Panch Mahal and Tomb of Salim Chishti. Continue to Jaipur and check in at hotel. Optional evening visit to Chokhi Dhani at own cost. Overnight stay in Jaipur.',
+        highlights: [
+          'Breakfast & Drive towards Jaipur',
+          'Fatehpur Sikri & Buland Darwaza',
+          'Jodha Bai Palace & Salim Chishti Tomb',
+          'Hotel Check-in in Jaipur',
+          'Optional Chokhi Dhani Village Experience',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Jaipur Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit majestic Amer Fort, explore Shila Devi Temple and Sheesh Mahal, visit historic Panna Meena Ka Kund stepwell, Jal Mahal (Man Sagar Lake) photo stop, City Palace, and iconic Hawa Mahal. Return to the hotel. Overnight stay in Jaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Amer Fort & Sheesh Mahal',
+          'Panna Meena Ka Kund & Jal Mahal',
+          'City Palace & Hawa Mahal Visit',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Jaipur to Delhi + Departure',
+        description: 'Breakfast at the hotel. Hotel check-out. Proceed to Delhi by private vehicle. Drop at Delhi Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Intercity Drive to Delhi',
+          'Drop at Delhi Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Delhi.",
+      "01 night's accommodation in Agra.",
+      "02 nights' accommodation in Jaipur.",
+      'Daily breakfast from Day 02.',
+      'Delhi Airport pickup and final Delhi Airport / Railway Station drop.',
+      'Private vehicle for intercity transfers and sightseeing as per itinerary.',
+      'Delhi local sightseeing.',
+      'Agra sightseeing.',
+      'Fatehpur Sikri en-route sightseeing.',
+      'Jaipur local sightseeing.',
+      'Driver allowance and fuel charges as per confirmed package.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Meals not specifically mentioned.',
+      'Monument and attraction entry tickets.',
+      'Taj Mahal and Agra Fort entry tickets.',
+      'Fatehpur Sikri monument entry tickets.',
+      'Amer Fort, City Palace and other Jaipur entry tickets.',
+      'Chokhi Dhani entry and dinner charges.',
+      'Elephant ride or other optional activities.',
+      'Local guide charges.',
+      'Personal expenses.',
+      'Parking and toll charges, unless specifically included.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 14,900',
+        price4Pax: 'INR 9,800'
+      }
+    ]
   },
   {
-    id: 'raj-4',
+    id: 'raj-royal-circuit-7d',
     destinationId: 'rajasthan',
     destinationName: 'Rajasthan',
     category: 'Domestic',
-    title: 'Ranthambore Tiger Safari & Jaipur Royal Heritage',
-    duration: '5D / 4N',
-    price: '₹17,500',
-    originalPrice: '₹23,000',
-    rating: '4.90',
-    reviewsCount: 130,
-    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80',
-    description: 'Open-top 4x4 Jeep tiger safari in Ranthambore National Park combined with Pink City Jaipur forts.',
-    itinerary: [
-      { day: 1, title: 'Jaipur Arrival', details: 'Shopping at Johari bazaar.' },
-      { day: 2, title: 'Jaipur Forts & Palaces', details: 'Amer Fort & Hawa Mahal.' },
-      { day: 3, title: 'Jaipur to Ranthambore', details: 'Check-in jungle resort near park.' },
-      { day: 4, title: 'Morning & Afternoon Tiger Safari', details: 'Jeep jungle safari in Zone 1-5.' },
-      { day: 5, title: 'Departure', details: 'Drop at Jaipur airport.' }
+    title: 'Rajasthan 07 Days Itinerary Royal Circuit (Jaipur, Jodhpur & Jaisalmer with Sam Dunes)',
+    duration: '7D / 6N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 240,
+    image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1600850056064-a8b380df8395?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['4 Nights Stay', 'Breakfast & Dinner', '1 Ranthambore Jungle Safari Permit', 'Private Taxi'],
-    exclusions: ['Airfare', 'Camera permits']
+    description: 'The ultimate 07-day royal Rajasthan expedition. Experience the Pink City of Jaipur with Amer Fort and City Palace, sacred Ajmer Sharif and Pushkar, the Blue City of Jodhpur with Mehrangarh Fort and Jaswant Thada, the Golden City of Jaisalmer with Thar desert Sam Sand Dunes camping, and the historic Indo-Pak border sites of Tanot Mata Temple and Longewala.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Jaipur',
+        description: 'Arrival at Jaipur Airport / Railway Station. Pickup and transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Jaipur.',
+        highlights: [
+          'Jaipur Airport / Railway Pickup & Transfer',
+          'Hotel Check-in & Relaxation',
+          'Leisure Evening in Pink City',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Jaipur Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit Amer Fort, explore Shila Devi Temple and Sheesh Mahal, visit Panna Meena Ka Kund, photo stop at Jal Mahal (Man Sagar Lake), visit City Palace and iconic Hawa Mahal. Return to the hotel. Overnight stay in Jaipur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Amer Fort & Sheesh Mahal',
+          'Panna Meena Ka Kund & Jal Mahal',
+          'City Palace & Hawa Mahal Visit',
+          'Overnight Stay in Jaipur'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Jaipur to Jodhpur via Ajmer & Pushkar',
+        description: 'Breakfast at the hotel and check-out. Proceed towards Jodhpur. En route visit Ajmer Sharif Dargah, Adhai Din Ka Jhonpra and Ana Sagar Lake. Continue to Pushkar to visit Pushkar Lake & Ghats and Lord Brahma Temple. Continue to Jodhpur. Hotel check-in and overnight stay in Jodhpur.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Ajmer Sharif Dargah Visit',
+          'Pushkar Lake & Holy Brahma Temple',
+          'Drive to Sun City Jodhpur',
+          'Overnight Stay in Jodhpur'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Jodhpur Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Visit majestic Mehrangarh Fort, Jaswant Thada, and Umaid Bhawan Palace & Museum. Free time for local exploration and bazaars. Return to the hotel. Overnight stay in Jodhpur.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Mighty Mehrangarh Fort Tour',
+          'Jaswant Thada Marble Memorial',
+          'Umaid Bhawan Palace & Museum',
+          'Overnight Stay in Jodhpur'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Jodhpur to Jaisalmer + Sightseeing + Sam Dunes',
+        description: 'Breakfast at the hotel and check-out. Proceed to Jaisalmer. Visit living Jaisalmer Fort and explore major city attractions. Later proceed to Sam Sand Dunes. Optional sunset camel ride. Enjoy Rajasthani cultural program and dinner at the desert camp. Overnight stay at Sam Dunes.',
+        highlights: [
+          'Drive to Golden City Jaisalmer',
+          'Golden Jaisalmer Fort Visit',
+          'Sam Sand Dunes Desert Camp Check-in',
+          'Sunset Camel Ride & Cultural Program',
+          'Desert Dinner & Overnight Stay at Sam Dunes'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Tanot Mata Temple + Longewala Excursion',
+        description: 'Breakfast at the camp. Proceed for a full-day excursion to sacred Tanot Mata Temple near Indo-Pak border and historic Longewala War Memorial / Battlefield Area. Return to Jaisalmer city. Overnight stay in Jaisalmer.',
+        highlights: [
+          'Breakfast at Desert Camp',
+          'Tanot Mata Temple Border Darshan',
+          'Longewala War Memorial & Battlefield Tour',
+          'Drive back to Jaisalmer City',
+          'Overnight Stay in Jaisalmer'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Jaisalmer to Jaipur + Departure',
+        description: 'Breakfast and hotel check-out. Proceed to Jaipur. Drop at Jaipur Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Highway Return to Jaipur',
+          'Drop at Airport / Railway Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Jaipur.",
+      "02 nights' accommodation in Jodhpur.",
+      "01 night's accommodation at Sam Dunes.",
+      "01 night's accommodation in Jaisalmer.",
+      'Daily breakfast, from Day 02.',
+      'Dinner and cultural program at Sam Dunes, if included in the confirmed camp package.',
+      'Jaipur Airport / Railway Station pickup and drop.',
+      'Private vehicle for intercity transfers and sightseeing as per itinerary.',
+      'Jaipur local sightseeing.',
+      'Ajmer & Pushkar en-route sightseeing.',
+      'Jodhpur local sightseeing.',
+      'Jaisalmer local sightseeing.',
+      'Tanot Mata & Longewala excursion.',
+      'Driver allowance and fuel charges as per confirmed package.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Meals not specifically mentioned.',
+      'Monument and attraction entry tickets.',
+      'Chokhi Dhani entry and dinner charges.',
+      'Elephant ride at Amer Fort.',
+      'Camel ride / Jeep Safari at Sam Dunes.',
+      'Local guide charges.',
+      'Personal expenses.',
+      'Parking, toll and state taxes unless specifically included.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
   },
 
-  // --- ANDAMAN PACKAGES (4) ---
+  // --- ANDAMAN PACKAGES ---
   {
-    id: 'and-1',
+    id: 'and-pb-hav-4d',
     destinationId: 'andaman',
     destinationName: 'Andaman Islands',
     category: 'Domestic',
-    title: 'Havelock Scuba, Radhanagar Beach & Neil Island Escape',
-    duration: '6D / 5N',
-    price: '₹24,500',
-    originalPrice: '₹32,000',
-    rating: '4.96',
-    reviewsCount: 195,
-    image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80',
-    description: 'Private catamaran cruise to Havelock Island, Radhanagar Beach sunset, Elephant beach snorkeling, and Neil Island coral bridge.',
-    itinerary: [
-      { day: 1, title: 'Port Blair Arrival & Cellular Jail Light Show', details: 'Cellular Jail museum tour & evening light and sound show.' },
-      { day: 2, title: 'Port Blair to Havelock Cruise & Radhanagar Beach', details: 'AC Ferry cruise to Havelock. Sunset at Asia’s best Radhanagar beach.' },
-      { day: 3, title: 'Elephant Beach Boat Trip & Underwater Scuba', details: 'Speedboat to Elephant Beach. Scuba diving with underwater photographer.' },
-      { day: 4, title: 'Havelock to Neil Island (Laxmanpur & Bharatpur)', details: 'Ferry to Neil Island. Visit Natural Coral Rock Bridge.' },
-      { day: 5, title: 'Neil Island to Port Blair Return', details: 'Return ferry to Port Blair. Chidiyatapu sunset point.' },
-      { day: 6, title: 'Departure from Port Blair', details: 'Airport drop.' }
+    title: 'Andaman PB-HAV 04 Days Itinerary (Port Blair & Havelock Island)',
+    duration: '4D / 3N',
+    price: '₹9,900',
+    originalPrice: '₹11,200',
+    rating: '4.95',
+    reviewsCount: 118,
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['5 Nights Beach Resort Stay', 'Breakfast & Dinner', 'Makruzz / Green Ocean Cruise Tickets', 'Scuba Diving Trial with Video', 'Private AC Cab'],
-    exclusions: ['Airfare', 'Personal watersports extra']
+    description: 'Discover the tropical paradise of the Andaman Islands on a 04-day getaway covering Port Blair, historic Cellular Jail & Light and Sound show, Radhanagar Beach, and turquoise Kalapathar Beach with seamless inter-island ferry transfers.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Port Blair',
+        description: 'Arrival at Port Blair Airport. Private transfer to the hotel. Visit Cellular Jail. Enjoy the Light & Sound Show. Visit Corbyn’s Cove Beach. Overnight stay in Port Blair.',
+        highlights: [
+          'Arrival at Port Blair Airport & Transfer',
+          'Historic Cellular Jail Visit',
+          'Light & Sound Show',
+          'Corbyn\'s Cove Beach Stroll',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Port Blair to Havelock Island',
+        description: 'Breakfast at the hotel. Transfer to the ferry terminal. Proceed to Havelock Island by ferry. Visit Radhanagar Beach. Overnight stay in Havelock.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ferry Transfer to Havelock Island',
+          'World-Famous Radhanagar Beach Sunset',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kalapathar Beach + Port Blair Transfer',
+        description: 'Breakfast at the hotel. Visit Kalapathar Beach. Transfer to the ferry terminal. Return to Port Blair by ferry. Overnight stay in Port Blair.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Scenic Kalapathar Beach Visit',
+          'Return Ferry to Port Blair',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        description: 'Breakfast and hotel check-out. Private transfer to Port Blair Airport. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Hotel Check-out',
+          'Private Transfer to Port Blair Airport',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Port Blair.",
+      "01 night's accommodation in Havelock.",
+      '03 breakfasts.',
+      'Private cab for local sightseeing and transfers.',
+      'Inter-island ferry transfers.',
+      'Cellular Jail visit.',
+      'Light & Sound Show.',
+      "Corbyn's Cove Beach visit.",
+      'Radhanagar Beach visit.',
+      'Kalapathar Beach visit.',
+      'Airport pickup and drop.',
+      'All transfers and sightseeing as per the itinerary.'
+    ],
+    exclusions: [
+      'Airfare.',
+      'Lunch and dinner.',
+      'Personal expenses.',
+      'Water sports and optional activities.',
+      'Entry tickets not specifically mentioned under inclusions.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to ferry delays, weather conditions or other circumstances beyond control.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 11,200',
+        price4Pax: 'INR 9,900'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        price2Pax: 'INR 17,300',
+        price4Pax: 'INR 16,100'
+      }
+    ]
   },
   {
-    id: 'and-2',
+    id: 'and-pb-hav-neil-4d',
     destinationId: 'andaman',
     destinationName: 'Andaman Islands',
     category: 'Domestic',
-    title: 'Baratang Limestone Caves & Mud Volcano Safari',
-    duration: '5D / 4N',
-    price: '₹19,800',
-    originalPrice: '₹26,000',
-    rating: '4.87',
-    reviewsCount: 110,
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
-    description: 'Mangrove boat safari through Jarawa tribal reserve to Baratang limestone caves and Havelock turquoise lagoons.',
-    itinerary: [
-      { day: 1, title: 'Port Blair Arrival', details: 'Corbyn’s Cove beach.' },
-      { day: 2, title: 'Baratang Island Day Trip', details: 'Jarawa tribal reserve forest drive, boat safari through mangrove creek to limestone caves.' },
-      { day: 3, title: 'Port Blair to Havelock Island', details: 'Radhanagar beach.' },
-      { day: 4, title: 'Kalapathar Beach & Return to Port Blair', details: 'Black rock beach & return ferry.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
+    title: 'Andaman PB-HAV-NEIL 04 Days Itinerary (Port Blair, Havelock & Neil Island)',
+    duration: '4D / 3N',
+    price: '₹11,900',
+    originalPrice: '₹14,200',
+    rating: '4.97',
+    reviewsCount: 132,
+    image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['4 Nights Hotel/Resort', 'Breakfast & Dinner', 'Baratang Boat & Forest Convoy Permits', 'Inter-island Ferry Tickets'],
-    exclusions: ['Airfare', 'Personal tips']
+    description: 'An island-hopping 04-day adventure spanning Port Blair, Havelock Island and Neil Island. Experience white-sand Radhanagar Beach, turquoise Kalapathar, Bharatpur coral beach, Laxmanpur sunset point, the Natural Coral Bridge, and Cellular Jail Light & Sound show.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Port Blair – Havelock Transfer',
+        description: 'Arrival at Port Blair Airport. Transfer to the ferry terminal. Proceed to Havelock Island by ferry. Visit the world-renowned Radhanagar Beach. Overnight stay in Havelock.',
+        highlights: [
+          'Arrival at Port Blair Airport',
+          'Ferry Transfer to Havelock Island',
+          'Radhanagar Beach Sunset',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Havelock to Neil Island',
+        description: 'Breakfast at the hotel. Visit scenic Kalapathar Beach. Transfer to the ferry terminal. Proceed to Neil Island by ferry. Overnight stay in Neil Island.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Kalapathar Beach Visit',
+          'Ferry Transfer to Neil Island',
+          'Overnight Stay in Neil Island'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Neil Island Sightseeing + Port Blair Transfer',
+        description: 'Breakfast at the hotel. Visit Bharatpur Beach, Laxmanpur Beach, and explore the famous Natural Coral Bridge. Transfer to Port Blair by ferry. Visit historic Cellular Jail and enjoy the Light & Sound Show. Overnight stay in Port Blair.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Bharatpur & Laxmanpur Beach',
+          'Natural Coral Bridge Exploration',
+          'Return Ferry to Port Blair',
+          'Cellular Jail Light & Sound Show',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        description: 'Breakfast and hotel check-out. Private transfer to Port Blair Airport. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Hotel Check-out',
+          'Private Transfer to Port Blair Airport',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "01 night's accommodation in Port Blair.",
+      "01 night's accommodation in Havelock.",
+      "01 night's accommodation in Neil Island.",
+      '03 breakfasts.',
+      'Private cab for local sightseeing and transfers.',
+      'Inter-island ferry transfers.',
+      'Radhanagar Beach visit.',
+      'Kalapathar Beach visit.',
+      'Bharatpur Beach visit.',
+      'Laxmanpur Beach visit.',
+      'Natural Coral Bridge visit.',
+      'Cellular Jail visit.',
+      'Light & Sound Show.',
+      'Airport pickup and drop.',
+      'All transfers and sightseeing as per the itinerary.'
+    ],
+    exclusions: [
+      'Airfare.',
+      'Lunch and dinner.',
+      'Personal expenses.',
+      'Water sports and optional activities.',
+      'Entry tickets not specifically mentioned under inclusions.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to ferry delays, weather conditions or other circumstances beyond control.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 14,200',
+        price4Pax: 'INR 11,900'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        price2Pax: 'INR 20,100',
+        price4Pax: 'INR 17,800'
+      }
+    ]
   },
   {
-    id: 'and-3',
+    id: 'and-pb-hav-5d',
     destinationId: 'andaman',
     destinationName: 'Andaman Islands',
     category: 'Domestic',
-    title: 'Andaman Honeymoon Lagoon & Candlelit Beach Special',
+    title: 'Andaman PB-HAV 05 Days Itinerary (Port Blair & Havelock Island with Elephant Beach)',
     duration: '5D / 4N',
-    price: '₹22,900',
-    originalPrice: '₹29,500',
+    price: '₹13,400',
+    originalPrice: '₹14,700',
     rating: '4.98',
-    reviewsCount: 140,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    description: 'Luxury beachfront resort stay in Havelock, private candlelit seafood dinner on the sand, bed decoration, and couple photo shoot.',
-    itinerary: [
-      { day: 1, title: 'Port Blair Arrival & Sunset', details: 'Resort check-in.' },
-      { day: 2, title: 'Catamaran to Havelock & Private Beach Dinner', details: 'Beachfront resort & candlelit setup.' },
-      { day: 3, title: 'Elephant Beach Couple Snorkeling', details: 'Coral reef excursion.' },
-      { day: 4, title: 'Havelock to Port Blair & Shopping', details: 'Return cruise & Pearl shopping.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
+    reviewsCount: 145,
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['4 Nights Premium Beach Resorts', 'Breakfast & Candlelit Dinner', 'High-speed Cruise Tickets', 'Honeymoon Inclusions (Cake, Flower Bed)'],
-    exclusions: ['Airfare', 'Extra water sports']
+    description: 'An extended 05-day tropical retreat in the Andaman Islands featuring Port Blair heritage, Cellular Jail Light & Sound Show, Corbyn\'s Cove, Radhanagar sunset, an exciting excursion to Elephant Beach with water sports, and tranquil Kalapathar Beach.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Port Blair',
+        description: 'Arrival at Port Blair Airport. Private transfer to the hotel. Visit Cellular Jail. Enjoy the Light & Sound Show. Visit Corbyn’s Cove Beach. Overnight stay in Port Blair.',
+        highlights: [
+          'Arrival at Port Blair Airport & Transfer',
+          'Cellular Jail Heritage Visit',
+          'Light & Sound Show',
+          'Corbyn\'s Cove Beach Stroll',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Port Blair to Havelock Island',
+        description: 'Breakfast at the hotel. Transfer to the ferry terminal. Proceed to Havelock Island by ferry. Visit Radhanagar Beach. Overnight stay in Havelock.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ferry Transfer to Havelock Island',
+          'Radhanagar Beach Sunset',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Elephant Beach Excursion',
+        description: 'Breakfast at the hotel. Proceed for Elephant Beach excursion. Enjoy beach time and optional water sports activities. Return to the hotel. Overnight stay in Havelock.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Elephant Beach Excursion',
+          'Snorkeling & Coral Reef Water Sports',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kalapathar Beach + Port Blair Transfer',
+        description: 'Breakfast at the hotel. Visit Kalapathar Beach. Transfer to the ferry terminal. Return to Port Blair by ferry. Overnight stay in Port Blair.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Kalapathar Beach Exploration',
+          'Return Ferry to Port Blair',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        description: 'Breakfast and hotel check-out. Private transfer to Port Blair Airport. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Hotel Check-out',
+          'Private Transfer to Port Blair Airport',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Port Blair.",
+      "02 nights' accommodation in Havelock.",
+      '04 breakfasts.',
+      'Private cab for local sightseeing and transfers.',
+      'Inter-island ferry transfers.',
+      'Cellular Jail visit.',
+      'Light & Sound Show.',
+      "Corbyn's Cove Beach visit.",
+      'Radhanagar Beach visit.',
+      'Elephant Beach excursion.',
+      'Kalapathar Beach visit.',
+      'Airport pickup and drop.',
+      'All transfers and sightseeing as per the itinerary.'
+    ],
+    exclusions: [
+      'Airfare.',
+      'Lunch and dinner.',
+      'Personal expenses.',
+      'Water sports and optional activities at Elephant Beach.',
+      'Entry tickets not specifically mentioned under inclusions.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to ferry delays, weather conditions or other circumstances beyond control.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 14,700',
+        price4Pax: 'INR 13,400'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        price2Pax: 'INR 22,800',
+        price4Pax: 'INR 21,500'
+      }
+    ]
   },
   {
-    id: 'and-4',
+    id: 'and-pb-hav-neil-6d',
     destinationId: 'andaman',
     destinationName: 'Andaman Islands',
     category: 'Domestic',
-    title: 'Ross & Smith Twin Island Explorer Circuit',
-    duration: '7D / 6N',
-    price: '₹29,900',
-    originalPrice: '₹39,000',
-    rating: '4.93',
-    reviewsCount: 85,
-    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',
-    description: 'Travel up to Diglipur in North Andaman to walk across the sandbar connecting Ross & Smith twin islands.',
-    itinerary: [
-      { day: 1, title: 'Port Blair Arrival', details: 'Cellular jail.' },
-      { day: 2, title: 'Port Blair to Rangat / Mayabunder', details: 'Amkunj beach & Dhaninallah mangrove walkway.' },
-      { day: 3, title: 'Diglipur Ross & Smith Island Boat', details: 'Natural sandbar joining two islands.' },
-      { day: 4, title: 'Return to Port Blair via Baratang', details: 'Limestone caves.' },
-      { day: 5, title: 'Port Blair to Havelock', details: 'Radhanagar beach.' },
-      { day: 6, title: 'Havelock to Port Blair', details: 'Shopping.' },
-      { day: 7, title: 'Departure', details: 'Airport drop.' }
+    title: 'Andaman PB-HAV-NEIL 06 Days Itinerary (Port Blair, Havelock & Neil Island with Elephant Beach)',
+    duration: '6D / 5N',
+    price: '₹17,000',
+    originalPrice: '₹18,800',
+    rating: '4.98',
+    reviewsCount: 165,
+    image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=85'
     ],
-    inclusions: ['6 Nights Resort Accommodation', 'Breakfast & Dinner', 'All Island Ferry & Forest Permits', 'Private Vehicle'],
-    exclusions: ['Airfare', 'Personal expenses']
+    description: 'The definitive 06-day Andaman island-hopping holiday. Explore historic Port Blair with Cellular Jail Light & Sound show, spend 2 nights in Havelock visiting Radhanagar, Elephant Beach & Kalapathar, and discover Neil Island’s pristine Bharatpur, Laxmanpur, and Natural Coral Bridge.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Port Blair',
+        description: 'Arrival at Port Blair Airport. Private transfer to the hotel. Visit Cellular Jail. Enjoy the Light & Sound Show. Visit Corbyn’s Cove Beach. Overnight stay in Port Blair.',
+        highlights: [
+          'Arrival at Port Blair Airport & Transfer',
+          'Historic Cellular Jail Visit',
+          'Light & Sound Show',
+          'Corbyn\'s Cove Beach Walk',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Port Blair to Havelock Island',
+        description: 'Breakfast at the hotel. Transfer to the ferry terminal. Proceed to Havelock Island by ferry. Visit Radhanagar Beach. Overnight stay in Havelock.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ferry Cruise to Havelock Island',
+          'Radhanagar Beach Sunset',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Elephant Beach Excursion',
+        description: 'Breakfast at the hotel. Proceed for Elephant Beach excursion. Enjoy beach time and optional water sports activities. Return to the hotel. Overnight stay in Havelock.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Elephant Beach Excursion',
+          'Snorkeling & Coral Reef Water Sports',
+          'Overnight Stay in Havelock'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kalapathar Beach + Neil Island Transfer',
+        description: 'Breakfast at the hotel. Visit Kalapathar Beach. Transfer to the ferry terminal. Proceed to Neil Island by ferry. Overnight stay in Neil Island.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Scenic Kalapathar Beach Visit',
+          'Ferry Transfer to Neil Island',
+          'Overnight Stay in Neil Island'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Neil Island Sightseeing + Port Blair Transfer',
+        description: 'Breakfast at the hotel. Visit Bharatpur Beach, Laxmanpur Beach, and explore the Natural Coral Bridge. Transfer to Port Blair by ferry. Overnight stay in Port Blair.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Bharatpur & Laxmanpur Beach',
+          'Natural Coral Bridge Visit',
+          'Return Ferry to Port Blair',
+          'Overnight Stay in Port Blair'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        description: 'Breakfast and hotel check-out. Private transfer to Port Blair Airport. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Hotel Check-out',
+          'Private Transfer to Port Blair Airport',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Port Blair.",
+      "02 nights' accommodation in Havelock.",
+      "01 night's accommodation in Neil Island.",
+      '05 breakfasts.',
+      'Private cab for local sightseeing and transfers.',
+      'Inter-island ferry transfers.',
+      'Airport pickup and drop.',
+      'Cellular Jail visit.',
+      'Light & Sound Show.',
+      "Corbyn's Cove Beach visit.",
+      'Radhanagar Beach visit.',
+      'Elephant Beach excursion.',
+      'Kalapathar Beach visit.',
+      'Bharatpur Beach visit.',
+      'Laxmanpur Beach visit.',
+      'Natural Coral Bridge visit.',
+      'All transfers and sightseeing as per the itinerary.'
+    ],
+    exclusions: [
+      'Airfare.',
+      'Lunch and dinner.',
+      'Personal expenses.',
+      'Water sports and optional activities at Elephant Beach.',
+      'Entry tickets not specifically mentioned under inclusions.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to ferry delays, weather conditions or other circumstances beyond control.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 18,800',
+        price4Pax: 'INR 17,000'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        price2Pax: 'INR 28,800',
+        price4Pax: 'INR 27,000'
+      }
+    ]
   },
 
   // --- LADAKH PACKAGES (4) ---
@@ -874,681 +3086,5894 @@ export const PACKAGES = [
     exclusions: ['Airfare', 'Personal tips']
   },
 
+  // --- UTTAR PRADESH PACKAGES ---
+  {
+    id: 'varanasi-1',
+    destinationId: 'uttar-pradesh',
+    destinationName: 'Uttar Pradesh',
+    category: 'Domestic',
+    title: 'Varanasi - Prayagraj - Ayodhya Spiritual Trail',
+    duration: '4D / 3N',
+    price: '₹7,200',
+    originalPrice: '₹10,900',
+    rating: '4.95',
+    reviewsCount: 88,
+    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A 03N/04D sacred spiritual tour across Varanasi, Prayagraj, and Ayodhya. Experience Kashi Vishwanath darshan, Ganga Aarti, holy Triveni Sangam, and Shri Ram Janmabhoomi temple.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Varanasi + Ghat Exploration & Darshan',
+        description: 'Arrival in Varanasi. Pickup and private transfer to the hotel. Visit Kashi Vishwanath Temple for darshan. Explore Dashashwamedh Ghat and nearby ghats. Visit Assi Ghat. Explore the spiritual lanes and riverside areas of Varanasi. Overnight stay in Varanasi.',
+        highlights: [
+          'Arrival in Varanasi & Hotel Transfer',
+          'Kashi Vishwanath Temple Darshan',
+          'Dashashwamedh & Assi Ghat Exploration',
+          'Spiritual Riverside Lanes Walk',
+          'Overnight Stay in Varanasi'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Varanasi Local Sightseeing',
+        description: 'Breakfast at the hotel. Visit Sankat Mochan Hanuman Temple. Visit Durga Kund Temple. Visit Tulsi Manas Temple. Visit BHU / New Vishwanath Temple. Visit Sarnath, including major Buddhist and historical attractions. Return to the hotel. Overnight stay in Varanasi.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Sankat Mochan & Durga Kund Temple',
+          'Tulsi Manas Temple & BHU New Vishwanath',
+          'Sarnath Buddhist & Historical Attractions',
+          'Overnight Stay in Varanasi'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Varanasi → Prayagraj Sightseeing → Ayodhya',
+        description: 'Breakfast and hotel check-out. Proceed to Prayagraj by private cab. Visit Triveni Sangam. Visit Bade Hanuman Ji Temple. Visit Anand Bhawan, subject to operational timings. Continue towards Ayodhya after sightseeing. Hotel check-in on arrival. Overnight stay in Ayodhya.',
+        highlights: [
+          'Scenic Cab Drive to Prayagraj',
+          'Holy Triveni Sangam & Bade Hanuman Ji Temple',
+          'Anand Bhawan Heritage Visit',
+          'Transfer to Ayodhya & Hotel Check-in',
+          'Overnight Stay in Ayodhya'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ayodhya Darshan → Varanasi Drop',
+        description: 'Breakfast and hotel check-out. Visit Shri Ram Janmabhoomi Temple. Visit Hanuman Garhi. Visit Kanak Bhawan. Visit Dashrath Mahal. Visit Saryu Ghat / Ram Ki Paidi. After darshan and sightseeing, proceed to Varanasi. Drop at Varanasi Airport / Railway Station / designated location. Tour ends with pleasant memories.',
+        highlights: [
+          'Shri Ram Janmabhoomi Temple Darshan',
+          'Hanuman Garhi & Kanak Bhawan',
+          'Dashrath Mahal & Saryu Ghat / Ram Ki Paidi',
+          'Transfer & Drop at Varanasi Airport / Station'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' hotel accommodation.",
+      '03 breakfasts.',
+      'Private cab for the complete tour.',
+      'Arrival and departure transfers.',
+      'Varanasi local sightseeing.',
+      'Varanasi ghat and temple exploration.',
+      'Prayagraj sightseeing.',
+      'Ayodhya darshan and sightseeing.',
+      'Intercity transfers as per the itinerary.',
+      'Driver allowance and fuel charges as applicable to the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Monument and attraction entry tickets.',
+      'Boat ride charges at Varanasi or Prayagraj.',
+      'VIP / special darshan charges.',
+      'Personal expenses.',
+      'Parking, toll and state taxes, unless specifically included in the final quotation.',
+      'Optional activities.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'INR 10,900',
+        price4Pax: 'INR 7,200'
+      }
+    ]
+  },
+  {
+    id: 'up-religious-circuit-7d',
+    destinationId: 'uttar-pradesh',
+    destinationName: 'Uttar Pradesh',
+    category: 'Domestic',
+    title: 'Religious 07 Days Itinerary Mathura, Vrindavan, Ayodhya, Prayagraj, & Varanasi',
+    duration: '7D / 6N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.98',
+    reviewsCount: 142,
+    image: 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An auspicious 07-day Uttar Pradesh Religious Circuit covering the most revered sacred hubs of India. Journey from Delhi through Mathura Shri Krishna Janmabhoomi, Vrindavan Banke Bihari & Prem Mandir, Ayodhya Shri Ram Janmabhoomi & Kanak Bhawan, holy Prayagraj Triveni Sangam, and the spiritual ghats and temples of Kashi Varanasi. *Rates are not valid on blackout dates & valid till Oct-26.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Delhi to Mathura',
+        description: 'Pickup from Delhi. Private transfer to Mathura. Hotel check-in on arrival. Evening free for leisure or local exploration. Overnight stay in Mathura.',
+        highlights: [
+          'Pickup from Delhi',
+          'Private transfer to Mathura',
+          'Hotel check-in on arrival',
+          'Evening free for leisure or local exploration',
+          'Overnight stay in Mathura'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Mathura & Vrindavan Sightseeing',
+        description: 'Breakfast at the hotel. Visit Shri Krishna Janmabhoomi Temple. Visit Dwarkadhish Temple. Explore Vishram Ghat. Proceed to Vrindavan. Visit Banke Bihari Temple. Visit ISKCON Temple. Visit Prem Mandir. Explore the local temple streets and spiritual surroundings. Return to Mathura. Overnight stay in Mathura.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Visit Shri Krishna Janmabhoomi Temple & Dwarkadhish Temple',
+          'Explore Vishram Ghat',
+          'Visit Banke Bihari Temple & ISKCON Temple',
+          'Visit illuminated Prem Mandir',
+          'Explore local temple streets & spiritual surroundings',
+          'Overnight stay in Mathura'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Mathura to Ayodhya',
+        description: 'Breakfast and hotel check-out. Proceed towards Ayodhya by private cab. Hotel check-in on arrival. Evening free for leisure. Overnight stay in Ayodhya.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Proceed towards Ayodhya by private cab',
+          'Hotel check-in on arrival',
+          'Evening free for leisure',
+          'Overnight stay in Ayodhya'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ayodhya Sightseeing & Darshan',
+        description: 'Breakfast at the hotel. Visit Shri Ram Janmabhoomi Temple. Visit Hanuman Garhi. Visit Kanak Bhawan. Visit Dashrath Mahal. Visit Ram Ki Paidi. Visit Saryu Ghat. Return to the hotel. Overnight stay in Ayodhya.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Visit Shri Ram Janmabhoomi Temple',
+          'Visit Hanuman Garhi & Kanak Bhawan',
+          'Visit Dashrath Mahal',
+          'Visit Ram Ki Paidi & holy Saryu Ghat',
+          'Overnight stay in Ayodhya'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Ayodhya to Varanasi via Prayagraj',
+        description: 'Breakfast and hotel check-out. Proceed towards Prayagraj. Visit Triveni Sangam. Visit Bade Hanuman Ji Temple. Visit Anand Bhawan, subject to operating timings. Continue towards Varanasi. Hotel check-in on arrival. Overnight stay in Varanasi.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Proceed towards Prayagraj',
+          'Visit Triveni Sangam & Bade Hanuman Ji Temple',
+          'Visit Anand Bhawan (subject to operational timings)',
+          'Continue towards Varanasi & Hotel check-in',
+          'Overnight stay in Varanasi'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Varanasi Sightseeing',
+        description: 'Breakfast at the hotel. Visit Kashi Vishwanath Temple. Visit Annapurna Temple. Visit Sankat Mochan Hanuman Temple. Visit Durga Kund Temple. Visit Tulsi Manas Temple. Explore Assi Ghat and Dashashwamedh Ghat. Evening free to experience the spiritual atmosphere of the ghats. Overnight stay in Varanasi.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Visit Kashi Vishwanath Temple & Annapurna Temple',
+          'Visit Sankat Mochan, Durga Kund & Tulsi Manas Temple',
+          'Explore Assi Ghat and Dashashwamedh Ghat',
+          'Experience the spiritual Ganga Aarti atmosphere',
+          'Overnight stay in Varanasi'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure from Varanasi',
+        description: 'Breakfast and hotel check-out. Private transfer to Varanasi Airport / Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Private transfer to Varanasi Airport / Railway Station',
+          'Tour ends with pleasant memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' accommodation in 03-star hotels.",
+      '06 breakfasts.',
+      'Private cab from Delhi to Varanasi for the complete tour.',
+      'Delhi to Mathura transfer.',
+      'Mathura & Vrindavan sightseeing.',
+      'Mathura to Ayodhya transfer.',
+      'Ayodhya sightseeing and darshan.',
+      'Ayodhya to Varanasi transfer via Prayagraj.',
+      'Prayagraj sightseeing.',
+      'Varanasi local sightseeing.',
+      'Varanasi Airport / Railway Station departure transfer.',
+      'Fuel and driver allowance as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Temple, monument and attraction entry tickets.',
+      'Boat ride charges at Prayagraj or Varanasi.',
+      'VIP / special darshan charges.',
+      'Local guide charges.',
+      'Personal expenses.',
+      'Parking, toll and state taxes unless specifically included.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Stays in Mathura, Vrindavan, Ayodhya, Prayagraj, & Varanasi',
+        price2Pax: 'NA (On Request)',
+        price4Pax: 'NA (On Request)'
+      }
+    ]
+  },
+  {
+    id: 'up-jain-religious-circuit-7d',
+    destinationId: 'uttar-pradesh',
+    destinationName: 'Uttar Pradesh',
+    category: 'Domestic',
+    title: 'Religious Jain 07 Days Itinerary',
+    duration: '7D / 6N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 118,
+    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A deeply spiritual 07-day Uttar Pradesh Religious Jain Circuit. Embark on a holy pilgrimage covering Lord Parshvanatha Kalyanak tirthas in Varanasi, Sarnath, Lord Adinath and 5 Tirthankara shrines in Ayodhya, the great Digambar and Shwetambara tirthas in Hastinapur, ancient rock-cut Deogarh Jain temples, Papaura Ji Atishaya Kshetra, Drongiri, and white-temple hill tirth Sonagiri before concluding in Agra. *Rates are not valid on blackout dates & valid till Oct-26.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Varanasi + Jain Temple Visit',
+        description: 'Arrival in Varanasi. Pickup and transfer to the hotel. Visit Sri Parshvanatha Digambar Jain Temple, Bhelpur. Visit Sri Parshvanatha Shwetambara Jain Temple. Explore the sacred Kalyanak sites associated with Lord Parshvanatha. Evening visit to the ghats for Ganga Aarti. Overnight stay in Varanasi.',
+        highlights: [
+          'Arrival in Varanasi & Hotel Transfer',
+          'Sri Parshvanatha Digambar & Shwetambara Jain Temples',
+          'Explore sacred Kalyanak sites of Lord Parshvanatha',
+          'Evening Ganga Aarti visit at the Ghats',
+          'Overnight stay in Varanasi'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Varanasi + Sarnath – Transfer to Ayodhya',
+        description: 'Early morning optional boat ride on the Ganges. Visit Sarnath Digambar Jain Temple, associated with Lord Shreyansnath. Explore nearby Jain pilgrimage sites as time permits. Later proceed towards Ayodhya. Hotel check-in on arrival. Overnight stay in Ayodhya.',
+        highlights: [
+          'Early morning optional Ganges boat ride',
+          'Sarnath Digambar Jain Temple (Lord Shreyansnath)',
+          'Explore nearby Jain pilgrimage sites',
+          'Private cab transfer to Ayodhya',
+          'Overnight stay in Ayodhya'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Ayodhya Jain Pilgrimage Sightseeing',
+        description: 'Breakfast at the hotel. Explore important Jain Kalyanak sites in Ayodhya. Visit shrines associated with Lord Adinath, Ajitnath, Abhinandanmath, Sumatinath and Anantanath. Visit prominent Digambar and Shwetambara Jain temples. Free time for darshan and religious activities. Overnight stay in Ayodhya.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Explore important Jain Kalyanak sites in Ayodhya',
+          'Visit shrines of Lord Adinath, Ajitnath, Abhinandanmath, Sumatinath & Anantanath',
+          'Visit prominent Digambar & Shwetambara Jain temples',
+          'Overnight stay in Ayodhya'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ayodhya to Hastinapur',
+        description: 'Breakfast and hotel check-out. Proceed towards Hastinapur. Visit major Digambar and Shwetambara Jain Temples. Explore pilgrimage sites associated with several Jain Tirthankaras. Visit the sacred site connected with Lord Adinath’s first Paaran. Overnight stay in Hastinapur.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Proceed towards Hastinapur by private cab',
+          'Visit major Digambar & Shwetambara Jain Temples',
+          'Explore pilgrimage sites of several Jain Tirthankaras',
+          'Visit sacred site of Lord Adinath’s first Paaran',
+          'Overnight stay in Hastinapur'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Hastinapur to Bundelkhand + Deogarh + Papaura Ji',
+        description: 'Breakfast and proceed towards Jhansi / Lalitpur region. Visit the historic Deogarh Jain Temple Complex. Explore ancient Jain sculptures and rock-cut temple architecture. Continue to Papaura Ji Digambar Jain Atishaya Kshetra. Evening darshan at Papaura Ji. Overnight stay in the Bundelkhand region.',
+        highlights: [
+          'Proceed towards Jhansi / Lalitpur Bundelkhand region',
+          'Historic Deogarh Jain Temple Complex & Rock-cut sculptures',
+          'Papaura Ji Digambar Jain Atishaya Kshetra',
+          'Evening darshan at Papaura Ji',
+          'Overnight stay in Bundelkhand region'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Drongiri + Sonagiri',
+        description: 'Breakfast at the hotel. Proceed to Drongiri Jain Tirth Kshetra. Explore the serene hill temples and sacred surroundings. Continue towards Sonagiri Jain Tirth. Visit the famous cluster of white Jain temples. Perform Pahad Vandana, subject to individual fitness and temple timings. Overnight stay in Sonagiri / nearby area.',
+        highlights: [
+          'Breakfast at the hotel',
+          'Drongiri Jain Tirth Kshetra hill temples',
+          'Sonagiri Jain Tirth famous white temple cluster',
+          'Perform holy Pahad Vandana',
+          'Overnight stay in Sonagiri / nearby area'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Sonagiri to Agra Drop',
+        description: 'Breakfast and hotel check-out. Proceed towards Agra. Drop at Agra Airport / Railway Station / designated location. Pilgrimage concludes with memorable spiritual experiences.',
+        highlights: [
+          'Breakfast and hotel check-out',
+          'Proceed towards Agra by private cab',
+          'Drop at Agra Airport / Railway Station',
+          'Pilgrimage concludes with memorable spiritual blessings'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' accommodation in 03-star hotels.",
+      '06 breakfasts.',
+      'Private cab for the complete tour and transfers.',
+      'Varanasi local transfers and Jain pilgrimage sightseeing.',
+      'Varanasi to Ayodhya transfer.',
+      'Ayodhya Jain pilgrimage sightseeing.',
+      'Ayodhya to Hastinapur transfer.',
+      'Hastinapur Jain pilgrimage sightseeing.',
+      'Transfer to Bundelkhand region.',
+      'Deogarh Jain Temple Complex visit.',
+      'Papaura Ji visit.',
+      'Drongiri Jain Tirth visit.',
+      'Sonagiri Jain Tirth visit.',
+      'Sonagiri to Agra departure transfer.',
+      'Fuel and driver allowance as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Lunch and dinner.',
+      'Boat ride charges in Varanasi.',
+      'Temple donations, pooja or special darshan charges.',
+      'Local priest/guide charges.',
+      'Monument and attraction entry tickets, if applicable.',
+      'Personal expenses.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, toll and state taxes unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Any special vehicle or local transport required at hill temples.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Stays',
+        price2Pax: 'NA (On Request)',
+        price4Pax: 'NA (On Request)'
+      }
+    ]
+  },
+
+  // --- NORTH EAST PACKAGES ---
+  {
+    id: 'ne-gangtok-darjeeling-5d',
+    destinationId: 'northeast',
+    destinationName: 'North East',
+    category: 'Domestic',
+    title: 'North-East 05 Days Itinerary Gangtok + Darjeeling (with Rumtek & Tiger Hill Sunrise)',
+    duration: '5D / 4N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.97',
+    reviewsCount: 175,
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An enchanting 05-day Eastern Himalayan journey covering Gangtok and Darjeeling. Drive along the emerald Teesta River, visit spiritual Rumtek Monastery and Banjhakri Waterfalls in Sikkim, experience the world-famous Tiger Hill sunrise over Mount Kanchenjunga in Darjeeling, Ghoom Monastery, Batasia Loop, and lush rolling tea estates.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Bagdogra / NJP / Siliguri to Gangtok',
+        description: 'Pickup from Bagdogra Airport / NJP Railway Station / Siliguri. Private transfer to Gangtok enjoying the scenic drive along the Teesta River and Himalayan foothills. Hotel check-in on arrival. Rest of the day at leisure. Overnight stay in Gangtok.',
+        highlights: [
+          'Bagdogra / NJP / Siliguri Pickup',
+          'Scenic Teesta River Valley Drive',
+          'Gangtok Hotel Check-in & Relaxation',
+          'Overnight Stay in Gangtok'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Gangtok Local Sightseeing + Rumtek Monastery',
+        description: 'Breakfast at the hotel. Proceed for a full-day Gangtok sightseeing tour. Visit sacred Rumtek Monastery, scenic Banjhakri Falls, and major viewpoints. Visit MG Marg for local shopping, cafes, and leisure time. Return to hotel. Overnight stay in Gangtok.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Historic Rumtek Monastery Visit',
+          'Banjhakri Cascading Waterfalls',
+          'Scenic Viewpoints & MG Marg Stroll',
+          'Overnight Stay in Gangtok'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gangtok to Darjeeling',
+        description: 'Breakfast and hotel check-out. Private transfer to Darjeeling enjoying the scenic hill drive through tea garden slopes. Hotel check-in on arrival. Evening free for leisure. Overnight stay in Darjeeling.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Intercity Hill Transfer',
+          'Darjeeling Hotel Check-in',
+          'Evening Free for Leisure',
+          'Overnight Stay in Darjeeling'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Darjeeling Full-Day Sightseeing',
+        description: 'Early morning (approx. 4:00 AM) visit to Tiger Hill for spectacular sunrise views over Mount Kanchenjunga. Visit Ghoom Monastery and Batasia Loop. Return to hotel for breakfast. Continue with Darjeeling local sightseeing: visit Himalayan Mountaineering Institute & Zoo, Tenzing Rock, Tibetan Refugee Self-Help Centre, Japanese Temple and Peace Pagoda, and tea estate view. Evening free at Mall Road / local market. Overnight stay in Darjeeling.',
+        highlights: [
+          'Early Morning Tiger Hill Kanchenjunga Sunrise',
+          'Ghoom Monastery & Batasia Loop',
+          'HMI & Padmaja Naidu Himalayan Zoo',
+          'Japanese Peace Pagoda & Tea Estate',
+          'Mall Road Evening & Overnight in Darjeeling'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Darjeeling to Bagdogra / NJP',
+        description: 'Breakfast and hotel check-out. Private transfer to Bagdogra Airport / NJP Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Transfer to Bagdogra Airport / NJP Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in 03-star hotels.",
+      '04 breakfasts.',
+      'Private cab for all transfers and sightseeing.',
+      'Bagdogra / NJP / Siliguri to Gangtok transfer.',
+      'Gangtok local sightseeing.',
+      'Rumtek Monastery visit.',
+      'Gangtok to Darjeeling transfer.',
+      'Darjeeling full-day sightseeing.',
+      'Tiger Hill, Ghoom Monastery & Batasia Loop excursion.',
+      'Darjeeling to Bagdogra / NJP departure transfer.',
+      'Driver allowance and fuel charges as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare/train fare.',
+      'Lunch and dinner.',
+      'Monument, attraction and sightseeing entry tickets.',
+      'Toy Train ride charges.',
+      'Ropeway charges.',
+      'Personal expenses.',
+      'Optional activities.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, permit and local union charges unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+  {
+    id: 'ne-gangtok-pelling-darjeeling-7d',
+    destinationId: 'northeast',
+    destinationName: 'North East',
+    category: 'Domestic',
+    title: 'North-East 07 Days Itinerary Gangtok + Pelling + Darjeeling (with Ravangla Buddha Park & Pelling Skywalk)',
+    duration: '7D / 6N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.98',
+    reviewsCount: 215,
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'A 07-day Himalayan circuit across Sikkim and West Bengal hills. Experience Gangtok with Rumtek Monastery and MG Marg, scenic Ravangla Buddha Park (130-ft Buddha), Pelling Skywalk, sacred Khecheopalri Lake, Rabdentse Ruins, and Darjeeling with Tiger Hill Mount Kanchenjunga sunrise, Batasia Loop, and tea gardens.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Bagdogra / NJP / Siliguri to Gangtok',
+        description: 'Pickup from Bagdogra Airport / NJP Railway Station / Siliguri. Private transfer to Gangtok enjoying the scenic drive along the Teesta River and Himalayan foothills. Hotel check-in on arrival. Rest of the day at leisure. Overnight stay in Gangtok.',
+        highlights: [
+          'Bagdogra / NJP / Siliguri Pickup',
+          'Scenic Teesta River Highway',
+          'Hotel Check-in in Gangtok',
+          'Overnight Stay in Gangtok'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Gangtok Local Sightseeing + Rumtek Monastery',
+        description: 'Breakfast at the hotel. Full-day Gangtok sightseeing tour: visit sacred Rumtek Monastery, Banjhakri Falls, and major scenic viewpoints. Visit MG Marg for local shopping, cafes, and leisure time. Return to hotel. Overnight stay in Gangtok.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Rumtek Monastery Dharma Chakra Centre',
+          'Banjhakri Falls & Energy Park',
+          'MG Marg Evening Exploration',
+          'Overnight Stay in Gangtok'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gangtok to Pelling via Ravangla',
+        description: 'Breakfast and hotel check-out. Proceed towards Pelling. En route visit Buddha Park in Ravangla featuring the majestic 130-ft Buddha Statue, eco-garden, and sacred Cho Djo Lake. Continue towards Pelling. Hotel check-in on arrival. Overnight stay in Pelling.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Drive through South Sikkim',
+          '130-ft Ravangla Buddha Statue & Park',
+          'Cho Djo Lake Visit',
+          'Overnight Stay in Pelling'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Pelling Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Comprehensive Pelling sightseeing tour: visit historic Pemayangtse Monastery, Chenrezig Statue & India’s first Glass Skywalk, cascading Rimbi Waterfalls, holy wish-fulfilling Khecheopalri Lake, thunderous Kanchanjunga Waterfalls, and ancient Rabdentse Ruins. Return to hotel. Overnight stay in Pelling.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Pemayangtse Monastery Heritage',
+          'Chenrezig Statue & Pelling Glass Skywalk',
+          'Wish-fulfilling Khecheopalri Lake',
+          'Kanchanjunga & Rimbi Waterfalls',
+          'Rabdentse Palace Ruins',
+          'Overnight Stay in Pelling'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Pelling to Darjeeling',
+        description: 'Breakfast and hotel check-out. Private transfer to Darjeeling enjoying the scenic hill journey along mountain rivers and lush valleys. Hotel check-in on arrival. Rest of the day at leisure. Overnight stay in Darjeeling.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Mountain Drive from Sikkim to Bengal',
+          'Hotel Check-in in Darjeeling',
+          'Evening at Leisure',
+          'Overnight Stay in Darjeeling'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Darjeeling Full-Day Sightseeing',
+        description: 'Early morning (approx. 4:00 AM) sunrise excursion to Tiger Hill with view of Mount Kanchenjunga. Visit Ghoom Monastery and Batasia Loop. Return to hotel for breakfast. Continue with Darjeeling local sightseeing: visit Himalayan Mountaineering Institute & Zoo, Tenzing Rock, Tibetan Refugee Self-Help Centre, Japanese Temple and Peace Pagoda, and tea estate view. Evening free at Mall Road / local market. Overnight stay in Darjeeling.',
+        highlights: [
+          'Early Morning Tiger Hill Sunrise',
+          'Ghoom Monastery & Batasia Loop',
+          'HMI & Padmaja Naidu Himalayan Zoo',
+          'Japanese Peace Pagoda & Tea Gardens',
+          'Mall Road Evening Stroll',
+          'Overnight Stay in Darjeeling'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Darjeeling to Bagdogra / NJP',
+        description: 'Breakfast and hotel check-out. Private transfer to Bagdogra Airport / NJP Railway Station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast at Hotel & Check-out',
+          'Transfer to Bagdogra Airport / NJP Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' accommodation in 03-star hotels.",
+      '06 breakfasts.',
+      'Private cab for all transfers and sightseeing.',
+      'Bagdogra / NJP / Siliguri to Gangtok transfer.',
+      'Gangtok local sightseeing.',
+      'Rumtek Monastery visit.',
+      'Gangtok to Pelling transfer via Ravangla.',
+      'Buddha Park, Ravangla visit.',
+      'Pelling full-day sightseeing.',
+      'Pelling Skywalk visit.',
+      'Pelling to Darjeeling transfer.',
+      'Darjeeling full-day sightseeing.',
+      'Tiger Hill, Ghoom Monastery & Batasia Loop excursion.',
+      'Darjeeling to Bagdogra / NJP departure transfer.',
+      'Driver allowance and fuel charges as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Monument, attraction and sightseeing entry tickets.',
+      'Pelling Skywalk / attraction entry charges unless specifically included.',
+      'Toy Train ride charges.',
+      'Ropeway charges.',
+      'Personal expenses.',
+      'Optional activities.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, permit and local union charges unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+  {
+    id: 'ne-shillong-cherrapunji-6d',
+    destinationId: 'northeast',
+    destinationName: 'North East',
+    category: 'Domestic',
+    title: 'North-East 06 Days Itinerary Shillong + Cherrapunji (with Living Root Bridge, Mawlynnong & Dawki)',
+    duration: '6D / 5N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 245,
+    image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An unforgettable 06-day Meghalaya nature expedition. Explore the Scotland of the East (Shillong), majestic Elephant Falls, Nohkalikai Falls (India’s tallest plunge waterfall), limestone Mawsmai Cave, bio-engineering marvel Living Root Bridge, Mawlynnong (Asia’s cleanest village), crystal-clear Umngot River in Dawki on the Indo-Bangladesh border, and picturesque Umiam Lake.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Guwahati Arrival – Transfer to Shillong',
+        description: 'Arrival at Guwahati Airport / Railway Station. Pickup and private cab transfer to Shillong through the scenic pine hills of Meghalaya. Hotel check-in on arrival. Rest of the day at leisure. Overnight stay in Shillong.',
+        highlights: [
+          'Guwahati Airport / Station Pickup',
+          'Scenic Hill Drive into Meghalaya',
+          'Hotel Check-in in Shillong',
+          'Overnight Stay in Shillong'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Shillong Full-Day Sightseeing',
+        description: 'Breakfast at the hotel. Full-day city tour: visit Ward’s Lake, Don Bosco Museum of Indigenous Cultures, Cathedral of Mary Help of Christians, Lady Hydari Park, Shillong Peak panoramic viewpoint, Elephant Falls, and vibrant Police Bazaar for local shopping. Return to hotel. Overnight stay in Shillong.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Ward’s Lake & Don Bosco Museum',
+          'Cathedral & Lady Hydari Park',
+          'Elephant Falls & Shillong Peak',
+          'Police Bazaar Evening Stroll',
+          'Overnight Stay in Shillong'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Shillong to Cherrapunji + Sightseeing',
+        description: 'Breakfast and hotel check-out. Proceed towards Cherrapunji (Sohra). Visit spectacular Nohkalikai Falls, prehistoric Mawsmai Cave limestone formations, Seven Sisters Falls, and Eco Park (subject to weather). Hotel check-in in Cherrapunji. Overnight stay in Cherrapunji.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Misty Drive to Sohra',
+          'Nohkalikai & Seven Sisters Falls',
+          'Mawsmai Limestone Caves',
+          'Overnight Stay in Cherrapunji'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Living Root Bridge + Mawlynnong Excursion',
+        description: 'Breakfast at the hotel. Full-day nature excursion: trek to the iconic indigenous Living Root Bridge, explore Mawlynnong Village (awarded Asia’s cleanest village), walk through floral alleys, and visit Sky View Point overlooking Bangladesh plains. Return to Cherrapunji. Overnight stay in Cherrapunji.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Living Root Bridge Bio-engineering Marvel',
+          'Mawlynnong Asia’s Cleanest Village Walk',
+          'Sky View Point overlooking Bangladesh Plains',
+          'Overnight Stay in Cherrapunji'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Cherrapunji to Shillong via Dawki',
+        description: 'Breakfast and hotel check-out. Proceed towards Dawki on the Indo-Bangladesh border. Visit the crystal-clear glass-like Umngot River (optional country boat ride at own cost) and border viewpoint. Continue drive back to Shillong. Hotel check-in on arrival. Overnight stay in Shillong.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Crystal Clear Dawki Umngot River',
+          'Indo-Bangladesh Border Viewpoint',
+          'Return Drive to Shillong',
+          'Overnight Stay in Shillong'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Shillong to Guwahati + Departure',
+        description: 'Breakfast and hotel check-out. Proceed towards Guwahati Airport / Railway Station. Enjoy an optional photo stop at serene Umiam Lake (Barapani), subject to flight/train timings. Drop for onward journey. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Umiam Lake (Barapani) Photo Stop',
+          'Transfer to Guwahati Airport / Station',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation in 03-star hotels.",
+      '05 breakfasts.',
+      'Private cab for all transfers and sightseeing.',
+      'Guwahati to Shillong transfer.',
+      'Shillong local sightseeing.',
+      'Shillong to Cherrapunji transfer and sightseeing.',
+      'Living Root Bridge excursion.',
+      'Mawlynnong Village sightseeing.',
+      'Dawki & Umngot River sightseeing.',
+      'Cherrapunji to Shillong transfer.',
+      'Shillong to Guwahati departure transfer.',
+      'Driver allowance and fuel charges as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Monument, cave, park and attraction entry tickets.',
+      'Boating charges at Umngot River.',
+      'Personal expenses.',
+      'Optional activities.',
+      'Local guide charges.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, toll and permit charges unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to weather conditions, road closures or other circumstances beyond control.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+  {
+    id: 'ne-arunachal-tawang-6d',
+    destinationId: 'northeast',
+    destinationName: 'North East',
+    category: 'Domestic',
+    title: 'North-East 06 Days Itinerary Shergaon + Dirang + Tawang + Bhalukpong (Arunachal Circuit)',
+    duration: '6D / 5N',
+    price: 'On Request',
+    originalPrice: 'On Request',
+    rating: '4.99',
+    reviewsCount: 188,
+    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=85'
+    ],
+    description: 'An awe-inspiring 06-day Arunachal Pradesh mountain expedition. Journey through Shergaon apple orchards, Zengbu Gompa, Dirang Sangti Valley, snow-clad Sela Pass (13,700 ft) & Sela Lake, Jaswant Garh War Memorial, Indo-China border Bumla Pass, pristine Madhuri Lake (Shonga-tser), iconic 400-year-old Tawang Monastery, and Kameng riverside at Bhalukpong.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Guwahati to Shergaon',
+        description: 'Pickup from Guwahati. Scenic mountain drive through Himalayan foothills, lush valleys, and forest landscapes with riverside views. Explore the serene local village surroundings of Shergaon. Evening free for leisure amidst untouched nature. Overnight stay in Shergaon.',
+        highlights: [
+          'Guwahati Pickup & Scenic Foothills Drive',
+          'Riverside Valley Landscapes',
+          'Shergaon Village Exploration',
+          'Overnight Stay in Shergaon'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Shergaon Sightseeing + Transfer to Dirang',
+        description: 'Breakfast at the hotel. Visit Choskorong Waterfall, historic Zengbu Gompa, and Buddha Heritage Park amidst apple orchards and pine forests. Proceed towards Dirang. Hotel check-in on arrival. Overnight stay in Dirang.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Choskorong Waterfall & Zengbu Gompa',
+          'Buddha Heritage Park & Apple Orchards',
+          'Transfer to Dirang & Check-in',
+          'Overnight Stay in Dirang'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Dirang to Tawang',
+        description: 'Breakfast at the hotel. Visit Dirang Monastery, picturesque Sangti Valley, and natural Hot Water Springs. Proceed towards Tawang climbing through the high-altitude Sela Pass (13,700 ft) and frozen Sela Lake. Visit Jaswant Garh War Memorial honoring the 1962 war hero. Arrival and hotel check-in in Tawang. Overnight stay in Tawang.',
+        highlights: [
+          'Dirang Monastery & Sangti Valley',
+          'Natural Sulphur Hot Water Springs',
+          'Sela Pass (13,700 ft) & Sela Lake',
+          'Jaswant Garh War Memorial',
+          'Overnight Stay in Tawang'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Bumla Pass + Madhuri Lake + Tawang Sightseeing',
+        description: 'Breakfast at the hotel. Proceed for high-altitude excursion to Bumla Pass near the Indo-China border (subject to permit and road conditions). Visit breathtaking Madhuri Lake (Shonga-tser Lake) and P.T. Tso Lake. In the evening, visit the historic 400-year-old Tawang Monastery (India’s largest monastery). Overnight stay in Tawang.',
+        highlights: [
+          'Breakfast at Hotel',
+          'Indo-China Border Bumla Pass Excursion',
+          'Scenic Madhuri Lake (Shonga-tser Lake)',
+          'P.T. Tso High-Altitude Lake',
+          'Iconic 400-Year-Old Tawang Monastery',
+          'Overnight Stay in Tawang'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Tawang to Bhalukpong',
+        description: 'Breakfast and hotel check-out. Proceed towards Bhalukpong enjoying scenic mountain passes, gushing waterfalls, and valley viewpoints en route. Arrive and relax by the Kameng river surroundings of Bhalukpong. Hotel check-in. Overnight stay in Bhalukpong.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Scenic Mountain Highway Drive',
+          'Waterfalls & Himalayan Viewpoints',
+          'Kameng River Relaxation',
+          'Overnight Stay in Bhalukpong'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Bhalukpong to Guwahati',
+        description: 'Breakfast and hotel check-out. Visit Tipi Orchid Research Centre (home to over 500 orchid species) and enjoy a short nature walk near the Kameng River. Proceed towards Guwahati for drop at the designated airport/railway station. Tour ends with pleasant memories.',
+        highlights: [
+          'Breakfast & Check-out',
+          'Tipi Orchid Research Centre',
+          'Kameng River Nature Walk',
+          'Transfer & Drop in Guwahati',
+          'Tour Ends with Pleasant Memories'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation in 03-star hotels.",
+      '05 breakfasts.',
+      'Private cab for all transfers and sightseeing.',
+      'Guwahati to Shergaon transfer.',
+      'Shergaon local sightseeing.',
+      'Shergaon to Dirang transfer.',
+      'Dirang local sightseeing.',
+      'Dirang to Tawang transfer with en-route sightseeing.',
+      'Bumla Pass, Madhuri Lake & P.T. Tso Lake excursion, subject to permit and road conditions.',
+      'Tawang local sightseeing.',
+      'Tawang to Bhalukpong transfer.',
+      'Bhalukpong sightseeing.',
+      'Bhalukpong to Guwahati departure transfer.',
+      'Driver allowance and fuel charges as per the confirmed itinerary.'
+    ],
+    exclusions: [
+      'Airfare / train fare.',
+      'Lunch and dinner.',
+      'Inner Line Permit / special permit charges unless specifically included.',
+      'Bumla Pass local vehicle / permit charges, if separately applicable.',
+      'Monument, monastery and attraction entry tickets.',
+      'Personal expenses.',
+      'Optional activities.',
+      'Local guide charges.',
+      'Travel insurance.',
+      'Tips and gratuities.',
+      'Parking, toll and state taxes unless specifically included.',
+      'Early check-in and late check-out charges.',
+      'Expenses arising due to snowfall, landslides, road closures, permit restrictions or weather conditions.',
+      'Any service not specifically mentioned under inclusions.'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        price2Pax: 'On Request (NA)',
+        price4Pax: 'On Request (NA)'
+      }
+    ]
+  },
+
   // --- BALI PACKAGES (4) ---
   {
-    id: 'bali-1',
+    id: 'bali-4day-essential',
     destinationId: 'bali',
     destinationName: 'Bali',
     category: 'International',
-    title: 'Ubud Rice Terraces, Nusa Penida & Seminyak Luxury',
-    duration: '6D / 5N',
-    price: '₹28,500',
-    originalPrice: '₹36,000',
-    rating: '4.95',
-    reviewsCount: 310,
+    title: 'Bali 04 Days Itinerary: Kintamani, Ubud Swing & Nusa Penida West',
+    duration: '4D / 3N',
+    price: '₹9,450',
+    originalPrice: '₹13,500',
+    priceUsd: 'INR 9,450',
+    rating: '4.96',
+    reviewsCount: 285,
     image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80',
-    description: 'Tegalalang rice terrace swing, Kintamani volcano view, fast boat to Nusa Penida Kelingking T-Rex beach, and Uluwatu Kecak fire dance.',
+    description: '4 Days private sightseeing in Bali covering Tegalalang Rice Terraces, Tegenungan Waterfall, Desa Bali Swing, Kintamani, Ubud Market, and a full day Nusa Penida West speedboat tour with local lunch.',
     itinerary: [
-      { day: 1, title: 'Denpasar Arrival & Ubud Villa Check-In', details: 'Welcome flower garland & transfer to private pool villa in Ubud.' },
-      { day: 2, title: 'Ubud Swing, Rice Terrace & Waterfall', details: 'Visit Tegalalang rice fields, jungle swing, and Tegenungan Waterfall.' },
-      { day: 3, title: 'Kintamani Batur Volcano & Coffee Plantation', details: 'Mount Batur view lunch, Luwak coffee tasting, and Holy Water Temple Tirta Empul.' },
-      { day: 4, title: 'Nusa Penida Island Speedboat Day Tour', details: 'Fast boat to Nusa Penida. Visit Kelingking T-Rex Beach, Broken Beach & Angel Billabong.' },
-      { day: 5, title: 'Uluwatu Cliff Temple & Kecak Fire Dance', details: 'Cliffside ocean temple view, Kecak dance at sunset & Jimbaran seafood dinner.' },
-      { day: 6, title: 'Shopping at Kuta & Departure', details: 'Souvenir shopping & drop at Bali airport.' }
+      {
+        day: 1,
+        title: 'Arrival in Bali',
+        details: 'Pickup from Bali Airport. Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar. Hotel check-in and leisure time. Overnight stay in Bali.',
+        points: [
+          'Pickup from Bali Airport.',
+          'Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Bali.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kintamani and Ubud Tour',
+        details: 'Breakfast at the hotel. Full-day private sightseeing tour. Visit Tegalalang Rice Terraces. Visit Tegenungan Waterfall. Enjoy Desa Bali Swing. Visit Kintamani and Ubud Market. Return to the hotel.',
+        points: [
+          'Breakfast at the hotel.',
+          'Full-day private sightseeing tour.',
+          'Visit Tegalalang Rice Terraces.',
+          'Visit Tegenungan Waterfall.',
+          'Enjoy Desa Bali Swing.',
+          'Visit Kintamani and Ubud Market.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Nusa Penida West Tour',
+        details: 'Private transfer from hotel to the pier. Shared fastboat transfer to Nusa Penida. Private island sightseeing by car. Visit Kelingking Beach, Broken Beach, Angel’s Billabong and Crystal Bay. Local lunch included. Return to Bali and transfer to the hotel.',
+        points: [
+          'Private transfer from hotel to the pier.',
+          'Shared fastboat transfer to Nusa Penida.',
+          'Private island sightseeing by car.',
+          'Visit Kelingking Beach, Broken Beach, Angel’s Billabong and Crystal Bay.',
+          'Local lunch included.',
+          'Return to Bali and transfer to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to Bali Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to Bali Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
     ],
-    inclusions: ['Private Pool Villa (2N) + 4-Star Resort (3N)', 'Daily Breakfast & Jimbaran Candlelight Seafood Dinner', 'Nusa Penida Fast Boat Tickets & Private Island Tour', 'Private AC Car with English Speaking Driver Guide'],
-    exclusions: ['Airfare (Available on Request)', 'Visa on Arrival ($35)', 'Personal sports']
+    inclusions: [
+      '03 nights’ hotel accommodation with daily breakfast',
+      'Private airport pickup and drop',
+      'Full-day Kintamani and Ubud tour by private car',
+      'Desa Bali Swing',
+      'Nusa Penida West Tour with private car on island',
+      'Shared return fastboat tickets',
+      'Private hotel-to-pier transfers',
+      'Local lunch during Nusa Penida tour'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹11,200',
+        price4Pax: '₹9,450'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (03 Nights)',
+        price2Pax: '₹12,250',
+        price4Pax: '₹10,500'
+      },
+      {
+        hotelName: '05 Star Hotel',
+        category: '05-Star Accommodation (03 Nights)',
+        price2Pax: '₹16,200',
+        price4Pax: '₹14,500'
+      }
+    ]
   },
   {
-    id: 'bali-2',
+    id: 'bali-5day-essential',
     destinationId: 'bali',
     destinationName: 'Bali',
     category: 'International',
-    title: 'Bali Honeymoon Private Pool Villa & Floating Breakfast',
+    title: 'Bali 05 Days Itinerary: Kintamani, Nusa Penida & Water Sports with Kecak Dance',
     duration: '5D / 4N',
-    price: '₹32,000',
+    price: '₹13,000',
+    originalPrice: '₹17,500',
+    priceUsd: 'INR 13,000',
+    rating: '4.98',
+    reviewsCount: 312,
+    image: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80',
+    description: '5 Days private Bali trip including Ubud swing & waterfalls, Kintamani, Nusa Penida island speedboat tour, Water Sports (Banana Boat + Jet Ski + Parasailing) and Uluwatu cliff sunset Kecak dance.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bali',
+        details: 'Pickup from Bali Airport. Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar. Hotel check-in and leisure time. Overnight stay in Bali.',
+        points: [
+          'Pickup from Bali Airport.',
+          'Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Bali.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kintamani and Ubud Tour',
+        details: 'Breakfast at the hotel. Full-day private sightseeing tour. Visit Tegalalang Rice Terraces. Visit Tegenungan Waterfall. Enjoy Desa Bali Swing. Visit Kintamani and Ubud Market. Return to the hotel.',
+        points: [
+          'Breakfast at the hotel.',
+          'Full-day private sightseeing tour.',
+          'Visit Tegalalang Rice Terraces.',
+          'Visit Tegenungan Waterfall.',
+          'Enjoy Desa Bali Swing.',
+          'Visit Kintamani and Ubud Market.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Nusa Penida West Tour',
+        details: 'Private transfer from the hotel to the pier. Shared fastboat transfer to Nusa Penida. Private island sightseeing by car. Visit the major attractions of the West Nusa Penida Tour. Local lunch included. Return to Bali and transfer to the hotel.',
+        points: [
+          'Private transfer from the hotel to the pier.',
+          'Shared fastboat transfer to Nusa Penida.',
+          'Private island sightseeing by car.',
+          'Visit the major attractions of the West Nusa Penida Tour.',
+          'Local lunch included.',
+          'Return to Bali and transfer to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Water Sports Half Day + Uluwatu Temple and Kecak Dance',
+        details: 'Breakfast at the hotel. Banana Boat Ride + Jet Ski + Parasailing Adventure. Proceed to Uluwatu Temple by private cab. Explore the temple and enjoy the scenic cliff views. Watch the traditional Kecak Dance performance. Return to the hotel.',
+        points: [
+          'Breakfast at the hotel.',
+          'Banana Boat Ride + Jet Ski + Parasailing Adventure.',
+          'Proceed to Uluwatu Temple by private cab.',
+          'Explore the temple and enjoy the scenic cliff views.',
+          'Watch the traditional Kecak Dance performance.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to Bali Airport. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to Bali Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      '04 nights’ hotel accommodation with daily breakfast',
+      'Private airport pickup and drop',
+      'Full-day Kintamani and Ubud tour by private car',
+      'Desa Bali Swing',
+      'Nusa Penida West Tour with private half-day car on island',
+      'Shared return fastboat tickets',
+      'Private hotel-to-pier transfers',
+      'Local lunch during Nusa Penida tour',
+      'Banana Boat Ride + Jet Ski + Parasailing Adventure',
+      'Uluwatu Temple and Kecak Dance tour by private cab'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹15,700',
+        price4Pax: '₹13,000'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹17,000',
+        price4Pax: '₹14,350'
+      },
+      {
+        hotelName: '05 Star Hotel',
+        category: '05-Star Accommodation (04 Nights)',
+        price2Pax: '₹22,300',
+        price4Pax: '₹19,800'
+      }
+    ]
+  },
+  {
+    id: 'bali-6day-essential',
+    destinationId: 'bali',
+    destinationName: 'Bali',
+    category: 'International',
+    title: 'Bali 06 Days Itinerary: Kuta Resort & Ubud Private Pool Villa with Ulun Danu & Tanah Lot',
+    duration: '6D / 5N',
+    price: '₹21,000',
+    originalPrice: '₹27,500',
+    priceUsd: 'INR 21,000',
+    rating: '4.99',
+    reviewsCount: 340,
+    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80',
+    description: '6 Days Bali getaway combining 3 nights Kuta resort & 2 nights Ubud Private Pool Villa. Includes Nusa Penida West tour, Water Sports & Uluwatu Kecak dance, Kintamani Ubud swing, Ulun Danu & Tanah Lot sunset.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bali',
+        details: 'Pickup from Bali Airport. Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar. Hotel check-in and leisure time. Overnight stay in Bali.',
+        points: [
+          'Pickup from Bali Airport.',
+          'Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Bali.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Nusa Penida West Tour',
+        details: 'Private transfer from the hotel to the pier. Shared fastboat transfer to Nusa Penida. Private half-day island sightseeing by car. Visit the major attractions of West Nusa Penida. Local lunch included. Return to Bali and transfer to the hotel.',
+        points: [
+          'Private transfer from the hotel to the pier.',
+          'Shared fastboat transfer to Nusa Penida.',
+          'Private half-day island sightseeing by car.',
+          'Visit the major attractions of West Nusa Penida.',
+          'Local lunch included.',
+          'Return to Bali and transfer to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Water Sports and Uluwatu Tour',
+        details: 'Enjoy Banana Boat Ride, Jet Ski and Parasailing Adventure. Private transfers for the water sports activities. Visit Uluwatu Temple. Watch the traditional Kecak Dance performance. Return to the hotel by private cab.',
+        points: [
+          'Enjoy Banana Boat Ride, Jet Ski and Parasailing Adventure.',
+          'Private transfers for the water sports activities.',
+          'Visit Uluwatu Temple.',
+          'Watch the traditional Kecak Dance performance.',
+          'Return to the hotel by private cab.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kintamani and Ubud Tour',
+        details: 'Full-day private sightseeing tour. Visit Tegalalang Rice Terraces. Visit Tegenungan Waterfall. Enjoy Desa Bali Swing. Visit Kintamani and Ubud Market. Private inter-hotel transfer to Ubud. Check in at Ubud Heaven Sayan.',
+        points: [
+          'Full-day private sightseeing tour.',
+          'Visit Tegalalang Rice Terraces.',
+          'Visit Tegenungan Waterfall.',
+          'Enjoy Desa Bali Swing.',
+          'Visit Kintamani and Ubud Market.',
+          'Private inter-hotel transfer to Ubud.',
+          'Check in at Ubud Heaven Sayan.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Ulun Danu and Tanah Lot Tour + Handara Gate',
+        details: 'Full-day private sightseeing tour. Visit Ulun Danu Temple. Visit Tanah Lot Temple. Handara Gate. Temple admission tickets included. Return to the hotel.',
+        points: [
+          'Full-day private sightseeing tour.',
+          'Visit Ulun Danu Temple.',
+          'Visit Tanah Lot Temple.',
+          'Handara Gate.',
+          'Temple admission tickets included.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from Ubud, Tanah Lot or Uluwatu area to Bali Airport. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from Ubud, Tanah Lot or Uluwatu area to Bali Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      '05 nights’ hotel accommodation (3N Kuta Resort + 2N Ubud Private Pool Villa)',
+      'Daily breakfast',
+      'Private airport pickup and drop',
+      'Nusa Penida West Tour with private half-day car on island',
+      'Shared return fastboat tickets',
+      'Private hotel-to-pier transfers',
+      'Local lunch during Nusa Penida tour',
+      'Banana Boat Ride, Jet Ski and Parasailing Adventure',
+      'Private water sports transfers',
+      'Uluwatu Temple and Kecak Dance tour',
+      'Full-day Kintamani, Ubud Swing & Rice Terrace tour',
+      'Ulun Danu, Handara Gate & Tanah Lot Temple tour with admission tickets'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '04 Star Hotel & 04 Star Private Pool Villa',
+        category: '03-Star Hotel (03N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹26,700',
+        price4Pax: '₹21,000'
+      },
+      {
+        hotelName: '04 Star Hotel & 04 Star Private Pool Villa',
+        category: '04-Star Hotel (03N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹27,750',
+        price4Pax: '₹22,000'
+      },
+      {
+        hotelName: '05 Star Hotel & 04 Star Private Pool Villa',
+        category: '05-Star Hotel (03N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹31,700',
+        price4Pax: '₹26,000'
+      }
+    ]
+  },
+  {
+    id: 'bali-7day-essential',
+    destinationId: 'bali',
+    destinationName: 'Bali',
+    category: 'International',
+    title: 'Bali 07 Days Grand Escape: Kuta Resort, Gili Island Hop & Ubud Private Pool Villa with ATV Ride',
+    duration: '7D / 6N',
+    price: '₹30,000',
+    originalPrice: '₹38,500',
+    priceUsd: 'INR 30,000',
+    rating: '5.0',
+    reviewsCount: 390,
+    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80',
+    description: '7 Days ultimate Bali island hop (3N Kuta + 1N Gili Island + 2N Ubud Private Pool Villa). Includes Nusa Penida West tour, Uluwatu Kecak dance, Cidomo carriage on Gili, 90-minute Tandem ATV quad bike adventure & Kintamani Ubud swing tour.',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bali',
+        details: 'Pickup from Bali Airport. Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar. Hotel check-in and leisure time. Overnight stay in Bali.',
+        points: [
+          'Pickup from Bali Airport.',
+          'Private transfer to the hotel in Kuta, Seminyak, Sanur or Denpasar.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Bali.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Nusa Penida West Tour',
+        details: 'Private transfer from the hotel to the pier. Shared fastboat transfer to Nusa Penida. Private island sightseeing by car. Visit the major attractions of West Nusa Penida. Local lunch included. Return to Bali and transfer to the hotel.',
+        points: [
+          'Private transfer from the hotel to the pier.',
+          'Shared fastboat transfer to Nusa Penida.',
+          'Private island sightseeing by car.',
+          'Visit the major attractions of West Nusa Penida.',
+          'Local lunch included.',
+          'Return to Bali and transfer to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Uluwatu Temple and Kecak Dance',
+        details: 'Breakfast at the hotel. Proceed to Uluwatu Temple by private cab. Explore the temple and scenic cliff views. Watch the traditional Kecak Dance performance. Return to the hotel.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Uluwatu Temple by private cab.',
+          'Explore the temple and scenic cliff views.',
+          'Watch the traditional Kecak Dance performance.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Bali to Gili Island',
+        details: 'Breakfast and check-out from the Bali hotel. Private transfer from the hotel to the Gili Island departure pier. Proceed to Gili Island as per the confirmed transfer arrangement. Transfer from Gili Pier to the hotel by Cidomo. Hotel check-in and leisure time. Overnight stay at Gili Island.',
+        points: [
+          'Breakfast and check-out from the Bali hotel.',
+          'Private transfer from the hotel to the Gili Island departure pier.',
+          'Proceed to Gili Island as per the confirmed transfer arrangement.',
+          'Transfer from Gili Pier to the hotel by Cidomo.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay at Gili Island.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Gili Island to Ubud with ATV Adventure',
+        details: 'Breakfast and check-out from the Gili hotel. Transfer from the hotel to Gili Pier. Proceed from Gili Island to Bali. Continue by private car towards Ubud. Enjoy a 90-minute tandem ATV bike ride. Transfer to Ubud Heaven Sayan. Check in to the private pool villa. Overnight stay in Ubud.',
+        points: [
+          'Breakfast and check-out from the Gili hotel.',
+          'Transfer from the hotel to Gili Pier.',
+          'Proceed from Gili Island to Bali.',
+          'Continue by private car towards Ubud.',
+          'Enjoy a 90-minute tandem ATV bike ride.',
+          'Transfer to Ubud Heaven Sayan.',
+          'Check in to the private pool villa.',
+          'Overnight stay in Ubud.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Kintamani and Ubud Tour',
+        details: 'Breakfast at the hotel. Full-day private sightseeing tour. Visit Tegalalang Rice Terraces. Visit Tegenungan Waterfall. Enjoy Desa Bali Swing. Visit Kintamani and Ubud Market. Return to the hotel.',
+        points: [
+          'Breakfast at the hotel.',
+          'Full-day private sightseeing tour.',
+          'Visit Tegalalang Rice Terraces.',
+          'Visit Tegenungan Waterfall.',
+          'Enjoy Desa Bali Swing.',
+          'Visit Kintamani and Ubud Market.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Ubud hotel to Bali Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Ubud hotel to Bali Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      '06 nights’ accommodation with breakfast (3N Kuta + 1N Gili Island + 2N Ubud Private Pool Villa)',
+      'Private Bali Airport pickup and drop',
+      'Nusa Penida West Tour with private half-day car & local lunch',
+      'Shared return fastboat for Nusa Penida',
+      'Private hotel-to-pier transfers for Nusa Penida',
+      'Uluwatu Temple and Kecak Dance tour by private cab',
+      'Private transfer from Bali hotel to Gili departure pier',
+      'Cidomo transfer between Gili Pier and hotel',
+      'Return transfer from Gili Island to Bali',
+      'Private transfer from Bali pier to Ubud',
+      '90-minute tandem ATV bike ride adventure',
+      'Inter-hotel transfer to Ubud private pool villa',
+      'Full-day Kintamani and Ubud tour by private car',
+      'Desa Bali Swing'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Bali–Gili–Bali fastboat tickets unless specifically included in final confirmation',
+      'Anything not mentioned under inclusions'
+    ],
+    hotelPricingOptions: [
+      {
+        hotelName: '04 Star Hotel & 04 Star Private Pool Villa',
+        category: '03-Star Hotel (03N) + 04-Star Resort (01N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹35,850',
+        price4Pax: '₹30,000'
+      },
+      {
+        hotelName: '04 Star Hotel & 04 Star Private Pool Villa',
+        category: '04-Star Hotel (03N) + 04-Star Resort (01N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹36,900',
+        price4Pax: '₹31,000'
+      },
+      {
+        hotelName: '05 Star Hotel & 04 Star Private Pool Villa',
+        category: '05-Star Hotel (03N) + 04-Star Resort (01N) + 04-Star Pool Villa (02N)',
+        price2Pax: '₹40,900',
+        price4Pax: '₹35,000'
+      }
+    ]
+  },
+
+  // --- THAILAND PACKAGES (6) ---
+  {
+    id: 'thai-bangkok-pattaya-4d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 04 Days Itinerary Bangkok-Pattaya',
+    duration: '4D / 3N',
+    price: '₹11,200',
+    originalPrice: '₹16,500',
+    rating: '4.95',
+    reviewsCount: 280,
+    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days exciting Thailand journey covering private Bangkok airport transfers, Pattaya Alcazar Cabaret Show, Coral Island speedboat tour with lunch, and Bangkok city tour visiting Golden Buddha Temple, Wat Hua Lamphong, and Gems Gallery.',
+    hotel: '03-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹11,200 (02 PAX) | ₹9,050 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹11,200',
+        price4Pax: '₹9,050'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bangkok – Transfer to Pattaya',
+        details: 'Pickup from Bangkok Airport. Private transfer to the Pattaya hotel. Proceed for the Alcazar Cabaret Show on a shared basis. Return to the hotel after the show. Overnight stay in Pattaya.',
+        points: [
+          'Pickup from Bangkok Airport.',
+          'Private transfer to the Pattaya hotel.',
+          'Proceed for the Alcazar Cabaret Show on a shared basis.',
+          'Return to the hotel after the show.',
+          'Overnight stay in Pattaya.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Coral Island Tour',
+        details: 'Proceed for the Coral Island tour on a shared basis. Enjoy beach time and optional water activities. Lunch included during the tour. Return to the Pattaya hotel.',
+        points: [
+          'Proceed for the Coral Island tour on a shared basis.',
+          'Enjoy beach time and optional water activities.',
+          'Lunch included during the tour.',
+          'Return to the Pattaya hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Pattaya to Bangkok with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Bangkok by private vehicle. Visit the Golden Buddha Temple. Visit Wat Hua Lamphong. Visit the Gems Gallery. Transfer to the Bangkok hotel. Overnight stay in Bangkok.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Bangkok by private vehicle.',
+          'Visit the Golden Buddha Temple.',
+          'Visit Wat Hua Lamphong.',
+          'Visit the Gems Gallery.',
+          'Transfer to the Bangkok hotel.',
+          'Overnight stay in Bangkok.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Bangkok hotel to Bangkok Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Bangkok hotel to Bangkok Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' 03-Star hotel accommodation (2N Pattaya + 1N Bangkok)",
+      'Daily breakfast at the hotels',
+      'Private Bangkok Airport-to-Pattaya transfer',
+      'Alcazar Cabaret Show with shared transfers',
+      'Coral Island tour on shared basis',
+      'Lunch during the Coral Island tour',
+      'Private Pattaya-to-Bangkok transfer',
+      'Half-day Bangkok city tour',
+      'Golden Buddha Temple visit',
+      'Wat Hua Lamphong visit',
+      'Gems Gallery visit',
+      'Private Bangkok hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Water sports and optional activities at Coral Island',
+      'Personal expenses',
+      'Additional entrance tickets not mentioned',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'thai-bangkok-pattaya-5d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 05 Days Itinerary Bangkok-Pattaya',
+    duration: '5D / 4N',
+    price: '₹14,100',
+    originalPrice: '₹19,500',
+    rating: '4.96',
+    reviewsCount: 315,
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days Thailand getaway covering Pattaya Alcazar Cabaret Show, Coral Island speedboat tour with lunch, Bangkok city temples tour, and Damnoen Saduak Floating Market with Maeklong Railway Market.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹14,100 (02 PAX) | ₹12,000 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹14,100',
+        price4Pax: '₹12,000'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bangkok – Transfer to Pattaya',
+        details: 'Pickup from Bangkok Airport. Private transfer to the Pattaya hotel. Proceed for the Alcazar Cabaret Show on a shared basis. Return to the hotel after the show. Overnight stay in Pattaya.',
+        points: [
+          'Pickup from Bangkok Airport.',
+          'Private transfer to the Pattaya hotel.',
+          'Proceed for the Alcazar Cabaret Show on a shared basis.',
+          'Return to the hotel after the show.',
+          'Overnight stay in Pattaya.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Coral Island Tour',
+        details: 'Proceed for the Coral Island tour on a shared basis. Enjoy beach time and optional water activities. Lunch included during the tour. Return to the Pattaya hotel.',
+        points: [
+          'Proceed for the Coral Island tour on a shared basis.',
+          'Enjoy beach time and optional water activities.',
+          'Lunch included during the tour.',
+          'Return to the Pattaya hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Pattaya to Bangkok with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Bangkok by private vehicle. Visit the Golden Buddha Temple. Visit Wat Hua Lamphong. Visit the Gems Gallery. Transfer to the Bangkok hotel. Overnight stay in Bangkok.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Bangkok by private vehicle.',
+          'Visit the Golden Buddha Temple.',
+          'Visit Wat Hua Lamphong.',
+          'Visit the Gems Gallery.',
+          'Transfer to the Bangkok hotel.',
+          'Overnight stay in Bangkok.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Floating Market and Railway Market Tour',
+        details: 'Proceed to Damnoen Saduak Floating Market on a shared basis. Enjoy a boat ride through the market. Visit the Maeklong Railway Market. Return to the Bangkok hotel.',
+        points: [
+          'Proceed to Damnoen Saduak Floating Market on a shared basis.',
+          'Enjoy a boat ride through the market.',
+          'Visit the Maeklong Railway Market.',
+          'Return to the Bangkok hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Bangkok hotel to Bangkok Airport. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Bangkok hotel to Bangkok Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' 03-Star hotel accommodation (2N Pattaya + 2N Bangkok)",
+      'Daily breakfast at the hotels',
+      'Private Bangkok Airport-to-Pattaya transfer',
+      'Alcazar Cabaret Show with shared transfers',
+      'Coral Island tour on a shared basis',
+      'Lunch during the Coral Island tour',
+      'Private Pattaya-to-Bangkok transfer',
+      'Half-day Bangkok city tour',
+      'Golden Buddha Temple visit',
+      'Wat Hua Lamphong visit',
+      'Gems Gallery visit',
+      'Damnoen Saduak Floating Market tour',
+      'Maeklong Railway Market visit',
+      'Boat ride at the floating market',
+      'Shared transfers for the Day 04 tour',
+      'Private Bangkok hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Water sports and optional activities at Coral Island',
+      'Personal expenses',
+      'Additional entrance tickets not mentioned',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'thai-bangkok-pattaya-6d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 06 Days Itinerary Bangkok-Pattaya',
+    duration: '6D / 5N',
+    price: '₹16,900',
+    originalPrice: '₹23,000',
+    rating: '4.97',
+    reviewsCount: 345,
+    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days comprehensive Thailand journey covering Pattaya Alcazar Cabaret Show, Coral Island speedboat tour with lunch, dedicated Pattaya private city tour, Bangkok temples, and Damnoen Saduak Floating Market with Maeklong Railway Market.',
+    hotel: '03-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹16,900 (02 PAX) | ₹14,050 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹16,900',
+        price4Pax: '₹14,050'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Bangkok – Transfer to Pattaya',
+        details: 'Pickup from Bangkok Airport. Private transfer to the Pattaya hotel. Proceed for the Alcazar Cabaret Show on a shared basis. Return to the hotel after the show. Overnight stay in Pattaya.',
+        points: [
+          'Pickup from Bangkok Airport.',
+          'Private transfer to the Pattaya hotel.',
+          'Proceed for the Alcazar Cabaret Show on a shared basis.',
+          'Return to the hotel after the show.',
+          'Overnight stay in Pattaya.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Coral Island Tour',
+        details: 'Proceed for the Coral Island tour on a shared basis. Enjoy beach time and optional water activities. Lunch included during the tour. Return to the Pattaya hotel.',
+        points: [
+          'Proceed for the Coral Island tour on a shared basis.',
+          'Enjoy beach time and optional water activities.',
+          'Lunch included during the tour.',
+          'Return to the Pattaya hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Pattaya City Tour',
+        details: 'Proceed for a private Pattaya city tour. Visit Pattaya Viewpoint. Visit Bali Hai Pier. Visit the Big Buddha. Visit the Gems Gallery. Return to the hotel.',
+        points: [
+          'Proceed for a private Pattaya city tour.',
+          'Visit Pattaya Viewpoint.',
+          'Visit Bali Hai Pier.',
+          'Visit the Big Buddha.',
+          'Visit the Gems Gallery.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Pattaya to Bangkok with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Bangkok by private vehicle. Visit the Golden Buddha Temple. Visit Wat Hua Lamphong. Visit the Gems Gallery. Transfer to the Bangkok hotel. Overnight stay in Bangkok.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Bangkok by private vehicle.',
+          'Visit the Golden Buddha Temple.',
+          'Visit Wat Hua Lamphong.',
+          'Visit the Gems Gallery.',
+          'Transfer to the Bangkok hotel.',
+          'Overnight stay in Bangkok.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Floating Market and Railway Market Tour',
+        details: 'Proceed to Damnoen Saduak Floating Market on a shared basis. Enjoy a boat ride through the market. Visit the Maeklong Railway Market. Return to the Bangkok hotel.',
+        points: [
+          'Proceed to Damnoen Saduak Floating Market on a shared basis.',
+          'Enjoy a boat ride through the market.',
+          'Visit the Maeklong Railway Market.',
+          'Return to the Bangkok hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Bangkok hotel to Bangkok Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Bangkok hotel to Bangkok Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' 03-Star hotel accommodation (3N Pattaya + 2N Bangkok)",
+      'Daily breakfast at the hotels',
+      'Private Bangkok Airport-to-Pattaya transfer',
+      'Alcazar Cabaret Show with shared transfers',
+      'Coral Island tour on shared basis',
+      'Lunch during the Coral Island tour',
+      'Private Pattaya city tour',
+      'Pattaya Viewpoint, Bali Hai Pier, Big Buddha and Gems Gallery visits',
+      'Private Pattaya-to-Bangkok transfer',
+      'Half-day Bangkok city tour',
+      'Golden Buddha Temple, Wat Hua Lamphong and Gems Gallery visits',
+      'Damnoen Saduak Floating Market tour',
+      'Maeklong Railway Market visit',
+      'Boat ride at the floating market',
+      'Shared transfers for the Day 05 tour',
+      'Private Bangkok hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Water sports and optional activities at Coral Island',
+      'Personal expenses',
+      'Additional entrance tickets not mentioned',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'thai-phuket-krabi-4d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 04 Days Itinerary Phuket-Krabi',
+    duration: '4D / 3N',
+    price: '₹13,200',
+    originalPrice: '₹18,000',
+    rating: '4.96',
+    reviewsCount: 290,
+    image: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days tropical island getaway featuring private airport transfers, Krabi Four Island longtail boat tour with local lunch, and half-day Phuket city tour with Big Buddha visit.',
+    hotel: '03-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹13,200 (02 PAX) | ₹9,650 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹13,200',
+        price4Pax: '₹9,650'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Phuket Airport to Krabi',
+        details: 'Pickup from Phuket Airport. Private transfer to the Krabi hotel. Hotel check-in and leisure time. Overnight stay in Krabi.',
+        points: [
+          'Pickup from Phuket Airport.',
+          'Private transfer to the Krabi hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Krabi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Krabi Four Island Tour',
+        details: 'Proceed for the Four Island Tour on a shared basis. Enjoy the island excursion by longtail boat. Local lunch included during the tour. National Park Fee will be paid separately. Return to the Krabi hotel.',
+        points: [
+          'Proceed for the Four Island Tour on a shared basis.',
+          'Enjoy the island excursion by longtail boat.',
+          'Local lunch included during the tour.',
+          'National Park Fee will be paid separately.',
+          'Return to the Krabi hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Krabi to Phuket with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Phuket by private vehicle. Enjoy a half-day Phuket city tour. Visit the Big Buddha. Transfer to the Phuket hotel. Overnight stay in Phuket.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Phuket by private vehicle.',
+          'Enjoy a half-day Phuket city tour.',
+          'Visit the Big Buddha.',
+          'Transfer to the Phuket hotel.',
+          'Overnight stay in Phuket.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Phuket hotel to Phuket Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Phuket hotel to Phuket Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' 03-Star hotel accommodation (2N Krabi + 1N Phuket)",
+      'Daily breakfast at the hotels',
+      'Private Phuket Airport-to-Krabi transfer',
+      'Four Island Tour by longtail boat',
+      'Shared transfers for the Four Island Tour',
+      'Local lunch during the island tour',
+      'Private Krabi-to-Phuket transfer',
+      'Half-day Phuket city tour',
+      'Big Buddha visit',
+      'Private Phuket hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'National Park Fee for the Four Island Tour',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entrance tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'thai-phuket-krabi-5d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 05 Days Itinerary Phuket-Krabi',
+    duration: '5D / 4N',
+    price: '₹16,050',
+    originalPrice: '₹22,500',
+    rating: '4.98',
+    reviewsCount: 330,
+    image: 'https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days tropical Thailand escape across Krabi and Phuket featuring Four Island longtail boat excursion, Phuket Big Buddha city tour, and exhilarating Phi Phi Island speedboat cruise with lunch.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹16,050 (02 PAX) | ₹12,450 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹16,050',
+        price4Pax: '₹12,450'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Phuket Airport to Krabi',
+        details: 'Pickup from Phuket Airport. Private transfer to the Krabi hotel. Hotel check-in and leisure time. Overnight stay in Krabi.',
+        points: [
+          'Pickup from Phuket Airport.',
+          'Private transfer to the Krabi hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Krabi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Krabi Four Island Tour',
+        details: 'Proceed for the Four Island Tour on a shared basis. Enjoy the island excursion by longtail boat. Local lunch included during the tour. National Park Fee will be paid separately. Return to the Krabi hotel.',
+        points: [
+          'Proceed for the Four Island Tour on a shared basis.',
+          'Enjoy the island excursion by longtail boat.',
+          'Local lunch included during the tour.',
+          'National Park Fee will be paid separately.',
+          'Return to the Krabi hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Krabi to Phuket with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Phuket by private vehicle. Enjoy a half-day Phuket city tour. Visit the Big Buddha. Transfer to the Phuket hotel. Overnight stay in Phuket.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Phuket by private vehicle.',
+          'Enjoy a half-day Phuket city tour.',
+          'Visit the Big Buddha.',
+          'Transfer to the Phuket hotel.',
+          'Overnight stay in Phuket.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Phi Phi Island Tour',
+        details: 'Proceed for the Phi Phi Island tour on a shared basis. Enjoy the island excursion by speedboat. Lunch included during the tour. National Park Fee will be paid separately. Return to the Phuket hotel.',
+        points: [
+          'Proceed for the Phi Phi Island tour on a shared basis.',
+          'Enjoy the island excursion by speedboat.',
+          'Lunch included during the tour.',
+          'National Park Fee will be paid separately.',
+          'Return to the Phuket hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Phuket hotel to Phuket Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Phuket hotel to Phuket Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' 03-Star hotel accommodation (2N Krabi + 2N Phuket)",
+      'Daily breakfast at the hotels',
+      'Private Phuket Airport-to-Krabi transfer',
+      'Four Island Tour by longtail boat',
+      'Shared transfers for the Four Island Tour',
+      'Local lunch during the Four Island Tour',
+      'Private Krabi-to-Phuket transfer',
+      'Half-day Phuket city tour',
+      'Big Buddha visit',
+      'Phi Phi Island Tour by speedboat',
+      'Shared transfers for the Phi Phi Island Tour',
+      'Lunch during the Phi Phi Island Tour',
+      'Private Phuket hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'National Park Fees for the Four Island and Phi Phi Island tours',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entrance tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'thai-phuket-krabi-6d',
+    destinationId: 'thailand',
+    destinationName: 'Thailand',
+    category: 'International',
+    title: 'Thailand 06 Days Itinerary Phuket-Krabi',
+    duration: '6D / 5N',
+    price: '₹18,600',
+    originalPrice: '₹25,500',
+    rating: '4.98',
+    reviewsCount: 360,
+    image: 'https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days ultimate island hopping experience across Krabi and Phuket featuring Krabi 4 Islands longtail boat tour, Phuket Big Buddha city tour, Phi Phi Islands speedboat tour, and James Bond Island longtail boat excursion.',
+    hotel: '03-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹18,600 (02 PAX) | ₹15,000 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹18,600',
+        price4Pax: '₹15,000'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Phuket Airport to Krabi',
+        details: 'Pickup from Phuket Airport. Private transfer to the Krabi hotel. Hotel check-in and leisure time. Overnight stay in Krabi.',
+        points: [
+          'Pickup from Phuket Airport.',
+          'Private transfer to the Krabi hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Krabi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Krabi Four Island Tour',
+        details: 'Proceed for the Four Island Tour on a shared basis. Enjoy the island excursion by longtail boat. Local lunch included during the tour. National Park Fee will be paid separately. Return to the Krabi hotel.',
+        points: [
+          'Proceed for the Four Island Tour on a shared basis.',
+          'Enjoy the island excursion by longtail boat.',
+          'Local lunch included during the tour.',
+          'National Park Fee will be paid separately.',
+          'Return to the Krabi hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Krabi to Phuket with City Tour',
+        details: 'Breakfast and hotel check-out. Proceed to Phuket by private vehicle. Enjoy a half-day Phuket city tour. Visit the Big Buddha. Transfer to the Phuket hotel. Overnight stay in Phuket.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed to Phuket by private vehicle.',
+          'Enjoy a half-day Phuket city tour.',
+          'Visit the Big Buddha.',
+          'Transfer to the Phuket hotel.',
+          'Overnight stay in Phuket.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Phi Phi Island Tour',
+        details: 'Proceed for the Phi Phi Island tour on a shared basis. Enjoy the island excursion by speedboat. Lunch included during the tour. National Park Fee will be paid separately. Return to the Phuket hotel.',
+        points: [
+          'Proceed for the Phi Phi Island tour on a shared basis.',
+          'Enjoy the island excursion by speedboat.',
+          'Lunch included during the tour.',
+          'National Park Fee will be paid separately.',
+          'Return to the Phuket hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'James Bond Island Tour',
+        details: 'Proceed for the James Bond Island tour on a shared basis. Enjoy the island excursion by longtail boat. Explore the major attractions around James Bond Island. National Park Fee will be paid separately. Return to the Phuket hotel.',
+        points: [
+          'Proceed for the James Bond Island tour on a shared basis.',
+          'Enjoy the island excursion by longtail boat.',
+          'Explore the major attractions around James Bond Island.',
+          'National Park Fee will be paid separately.',
+          'Return to the Phuket hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer from the Phuket hotel to Phuket Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the Phuket hotel to Phuket Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' 03-Star hotel accommodation (2N Krabi + 3N Phuket)",
+      'Daily breakfast at the hotels',
+      'Private Phuket Airport-to-Krabi transfer',
+      'Four Island Tour by longtail boat',
+      'Shared transfers for the Four Island Tour',
+      'Local lunch during the Four Island Tour',
+      'Private Krabi-to-Phuket transfer',
+      'Half-day Phuket city tour',
+      'Big Buddha visit',
+      'Phi Phi Island Tour by speedboat',
+      'Shared transfers for the Phi Phi Island Tour',
+      'Lunch during the Phi Phi Island Tour',
+      'James Bond Island Tour by longtail boat',
+      'Shared transfers for the James Bond Island Tour',
+      'Private Phuket hotel-to-airport transfer'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Thailand visa charges',
+      'Travel insurance',
+      'National Park Fees for the Four Island, Phi Phi Island and James Bond Island tours',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entrance tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+
+  // --- VIETNAM PACKAGES (6) ---
+  {
+    id: 'viet-hanoi-halong-4d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 04 Days Itinerary - Hanoi & Halong Bay Cruise',
+    duration: '4D / 3N',
+    price: '₹13,200',
+    originalPrice: '₹18,500',
+    rating: '4.95',
+    reviewsCount: 148,
+    image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days Vietnam package with private Hanoi airport pickup/drop, half-day Hanoi city tour, Train Street visit, and a scenic Halong Bay cruise with local lunch.',
+    hotel: '03-Star Hotel (03 Nights)',
+    pricingNotes: 'USD 155 per person (02 PAX) | USD 135 per person (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: 'USD 155 (~ ₹13,200)',
+        price4Pax: 'USD 135 (~ ₹11,500)'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Hanoi',
+        details: 'Pickup from Hanoi Airport. Private transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Hanoi.',
+        points: [
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Hanoi City Tour',
+        details: 'Proceed for a half-day private Hanoi city tour with a guide. Visit the major city attractions. Explore the famous Hanoi Train Street. Coffee at Train Street will be self-paid. Return to the hotel.',
+        points: [
+          'Proceed for a half-day private Hanoi city tour with a guide.',
+          'Visit the major city attractions.',
+          'Explore the famous Hanoi Train Street.',
+          'Coffee at Train Street will be self-paid.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Halong Bay Cruise',
+        details: 'Proceed to Halong Bay by shared shuttle bus. Enjoy a scenic Halong Bay cruise. Local lunch included during the cruise. Return to Hanoi after the tour.',
+        points: [
+          'Proceed to Halong Bay by shared shuttle bus.',
+          'Enjoy a scenic Halong Bay cruise.',
+          'Local lunch included during the cruise.',
+          'Return to Hanoi after the tour.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer from the hotel to Hanoi Airport. Tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer from the hotel to Hanoi Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' 03-Star hotel accommodation",
+      'Private Hanoi Airport pickup and drop',
+      'Half-day Hanoi city tour by private vehicle',
+      'English-speaking guide during the Hanoi city tour',
+      'Hanoi Train Street visit',
+      'Halong Bay cruise',
+      'Shared shuttle bus transfers for Halong Bay',
+      'Local lunch during the Halong Bay cruise'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Coffee at Hanoi Train Street',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'viet-hanoi-5d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 05 Days Itinerary Hanoi - Halong Bay & Ninh Binh',
+    duration: '5D / 4N',
+    price: '₹19,300',
+    originalPrice: '₹26,000',
+    rating: '4.96',
+    reviewsCount: 165,
+    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days Vietnam Hanoi itinerary featuring private airport transfers, half-day city tour with Train Street, Halong Bay scenic cruise with lunch, and a full-day Ninh Binh & Tam Coc boat tour.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹19,300 (02 PAX) | ₹17,650 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹19,300',
+        price4Pax: '₹17,650'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Hanoi',
+        details: 'Pickup from Hanoi Airport. Private transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Hanoi.',
+        points: [
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Hanoi City Tour',
+        details: 'Half-day private Hanoi city tour with guide. Visit the major city attractions. Explore the famous Hanoi Train Street. Coffee at Train Street will be self-paid. Return to the hotel.',
+        points: [
+          'Half-day private Hanoi city tour with guide.',
+          'Visit the major city attractions.',
+          'Explore the famous Hanoi Train Street.',
+          'Coffee at Train Street will be self-paid.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Halong Bay Cruise',
+        details: 'Transfer to Halong Bay by shared shuttle bus. Enjoy a scenic Halong Bay cruise. Local lunch included during the tour. Return to Hanoi after the excursion.',
+        points: [
+          'Transfer to Halong Bay by shared shuttle bus.',
+          'Enjoy a scenic Halong Bay cruise.',
+          'Local lunch included during the tour.',
+          'Return to Hanoi after the excursion.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ninh Binh and Tam Coc Tour',
+        details: 'Proceed to Ninh Binh by shared shuttle bus. Explore the major attractions of Ninh Binh. Enjoy a scenic boat ride at Tam Coc. Local meal included during the tour. Return to Hanoi.',
+        points: [
+          'Proceed to Ninh Binh by shared shuttle bus.',
+          'Explore the major attractions of Ninh Binh.',
+          'Enjoy a scenic boat ride at Tam Coc.',
+          'Local meal included during the tour.',
+          'Return to Hanoi.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer from the hotel to Hanoi Airport. Tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer from the hotel to Hanoi Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' 03-Star hotel accommodation",
+      'Private Hanoi Airport pickup and drop',
+      'Half-day private Hanoi city tour',
+      'Guide during the Hanoi city tour',
+      'Hanoi Train Street visit',
+      'Halong Bay cruise',
+      'Shared shuttle bus transfers for Halong Bay',
+      'Local lunch during the Halong Bay tour',
+      'Ninh Binh and Tam Coc tour',
+      'Shared shuttle bus transfers for Ninh Binh',
+      'Tam Coc boat ride',
+      'Local meal during the Ninh Binh tour'
+    ],
+    exclusions: [
+      'Airfare and visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Coffee at Hanoi Train Street',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'viet-hanoi-danang-6d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 06 Days Itinerary Hanoi & Da Nang',
+    duration: '6D / 5N',
+    price: '₹28,400',
+    originalPrice: '₹37,500',
+    rating: '4.97',
+    reviewsCount: 194,
+    image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days Vietnam journey covering Hanoi, Halong Bay cruise, and Da Nang with Ba Na Hills Golden Bridge, Marble Mountain, Coconut Village, and Hoi An Ancient Town.',
+    hotel: '03-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹28,400 (02 PAX) | ₹24,000 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹28,400',
+        price4Pax: '₹24,000'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Hanoi and City Tour',
+        details: 'Pickup from Hanoi Airport. Private transfer to the hotel. Proceed for a half-day private Hanoi city tour with guide. Visit the famous Hanoi Train Street (coffee at Train Street will be self-paid). Overnight stay in Hanoi.',
+        points: [
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Proceed for a half-day private Hanoi city tour with guide.',
+          'Visit the famous Hanoi Train Street.',
+          'Coffee at Train Street will be self-paid.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Halong Bay Cruise',
+        details: 'Transfer to Halong Bay by shared shuttle bus. Enjoy a scenic Halong Bay cruise. Local lunch included during the tour. Return to Hanoi after the excursion.',
+        points: [
+          'Transfer to Halong Bay by shared shuttle bus.',
+          'Enjoy a scenic Halong Bay cruise.',
+          'Local lunch included during the tour.',
+          'Return to Hanoi after the excursion.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Hanoi to Da Nang',
+        details: 'Private transfer from the Hanoi hotel to Hanoi Airport. Board the flight to Da Nang. Pickup from Da Nang Airport. Private transfer to the Da Nang hotel. Overnight stay in Da Nang.',
+        points: [
+          'Private transfer from the Hanoi hotel to Hanoi Airport.',
+          'Board the flight to Da Nang.',
+          'Pickup from Da Nang Airport.',
+          'Private transfer to the Da Nang hotel.',
+          'Overnight stay in Da Nang.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ba Na Hills Tour',
+        details: 'Proceed to Ba Na Hills on a shared basis. Enjoy the cable car ride. Visit the Golden Bridge. Explore Fantasy Park. Return to the hotel.',
+        points: [
+          'Proceed to Ba Na Hills on a shared basis.',
+          'Enjoy the cable car ride.',
+          'Visit the Golden Bridge.',
+          'Explore Fantasy Park.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Da Nang, Coconut Village and Hoi An Tour',
+        details: 'Proceed for a private Da Nang city tour. Visit Marble Mountain. Explore Coconut Village. Visit Hoi An Ancient Town with a guide. Return to Da Nang after the tour.',
+        points: [
+          'Proceed for a private Da Nang city tour.',
+          'Visit Marble Mountain.',
+          'Explore Coconut Village.',
+          'Visit Hoi An Ancient Town with a guide.',
+          'Return to Da Nang after the tour.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer from the Da Nang hotel to Da Nang Airport. Tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer from the Da Nang hotel to Da Nang Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' 03-Star hotel accommodation",
+      'Private airport transfers in Hanoi and Da Nang',
+      'Half-day private Hanoi city tour',
+      'Guide during the Hanoi city tour',
+      'Hanoi Train Street visit',
+      'Halong Bay cruise',
+      'Shared shuttle bus transfers for Halong Bay',
+      'Local lunch during the Halong Bay tour',
+      'Ba Na Hills tour on shared basis',
+      'Cable car ride',
+      'Golden Bridge visit',
+      'Fantasy Park entry',
+      'Private Da Nang city tour',
+      'Marble Mountain visit',
+      'Coconut Village visit',
+      'Hoi An Ancient Town tour with guide'
+    ],
+    exclusions: [
+      'Domestic and international airfare',
+      'Visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Coffee at Hanoi Train Street',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'viet-hanoi-danang-7d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 07 Days Itinerary Hanoi & Da Nang',
+    duration: '7D / 6N',
+    price: '₹33,200',
+    originalPrice: '₹44,000',
+    rating: '4.98',
+    reviewsCount: 210,
+    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80',
+    description: 'Comprehensive 07 Days Vietnam journey covering Hanoi, Halong Bay cruise, Ninh Binh & Tam Coc boat tour, plus Da Nang with Ba Na Hills Golden Bridge, Marble Mountain, Coconut Village, and Hoi An Ancient Town.',
+    hotel: '03-Star Hotel (06 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹33,200 (02 PAX) | ₹29,200 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (06 Nights)',
+        price2Pax: '₹33,200',
+        price4Pax: '₹29,200'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Hanoi and City Tour',
+        details: 'Pickup from Hanoi Airport. Private transfer to the hotel. Proceed for a half-day private Hanoi city tour with guide. Visit the famous Hanoi Train Street (coffee at Train Street will be self-paid). Overnight stay in Hanoi.',
+        points: [
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Proceed for a half-day private Hanoi city tour with guide.',
+          'Visit the famous Hanoi Train Street.',
+          'Coffee at Train Street will be self-paid.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Halong Bay Cruise',
+        details: 'Transfer to Halong Bay by shared shuttle bus. Enjoy a scenic Halong Bay cruise. Local lunch included during the tour. Return to Hanoi after the excursion.',
+        points: [
+          'Transfer to Halong Bay by shared shuttle bus.',
+          'Enjoy a scenic Halong Bay cruise.',
+          'Local lunch included during the tour.',
+          'Return to Hanoi after the excursion.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Ninh Binh and Tam Coc Tour',
+        details: 'Proceed to Ninh Binh by shared shuttle bus. Explore the major attractions of Ninh Binh. Enjoy a scenic boat ride at Tam Coc. Local meal included during the tour. Return to Hanoi.',
+        points: [
+          'Proceed to Ninh Binh by shared shuttle bus.',
+          'Explore the major attractions of Ninh Binh.',
+          'Enjoy a scenic boat ride at Tam Coc.',
+          'Local meal included during the tour.',
+          'Return to Hanoi.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Hanoi to Da Nang',
+        details: 'Private transfer from the Hanoi hotel to Hanoi Airport. Board the flight to Da Nang. Pickup from Da Nang Airport. Private transfer to the Da Nang hotel. Overnight stay in Da Nang.',
+        points: [
+          'Private transfer from the Hanoi hotel to Hanoi Airport.',
+          'Board the flight to Da Nang.',
+          'Pickup from Da Nang Airport.',
+          'Private transfer to the Da Nang hotel.',
+          'Overnight stay in Da Nang.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Ba Na Hills Tour',
+        details: 'Proceed to Ba Na Hills on a shared basis. Enjoy the cable car ride. Visit the Golden Bridge. Explore Fantasy Park. Return to the hotel.',
+        points: [
+          'Proceed to Ba Na Hills on a shared basis.',
+          'Enjoy the cable car ride.',
+          'Visit the Golden Bridge.',
+          'Explore Fantasy Park.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Da Nang, Coconut Village and Hoi An Tour',
+        details: 'Proceed for a private Da Nang city tour. Visit Marble Mountain. Explore Coconut Village. Visit Hoi An Ancient Town with a guide. Return to Da Nang after the tour.',
+        points: [
+          'Proceed for a private Da Nang city tour.',
+          'Visit Marble Mountain.',
+          'Explore Coconut Village.',
+          'Visit Hoi An Ancient Town with a guide.',
+          'Return to Da Nang after the tour.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer from the Da Nang hotel to Da Nang Airport. The tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer from the Da Nang hotel to Da Nang Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' 03-Star hotel accommodation",
+      'Private airport transfers in Hanoi and Da Nang',
+      'Half-day private Hanoi city tour',
+      'Guide during the Hanoi city tour',
+      'Hanoi Train Street visit',
+      'Halong Bay cruise',
+      'Shared shuttle bus transfers for Halong Bay',
+      'Local lunch during the Halong Bay tour',
+      'Ninh Binh and Tam Coc tour',
+      'Shared shuttle bus transfers for Ninh Binh',
+      'Tam Coc boat ride',
+      'Local meal during the Ninh Binh tour',
+      'Ba Na Hills tour on a shared basis',
+      'Cable car ride',
+      'Golden Bridge visit',
+      'Fantasy Park entry',
+      'Private Da Nang city tour',
+      'Marble Mountain visit',
+      'Coconut Village visit',
+      'Hoi An Ancient Town tour with a guide'
+    ],
+    exclusions: [
+      'Domestic and international airfare',
+      'Visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Coffee at Hanoi Train Street',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'viet-hcm-danang-hanoi-7d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 07 Days Itinerary Ho Chi Minh, Da Nang, & Hanoi',
+    duration: '7D / 6N',
+    price: '₹29,700',
+    originalPrice: '₹39,500',
+    rating: '4.98',
+    reviewsCount: 228,
+    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80',
+    description: '07 Days grand Vietnam discovery spanning Ho Chi Minh City, Mekong Delta & Cu Chi Tunnels, Da Nang Ba Na Hills Golden Bridge, and Hanoi with Ninh Binh & Tam Coc tour.',
+    hotel: '03-Star Hotel (06 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹29,700 (02 PAX) | ₹27,850 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (06 Nights)',
+        price2Pax: '₹29,700',
+        price4Pax: '₹27,850'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Ho Chi Minh City and City Tour',
+        details: 'Pickup from Ho Chi Minh City Airport. Private transfer to the hotel. Proceed for a half-day private city tour with a guide. Visit the major attractions of Ho Chi Minh City. Overnight stay in Ho Chi Minh City.',
+        points: [
+          'Pickup from Ho Chi Minh City Airport.',
+          'Private transfer to the hotel.',
+          'Proceed for a half-day private city tour with a guide.',
+          'Visit the major attractions of Ho Chi Minh City.',
+          'Overnight stay in Ho Chi Minh City.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Mekong Delta and Cu Chi Tunnels Tour',
+        details: 'Proceed for the Mekong Delta and Cu Chi Tunnels tour. Explore the scenic waterways and local surroundings of the Mekong Delta. Visit the historic Cu Chi Tunnels. Tour and transfers on a shared basis. Return to the hotel.',
+        points: [
+          'Proceed for the Mekong Delta and Cu Chi Tunnels tour.',
+          'Explore the scenic waterways and local surroundings of the Mekong Delta.',
+          'Visit the historic Cu Chi Tunnels.',
+          'Tour and transfers on a shared basis.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Ho Chi Minh City to Da Nang',
+        details: 'Breakfast and hotel check-out. Private transfer to Ho Chi Minh City Airport. Board the flight to Da Nang. Pickup from Da Nang Airport. Private transfer to the hotel. Overnight stay in Da Nang.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Ho Chi Minh City Airport.',
+          'Board the flight to Da Nang.',
+          'Pickup from Da Nang Airport.',
+          'Private transfer to the hotel.',
+          'Overnight stay in Da Nang.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ba Na Hills Tour',
+        details: 'Proceed to Ba Na Hills on a shared basis. Enjoy the cable car ride. Visit the Golden Bridge. Explore Fantasy Park. Return to the hotel.',
+        points: [
+          'Proceed to Ba Na Hills on a shared basis.',
+          'Enjoy the cable car ride.',
+          'Visit the Golden Bridge.',
+          'Explore Fantasy Park.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Da Nang to Hanoi',
+        details: 'Breakfast and hotel check-out. Private transfer to Da Nang Airport. Board the flight to Hanoi. Pickup from Hanoi Airport. Private transfer to the hotel. Overnight stay in Hanoi.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Da Nang Airport.',
+          'Board the flight to Hanoi.',
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Ninh Binh and Tam Coc Tour',
+        details: 'Proceed to Ninh Binh by shared shuttle bus. Explore the major attractions of Ninh Binh. Enjoy a scenic boat ride at Tam Coc. Local meal included during the tour. Return to Hanoi.',
+        points: [
+          'Proceed to Ninh Binh by shared shuttle bus.',
+          'Explore the major attractions of Ninh Binh.',
+          'Enjoy a scenic boat ride at Tam Coc.',
+          'Local meal included during the tour.',
+          'Return to Hanoi.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure from Hanoi',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to Hanoi Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to Hanoi Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "06 nights' 03-Star hotel accommodation",
+      'Daily breakfast at the hotels',
+      'Private airport transfers in Ho Chi Minh City, Da Nang and Hanoi',
+      'Half-day private Ho Chi Minh City tour',
+      'Guide during the Ho Chi Minh City tour',
+      'Mekong Delta and Cu Chi Tunnels tour on shared basis',
+      'Ba Na Hills tour on shared basis',
+      'Ba Na Hills cable car ride',
+      'Golden Bridge visit',
+      'Fantasy Park entry',
+      'Ninh Binh and Tam Coc tour',
+      'Shared shuttle bus transfers for Ninh Binh',
+      'Tam Coc boat ride',
+      'Local meal during the Ninh Binh tour'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Vietnam visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'viet-hcm-danang-hanoi-9d',
+    destinationId: 'vietnam',
+    destinationName: 'Vietnam',
+    category: 'International',
+    title: 'Vietnam 09 Days Itinerary Ho Chi Minh, Da Nang, & Hanoi',
+    duration: '9D / 8N',
+    price: '₹45,500',
+    originalPrice: '₹58,000',
+    rating: '4.99',
+    reviewsCount: 256,
+    image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=80',
+    description: 'Complete 09 Days grand exploration of Vietnam covering Ho Chi Minh City & Mekong Delta, Da Nang with Ba Na Hills Golden Bridge & Hoi An Ancient Town, and Hanoi with Ninh Binh, Tam Coc, and a scenic Halong Bay cruise.',
+    hotel: '03-Star Hotel (08 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹45,500 (02 PAX) | ₹41,000 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (08 Nights)',
+        price2Pax: '₹45,500',
+        price4Pax: '₹41,000'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Ho Chi Minh City & Half Day City Tour',
+        details: 'Pickup from Ho Chi Minh City Airport. Private transfer to the hotel. Half-day private Ho Chi Minh City tour with guide. Visit the major city attractions. Overnight stay in Ho Chi Minh City.',
+        points: [
+          'Pickup from Ho Chi Minh City Airport.',
+          'Private transfer to the hotel.',
+          'Half-day private Ho Chi Minh City tour with guide.',
+          'Visit the major city attractions.',
+          'Overnight stay in Ho Chi Minh City.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Mekong Delta and Cu Chi Tunnels Tour',
+        details: 'Proceed for the Mekong Delta and Cu Chi Tunnels tour. Explore the waterways and local surroundings of the Mekong Delta. Visit the historic Cu Chi Tunnels. Return to the hotel.',
+        points: [
+          'Proceed for the Mekong Delta and Cu Chi Tunnels tour.',
+          'Explore the waterways and local surroundings of the Mekong Delta.',
+          'Visit the historic Cu Chi Tunnels.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Ho Chi Minh City to Da Nang',
+        details: 'Breakfast and hotel check-out. Private transfer to Ho Chi Minh City Airport. Board the flight to Da Nang. Pickup from Da Nang Airport. Private transfer to the hotel. Overnight stay in Da Nang.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Ho Chi Minh City Airport.',
+          'Board the flight to Da Nang.',
+          'Pickup from Da Nang Airport.',
+          'Private transfer to the hotel.',
+          'Overnight stay in Da Nang.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Ba Na Hills Tour',
+        details: 'Proceed to Ba Na Hills on a shared basis. Enjoy the cable car ride. Visit the Golden Bridge. Explore Fantasy Park. Return to the hotel.',
+        points: [
+          'Proceed to Ba Na Hills on a shared basis.',
+          'Enjoy the cable car ride.',
+          'Visit the Golden Bridge.',
+          'Explore Fantasy Park.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Da Nang and Hoi An Tour',
+        details: 'Proceed for the Da Nang city tour. Visit Marble Mountain. Explore Coconut Village. Visit Hoi An Ancient Town with guide. Private vehicle for the Da Nang–Hoi An tour. Return to the hotel.',
+        points: [
+          'Proceed for the Da Nang city tour.',
+          'Visit Marble Mountain.',
+          'Explore Coconut Village.',
+          'Visit Hoi An Ancient Town with guide.',
+          'Private vehicle for the Da Nang–Hoi An tour.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Da Nang to Hanoi',
+        details: 'Breakfast and hotel check-out. Private transfer to Da Nang Airport. Board the flight to Hanoi. Pickup from Hanoi Airport. Private transfer to the hotel. Overnight stay in Hanoi.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Da Nang Airport.',
+          'Board the flight to Hanoi.',
+          'Pickup from Hanoi Airport.',
+          'Private transfer to the hotel.',
+          'Overnight stay in Hanoi.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Ninh Binh and Tam Coc Tour',
+        details: 'Proceed to Ninh Binh by shared shuttle bus. Explore the major attractions of Ninh Binh. Enjoy a scenic boat ride at Tam Coc. Local meal included. Return to Hanoi.',
+        points: [
+          'Proceed to Ninh Binh by shared shuttle bus.',
+          'Explore the major attractions of Ninh Binh.',
+          'Enjoy a scenic boat ride at Tam Coc.',
+          'Local meal included.',
+          'Return to Hanoi.'
+        ]
+      },
+      {
+        day: 8,
+        title: 'Halong Bay Cruise',
+        details: 'Transfer to Halong Bay by shared shuttle bus. Enjoy a scenic Halong Bay cruise. Local lunch included during the tour. Return to Hanoi.',
+        points: [
+          'Transfer to Halong Bay by shared shuttle bus.',
+          'Enjoy a scenic Halong Bay cruise.',
+          'Local lunch included during the tour.',
+          'Return to Hanoi.'
+        ]
+      },
+      {
+        day: 9,
+        title: 'Hanoi City Tour and Departure',
+        details: 'Breakfast and hotel check-out. Half-day private Hanoi city tour with guide. Visit the famous Hanoi Train Street. Coffee at Train Street will be self-paid. Private transfer to Hanoi Airport. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Half-day private Hanoi city tour with guide.',
+          'Visit the famous Hanoi Train Street.',
+          'Coffee at Train Street will be self-paid.',
+          'Private transfer to Hanoi Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "08 nights' hotel accommodation",
+      'Daily breakfast at the hotels',
+      'Private airport transfers in Ho Chi Minh City, Da Nang and Hanoi',
+      'Half-day private Ho Chi Minh City tour with guide',
+      'Mekong Delta and Cu Chi Tunnels tour',
+      'Ba Na Hills tour on a shared basis',
+      'Cable car ride, Golden Bridge and Fantasy Park',
+      'Da Nang city tour',
+      'Marble Mountain, Coconut Village and Hoi An Ancient Town tour',
+      'Private vehicle for the Da Nang–Hoi An tour',
+      'Ninh Binh and Tam Coc tour by shared shuttle bus',
+      'Tam Coc boat ride and local meal',
+      'Halong Bay cruise with shared shuttle transfers',
+      'Local lunch during the Halong Bay cruise',
+      'Half-day private Hanoi city tour with guide',
+      'Hanoi Train Street visit'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Vietnam visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Coffee at Hanoi Train Street',
+      'Personal expenses',
+      'Optional activities and additional entry tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+
+  // --- SINGAPORE PACKAGES (2) ---
+  {
+    id: 'sing-singapore-4d',
+    destinationId: 'singapore',
+    destinationName: 'Singapore',
+    category: 'International',
+    title: 'Singapore 04 Days Itinerary',
+    duration: '4D / 3N',
+    price: '₹36,300',
+    originalPrice: '₹46,000',
+    rating: '4.98',
+    reviewsCount: 310,
+    image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days premier Singapore holiday including private airport transfers, Night Safari, 3-hour city tour, half-day Sentosa with cable car & Madame Tussauds, Marina Bay Sands SkyPark, and Gardens by the Bay Flower Dome & Cloud Forest.',
+    hotel: '03-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹36,300 (02 PAX) | ₹35,250 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹36,300',
+        price4Pax: '₹35,250'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Singapore and Night Safari',
+        details: 'Pickup from Changi Airport between 6:00 AM and 10:00 PM. Private transfer to the hotel. Hotel check-in and leisure time. Proceed for the Night Safari on a shared basis. Return to the hotel. Overnight stay in Singapore.',
+        points: [
+          'Pickup from Changi Airport between 6:00 AM and 10:00 PM.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Proceed for the Night Safari on a shared basis.',
+          'Return to the hotel.',
+          'Overnight stay in Singapore.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Singapore City Tour and Sentosa Island',
+        details: 'Proceed for a three-hour Singapore city tour on a shared basis. Drop-off at Little India after the city tour. Proceed for the half-day Sentosa tour from Little India. Enjoy a one-way cable car ride. Visit Madame Tussauds with the 4-in-1 Combo. Explore Images of Singapore. Enjoy the Spirit of Singapore Boat Ride. Experience Ultimate Film Star. Return to the hotel.',
+        points: [
+          'Proceed for a three-hour Singapore city tour on a shared basis.',
+          'Drop-off at Little India after the city tour.',
+          'Proceed for the half-day Sentosa tour from Little India.',
+          'Enjoy a one-way cable car ride.',
+          'Visit Madame Tussauds with the 4-in-1 Combo.',
+          'Explore Images of Singapore.',
+          'Enjoy the Spirit of Singapore Boat Ride.',
+          'Experience Ultimate Film Star.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Marina Bay Sands and Gardens by the Bay',
+        details: 'Proceed for the tour on a shared basis. Visit Marina Bay Sands SkyPark during non-peak hours. Explore Gardens by the Bay. Visit the Flower Dome. Visit the Cloud Forest. Experience Jurassic World: The Exhibition. Return to the hotel.',
+        points: [
+          'Proceed for the tour on a shared basis.',
+          'Visit Marina Bay Sands SkyPark during non-peak hours.',
+          'Explore Gardens by the Bay.',
+          'Visit the Flower Dome.',
+          'Visit the Cloud Forest.',
+          'Experience Jurassic World: The Exhibition.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer to Changi Airport between 6:00 AM and 10:00 PM. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Changi Airport between 6:00 AM and 10:00 PM.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Singapore",
+      'Daily breakfast at the hotel',
+      'Private arrival and departure airport transfers between 6:00 AM and 10:00 PM',
+      'Night Safari with shared transfers',
+      'Three-hour Singapore city tour on a shared basis',
+      'Half-day Sentosa tour on a shared basis',
+      'One-way Sentosa cable car ride',
+      'Madame Tussauds 4-in-1 Combo',
+      'Images of Singapore',
+      'Spirit of Singapore Boat Ride',
+      'Ultimate Film Star experience',
+      'Marina Bay Sands SkyPark non-peak-hours ticket',
+      'Gardens by the Bay tour',
+      'Flower Dome and Cloud Forest admission',
+      'Jurassic World: The Exhibition',
+      'Shared transfers for the sightseeing tours'
+    ],
+    exclusions: [
+      'International airfare',
+      'Singapore visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Airport transfers outside 6:00 AM to 10:00 PM',
+      'Personal expenses',
+      'Optional activities and additional entrance tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'sing-singapore-5d',
+    destinationId: 'singapore',
+    destinationName: 'Singapore',
+    category: 'International',
+    title: 'Singapore 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹42,700',
+    originalPrice: '₹54,000',
+    rating: '4.98',
+    reviewsCount: 335,
+    image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days comprehensive Singapore vacation featuring Night Safari, full-day Sentosa Island with Wings of Time show, Marina Bay Sands SkyPark, Gardens by the Bay, and 3-hour panoramic Singapore city tour.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — ₹42,700 (02 PAX) | ₹41,600 (04 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹42,700',
+        price4Pax: '₹41,600'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Singapore and Night Safari',
+        details: 'Pickup from Changi Airport between 6:00 AM and 10:00 PM. Private transfer to the hotel. Hotel check-in and leisure time. Proceed for the Night Safari on a shared basis. Return to the hotel.',
+        points: [
+          'Pickup from Changi Airport between 6:00 AM and 10:00 PM.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Proceed for the Night Safari on a shared basis.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Full-Day Sentosa Island Tour',
+        details: 'Proceed for a full-day Sentosa Island tour on a shared basis. Enjoy a one-way cable car ride. Visit Madame Tussauds with the 4-in-1 Combo. Explore Images of Singapore. Enjoy the Spirit of Singapore Boat Ride. Experience Ultimate Film Star. Watch the Wings of Time show at 7:30 PM. Return to the hotel.',
+        points: [
+          'Proceed for a full-day Sentosa Island tour on a shared basis.',
+          'Enjoy a one-way cable car ride.',
+          'Visit Madame Tussauds with the 4-in-1 Combo.',
+          'Explore Images of Singapore.',
+          'Enjoy the Spirit of Singapore Boat Ride.',
+          'Experience Ultimate Film Star.',
+          'Watch the Wings of Time show at 7:30 PM.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Marina Bay Sands and Gardens by the Bay',
+        details: 'Proceed for the tour on a shared basis. Visit Marina Bay Sands SkyPark during non-peak hours. Explore Gardens by the Bay. Visit the Flower Dome. Visit the Cloud Forest. Experience Jurassic World: The Exhibition. Return to the hotel.',
+        points: [
+          'Proceed for the tour on a shared basis.',
+          'Visit Marina Bay Sands SkyPark during non-peak hours.',
+          'Explore Gardens by the Bay.',
+          'Visit the Flower Dome.',
+          'Visit the Cloud Forest.',
+          'Experience Jurassic World: The Exhibition.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Singapore City Tour',
+        details: 'Proceed for a three-hour Singapore city tour on a shared basis. Drive past Suntec City, Fountain of Wealth and Esplanade Theatre. Enjoy photo stops at Merlion Park and Singapore Flyer. Visit the Chinatown area and Buddha Tooth Relic Temple. Optional stop at Sovereign Shopping Centre, subject to time. Drop-off at Little India after the tour.',
+        points: [
+          'Proceed for a three-hour Singapore city tour on a shared basis.',
+          'Drive past Suntec City, Fountain of Wealth and Esplanade Theatre.',
+          'Enjoy photo stops at Merlion Park and Singapore Flyer.',
+          'Visit the Chinatown area and Buddha Tooth Relic Temple.',
+          'Optional stop at Sovereign Shopping Centre, subject to time.',
+          'Drop-off at Little India after the tour.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer to Changi Airport between 6:00 AM and 10:00 PM. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Changi Airport between 6:00 AM and 10:00 PM.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Singapore",
+      'Daily breakfast at the hotel',
+      'Private arrival and departure airport transfers between 6:00 AM and 10:00 PM',
+      'Night Safari with shared transfers',
+      'Full-day Sentosa Island tour on a shared basis',
+      'One-way Sentosa cable car ride',
+      'Madame Tussauds 4-in-1 Combo',
+      'Images of Singapore',
+      'Spirit of Singapore Boat Ride',
+      'Ultimate Film Star experience',
+      'Wings of Time show',
+      'Marina Bay Sands SkyPark non-peak-hours ticket',
+      'Gardens by the Bay tour',
+      'Flower Dome and Cloud Forest admission',
+      'Jurassic World: The Exhibition',
+      'Three-hour Singapore city tour on a shared basis',
+      'Merlion Park and Singapore Flyer photo stops',
+      'Chinatown and Buddha Tooth Relic Temple visit'
+    ],
+    exclusions: [
+      'International airfare',
+      'Singapore visa charges',
+      'Travel insurance',
+      'Meals not mentioned',
+      'Airport transfers outside 6:00 AM to 10:00 PM',
+      'Personal expenses',
+      'Optional activities and additional entrance tickets',
+      'Tips and gratuities',
+      'Early check-in and late check-out',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+
+  // --- SRI LANKA PACKAGES (1) ---
+  {
+    id: 'sri-lanka-5d',
+    destinationId: 'srilanka',
+    destinationName: 'Sri Lanka',
+    category: 'International',
+    title: 'Sri-Lanka 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹17,400',
+    originalPrice: '₹24,500',
+    rating: '4.97',
+    reviewsCount: 285,
+    image: 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days scenic Sri Lanka journey covering Kandy Temple of the Tooth Relic, cultural dance show, Nuwara Eliya tea hills and waterfalls, Bentota beach with Madhu River safari, turtle hatchery, and Colombo city tour.',
+    hotel: '03-Star Hotel / 04-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹24,700 (2 PAX) / ₹17,400 (4 PAX) | 04-Star: ₹28,150 (2 PAX) / ₹20,700 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹24,700',
+        price4Pax: '₹17,400'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹28,150',
+        price4Pax: '₹20,700'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Colombo – Transfer to Kandy',
+        details: 'Pickup from Colombo International Airport. Private transfer to Kandy. En route, enjoy scenic roads, villages and greenery. Visit the Spice Garden. Visit Kandy Lake and Temple of the Tooth Relic. Enjoy the Cultural Dance Show. Optional visit to Pinnawala Elephant Orphanage. Overnight stay in Kandy.',
+        points: [
+          'Pickup from Colombo International Airport.',
+          'Private transfer to Kandy.',
+          'En route, enjoy scenic roads, villages and greenery.',
+          'Visit the Spice Garden.',
+          'Visit Kandy Lake and Temple of the Tooth Relic.',
+          'Enjoy the Cultural Dance Show.',
+          'Optional visit to Pinnawala Elephant Orphanage.',
+          'Overnight stay in Kandy.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kandy to Nuwara Eliya',
+        details: 'Breakfast at the hotel. Proceed to Nuwara Eliya through Sri Lanka’s tea country. Visit Ramboda Waterfalls. Tea factory visit with tea-tasting experience. Visit Gregory Lake. Explore the colonial town of Nuwara Eliya. Optional scenic train journey from Kandy to Nanu Oya. Overnight stay in Nuwara Eliya.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Nuwara Eliya through Sri Lanka’s tea country.',
+          'Visit Ramboda Waterfalls.',
+          'Tea factory visit with tea-tasting experience.',
+          'Visit Gregory Lake.',
+          'Explore the colonial town of Nuwara Eliya.',
+          'Optional scenic train journey from Kandy to Nanu Oya.',
+          'Overnight stay in Nuwara Eliya.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Nuwara Eliya to Bentota',
+        details: 'Breakfast at the hotel. Private transfer to Bentota. Relax at Bentota Beach. Enjoy Madhu River Safari. Visit the Turtle Hatchery. Enjoy a sunset beach walk. Optional water sports activities. Overnight stay in Bentota.',
+        points: [
+          'Breakfast at the hotel.',
+          'Private transfer to Bentota.',
+          'Relax at Bentota Beach.',
+          'Enjoy Madhu River Safari.',
+          'Visit the Turtle Hatchery.',
+          'Enjoy a sunset beach walk.',
+          'Optional water sports activities.',
+          'Overnight stay in Bentota.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Bentota to Colombo',
+        details: 'Breakfast at the hotel. Proceed to Colombo. Enjoy Colombo city sightseeing. Visit Galle Face Green. View the Lotus Tower. Explore shopping streets, cafés and nightlife areas. Overnight stay in Colombo.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Colombo.',
+          'Enjoy Colombo city sightseeing.',
+          'Visit Galle Face Green.',
+          'View the Lotus Tower.',
+          'Explore shopping streets, cafés and nightlife areas.',
+          'Overnight stay in Colombo.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer to Colombo International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Colombo International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' hotel accommodation (Kandy, Nuwara Eliya, Bentota & Colombo)",
+      'Daily breakfast',
+      'Private airport pickup and drop',
+      'Private intercity transfers',
+      'Sightseeing as per the itinerary',
+      'English-speaking driver-guide',
+      'All applicable hotel taxes'
+    ],
+    exclusions: [
+      'Airfare',
+      'Visa charges',
+      'Lunch and dinner',
+      'Sightseeing and attraction entry tickets',
+      'Optional activities and excursions',
+      'Personal expenses',
+      'Anything not mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'sri-lanka-6d',
+    destinationId: 'srilanka',
+    destinationName: 'Sri Lanka',
+    category: 'International',
+    title: 'Sri-Lanka 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹20,750',
+    originalPrice: '₹28,500',
+    rating: '4.98',
+    reviewsCount: 310,
+    image: 'https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days memorable Sri Lanka adventure covering Kandy Lake & Temple of Tooth, Nuwara Eliya waterfalls and tea estates, dedicated leisure day at Bentota Beach with Madhu river safari, and vibrant Colombo capital city tour.',
+    hotel: '03-Star Hotel / 04-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹29,700 (2 PAX) / ₹20,750 (4 PAX) | 04-Star: ₹33,950 (2 PAX) / ₹24,900 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹29,700',
+        price4Pax: '₹20,750'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (05 Nights)',
+        price2Pax: '₹33,950',
+        price4Pax: '₹24,900'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Colombo – Transfer to Kandy',
+        details: 'Pickup from Colombo International Airport. Private transfer to Kandy through scenic countryside. Visit the Spice Garden. Visit Kandy Lake and Temple of the Tooth Relic. Enjoy a traditional Cultural Show. Optional visit to Pinnawala Elephant Orphanage. Overnight stay in Kandy.',
+        points: [
+          'Pickup from Colombo International Airport.',
+          'Private transfer to Kandy through scenic countryside.',
+          'Visit the Spice Garden.',
+          'Visit Kandy Lake and Temple of the Tooth Relic.',
+          'Enjoy a traditional Cultural Show.',
+          'Optional visit to Pinnawala Elephant Orphanage.',
+          'Overnight stay in Kandy.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kandy to Nuwara Eliya',
+        details: 'Breakfast at the hotel. Proceed to Nuwara Eliya through scenic hill roads. Visit Ramboda Waterfalls. Visit a tea plantation and tea factory. Enjoy a tea-tasting session. Visit Gregory Lake. Explore the colonial town of Nuwara Eliya. Optional scenic train journey from Kandy to Nanu Oya. Overnight stay in Nuwara Eliya.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Nuwara Eliya through scenic hill roads.',
+          'Visit Ramboda Waterfalls.',
+          'Visit a tea plantation and tea factory.',
+          'Enjoy a tea-tasting session.',
+          'Visit Gregory Lake.',
+          'Explore the colonial town of Nuwara Eliya.',
+          'Optional scenic train journey from Kandy to Nanu Oya.',
+          'Overnight stay in Nuwara Eliya.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Nuwara Eliya to Bentota',
+        details: 'Breakfast at the hotel. Private transfer to Bentota. Relax at Bentota Beach. Explore beachside cafés and enjoy sunset views. Optional water sports activities. Overnight stay in Bentota.',
+        points: [
+          'Breakfast at the hotel.',
+          'Private transfer to Bentota.',
+          'Relax at Bentota Beach.',
+          'Explore beachside cafés and enjoy sunset views.',
+          'Optional water sports activities.',
+          'Overnight stay in Bentota.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Bentota Leisure Day',
+        details: 'Breakfast at the hotel. Enjoy the Madhu River Safari. Visit the Turtle Hatchery. Optional Jet Ski, Banana Boat and other water sports. Explore luxury beach clubs. Optional sunset dinner experience. Overnight stay in Bentota.',
+        points: [
+          'Breakfast at the hotel.',
+          'Enjoy the Madhu River Safari.',
+          'Visit the Turtle Hatchery.',
+          'Optional Jet Ski, Banana Boat and other water sports.',
+          'Explore luxury beach clubs.',
+          'Optional sunset dinner experience.',
+          'Overnight stay in Bentota.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Bentota to Colombo',
+        details: 'Breakfast at the hotel. Proceed to Colombo. Enjoy a Colombo city tour. Visit Galle Face Green. View the Lotus Tower. Explore shopping areas and cafés. Enjoy a coastal drive and nightlife experience. Overnight stay in Colombo.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Colombo.',
+          'Enjoy a Colombo city tour.',
+          'Visit Galle Face Green.',
+          'View the Lotus Tower.',
+          'Explore shopping areas and cafés.',
+          'Enjoy a coastal drive and nightlife experience.',
+          'Overnight stay in Colombo.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer to Colombo International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Colombo International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' hotel accommodation (Kandy, Nuwara Eliya, Bentota & Colombo)",
+      'Daily breakfast at the hotels',
+      'Private airport pickup and drop',
+      'Private intercity transfers',
+      'Transportation by private air-conditioned vehicle',
+      'Sightseeing as mentioned in the itinerary',
+      'Services of an English-speaking driver-guide',
+      'Fuel charges, parking charges and driver allowances',
+      'All applicable hotel taxes',
+      'Arrival and departure assistance',
+      'Services specifically mentioned under the itinerary'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Sri Lanka visa charges',
+      'Travel insurance',
+      'Lunch, dinner and beverages',
+      'Entry tickets for sightseeing attractions and monuments',
+      'Pinnawala Elephant Orphanage, Temple of Tooth Relic & Cultural Show entry tickets',
+      'Scenic train journey tickets',
+      'Madhu River Safari & Turtle Hatchery charges',
+      'Jet Ski, Banana Boat and optional water sports',
+      'Beach club charges and sunset dinner expenses',
+      'Early check-in and late check-out charges',
+      'Hotel security deposits, if applicable',
+      'Personal expenses (laundry, minibar, telephone calls, room service)',
+      'Tips and gratuities',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+
+  // --- KAZAKHSTAN PACKAGES (1) ---
+  {
+    id: 'kaz-almaty-4d',
+    destinationId: 'kazakhstan',
+    destinationName: 'Kazakhstan',
+    category: 'International',
+    title: 'Kazakhstan Almaty 04 Days Itinerary',
+    duration: '4D / 3N',
+    price: '₹23,350',
+    originalPrice: '₹32,000',
+    rating: '4.98',
+    reviewsCount: 260,
+    image: 'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days scenic Kazakhstan journey covering Almaty city tour, Kok-Tobe Park with cable car, high-altitude Medeo Gorge, Shymbulak Ski Resort cable car ride, Green Bazaar, and Rakhat Chocolate Factory.',
+    hotel: '03-Star Hotel / 04-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹28,900 (2 PAX) / ₹23,350 (4 PAX) | 04-Star: ₹30,250 (2 PAX) / ₹24,700 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹28,900',
+        price4Pax: '₹23,350'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (03 Nights)',
+        price2Pax: '₹30,250',
+        price4Pax: '₹24,700'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Almaty',
+        details: 'Arrival at Almaty International Airport. Meet & greet and private transfer to the hotel. Check-in at the hotel. Free time for leisure or nearby exploration. Overnight stay in Almaty.',
+        points: [
+          'Arrival at Almaty International Airport.',
+          'Meet & greet and private transfer to the hotel.',
+          'Check-in at the hotel.',
+          'Free time for leisure or nearby exploration.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Almaty City Tour + Kok-Tobe Park',
+        details: 'Breakfast at the hotel. Proceed for a guided Almaty city tour. Photo stops at Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic. Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory. Proceed to Kok-Tobe Park. Enjoy panoramic city views and free time for souvenir shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided Almaty city tour.',
+          'Photo stops at Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic.',
+          'Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory.',
+          'Proceed to Kok-Tobe Park.',
+          'Enjoy panoramic city views and free time for souvenir shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Medeo – Shymbulak + Green Bazaar',
+        details: 'Breakfast at the hotel. Visit Medeo Gorge and enjoy the scenic mountain surroundings. Proceed to Shymbulak Ski Resort by cable car. Enjoy spectacular mountain views from the resort. Later visit Green Bazaar for local shopping. Visit Rakhat Chocolate Factory Shop. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Medeo Gorge and enjoy the scenic mountain surroundings.',
+          'Proceed to Shymbulak Ski Resort by cable car.',
+          'Enjoy spectacular mountain views from the resort.',
+          'Later visit Green Bazaar for local shopping.',
+          'Visit Rakhat Chocolate Factory Shop.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Almaty International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Almaty International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' hotel accommodation in Standard Room category",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'All transportation as per the itinerary',
+      'English-speaking guide / guide-cum-driver, subject to availability',
+      'Almaty City Tour',
+      'Kok-Tobe cable car ride',
+      'Round-trip cable car from Medeo to Shymbulak Ski Resort',
+      'Green Bazaar shopping tour',
+      'Rakhat Chocolate Factory Shop visit',
+      'Entrance tickets as per the confirmed program',
+      '02 bottles of 500 ml mineral water per person per day',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable to the confirmed transfers'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Personal expenses',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional tours, activities or experiences not mentioned in the itinerary',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Meals other than those specifically mentioned',
+      'Expenses arising due to flight delays, weather, road conditions or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'kaz-almaty-5d',
+    destinationId: 'kazakhstan',
+    destinationName: 'Kazakhstan',
+    category: 'International',
+    title: 'Kazakhstan Almaty 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹29,450',
+    originalPrice: '₹38,000',
+    rating: '4.98',
+    reviewsCount: 290,
+    image: 'https://images.unsplash.com/photo-1579606032822-4467d588523c?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days comprehensive Kazakhstan escape covering Almaty city tour with Kok-Tobe cable car, Medeo Gorge and Shymbulak Ski Resort up to 3rd level, Arbat Street walk, Gorky Central Park, Green Bazaar, and Rakhat Chocolate Factory.',
+    hotel: '03-Star Hotel / 04-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹37,400 (2 PAX) / ₹29,450 (4 PAX) | 04-Star: ₹39,250 (2 PAX) / ₹31,300 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹37,400',
+        price4Pax: '₹29,450'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹39,250',
+        price4Pax: '₹31,300'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Almaty',
+        details: 'Arrival at Almaty International Airport. Meet & greet and transfer to the hotel. Check-in at the hotel. Free time for leisure or nearby exploration. Overnight stay in Almaty.',
+        points: [
+          'Arrival at Almaty International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in at the hotel.',
+          'Free time for leisure or nearby exploration.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Almaty City Tour + Kok-Tobe Park',
+        details: 'Breakfast at the hotel. Proceed for a guided Almaty city tour. Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic. Photo stop at the Palace of the President. Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame. Proceed to Kok-Tobe Park. Enjoy panoramic city views and free time for souvenir shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided Almaty city tour.',
+          'Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic.',
+          'Photo stop at the Palace of the President.',
+          'Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame.',
+          'Proceed to Kok-Tobe Park.',
+          'Enjoy panoramic city views and free time for souvenir shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Medeo – Shymbulak + Arbat Street',
+        details: 'Breakfast at the hotel. Visit Medeo Gorge and enjoy the scenic mountain surroundings. Proceed to Shymbulak Ski Resort by cable car. Enjoy stunning mountain views from the resort. Later, enjoy a walking tour of Arbat Street. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Medeo Gorge and enjoy the scenic mountain surroundings.',
+          'Proceed to Shymbulak Ski Resort by cable car.',
+          'Enjoy stunning mountain views from the resort.',
+          'Later, enjoy a walking tour of Arbat Street.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Gorky Park + Green Bazaar',
+        details: 'Breakfast at the hotel. Visit Gorky Central Park. Explore the landscaped gardens, lake and recreational areas. Proceed to Green Bazaar for local shopping. Visit Rakhat Chocolate Factory Shop. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Gorky Central Park.',
+          'Explore the landscaped gardens, lake and recreational areas.',
+          'Proceed to Green Bazaar for local shopping.',
+          'Visit Rakhat Chocolate Factory Shop.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Almaty International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Almaty International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'All transportation as per the itinerary',
+      'English-speaking guide / guide-cum-driver, subject to availability',
+      'Almaty City Tour',
+      'Kok-Tobe cable car ride',
+      'Round-trip Medeo to Shymbulak cable car up to 3rd level',
+      'Visit to Arbat Street',
+      'Visit to Gorky Park',
+      'Green Bazaar shopping tour',
+      'Rakhat Chocolate Factory Shop visit',
+      'Entrance tickets as per the confirmed program',
+      '02 bottles of 500 ml mineral water per person per day',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses of any nature',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional tours, activities or experiences not mentioned in the itinerary',
+      'Amusement rides, boating, Dino Park or other paid activities inside Gorky Park unless specifically included',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to flight delays, weather conditions, road closures or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'kaz-almaty-charyn-kolsai-5d',
+    destinationId: 'kazakhstan',
+    destinationName: 'Kazakhstan',
+    category: 'International',
+    title: 'Kazakhstan Almaty with Charyn Canyon + Kolsai Lake 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹33,950',
+    originalPrice: '₹44,000',
+    rating: '4.98',
+    reviewsCount: 315,
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days premier Kazakhstan expedition covering Almaty city tour, Kok-Tobe cable car, full-day excursion to Charyn Canyon Valley of Castles and alpine Kolsai Lake, Medeo Gorge, and Shymbulak Ski Resort.',
+    hotel: '03-Star Hotel / 04-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹45,100 (2 PAX) / ₹33,950 (4 PAX) | 04-Star: ₹46,650 (2 PAX) / ₹35,550 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹45,100',
+        price4Pax: '₹33,950'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹46,650',
+        price4Pax: '₹35,550'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Almaty',
+        details: 'Arrival at Almaty International Airport. Meet & greet and transfer to the hotel. Check-in at the hotel. Free time for leisure or nearby exploration. Overnight stay in Almaty.',
+        points: [
+          'Arrival at Almaty International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in at the hotel.',
+          'Free time for leisure or nearby exploration.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Almaty City Tour + Kok-Tobe Park',
+        details: 'Breakfast at the hotel. Proceed for a guided Almaty city tour. Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic. Photo stop at the Palace of the President. Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame. Proceed to Kok-Tobe Park. Enjoy panoramic city views and free time for souvenir shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided Almaty city tour.',
+          'Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic.',
+          'Photo stop at the Palace of the President.',
+          'Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame.',
+          'Proceed to Kok-Tobe Park.',
+          'Enjoy panoramic city views and free time for souvenir shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Charyn Canyon + Kolsai Lake',
+        details: 'Breakfast at the hotel. Proceed for a full-day guided excursion to Charyn Canyon and Kolsai Lake. Explore Charyn Canyon and the famous Valley of Castles. Visit scenic Kolsai Lake, surrounded by the Tien Shan Mountains. Enjoy the natural landscapes and photo opportunities. Return to Almaty. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a full-day guided excursion to Charyn Canyon and Kolsai Lake.',
+          'Explore Charyn Canyon and the famous Valley of Castles.',
+          'Visit scenic Kolsai Lake, surrounded by the Tien Shan Mountains.',
+          'Enjoy the natural landscapes and photo opportunities.',
+          'Return to Almaty.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Medeo – Shymbulak + Green Bazaar',
+        details: 'Breakfast at the hotel. Visit Medeo Gorge and enjoy the scenic mountain surroundings. Proceed to Shymbulak Ski Resort by cable car. Enjoy breathtaking mountain views from the resort. Later, visit Green Bazaar for local shopping. Visit Rakhat Chocolate Factory Shop. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Medeo Gorge and enjoy the scenic mountain surroundings.',
+          'Proceed to Shymbulak Ski Resort by cable car.',
+          'Enjoy breathtaking mountain views from the resort.',
+          'Later, visit Green Bazaar for local shopping.',
+          'Visit Rakhat Chocolate Factory Shop.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Almaty International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Almaty International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'All transportation as per the itinerary',
+      'English-speaking guide / guide-cum-driver, subject to availability',
+      'Almaty City Tour',
+      'Kok-Tobe cable car ride',
+      'Round-trip Medeo to Shymbulak cable car up to 3rd level',
+      'Full-day Charyn Canyon & Kolsai Lake excursion',
+      'Eco-post fee for Charyn Canyon & Kolsai Lake',
+      'Green Bazaar shopping tour',
+      'Rakhat Chocolate Factory Shop visit',
+      'Entrance tickets as per the confirmed program',
+      '02 bottles of 500 ml mineral water per person per day',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses of any nature',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional activities or experiences at Charyn Canyon, Kolsai Lake, Medeo or Shymbulak',
+      'Horse riding, boating or other recreational activities unless specifically included',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'kaz-almaty-charyn-kolsai-issyk-6d',
+    destinationId: 'kazakhstan',
+    destinationName: 'Kazakhstan',
+    category: 'International',
+    title: 'Kazakhstan Almaty with Charyn Canyon + Kolsai Lake 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹41,350',
+    originalPrice: '₹55,000',
+    rating: '4.99',
+    reviewsCount: 340,
+    image: 'https://images.unsplash.com/photo-1579606032822-4467d588523c?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days grand Kazakhstan holiday featuring Almaty city tour with Kok-Tobe cable car, full-day excursion to Charyn Canyon Valley of Castles & Kolsai Lake, Medeo Gorge, Shymbulak Ski Resort up to 3rd level, Gorky Central Park, and pristine alpine Issyk Lake.',
+    hotel: '03-Star Hotel / 04-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹55,650 (2 PAX) / ₹41,350 (4 PAX) | 04-Star: ₹57,800 (2 PAX) / ₹43,750 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹55,650',
+        price4Pax: '₹41,350'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (05 Nights)',
+        price2Pax: '₹57,800',
+        price4Pax: '₹43,750'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Almaty',
+        details: 'Arrival at Almaty International Airport. Meet & greet and transfer to the hotel. Check-in at the hotel. Free time for leisure or nearby exploration. Overnight stay in Almaty.',
+        points: [
+          'Arrival at Almaty International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in at the hotel.',
+          'Free time for leisure or nearby exploration.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Almaty City Tour + Kok-Tobe Park',
+        details: 'Breakfast at the hotel. Proceed for a guided Almaty city tour. Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic. Photo stop at the Palace of the President. Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame. Proceed to Kok-Tobe Park. Enjoy panoramic city views and free time for souvenir shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided Almaty city tour.',
+          'Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic.',
+          'Photo stop at the Palace of the President.',
+          'Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame.',
+          'Proceed to Kok-Tobe Park.',
+          'Enjoy panoramic city views and free time for souvenir shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Charyn Canyon + Kolsai Lake',
+        details: 'Breakfast at the hotel. Proceed for a full-day guided excursion to Charyn Canyon and Kolsai Lake. Explore the dramatic rock formations and Valley of Castles at Charyn Canyon. Visit scenic Kolsai Lake surrounded by the Tien Shan Mountains. Enjoy beautiful landscapes and photo opportunities. Return to Almaty. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a full-day guided excursion to Charyn Canyon and Kolsai Lake.',
+          'Explore the dramatic rock formations and Valley of Castles at Charyn Canyon.',
+          'Visit scenic Kolsai Lake surrounded by the Tien Shan Mountains.',
+          'Enjoy beautiful landscapes and photo opportunities.',
+          'Return to Almaty.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Medeo – Shymbulak + Gorky Park',
+        details: 'Breakfast at the hotel. Visit Medeo Gorge and enjoy the scenic mountain surroundings. Proceed to Shymbulak Ski Resort by cable car. Enjoy panoramic mountain views from the resort. Later, visit Gorky Central Park. Explore the landscaped gardens and recreational areas. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Medeo Gorge and enjoy the scenic mountain surroundings.',
+          'Proceed to Shymbulak Ski Resort by cable car.',
+          'Enjoy panoramic mountain views from the resort.',
+          'Later, visit Gorky Central Park.',
+          'Explore the landscaped gardens and recreational areas.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Issyk Lake + Green Bazaar',
+        details: 'Breakfast at the hotel. Proceed for a guided excursion to Issyk Lake. Enjoy the scenic alpine lake surrounded by mountains and pine forests. Return to Almaty. Later, visit Green Bazaar for local shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided excursion to Issyk Lake.',
+          'Enjoy the scenic alpine lake surrounded by mountains and pine forests.',
+          'Return to Almaty.',
+          'Later, visit Green Bazaar for local shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Almaty International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Almaty International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'All transportation as per the itinerary',
+      'English-speaking guide / guide-cum-driver, subject to availability',
+      'Almaty City Tour',
+      'Kok-Tobe cable car ride',
+      'Round-trip Medeo to Shymbulak cable car up to 3rd level',
+      'Full-day Charyn Canyon & Kolsai Lake excursion',
+      'Eco-post fee for Charyn Canyon & Kolsai Lake',
+      'Issyk Lake excursion',
+      'Eco-post fee for Issyk Lake',
+      'Visit to Gorky Central Park',
+      'Green Bazaar shopping tour',
+      'Entrance tickets as per the confirmed program',
+      '02 bottles of 500 ml mineral water per person per day',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses of any nature',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional tours, activities or experiences not mentioned in the itinerary',
+      'Amusement rides, boating, Dino Park or other paid activities at Gorky Park unless specifically included',
+      'Horse riding, boating or recreational activities at Charyn Canyon, Kolsai Lake or Issyk Lake unless specifically included',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'kaz-almaty-almarasan-6d',
+    destinationId: 'kazakhstan',
+    destinationName: 'Kazakhstan',
+    category: 'International',
+    title: 'Kazakhstan Almaty 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹36,300',
+    originalPrice: '₹48,000',
+    rating: '4.98',
+    reviewsCount: 305,
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days relaxing Kazakhstan experience covering Almaty city tour, Kok-Tobe cable car, Almarasan Gorge thermal spring area, Medeo Gorge, Shymbulak Ski Resort up to 3rd level, Arbat Street, Gorky Central Park, Green Bazaar, and Rakhat Chocolate Factory.',
+    hotel: '03-Star Hotel / 04-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹46,650 (2 PAX) / ₹36,300 (4 PAX) | 04-Star: ₹48,800 (2 PAX) / ₹38,450 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹46,650',
+        price4Pax: '₹36,300'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (05 Nights)',
+        price2Pax: '₹48,800',
+        price4Pax: '₹38,450'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Almaty',
+        details: 'Arrival at Almaty International Airport. Meet & greet and transfer to the hotel. Check-in at the hotel. Free time for leisure or nearby exploration. Overnight stay in Almaty.',
+        points: [
+          'Arrival at Almaty International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in at the hotel.',
+          'Free time for leisure or nearby exploration.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Almaty City Tour + Kok-Tobe Park',
+        details: 'Breakfast at the hotel. Proceed for a guided Almaty city tour. Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic. Photo stop at the Palace of the President. Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame. Proceed to Kok-Tobe Park. Enjoy panoramic city views and free time for souvenir shopping. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a guided Almaty city tour.',
+          'Visit Republic Square, Monument of Independence, Astana Square, Abai Square and Palace of the Republic.',
+          'Photo stop at the Palace of the President.',
+          'Visit Panfilov Park, Zenkov Cathedral and Memorial of Glory & Eternal Flame.',
+          'Proceed to Kok-Tobe Park.',
+          'Enjoy panoramic city views and free time for souvenir shopping.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Almarasan Gorge',
+        details: 'Breakfast at the hotel. Proceed to Almarasan Gorge. Enjoy the scenic mountain surroundings and natural thermal spring area. Free time to explore the wellness surroundings. Return to Almaty. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Almarasan Gorge.',
+          'Enjoy the scenic mountain surroundings and natural thermal spring area.',
+          'Free time to explore the wellness surroundings.',
+          'Return to Almaty.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Medeo – Shymbulak + Arbat Street',
+        details: 'Breakfast at the hotel. Visit Medeo Gorge and enjoy the scenic mountain surroundings. Proceed to Shymbulak Ski Resort by cable car. Enjoy panoramic mountain views from the resort. Later, enjoy a walking tour of Arbat Street. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Medeo Gorge and enjoy the scenic mountain surroundings.',
+          'Proceed to Shymbulak Ski Resort by cable car.',
+          'Enjoy panoramic mountain views from the resort.',
+          'Later, enjoy a walking tour of Arbat Street.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Gorky Park + Green Bazaar',
+        details: 'Breakfast at the hotel. Visit Gorky Central Park. Explore landscaped gardens and recreational areas. Proceed to Green Bazaar for local shopping. Visit Rakhat Chocolate Factory Shop. Overnight stay in Almaty.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Gorky Central Park.',
+          'Explore landscaped gardens and recreational areas.',
+          'Proceed to Green Bazaar for local shopping.',
+          'Visit Rakhat Chocolate Factory Shop.',
+          'Overnight stay in Almaty.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Almaty International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Almaty International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'All transportation as per the itinerary',
+      'English-speaking guide / guide-cum-driver, subject to availability',
+      'Almaty City Tour',
+      'Kok-Tobe cable car ride',
+      'Round-trip Medeo to Shymbulak cable car up to 3rd level',
+      'Visit to Arbat Street',
+      'Visit to Almarasan Gorge',
+      'Eco-post fee for Almarasan Gorge',
+      'Visit to Gorky Central Park',
+      'Green Bazaar shopping tour',
+      'Rakhat Chocolate Factory Shop visit',
+      'Entrance tickets as per the confirmed program',
+      '02 bottles of 500 ml mineral water per person per day',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses of any nature',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional wellness, spa or thermal-bath services at Almarasan Gorge unless specifically included',
+      'Amusement rides, Aqua Park, boating, Dino Park or other paid activities at Gorky Park unless specifically included',
+      'Optional tours, activities or experiences not mentioned in the itinerary',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+
+  // --- UZBEKISTAN PACKAGES (1) ---
+  {
+    id: 'uzbek-tashkent-4d',
+    destinationId: 'uzbekistan',
+    destinationName: 'Uzbekistan',
+    category: 'International',
+    title: 'Uzbekistan Tashkent 04 Days Itinerary',
+    duration: '4D / 3N',
+    price: '₹31,600',
     originalPrice: '₹42,000',
     rating: '4.98',
-    reviewsCount: 220,
-    image: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80',
-    description: 'Romantic floating pool breakfast, couple flower spa bath, Tanah Lot sunset temple, and private catamaran cruise.',
-    itinerary: [
-      { day: 1, title: 'Bali Arrival & Villa Welcome', details: 'Honeymoon bed flower setup.' },
-      { day: 2, title: 'Floating Breakfast & 2-Hour Balinese Massage', details: 'Luxury pool floating tray breakfast & spa.' },
-      { day: 3, title: 'Tanah Lot Sunset Temple Tour', details: 'Ocean rock temple vistas.' },
-      { day: 4, title: 'Nusa Dua Water Sports & Dinner Cruise', details: 'Banana boat & sunset buffet cruise.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
+    reviewsCount: 275,
+    image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days enchanting Uzbekistan journey covering Tashkent shopping tour & Chorsu Bazaar, Tashkent city landmarks & Hazrat Imam Complex, and full-day high-speed train excursion to Samarkand Registan Square & Silk Road monuments.',
+    hotel: '03-Star Hotel / 04-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹38,700 (2 PAX) / ₹31,600 (4 PAX) | 04-Star: ₹42,950 (2 PAX) / ₹36,100 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹38,700',
+        price4Pax: '₹31,600'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (03 Nights)',
+        price2Pax: '₹42,950',
+        price4Pax: '₹36,100'
+      }
     ],
-    inclusions: ['4 Nights Luxury Private Pool Villa', 'Floating Breakfast (1 Morning)', '2-Hour Couple Spa Session', 'Private AC Vehicle'],
-    exclusions: ['Airfare', 'Personal shopping']
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tashkent + Shopping Tour',
+        details: 'Arrival at Tashkent International Airport. Transfer to the hotel and luggage drop. Proceed for a shopping and leisure tour. Visit Tashkent City Mall, Magic City, Seoul Mun and Next Mall. Explore Samarkand Darvoza or local handicraft shops. Visit Mega Planet Mall. Explore Chorsu Bazaar for local products, spices, textiles and souvenirs. Overnight stay in Tashkent.',
+        points: [
+          'Arrival at Tashkent International Airport.',
+          'Transfer to the hotel and luggage drop.',
+          'Proceed for a shopping and leisure tour.',
+          'Visit Tashkent City Mall, Magic City, Seoul Mun and Next Mall.',
+          'Explore Samarkand Darvoza or local handicraft shops.',
+          'Visit Mega Planet Mall.',
+          'Explore Chorsu Bazaar for local products, spices, textiles and souvenirs.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tashkent City Tour',
+        details: 'Breakfast at the hotel. Visit Amir Timur Square and Independence Square. Visit the Monument of Courage. Photo stop at Romanov Prince Duke Residence. Visit the Museum of Applied Arts. View Alisher Navoi Opera & Ballet Theatre from outside. Visit Memorial of Repressions Victims. Visit Tashkent TV Tower. Explore Hazrat Imam Complex and the Old City. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Amir Timur Square and Independence Square.',
+          'Visit the Monument of Courage.',
+          'Photo stop at Romanov Prince Duke Residence.',
+          'Visit the Museum of Applied Arts.',
+          'View Alisher Navoi Opera & Ballet Theatre from outside.',
+          'Visit Memorial of Repressions Victims.',
+          'Visit Tashkent TV Tower.',
+          'Explore Hazrat Imam Complex and the Old City.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Samarkand Day Tour',
+        details: 'Breakfast at the hotel. Transfer to the railway station and proceed to Samarkand. Visit Registan Square. Explore Shakhi-Zinda Complex. Visit Gur Emir Mausoleum. Visit Bibi-Khanum Mosque. Visit Ulugbek Observatory. Visit Khoja Daniyor. Explore Siab Bazaar for local shopping. Transfer to Samarkand railway station and return to Tashkent. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Transfer to the railway station and proceed to Samarkand.',
+          'Visit Registan Square.',
+          'Explore Shakhi-Zinda Complex.',
+          'Visit Gur Emir Mausoleum.',
+          'Visit Bibi-Khanum Mosque.',
+          'Visit Ulugbek Observatory.',
+          'Visit Khoja Daniyor.',
+          'Explore Siab Bazaar for local shopping.',
+          'Transfer to Samarkand railway station and return to Tashkent.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Hotel check-out. Transfer to Tashkent International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Transfer to Tashkent International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Tashkent",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'Transportation by Sedan Car as per the itinerary',
+      'English-speaking guide-cum-driver for all tours',
+      'Tashkent City Tour',
+      'Shopping tour including Chorsu Bazaar',
+      'Samarkand City Tour',
+      'Railway station transfers for the Samarkand excursion',
+      'Entrance fees to Museum of Applied Arts',
+      'Entrance to Hazrat Imam Complex',
+      'Entrance to Amir Temur Museum, where applicable as per confirmed program',
+      'Entrance to Registan Square',
+      'Entrance to Bibi-Khanum Mosque',
+      'Entrance to Gur Emir Mausoleum',
+      '02 bottles of 500 ml mineral water per person per day during tours',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Train tickets unless specifically included in the final confirmation',
+      'Porter services at airport, railway station or hotel',
+      'Refundable hotel security deposit, if applicable',
+      'Meals other than those specifically mentioned',
+      'Personal expenses of any nature',
+      'Laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Entrance fees not specifically mentioned under inclusions',
+      'Optional tours, activities, shows or experiences',
+      'Travel insurance',
+      'Tips and gratuities',
+      'Early check-in and late check-out charges',
+      'Expenses arising due to train delays, flight delays, weather conditions or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
   },
   {
-    id: 'bali-3',
-    destinationId: 'bali',
-    destinationName: 'Bali',
+    id: 'uzbek-tashkent-5d',
+    destinationId: 'uzbekistan',
+    destinationName: 'Uzbekistan',
     category: 'International',
-    title: 'Gili Trawangan Island Hop & Coral Snorkel Trail',
-    duration: '7D / 6N',
-    price: '₹34,900',
-    originalPrice: '₹45,000',
-    rating: '4.92',
-    reviewsCount: 165,
-    image: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80',
-    description: 'Combine Bali highlights with 2 nights in Gili Trawangan (car-free paradise island with sea turtle snorkeling & ocean swings).',
-    itinerary: [
-      { day: 1, title: 'Bali Arrival & Seminyak Stay', details: 'Beach club evening.' },
-      { day: 2, title: 'Fast Boat to Gili Trawangan', details: 'Bicycle explore around Gili island.' },
-      { day: 3, title: 'Gili Meno & Air Snorkeling Boat Trip', details: 'Swim with sea turtles & underwater statues.' },
-      { day: 4, title: 'Gili Trawangan to Ubud Return', details: 'Ubud monkey forest.' },
-      { day: 5, title: 'Ubud Swing & Waterfalls', details: 'Tegalalang.' },
-      { day: 6, title: 'Tanah Lot & Canggu Beach Clubs', details: 'Sunset at Finns Beach Club.' },
-      { day: 7, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['6 Nights Resorts (Ubud, Seminyak & Gili T)', 'Breakfast', 'Fast Boat Round Trip Tickets', 'Snorkeling Equipment'],
-    exclusions: ['Airfare', 'Gili Eco Tax']
-  },
-  {
-    id: 'bali-4',
-    destinationId: 'bali',
-    destinationName: 'Bali',
-    category: 'International',
-    title: 'Mount Batur Sunrise Volcano Trek & Hot Springs',
+    title: 'Uzbekistan Tashkent 05 Days Itinerary',
     duration: '5D / 4N',
-    price: '₹24,900',
-    originalPrice: '₹31,000',
-    rating: '4.89',
-    reviewsCount: 140,
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
-    description: 'Early morning 4x4 Jeep/trek up Mount Batur volcano crater for sunrise, natural volcanic hot springs, and ATV quad bike adventure.',
-    itinerary: [
-      { day: 1, title: 'Bali Arrival', details: 'Ubud hotel check-in.' },
-      { day: 2, title: 'Mount Batur Sunrise Jeep & Hot Spring', details: '4 AM volcano summit sunrise & volcanic bath.' },
-      { day: 3, title: 'ATV Quad Biking & Ayung River Rafting', details: 'Jungle mud trail riding & white water rafting.' },
-      { day: 4, title: 'Uluwatu Sunset & Beach Club', details: 'Cliff temple.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['4 Nights Hotel', 'Breakfast', 'Mount Batur 4x4 Jeep Safari Permit', 'ATV & Rafting Package with Lunch'],
-    exclusions: ['Airfare', 'Personal expenses']
-  },
-
-  // --- DUBAI PACKAGES (4) ---
-  {
-    id: 'dub-1',
-    destinationId: 'dubai',
-    destinationName: 'Dubai',
-    category: 'International',
-    title: 'Burj Khalifa, Desert Safari & Marina Cruise',
-    duration: '5D / 4N',
-    price: '₹38,500',
-    originalPrice: '₹48,000',
-    rating: '4.93',
-    reviewsCount: 280,
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
-    description: 'Burj Khalifa 124th floor view, 4x4 Land Cruiser desert dune bashing with belly dance BBQ dinner, and Marina Dhow cruise.',
-    itinerary: [
-      { day: 1, title: 'Dubai Arrival & Luxury Marina Dhow Cruise', details: 'Airport pickup in private cab. Evening Marina Dhow Cruise with international buffet dinner.' },
-      { day: 2, title: 'Dubai City Tour & Burj Khalifa 124th Floor', details: 'Dubai Frame, Museum of the Future photo stop, Dubai Mall & Burj Khalifa observation deck at sunset.' },
-      { day: 3, title: 'Desert Safari 4x4 Dune Bashing & BBQ Night', details: 'Red dune 4x4 bashing, camel ride, sandboarding, henna painting, and live BBQ show.' },
-      { day: 4, title: 'Abu Dhabi Grand Mosque & Louvre Day Trip', details: 'Visit Sheikh Zayed Grand Mosque and Louvre Abu Dhabi museum.' },
-      { day: 5, title: 'Gold Souk Shopping & Departure', details: 'Traditional Deira Gold & Spice Souk shopping, airport drop.' }
-    ],
-    inclusions: ['4-Star Hotel Accommodation (4N)', 'Daily Breakfast & 2 Dinners (Dhow & Desert Safari)', 'Burj Khalifa 124/125 Floor Entry Ticket', 'Desert Safari 4x4 Pickup', 'UAE Visa & Insurance Included'],
-    exclusions: ['Airfare (Available on Request)', 'Tourism Dirham Fee ($4/night)', 'Personal shopping']
-  },
-  {
-    id: 'dub-2',
-    destinationId: 'dubai',
-    destinationName: 'Dubai',
-    category: 'International',
-    title: 'Dubai Luxury Yacht Charter & Palm Jumeirah Helicopter',
-    duration: '6D / 5N',
-    price: '₹54,000',
-    originalPrice: '₹68,000',
-    rating: '4.97',
-    reviewsCount: 155,
-    image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80',
-    description: '12-minute helicopter flight over Palm Jumeirah, 2-hour private yacht cruise, Atlantis Aquaventure waterpark, and VIP desert safari.',
-    itinerary: [
-      { day: 1, title: 'Dubai Arrival & Private Limousine Transfer', details: 'Check-in 5-star hotel.' },
-      { day: 2, title: 'Helicopter Tour & Dubai Mall Shopping', details: 'Sky view over Palm Jumeirah & Atlantis.' },
-      { day: 3, title: 'Atlantis Aquaventure & Lost Chambers Aquarium', details: 'Full day access to world’s largest waterpark.' },
-      { day: 4, title: '2-Hour Private Yacht Cruise from Marina', details: 'Sailing along Burj Al Arab.' },
-      { day: 5, title: 'VIP Desert Safari with Quad Bike', details: 'Private AC tent.' },
-      { day: 6, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['5 Nights 5-Star Hotel Stay', 'Breakfast', 'Helicopter Flight Ticket', 'Aquaventure Waterpark Ticket', 'UAE Visa'],
-    exclusions: ['Airfare', 'Tourism Dirham']
-  },
-  {
-    id: 'dub-3',
-    destinationId: 'dubai',
-    destinationName: 'Dubai',
-    category: 'International',
-    title: 'Abu Dhabi Ferrari World & Warner Bros Theme Park Special',
-    duration: '5D / 4N',
-    price: '₹42,000',
+    price: '₹39,000',
     originalPrice: '₹52,000',
-    rating: '4.91',
-    reviewsCount: 130,
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
-    description: 'Ride Formula Rossa (world’s fastest roller coaster) at Ferrari World Abu Dhabi & explore Warner Bros Theme Park.',
-    itinerary: [
-      { day: 1, title: 'Dubai Arrival', details: 'Dhow cruise evening.' },
-      { day: 2, title: 'Dubai City Tour & Burj Khalifa', details: '124th floor ticket.' },
-      { day: 3, title: 'Abu Dhabi Ferrari World Day Trip', details: 'Formula Rossa roller coaster & Formula 1 simulator.' },
-      { day: 4, title: 'Desert Safari 4x4', details: 'Dune bashing & BBQ.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
+    rating: '4.99',
+    reviewsCount: 295,
+    image: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days complete Uzbekistan journey featuring Tashkent city landmarks, high-speed train day tour to Samarkand Registan Square & Shakhi-Zinda, scenic Chimgan Mountains excursion with chairlift ride & Charvak area, and Tashkent shopping tour.',
+    hotel: '03-Star Hotel / 04-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹47,700 (2 PAX) / ₹39,000 (4 PAX) | 04-Star: ₹53,550 (2 PAX) / ₹45,100 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹47,700',
+        price4Pax: '₹39,000'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹53,550',
+        price4Pax: '₹45,100'
+      }
     ],
-    inclusions: ['4 Nights Hotel', 'Breakfast', 'Ferrari World Entry Ticket', 'Burj Khalifa Ticket', 'UAE Visa'],
-    exclusions: ['Airfare', 'Personal expenses']
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tashkent',
+        details: 'Arrival at Tashkent International Airport. Meet & greet and transfer to the hotel. Check-in and time for rest. Free time for leisure on your own. Overnight stay in Tashkent.',
+        points: [
+          'Arrival at Tashkent International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in and time for rest.',
+          'Free time for leisure on your own.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tashkent City Tour',
+        details: 'Breakfast at the hotel. Visit Amir Timur Square and Independence Square. Visit the Monument of Courage. Photo stop at Romanov Prince Duke Residence. Visit the Museum of Applied Arts. View Alisher Navoi Opera & Ballet Theatre from outside. Visit Memorial of Repressions Victims. Visit Tashkent TV Tower. Explore Hazrat Imam Complex and the Old City. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Amir Timur Square and Independence Square.',
+          'Visit the Monument of Courage.',
+          'Photo stop at Romanov Prince Duke Residence.',
+          'Visit the Museum of Applied Arts.',
+          'View Alisher Navoi Opera & Ballet Theatre from outside.',
+          'Visit Memorial of Repressions Victims.',
+          'Visit Tashkent TV Tower.',
+          'Explore Hazrat Imam Complex and the Old City.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Samarkand Day Tour',
+        details: 'Breakfast at the hotel. Transfer to the railway station and proceed to Samarkand. Visit Registan Square. Explore Shakhi-Zinda Complex. Visit Gur Emir Mausoleum. Visit Bibi-Khanum Mosque. Visit Ulugbek Observatory and Khoja Daniyor. Explore Siab Bazaar for local shopping. Return to Tashkent by train. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Transfer to the railway station and proceed to Samarkand.',
+          'Visit Registan Square.',
+          'Explore Shakhi-Zinda Complex.',
+          'Visit Gur Emir Mausoleum.',
+          'Visit Bibi-Khanum Mosque.',
+          'Visit Ulugbek Observatory and Khoja Daniyor.',
+          'Explore Siab Bazaar for local shopping.',
+          'Return to Tashkent by train.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Chimgan Mountain Tour',
+        details: 'Breakfast at the hotel. Proceed to Chimgan Mountains. Enjoy scenic mountain views and a chairlift ride. Free time at the mountain peak for photography. Optional activities such as zip-lining or horseback riding. Visit the Charvak area as per the confirmed program. Return to Tashkent. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed to Chimgan Mountains.',
+          'Enjoy scenic mountain views and a chairlift ride.',
+          'Free time at the mountain peak for photography.',
+          'Optional activities such as zip-lining or horseback riding.',
+          'Visit the Charvak area as per the confirmed program.',
+          'Return to Tashkent.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Tashkent Shopping Tour + Departure',
+        details: 'Breakfast and hotel check-out. Visit Tashkent City Mall and Magic City. Visit Seoul Mun and Samarkand Darvoza or local handicraft shops. Explore Next Mall and Mega Planet Mall. Visit Chorsu Bazaar for local shopping and souvenirs. Later transfer to Tashkent International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Visit Tashkent City Mall and Magic City.',
+          'Visit Seoul Mun and Samarkand Darvoza or local handicraft shops.',
+          'Explore Next Mall and Mega Planet Mall.',
+          'Visit Chorsu Bazaar for local shopping and souvenirs.',
+          'Later transfer to Tashkent International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Tashkent",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'Transportation by Sedan Car as per the itinerary',
+      'English-speaking guide-cum-driver for all tours',
+      'Tashkent City Tour',
+      'Samarkand City Tour',
+      'Chimgan & Charvak Mountain Tour',
+      'Chimgan chairlift / cable car ride',
+      'Shopping tour including Chorsu Bazaar',
+      'Entrance fees to Museum of Applied Arts',
+      'Entrance to Hazrat Imam Complex',
+      'Entrance to Amir Temur Museum, as per confirmed program',
+      'Entrance to Registan Square',
+      'Entrance to Bibi-Khanum Mosque',
+      'Entrance to Gur Emir Mausoleum',
+      '02 bottles of 500 ml mineral water per person per day during tours',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Tashkent – Samarkand – Tashkent train tickets',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport, railway station or hotel',
+      'Refundable hotel security deposit, if applicable',
+      'Meals other than those specifically mentioned',
+      'Personal expenses such as laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Optional activities such as zip-lining, horseback riding or other adventure activities',
+      'Entrance tickets not specifically mentioned under inclusions',
+      'Tips and gratuities',
+      'Early check-in and late check-out charges',
+      'Expenses arising due to train delays, flight delays, weather conditions or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
   },
   {
-    id: 'dub-4',
+    id: 'uzbek-tashkent-samarkand-bukhara-6d',
+    destinationId: 'uzbekistan',
+    destinationName: 'Uzbekistan',
+    category: 'International',
+    title: 'Uzbekistan Tashkent, Samarkand & Bukhara 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹42,950',
+    originalPrice: '₹58,000',
+    rating: '4.99',
+    reviewsCount: 330,
+    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days grand Silk Road expedition across Uzbekistan exploring the capitals and ancient oasis cities: Tashkent modern avenues & Chorsu Bazaar, Samarkand Registan Square & Shakhi-Zinda, and Bukhara Ark Fortress, Kalyan Minaret & Lyabi Khauz.',
+    hotel: '03-Star Hotel / 04-Star Hotel (05 Nights: 03N Tashkent, 01N Samarkand, 01N Bukhara)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹51,400 (2 PAX) / ₹42,950 (4 PAX) | 04-Star: ₹57,250 (2 PAX) / ₹48,800 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights: Tashkent, Samarkand & Bukhara)',
+        price2Pax: '₹51,400',
+        price4Pax: '₹42,950'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (05 Nights: Tashkent, Samarkand & Bukhara)',
+        price2Pax: '₹57,250',
+        price4Pax: '₹48,800'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tashkent',
+        details: 'Arrival at Tashkent International Airport. Meet & greet and transfer to the hotel. Check-in and time for rest. Free time for leisure on your own. Overnight stay in Tashkent.',
+        points: [
+          'Arrival at Tashkent International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Check-in and time for rest.',
+          'Free time for leisure on your own.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tashkent City Tour',
+        details: 'Breakfast at the hotel. Visit Amir Timur Square and Independence Square. Visit the Monument of Courage. Photo stop at Romanov Prince Duke Residence. Visit the Museum of Applied Arts. View Alisher Navoi Opera & Ballet Theatre from outside. Visit Memorial of Repressions Victims. Visit Tashkent TV Tower and Hazrat Imam Complex. Explore Tashkent City Mall, Magic City, Seoul Mun and Next Mall. Visit Chorsu Bazaar for local shopping and souvenirs. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Amir Timur Square and Independence Square.',
+          'Visit the Monument of Courage.',
+          'Photo stop at Romanov Prince Duke Residence.',
+          'Visit the Museum of Applied Arts.',
+          'View Alisher Navoi Opera & Ballet Theatre from outside.',
+          'Visit Memorial of Repressions Victims.',
+          'Visit Tashkent TV Tower and Hazrat Imam Complex.',
+          'Explore Tashkent City Mall, Magic City, Seoul Mun and Next Mall.',
+          'Visit Chorsu Bazaar for local shopping and souvenirs.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Tashkent to Samarkand + Samarkand City Tour',
+        details: 'Breakfast and hotel check-out. Transfer to the railway station and proceed to Samarkand by train. Arrival, hotel check-in and luggage drop. Visit Registan Square. Explore Shakhi-Zinda Complex. Visit Gur Emir Mausoleum and Bibi-Khanum Mosque. Visit Ulugbek Observatory and Khoja Daniyor. Explore Siab Bazaar. Overnight stay in Samarkand.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to the railway station and proceed to Samarkand by train.',
+          'Arrival, hotel check-in and luggage drop.',
+          'Visit Registan Square.',
+          'Explore Shakhi-Zinda Complex.',
+          'Visit Gur Emir Mausoleum and Bibi-Khanum Mosque.',
+          'Visit Ulugbek Observatory and Khoja Daniyor.',
+          'Explore Siab Bazaar.',
+          'Overnight stay in Samarkand.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Samarkand to Bukhara + Bukhara City Tour',
+        details: 'Breakfast and hotel check-out. Transfer to the railway station and proceed to Bukhara by train. Arrival, hotel check-in and luggage drop. Visit Ark Fortress and Bolo-Khauz Mosque. Visit Ismail Samani Mausoleum and Chashma-Ayub. Visit Chor Minor. Explore Kalyan Minaret, Kalyan Mosque and Miri-Arab Madrasah. Visit Sitorai Mohi Hosa Palace. Explore Nadir Divan Begi Caravanserai and Lyabi Khauz Ensemble. Visit Magoki Attori Mosque, Trade Domes and historic madrasahs. Overnight stay in Bukhara.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to the railway station and proceed to Bukhara by train.',
+          'Arrival, hotel check-in and luggage drop.',
+          'Visit Ark Fortress and Bolo-Khauz Mosque.',
+          'Visit Ismail Samani Mausoleum and Chashma-Ayub.',
+          'Visit Chor Minor.',
+          'Explore Kalyan Minaret, Kalyan Mosque and Miri-Arab Madrasah.',
+          'Visit Sitorai Mohi Hosa Palace.',
+          'Explore Nadir Divan Begi Caravanserai and Lyabi Khauz Ensemble.',
+          'Visit Magoki Attori Mosque, Trade Domes and historic madrasahs.',
+          'Overnight stay in Bukhara.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Bukhara to Tashkent',
+        details: 'Breakfast and hotel check-out. Transfer to Bukhara railway station. Proceed to Tashkent by train. Arrival and transfer to the hotel. Check-in and time for rest. Overnight stay in Tashkent.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Bukhara railway station.',
+          'Proceed to Tashkent by train.',
+          'Arrival and transfer to the hotel.',
+          'Check-in and time for rest.',
+          'Overnight stay in Tashkent.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure from Tashkent',
+        details: 'Breakfast and hotel check-out. Transfer to Tashkent International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Tashkent International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation: 03 nights in Tashkent, 01 night in Samarkand, 01 night in Bukhara",
+      'Daily breakfast',
+      'Airport pickup and drop',
+      'Railway station transfers as per the itinerary',
+      'Transportation by Sedan vehicle as per the program',
+      'English-speaking guide-cum-driver for all tours',
+      'Tashkent City Tour',
+      'Chorsu Bazaar shopping visit',
+      'Samarkand City Tour',
+      'Bukhara City Tour',
+      'Entrance to Museum of Applied Arts',
+      'Entrance to Hazrat Imam Complex',
+      'Entrance to Amir Temur Museum, as per confirmed program',
+      'Entrance to Registan Square',
+      'Entrance to Bibi-Khanum Mosque',
+      'Entrance to Gur Emir Mausoleum',
+      'Entrance to Ark Fortress',
+      'Entrance to Ismail Samani Mausoleum',
+      'Entrance to Chashma-Ayub Mausoleum',
+      'Entrance to Kalyan Mosque',
+      '02 bottles of 500 ml mineral water per person per day during tours',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport, railway station or hotel',
+      'Refundable hotel security deposit, if applicable',
+      'Train tickets between Tashkent, Samarkand and Bukhara (USD 35 + USD 30 + USD 45 one-way approx)',
+      'Meals other than those specifically mentioned',
+      'Personal expenses such as laundry, telephone, internet, beverages, snacks and medical expenses',
+      'Photo and video shooting charges or permissions at museums and attractions',
+      'Entrance tickets not specifically mentioned under inclusions',
+      'Optional activities, excursions or experiences',
+      'Tips and gratuities',
+      'Early check-in and late check-out charges',
+      'Expenses arising due to train delays, flight delays, weather or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+
+  // --- GEORGIA PACKAGES (1) ---
+  {
+    id: 'georgia-tbilisi-4d',
+    destinationId: 'georgia',
+    destinationName: 'Georgia',
+    category: 'International',
+    title: 'Georgia Tbilisi 04 Days Itinerary',
+    duration: '4D / 3N',
+    price: '₹14,350',
+    originalPrice: '₹21,000',
+    rating: '4.98',
+    reviewsCount: 290,
+    image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days Caucasus discovery covering Tbilisi Old Town, cable car ride, Jvari Monastery & Svetitskhoveli Cathedral in Mtskheta, Ananuri Fortress, Jinvali Reservoir, Gudauri Resort, and Kazbegi Trinity Church.',
+    hotel: '03-Star Hotel / 04-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹19,650 (2 PAX) / ₹14,350 (4 PAX) | 04-Star: ₹22,900 (2 PAX) / ₹17,800 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹19,650',
+        price4Pax: '₹14,350'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (03 Nights)',
+        price2Pax: '₹22,900',
+        price4Pax: '₹17,800'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tbilisi',
+        details: 'Arrival at Tbilisi International Airport. Meet & greet and transfer to the hotel. Hotel check-in and free time for leisure. Overnight stay in Tbilisi.',
+        points: [
+          'Arrival at Tbilisi International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Hotel check-in and free time for leisure.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tbilisi + Mtskheta City Tour',
+        details: 'Breakfast at the hotel. Visit Jvari Monastery and Svetitskhoveli Cathedral in Mtskheta. Explore the souvenir market in Mtskheta. Visit the Chronicles of Georgia. Explore Tbilisi Old Town. Visit Metekhi Church, Narikala Fortress and Rike Park. Enjoy the Tbilisi cable car ride. Visit Mother of Georgia statue and Bridge of Peace. Explore Meidan Square and Abanotubani District. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Jvari Monastery and Svetitskhoveli Cathedral in Mtskheta.',
+          'Explore the souvenir market in Mtskheta.',
+          'Visit the Chronicles of Georgia.',
+          'Explore Tbilisi Old Town.',
+          'Visit Metekhi Church, Narikala Fortress and Rike Park.',
+          'Enjoy the Tbilisi cable car ride.',
+          'Visit Mother of Georgia statue and Bridge of Peace.',
+          'Explore Meidan Square and Abanotubani District.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gudauri + Kazbegi Tour',
+        details: 'Breakfast at the hotel. Visit Ananuri Fortress and Jinvali Water Reservoir. View the confluence of the Black and White Aragvi Rivers. Proceed to Gudauri Resort. Visit the Soviet-Georgian Friendship Monument. Continue towards Kazbegi, subject to weather conditions. Visit the Trinity Church in Kazbegi. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Ananuri Fortress and Jinvali Water Reservoir.',
+          'View the confluence of the Black and White Aragvi Rivers.',
+          'Proceed to Gudauri Resort.',
+          'Visit the Soviet-Georgian Friendship Monument.',
+          'Continue towards Kazbegi, subject to weather conditions.',
+          'Visit the Trinity Church in Kazbegi.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Tbilisi International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Tbilisi International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Tbilisi Airport – Hotel – Tbilisi Airport transfers',
+      'All transportation as per the itinerary',
+      'Guide-cum-driver for all tours',
+      'Tbilisi & Mtskheta sightseeing tour',
+      'Gudauri & Kazbegi sightseeing tour',
+      'Tbilisi cable car ride',
+      'Sightseeing as specifically mentioned in the itinerary',
+      '01 bottle of 500 ml mineral water per person per day',
+      '01 SIM card with unlimited internet data',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses such as laundry, telephone, beverages, snacks and medical expenses',
+      'Entrance tickets not specifically mentioned under inclusions',
+      'Optional tours, activities or experiences',
+      '4x4 / special vehicle charges for Kazbegi or Trinity Church, if required and not included in the confirmed package',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'georgia-tbilisi-5d',
+    destinationId: 'georgia',
+    destinationName: 'Georgia',
+    category: 'International',
+    title: 'Georgia Tbilisi 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹18,600',
+    originalPrice: '₹26,000',
+    rating: '4.99',
+    reviewsCount: 315,
+    image: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days delightful Georgia vacation covering Tbilisi Old Town, Mtskheta UNESCO monuments, scenic Gudauri & Kazbegi Caucasus mountain trip, and full-day Kakheti wine country tour to Bodbe, Sighnaghi & KTW Winery with wine degustation.',
+    hotel: '03-Star Hotel / 04-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹28,650 (2 PAX) / ₹18,600 (4 PAX) | 04-Star: ₹33,400 (2 PAX) / ₹23,900 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹28,650',
+        price4Pax: '₹18,600'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (04 Nights)',
+        price2Pax: '₹33,400',
+        price4Pax: '₹23,900'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tbilisi',
+        details: 'Arrival at Tbilisi International Airport. Meet & greet and transfer to the hotel. Hotel check-in and free time for leisure. Overnight stay in Tbilisi.',
+        points: [
+          'Arrival at Tbilisi International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Hotel check-in and free time for leisure.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tbilisi + Mtskheta City Tour',
+        details: 'Breakfast at the hotel. Visit Jvari Monastery and Svetitskhoveli Cathedral. Explore the souvenir market in Mtskheta. Visit the Chronicles of Georgia. Explore Tbilisi Old Town. Visit Metekhi Church, Narikala Fortress and Rike Park. Enjoy the Tbilisi cable car ride. Visit Mother of Georgia statue and Bridge of Peace. Explore Meidan Square and Abanotubani District. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Jvari Monastery and Svetitskhoveli Cathedral.',
+          'Explore the souvenir market in Mtskheta.',
+          'Visit the Chronicles of Georgia.',
+          'Explore Tbilisi Old Town.',
+          'Visit Metekhi Church, Narikala Fortress and Rike Park.',
+          'Enjoy the Tbilisi cable car ride.',
+          'Visit Mother of Georgia statue and Bridge of Peace.',
+          'Explore Meidan Square and Abanotubani District.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gudauri + Kazbegi Tour',
+        details: 'Breakfast at the hotel. Visit Ananuri Fortress and Jinvali Water Reservoir. View the confluence of the Black and White Aragvi Rivers. Proceed to Gudauri Resort. Visit the Soviet-Georgian Friendship Monument. Continue to Kazbegi, subject to weather conditions. Visit the Trinity Church in Kazbegi. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Ananuri Fortress and Jinvali Water Reservoir.',
+          'View the confluence of the Black and White Aragvi Rivers.',
+          'Proceed to Gudauri Resort.',
+          'Visit the Soviet-Georgian Friendship Monument.',
+          'Continue to Kazbegi, subject to weather conditions.',
+          'Visit the Trinity Church in Kazbegi.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kakheti Tour',
+        details: 'Breakfast at the hotel. Proceed for a full-day Kakheti region tour. Visit Bodbe Monastery. Explore Sighnaghi, popularly known as the "City of Love." Visit KTW Winery. Enjoy a winery tour with complimentary wine degustation. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a full-day Kakheti region tour.',
+          'Visit Bodbe Monastery.',
+          'Explore Sighnaghi, popularly known as the "City of Love." ',
+          'Visit KTW Winery.',
+          'Enjoy a winery tour with complimentary wine degustation.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Tbilisi International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Tbilisi International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Tbilisi Airport – Hotel – Tbilisi Airport transfers',
+      'All transportation as per the itinerary',
+      'Guide-cum-driver for all tours',
+      'Tbilisi & Mtskheta sightseeing tour',
+      'Gudauri & Kazbegi sightseeing tour',
+      'Kakheti sightseeing tour',
+      'Tbilisi cable car ride',
+      'KTW Winery visit with complimentary wine degustation',
+      'Sightseeing as specifically mentioned in the itinerary',
+      '01 bottle of 500 ml mineral water per person per day',
+      '01 SIM card with unlimited internet data',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses such as laundry, telephone, beverages, snacks and medical expenses',
+      'Entrance tickets not specifically mentioned under inclusions',
+      'Optional tours, activities or experiences',
+      '4x4 / special vehicle charges for Kazbegi or Trinity Church, if required and not included in the confirmed package',
+      'Additional wine tasting, winery purchases or premium tasting experiences',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+  {
+    id: 'georgia-tbilisi-6d',
+    destinationId: 'georgia',
+    destinationName: 'Georgia',
+    category: 'International',
+    title: 'Georgia Tbilisi 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹26,300',
+    originalPrice: '₹36,000',
+    rating: '4.99',
+    reviewsCount: 335,
+    image: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days ultimate Georgia journey traversing Tbilisi Old Town, Mtskheta UNESCO heritage, Gudauri & Kazbegi Caucasus mountain summits, Kakheti wine region with Bodbe, Sighnaghi & KTW Winery, Borjomi Central Park mineral springs, and ancient Uplistsikhe Cave Town.',
+    hotel: '03-Star Hotel / 04-Star Hotel (05 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹37,650 (2 PAX) / ₹26,300 (4 PAX) | 04-Star: ₹43,500 (2 PAX) / ₹31,850 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (05 Nights)',
+        price2Pax: '₹37,650',
+        price4Pax: '₹26,300'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (05 Nights)',
+        price2Pax: '₹43,500',
+        price4Pax: '₹31,850'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Tbilisi',
+        details: 'Arrival at Tbilisi International Airport. Meet & greet and transfer to the hotel. Hotel check-in and free time for leisure. Overnight stay in Tbilisi.',
+        points: [
+          'Arrival at Tbilisi International Airport.',
+          'Meet & greet and transfer to the hotel.',
+          'Hotel check-in and free time for leisure.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Tbilisi + Mtskheta City Tour',
+        details: 'Breakfast at the hotel. Visit Jvari Monastery and Svetitskhoveli Cathedral. Explore the souvenir market in Mtskheta. Visit the Chronicles of Georgia. Explore Tbilisi Old Town. Visit Metekhi Church, Narikala Fortress and Rike Park. Enjoy the Tbilisi cable car ride. Visit Mother of Georgia statue and Bridge of Peace. Explore Meidan Square and Abanotubani District. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Jvari Monastery and Svetitskhoveli Cathedral.',
+          'Explore the souvenir market in Mtskheta.',
+          'Visit the Chronicles of Georgia.',
+          'Explore Tbilisi Old Town.',
+          'Visit Metekhi Church, Narikala Fortress and Rike Park.',
+          'Enjoy the Tbilisi cable car ride.',
+          'Visit Mother of Georgia statue and Bridge of Peace.',
+          'Explore Meidan Square and Abanotubani District.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Gudauri + Kazbegi Tour',
+        details: 'Breakfast at the hotel. Visit Ananuri Fortress and Jinvali Water Reservoir. View the confluence of the Black and White Aragvi Rivers. Proceed to Gudauri Resort. Visit the Soviet-Georgian Friendship Monument. Continue to Kazbegi, subject to weather conditions. Visit Trinity Church in Kazbegi. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Visit Ananuri Fortress and Jinvali Water Reservoir.',
+          'View the confluence of the Black and White Aragvi Rivers.',
+          'Proceed to Gudauri Resort.',
+          'Visit the Soviet-Georgian Friendship Monument.',
+          'Continue to Kazbegi, subject to weather conditions.',
+          'Visit Trinity Church in Kazbegi.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kakheti Tour',
+        details: 'Breakfast at the hotel. Proceed for a Kakheti region tour. Visit Bodbe Monastery. Explore Sighnaghi, known as the "City of Love." Visit KTW Winery. Enjoy a winery tour with complimentary wine degustation. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a Kakheti region tour.',
+          'Visit Bodbe Monastery.',
+          'Explore Sighnaghi, known as the "City of Love." ',
+          'Visit KTW Winery.',
+          'Enjoy a winery tour with complimentary wine degustation.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Borjomi + Uplistsikhe Tour',
+        details: 'Breakfast at the hotel. Proceed for a full-day excursion. Visit Borjomi Central Park. Explore the historic Uplistsikhe Cave Town. Return to Tbilisi. Overnight stay in Tbilisi.',
+        points: [
+          'Breakfast at the hotel.',
+          'Proceed for a full-day excursion.',
+          'Visit Borjomi Central Park.',
+          'Explore the historic Uplistsikhe Cave Town.',
+          'Return to Tbilisi.',
+          'Overnight stay in Tbilisi.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Transfer to Tbilisi International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Transfer to Tbilisi International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "05 nights' accommodation in Standard Room category",
+      'Daily breakfast',
+      'Tbilisi Airport – Hotel – Tbilisi Airport transfers',
+      'All transportation as per the itinerary',
+      'Guide-cum-driver for all tours',
+      'Tbilisi & Mtskheta sightseeing tour',
+      'Gudauri & Kazbegi sightseeing tour',
+      'Kakheti sightseeing tour',
+      'Borjomi & Uplistsikhe sightseeing tour',
+      'Tbilisi cable car ride',
+      'Borjomi Central Park entry',
+      'Uplistsikhe Cave Town entry',
+      'KTW Winery visit with complimentary wine degustation',
+      'Sightseeing as specifically mentioned in the itinerary',
+      '01 bottle of 500 ml mineral water per person per day',
+      '01 SIM card with unlimited internet data',
+      'Hotel VAT and applicable local taxes',
+      'Fuel, parking and driver-related charges as applicable'
+    ],
+    exclusions: [
+      'International and domestic airfare',
+      'Visa charges, if applicable',
+      'Travel insurance',
+      'Porter services at airport or hotel',
+      'Meals other than those specifically mentioned',
+      'Personal expenses such as laundry, telephone, beverages, snacks and medical expenses',
+      'Entrance tickets not specifically mentioned under inclusions',
+      'Optional tours, activities or experiences',
+      '4x4 / special vehicle charges for Kazbegi or Trinity Church, if required and not included in the confirmed package',
+      'Additional wine tasting, winery purchases or premium tasting experiences',
+      'Tips, gratuities and service charges',
+      'Early check-in and late check-out charges',
+      'Hotel security deposit, if applicable',
+      'Expenses arising due to weather conditions, road closures, flight delays or other circumstances beyond control',
+      'Any service not specifically mentioned under inclusions'
+    ]
+  },
+
+  // --- MALAYSIA PACKAGES (3) ---
+  {
+    id: 'malay-kl-genting-4d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia',
+    category: 'International',
+    title: 'Malaysia 04 Days Itinerary - Kuala Lumpur & Genting Highlands',
+    duration: '4D / 3N',
+    price: '₹16,400',
+    originalPrice: '₹22,500',
+    rating: '4.95',
+    reviewsCount: 260,
+    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days vibrant Malaysia holiday covering private airport transfers, Kuala Lumpur half-day city tour with Petronas Twin Towers photo stop, Batu Caves Murugan Temple, and full-day Genting Highlands with two-way Awana SkyWay cable car ride.',
+    hotel: '03-Star Hotel / 04-Star Hotel (03 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹19,800 (2 PAX) / ₹16,400 (4 PAX) | 04-Star: ₹22,400 (2 PAX) / ₹18,900 (4 PAX)',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03 Nights)',
+        price2Pax: '₹19,800',
+        price4Pax: '₹16,400'
+      },
+      {
+        hotelName: '04 Star Hotel',
+        category: '04-Star Accommodation (03 Nights)',
+        price2Pax: '₹22,400',
+        price4Pax: '₹18,900'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kuala Lumpur',
+        details: 'Arrival at Kuala Lumpur International Airport (KLIA/KLIA2). Meet and greet with our representative. Transfer to the hotel in private AC vehicle. Check-in and relax. Evening free to explore Bukit Bintang night market and street food. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Arrival at Kuala Lumpur International Airport (KLIA/KLIA2).',
+          'Meet and greet with representative.',
+          'Private transfer to the hotel.',
+          'Check-in and free time for leisure.',
+          'Explore Bukit Bintang street food and nightlife.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Kuala Lumpur City Tour & Batu Caves',
+        details: 'Breakfast at the hotel. Proceed for a half-day Kuala Lumpur city tour. Photo stops at Petronas Twin Towers, King’s Palace (Istana Negara), National Monument, Independence Square (Dataran Merdeka), and National Mosque. Proceed to the famous Batu Caves to witness the giant golden Lord Murugan statue and 272 colorful steps. Visit a local chocolate boutique. Return to hotel. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Breakfast at the hotel.',
+          'Half-day guided Kuala Lumpur city tour.',
+          'Photo stop at iconic Petronas Twin Towers.',
+          'Visit King’s Palace (Istana Negara) & National Monument.',
+          'Explore Independence Square (Dataran Merdeka) & National Mosque.',
+          'Excursion to historic Batu Caves with 272 rainbow steps.',
+          'Visit local Malaysian chocolate boutique.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Full Day Genting Highlands with Cable Car',
+        details: 'Breakfast at the hotel. Full day excursion to Genting Highlands hill resort. En-route stop at Awana SkyWay station. Board the scenic cable car ride offering panoramic rainforest and mountain vistas. Free time at Genting Highlands to visit SkyAvenue mall, Skytropolis Indoor Theme Park, and Casino. Return to Kuala Lumpur in the evening. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Breakfast at the hotel.',
+          'Scenic drive to Genting Highlands resort.',
+          'Two-way Awana SkyWay cable car ride with panoramic rainforest views.',
+          'Optional visit to Chin Swee Caves Temple.',
+          'Free time for shopping at SkyAvenue and indoor theme park entertainment.',
+          'Return to hotel in the evening.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure from Kuala Lumpur',
+        details: 'Breakfast and hotel check-out. Free time for last-minute souvenir shopping at Pavilion Mall or Central Market. Transfer to Kuala Lumpur International Airport for your flight back home.',
+        points: [
+          'Breakfast at the hotel.',
+          'Hotel check-out.',
+          'Free time for souvenir shopping at Central Market or Bukit Bintang.',
+          'Private transfer to Kuala Lumpur International Airport (KLIA/KLIA2).',
+          'Departure with memorable moments.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in standard room category",
+      'Daily buffet breakfast at the hotel',
+      'Roundtrip airport transfers on private basis',
+      'Half-day Kuala Lumpur city tour on private basis',
+      'Batu Caves photo stop visit',
+      'Full-day Genting Highlands excursion with two-way Awana SkyWay cable car tickets',
+      'All toll, fuel, parking, and driver charges',
+      '24x7 local on-ground assistance'
+    ],
+    exclusions: [
+      'International airfare',
+      'Malaysia Tourism Tax (MYR 10 per room per night, payable directly to hotel)',
+      'Travel insurance & Visa fees (if applicable)',
+      'Meals other than specified (lunch & dinner)',
+      'Theme park entry tickets at Genting (Skytropolis / Genting SkyWorlds)',
+      'Personal expenses, tips, and porterage'
+    ]
+  },
+  {
+    id: 'malay-kl-genting-malacca-5d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia',
+    category: 'International',
+    title: 'Malaysia Kuala Lumpur 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹15,050',
+    originalPrice: '₹21,000',
+    rating: '4.98',
+    reviewsCount: 320,
+    image: 'https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days comprehensive Malaysia tour covering Kuala Lumpur airport transfers, Batu Caves, Genting Highlands with two-way cable car ride, Kuala Lumpur city tour with KL Tower Observation Deck tickets, Petronas Twin Towers photo stop, Beryl’s Chocolate Kingdom, and a full-day private Malacca heritage day trip.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹17,700 (02 PAX) | ₹15,050 (04 PAX) [USD 206 / USD 175 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹17,700',
+        price4Pax: '₹15,050'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kuala Lumpur',
+        details: 'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM. Private transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Batu Caves and Genting Highlands',
+        details: 'Proceed for the full-day Genting Highlands tour on a shared basis. Enjoy a 20-minute stop at Batu Caves. Travel to Genting Highlands by two-way cable car. Spend leisure time exploring the resort destination. Return to the hotel.',
+        points: [
+          'Proceed for the full-day Genting Highlands tour on a shared basis.',
+          'Enjoy a 20-minute stop at Batu Caves.',
+          'Travel to Genting Highlands by two-way cable car.',
+          'Spend leisure time exploring the resort destination.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kuala Lumpur City Tour',
+        details: 'Proceed for the Kuala Lumpur city tour on a shared basis. Photo stop at the Petronas Twin Towers. Visit Merdeka Square, National Mosque and King’s Palace. Visit the National Monument and Sultan Abdul Samad Building. Pass by the Malayan Railway Administration Building. Visit Beryl’s Chocolate Kingdom. Enjoy admission to the KL Tower Observation Deck. Return to the hotel.',
+        points: [
+          'Proceed for the Kuala Lumpur city tour on a shared basis.',
+          'Photo stop at the Petronas Twin Towers.',
+          'Visit Merdeka Square, National Mosque and King’s Palace.',
+          'Visit the National Monument and Sultan Abdul Samad Building.',
+          'Pass by the Malayan Railway Administration Building.',
+          'Visit Beryl’s Chocolate Kingdom.',
+          'Enjoy admission to the KL Tower Observation Deck.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Malacca Day Trip',
+        details: 'Proceed for a full-day private excursion to Malacca. Visit Red Square and the ruins of St. Paul’s Church. Explore Cheng Hoon Teng Temple. Walk along Jonker Street and the Malacca River area. Discover the city’s Portuguese, Dutch and Malay heritage. Lunch will be self-paid. Return to Kuala Lumpur.',
+        points: [
+          'Proceed for a full-day private excursion to Malacca.',
+          'Visit Red Square and the ruins of St. Paul’s Church.',
+          'Explore Cheng Hoon Teng Temple.',
+          'Walk along Jonker Street and the Malacca River area.',
+          'Discover the city’s Portuguese, Dutch and Malay heritage.',
+          'Lunch will be self-paid.',
+          'Return to Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Breakfast and hotel check-out. Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Kuala Lumpur.",
+      'Daily breakfast at the hotel.',
+      'Private arrival airport transfer.',
+      'Full-day Genting Highlands tour on a shared basis.',
+      'Two-way Genting cable car ride.',
+      'Batu Caves stop.',
+      'Kuala Lumpur city tour on a shared basis.',
+      'KL Tower Observation Deck ticket.',
+      'Petronas Twin Towers photo stop.',
+      'Visits to the listed Kuala Lumpur attractions.',
+      'Full-day private Malacca tour.',
+      'Private departure transfer to Sultan Abdul Aziz Shah Airport.'
+    ],
+    exclusions: [
+      'International and domestic airfare.',
+      'Malaysia visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Lunch during the Malacca tour.',
+      'Petronas Twin Towers entrance ticket.',
+      'Optional activities at Genting Highlands.',
+      'Personal expenses.',
+      'Additional entrance tickets not mentioned.',
+      'Tips and gratuities.',
+      'Transfers outside the specified operating hours.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+  {
+    id: 'malay-langkawi-5d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia',
+    category: 'International',
+    title: 'Malaysia Langkawi 05 Days Itinerary',
+    duration: '5D / 4N',
+    price: '₹13,500',
+    originalPrice: '₹18,000',
+    rating: '4.97',
+    reviewsCount: 280,
+    image: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80',
+    description: '05 Days tropical Langkawi island getaway including private airport transfers, Langkawi SkyCab cable car to Mount Mat Cincang with SkyBridge, SkyDome, SkyRex and 3D Art Museum, shared island-hopping boat cruise to Dayang Bunting, eagle-watching, Beras Basah beach, and private Crocodile Adventureland tour.',
+    hotel: '03-Star Hotel (04 Nights)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹13,950 (02 PAX) | ₹13,500 (04 PAX) [USD 162 / USD 157 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (04 Nights)',
+        price2Pax: '₹13,950',
+        price4Pax: '₹13,500'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Langkawi',
+        details: 'Pickup from Langkawi Airport. Private transfer to the beach or city hotel. Hotel check-in and leisure time. Overnight stay in Langkawi.',
+        points: [
+          'Pickup from Langkawi Airport.',
+          'Private transfer to the beach or city hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Langkawi.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Langkawi SkyCab Tour',
+        details: 'Proceed for a half-day private SkyCab tour. Enjoy the cable car ride to Mount Mat Cincang. Visit SkyBridge, SkyDome and SkyRex. Explore the 3D Art Museum. Spend leisure time at Oriental Village. Lunch will be self-paid. Return to the hotel.',
+        points: [
+          'Proceed for a half-day private SkyCab tour.',
+          'Enjoy the cable car ride to Mount Mat Cincang.',
+          'Visit SkyBridge, SkyDome and SkyRex.',
+          'Explore the 3D Art Museum.',
+          'Spend leisure time at Oriental Village.',
+          'Lunch will be self-paid.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Langkawi Island Hopping',
+        details: 'Transfer to the jetty on a shared basis. Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden. Enjoy eagle-watching activities. Visit Pulau Beras Basah. Enjoy swimming, beach time and optional water sports. Return to the hotel.',
+        points: [
+          'Transfer to the jetty on a shared basis.',
+          'Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden.',
+          'Enjoy eagle-watching activities.',
+          'Visit Pulau Beras Basah.',
+          'Enjoy swimming, beach time and optional water sports.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Crocodile Adventureland Tour',
+        details: 'Proceed for a half-day private Crocodile Adventureland tour. Explore the wildlife park and watch crocodile shows. Entrance tickets are not included. Return to the hotel.',
+        points: [
+          'Proceed for a half-day private Crocodile Adventureland tour.',
+          'Explore the wildlife park and watch crocodile shows.',
+          'Entrance tickets are not included.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer from the hotel to Langkawi Airport. The tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer from the hotel to Langkawi Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "04 nights' accommodation in Langkawi.",
+      'Private arrival and departure airport transfers.',
+      'Half-day private Langkawi SkyCab tour.',
+      'SkyCab ride.',
+      'SkyBridge access.',
+      'SkyDome and SkyRex.',
+      '3D Art Museum admission.',
+      'Langkawi Island Hopping tour.',
+      'Shared hotel and jetty transfers.',
+      'Boat transfers during the island-hopping tour.',
+      'Half-day Crocodile Adventureland tour by private vehicle.'
+    ],
+    exclusions: [
+      'International and domestic airfare.',
+      'Malaysia visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Lunch during the SkyCab tour.',
+      'Crocodile Adventureland entrance ticket.',
+      'Optional water sports and activities.',
+      'Personal expenses.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+  {
+    id: 'malay-kl-langkawi-6d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia',
+    category: 'International',
+    title: 'Malaysia KUL-LGK 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹20,100',
+    originalPrice: '₹27,000',
+    rating: '4.98',
+    reviewsCount: 340,
+    image: 'https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days grand twin-destination Malaysia journey covering Kuala Lumpur private arrival transfers, KL Night Tour with KL Tower Observation Deck tickets, Genting Highlands full-day trip with Batu Caves stop and two-way cable car, domestic transfer to Langkawi, Langkawi SkyCab, SkyBridge, SkyDome & 3D Art Museum, and Langkawi Island Hopping boat tour.',
+    hotel: '03-Star Hotel (02N Kuala Lumpur + 03N Langkawi)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹21,400 (02 PAX) | ₹20,100 (04 PAX) [USD 249 / USD 234 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (02N Kuala Lumpur + 03N Langkawi)',
+        price2Pax: '₹21,400',
+        price4Pax: '₹20,100'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kuala Lumpur and Night Tour',
+        details: 'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM. Private transfer to the hotel. Proceed for a half-day Kuala Lumpur Night Tour by private vehicle. Visit the KL Tower Observation Deck. Return to the hotel. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM.',
+          'Private transfer to the hotel.',
+          'Proceed for a half-day Kuala Lumpur Night Tour by private vehicle.',
+          'Visit the KL Tower Observation Deck.',
+          'Return to the hotel.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Batu Caves and Genting Highlands',
+        details: 'Proceed for the full-day Genting Highlands tour on a shared basis. Enjoy a 20-minute stop at Batu Caves. Travel to Genting Highlands by two-way cable car. Spend leisure time exploring the resort destination. Return to the Kuala Lumpur hotel.',
+        points: [
+          'Proceed for the full-day Genting Highlands tour on a shared basis.',
+          'Enjoy a 20-minute stop at Batu Caves.',
+          'Travel to Genting Highlands by two-way cable car.',
+          'Spend leisure time exploring the resort destination.',
+          'Return to the Kuala Lumpur hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kuala Lumpur to Langkawi',
+        details: 'Breakfast and hotel check-out. Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM. Board the flight to Langkawi at your own cost. Pickup from Langkawi Airport. Private transfer to the beach or city hotel. Overnight stay in Langkawi.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM.',
+          'Board the flight to Langkawi at your own cost.',
+          'Pickup from Langkawi Airport.',
+          'Private transfer to the beach or city hotel.',
+          'Overnight stay in Langkawi.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Langkawi SkyCab Tour',
+        details: 'Proceed for a half-day private SkyCab tour. Enjoy the cable car ride to Mount Mat Cincang. Visit SkyBridge, SkyDome and SkyRex. Explore the 3D Art Museum. Spend leisure time at Oriental Village. Lunch will be self-paid. Return to the hotel.',
+        points: [
+          'Proceed for a half-day private SkyCab tour.',
+          'Enjoy the cable car ride to Mount Mat Cincang.',
+          'Visit SkyBridge, SkyDome and SkyRex.',
+          'Explore the 3D Art Museum.',
+          'Spend leisure time at Oriental Village.',
+          'Lunch will be self-paid.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Langkawi Island Hopping',
+        details: 'Transfer to the jetty on a shared basis. Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden. Enjoy eagle-watching activities. Visit Pulau Beras Basah. Enjoy swimming, beach time and optional water sports. Return to the hotel.',
+        points: [
+          'Transfer to the jetty on a shared basis.',
+          'Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden.',
+          'Enjoy eagle-watching activities.',
+          'Visit Pulau Beras Basah.',
+          'Enjoy swimming, beach time and optional water sports.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Departure from Langkawi',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to Langkawi Airport. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to Langkawi Airport.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "02 nights' accommodation in Kuala Lumpur.",
+      "03 nights' accommodation in Langkawi.",
+      'Daily breakfast at the hotels.',
+      'Private Kuala Lumpur Airport arrival transfer.',
+      'Half-day private Kuala Lumpur Night Tour.',
+      'KL Tower Observation Deck ticket.',
+      'Genting Highlands tour on a shared basis.',
+      'Two-way Genting cable car ride.',
+      'Batu Caves photo stop.',
+      'Private Kuala Lumpur hotel-to-airport transfer.',
+      'Private Langkawi Airport pickup and drop.',
+      'Half-day private Langkawi SkyCab tour.',
+      'SkyCab, SkyBridge, SkyDome and SkyRex.',
+      '3D Art Museum admission.',
+      'Langkawi Island Hopping tour.',
+      'Shared hotel and jetty transfers.',
+      'Boat transfers during the island-hopping tour.'
+    ],
+    exclusions: [
+      'International airfare.',
+      'Kuala Lumpur-to-Langkawi flight.',
+      'Malaysia visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Lunch during the SkyCab tour.',
+      'Optional water sports and activities.',
+      'Personal expenses.',
+      'Additional entrance tickets not mentioned.',
+      'Tips and gratuities.',
+      'Transfers outside the specified operating hours.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+  {
+    id: 'malay-kl-langkawi-7d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia',
+    category: 'International',
+    title: 'Malaysia KUL-LGK 07 Days Itinerary',
+    duration: '7D / 6N',
+    price: '₹20,900',
+    originalPrice: '₹28,000',
+    rating: '4.99',
+    reviewsCount: 360,
+    image: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
+    description: '07 Days ultimate Malaysian vacation covering Kuala Lumpur private arrival transfers, Genting Highlands full-day trip with Batu Caves stop and two-way cable car, comprehensive Kuala Lumpur city tour with KL Tower Observation Deck, domestic transfer to Langkawi, Langkawi SkyCab, SkyBridge, SkyDome & 3D Art Museum, and Langkawi Island Hopping boat tour.',
+    hotel: '03-Star Hotel (03N Kuala Lumpur + 03N Langkawi)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹21,650 (02 PAX) | ₹20,900 (04 PAX) [USD 252 / USD 243 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03N Kuala Lumpur + 03N Langkawi)',
+        price2Pax: '₹21,650',
+        price4Pax: '₹20,900'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kuala Lumpur',
+        details: 'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM. Private transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Batu Caves and Genting Highlands',
+        details: 'Proceed for the full-day Genting Highlands tour on a shared basis. Enjoy a 20-minute stop at Batu Caves. Travel to Genting Highlands by two-way cable car. Spend leisure time exploring the resort destination. Return to the Kuala Lumpur hotel.',
+        points: [
+          'Proceed for the full-day Genting Highlands tour on a shared basis.',
+          'Enjoy a 20-minute stop at Batu Caves.',
+          'Travel to Genting Highlands by two-way cable car.',
+          'Spend leisure time exploring the resort destination.',
+          'Return to the Kuala Lumpur hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kuala Lumpur City Tour',
+        details: 'Proceed for the Kuala Lumpur city tour on a shared basis. Photo stop at the Petronas Twin Towers. Visit Merdeka Square, National Mosque and King’s Palace. Visit the National Monument and Sultan Abdul Samad Building. Pass by the Malayan Railway Administration Building. Visit Beryl’s Chocolate Kingdom. Enjoy admission to the KL Tower Observation Deck. Return to the hotel.',
+        points: [
+          'Proceed for the Kuala Lumpur city tour on a shared basis.',
+          'Photo stop at the Petronas Twin Towers.',
+          'Visit Merdeka Square, National Mosque and King’s Palace.',
+          'Visit the National Monument and Sultan Abdul Samad Building.',
+          'Pass by the Malayan Railway Administration Building.',
+          'Visit Beryl’s Chocolate Kingdom.',
+          'Enjoy admission to the KL Tower Observation Deck.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kuala Lumpur to Langkawi',
+        details: 'Breakfast and hotel check-out. Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM. Board the flight to Langkawi at your own cost. Pickup from Langkawi Airport. Private transfer to the beach or city hotel. Overnight stay in Langkawi.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM.',
+          'Board the flight to Langkawi at your own cost.',
+          'Pickup from Langkawi Airport.',
+          'Private transfer to the beach or city hotel.',
+          'Overnight stay in Langkawi.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Langkawi SkyCab Tour',
+        details: 'Proceed for a half-day private SkyCab tour. Enjoy the cable car ride to Mount Mat Cincang. Visit SkyBridge, SkyDome and SkyRex. Explore the 3D Art Museum. Spend leisure time at Oriental Village. Lunch will be self-paid. Return to the hotel.',
+        points: [
+          'Proceed for a half-day private SkyCab tour.',
+          'Enjoy the cable car ride to Mount Mat Cincang.',
+          'Visit SkyBridge, SkyDome and SkyRex.',
+          'Explore the 3D Art Museum.',
+          'Spend leisure time at Oriental Village.',
+          'Lunch will be self-paid.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Langkawi Island Hopping',
+        details: 'Transfer to the jetty on a shared basis. Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden. Enjoy eagle-watching activities. Visit Pulau Beras Basah. Enjoy swimming, beach time and optional water sports. Return to the hotel.',
+        points: [
+          'Transfer to the jetty on a shared basis.',
+          'Visit Pulau Dayang Bunting and the Lake of the Pregnant Maiden.',
+          'Enjoy eagle-watching activities.',
+          'Visit Pulau Beras Basah.',
+          'Enjoy swimming, beach time and optional water sports.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure from Langkawi',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to Langkawi Airport. Tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to Langkawi Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Kuala Lumpur.",
+      "03 nights' accommodation in Langkawi.",
+      'Daily breakfast at the hotels.',
+      'Private Kuala Lumpur Airport arrival transfer.',
+      'Genting Highlands tour on a shared basis.',
+      'Two-way Genting cable car ride.',
+      'Batu Caves photo stop.',
+      'Kuala Lumpur city tour on a shared basis.',
+      'KL Tower Observation Deck ticket.',
+      'Private Kuala Lumpur hotel-to-airport transfer.',
+      'Private Langkawi Airport pickup and drop.',
+      'Half-day private Langkawi SkyCab tour.',
+      'SkyCab, SkyBridge, SkyDome and SkyRex.',
+      '3D Art Museum admission.',
+      'Langkawi Island Hopping tour.',
+      'Shared hotel and jetty transfers.',
+      'Boat transfers during the island-hopping tour.'
+    ],
+    exclusions: [
+      'International airfare.',
+      'Kuala Lumpur-to-Langkawi flight.',
+      'Malaysia visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Lunch during the SkyCab tour.',
+      'Petronas Twin Towers entrance ticket.',
+      'Optional activities and water sports.',
+      'Personal expenses.',
+      'Additional entrance tickets not mentioned.',
+      'Tips and gratuities.',
+      'Transfers outside the specified operating hours.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+  {
+    id: 'malay-sing-kul-sin-7d',
+    destinationId: 'malaysia',
+    destinationName: 'Malaysia & Singapore',
+    category: 'International',
+    title: 'Malaysia-Singapore KUL-SIN 07 Days Itinerary',
+    duration: '7D / 6N',
+    price: '₹40,150',
+    originalPrice: '₹52,000',
+    rating: '4.99',
+    reviewsCount: 380,
+    image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80',
+    description: '07 Days twin-country holiday covering Kuala Lumpur private arrival transfers, Genting Highlands full-day trip with Batu Caves stop and two-way cable car, Kuala Lumpur city tour with KL Tower Observation Deck, AC shared coach transfer to Singapore, Singapore city tour, Night Safari, and a full-day Sentosa Island adventure with cable car, Madame Tussauds 4-in-1, and Wings of Time.',
+    hotel: '03-Star Hotel (03N Kuala Lumpur + 03N Singapore)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹42,300 (02 PAX) | ₹40,150 (04 PAX) [USD 492 / USD 467 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03N Kuala Lumpur + 03N Singapore)',
+        price2Pax: '₹42,300',
+        price4Pax: '₹40,150'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Kuala Lumpur',
+        details: 'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM. Private transfer to the hotel. Hotel check-in and leisure time. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Pickup from Kuala Lumpur Airport between 6:00 AM and 11:00 PM.',
+          'Private transfer to the hotel.',
+          'Hotel check-in and leisure time.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Batu Caves and Genting Highlands',
+        details: 'Proceed for the full-day Genting Highlands tour on a shared basis. Enjoy a 20-minute stop at Batu Caves. Travel to Genting Highlands by two-way cable car. Spend leisure time exploring the resort destination. Return to the hotel.',
+        points: [
+          'Proceed for the full-day Genting Highlands tour on a shared basis.',
+          'Enjoy a 20-minute stop at Batu Caves.',
+          'Travel to Genting Highlands by two-way cable car.',
+          'Spend leisure time exploring the resort destination.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Kuala Lumpur City Tour',
+        details: 'Proceed for the Kuala Lumpur city tour on a shared basis. Photo stop at the Petronas Twin Towers. Visit Merdeka Square, National Mosque and King’s Palace. Visit the National Monument and Sultan Abdul Samad Building. Pass by the Malayan Railway Administration Building. Visit Beryl’s Chocolate Kingdom. Enjoy admission to the KL Tower Observation Deck. Return to the hotel.',
+        points: [
+          'Proceed for the Kuala Lumpur city tour on a shared basis.',
+          'Photo stop at the Petronas Twin Towers.',
+          'Visit Merdeka Square, National Mosque and King’s Palace.',
+          'Visit the National Monument and Sultan Abdul Samad Building.',
+          'Pass by the Malayan Railway Administration Building.',
+          'Visit Beryl’s Chocolate Kingdom.',
+          'Enjoy admission to the KL Tower Observation Deck.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Kuala Lumpur to Singapore',
+        details: 'Breakfast and hotel check-out. Private transfer to Berjaya Times Square Bus Station between 7:00 AM and 11:00 PM. Travel from Kuala Lumpur to Singapore by shared coach. Approximate journey duration: 7–8 hours. Private transfer from the Singapore coach station to the hotel. Overnight stay in Singapore.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Berjaya Times Square Bus Station between 7:00 AM and 11:00 PM.',
+          'Travel from Kuala Lumpur to Singapore by shared coach (approx. 7–8 hours).',
+          'Private transfer from the Singapore coach station to the hotel.',
+          'Overnight stay in Singapore.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Singapore City Tour and Night Safari',
+        details: 'Proceed for a three-hour Singapore city tour on a shared basis. Drive past Suntec City, Fountain of Wealth and Esplanade Theatre. Enjoy photo stops at Merlion Park and Singapore Flyer. Visit the Chinatown and Buddha Tooth Relic Temple area. Drop-off at Little India after the tour. In the evening, proceed for the Night Safari on a shared basis. Return to the hotel.',
+        points: [
+          'Proceed for a three-hour Singapore city tour on a shared basis.',
+          'Drive past Suntec City, Fountain of Wealth and Esplanade Theatre.',
+          'Enjoy photo stops at Merlion Park and Singapore Flyer.',
+          'Visit Chinatown and Buddha Tooth Relic Temple area.',
+          'Drop-off at Little India after the tour.',
+          'In the evening, proceed for the Night Safari on a shared basis.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Full-Day Sentosa Island Tour',
+        details: 'Proceed for a full-day Sentosa Island tour on a shared basis. Enjoy a one-way cable car ride. Visit Madame Tussauds with the 4-in-1 Combo. Explore Images of Singapore. Enjoy the Spirit of Singapore Boat Ride. Experience Ultimate Film Star. Watch the Wings of Time show at 7:30 PM. Return to the hotel.',
+        points: [
+          'Proceed for a full-day Sentosa Island tour on a shared basis.',
+          'Enjoy a one-way Sentosa cable car ride.',
+          'Visit Madame Tussauds with the 4-in-1 Combo.',
+          'Explore Images of Singapore.',
+          'Enjoy the Spirit of Singapore Boat Ride.',
+          'Experience Ultimate Film Star.',
+          'Watch the Wings of Time show at 7:30 PM.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 7,
+        title: 'Departure from Singapore',
+        details: 'Breakfast and hotel check-out. Private transfer to Changi Airport between 6:00 AM and 10:00 PM. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer to Changi Airport between 6:00 AM and 10:00 PM.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Kuala Lumpur.",
+      "03 nights' accommodation in Singapore.",
+      'Daily breakfast at the hotels.',
+      'Private Kuala Lumpur Airport arrival transfer.',
+      'Genting Highlands tour on a shared basis.',
+      'Two-way Genting cable car ride.',
+      'Batu Caves photo stop.',
+      'Kuala Lumpur city tour on a shared basis.',
+      'KL Tower Observation Deck ticket.',
+      'Private Kuala Lumpur hotel-to-bus-station transfer.',
+      'Shared coach ticket from Kuala Lumpur to Singapore.',
+      'Private Singapore coach-station-to-hotel transfer.',
+      'Singapore city tour on a shared basis.',
+      'Night Safari with shared transfers.',
+      'Full-day Sentosa Island tour.',
+      'One-way Sentosa cable car ride.',
+      'Madame Tussauds 4-in-1 Combo.',
+      'Images of Singapore.',
+      'Spirit of Singapore Boat Ride.',
+      'Ultimate Film Star experience.',
+      'Wings of Time show.',
+      'Private Singapore hotel-to-airport transfer.'
+    ],
+    exclusions: [
+      'International airfare.',
+      'Malaysia and Singapore visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Petronas Twin Towers entrance ticket.',
+      'Optional activities at Genting Highlands and Sentosa.',
+      'Personal expenses.',
+      'Additional entrance tickets not mentioned.',
+      'Tips and gratuities.',
+      'Transfers outside the specified operating hours.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+  {
+    id: 'sing-malay-sin-kul-6d',
+    destinationId: 'malaysia',
+    destinationName: 'Singapore & Malaysia',
+    category: 'International',
+    title: 'Singapore-Malaysia 06 Days Itinerary',
+    duration: '6D / 5N',
+    price: '₹43,750',
+    originalPrice: '₹58,000',
+    rating: '4.98',
+    reviewsCount: 350,
+    image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80',
+    description: '06 Days grand Southeast Asian holiday starting in Singapore with Changi private transfers, Night Safari, Singapore city tour, Sentosa Island half-day excursion, Marina Bay Sands SkyPark, Gardens by the Bay Flower Dome & Cloud Forest, Jurassic World Exhibition, shared coach to Kuala Lumpur, Batu Caves, Genting Highlands with cable car, and Kuala Lumpur city tour with airport drop.',
+    hotel: '03-Star Hotel (03N Singapore + 02N Kuala Lumpur)',
+    pricingNotes: 'Price is in INR Per Person Basis — 03-Star: ₹45,500 (02 PAX) | ₹43,750 (04 PAX) [USD 529 / USD 509 Basis]',
+    hotelPricingOptions: [
+      {
+        hotelName: '03 Star Hotel',
+        category: '03-Star Accommodation (03N Singapore + 02N Kuala Lumpur)',
+        price2Pax: '₹45,500',
+        price4Pax: '₹43,750'
+      }
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Singapore and Night Safari',
+        details: 'Pickup from Changi Airport between 6:00 AM and 10:00 PM. Private transfer to the hotel. Proceed for the Night Safari on a shared basis. Return to the hotel. Overnight stay in Singapore.',
+        points: [
+          'Pickup from Changi Airport between 6:00 AM and 10:00 PM.',
+          'Private transfer to the hotel.',
+          'Proceed for the Night Safari on a shared basis.',
+          'Return to the hotel.',
+          'Overnight stay in Singapore.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Singapore City Tour and Sentosa Island',
+        details: 'Proceed for a three-hour Singapore city tour on a shared basis. Drop-off at Little India after the city tour. Continue for the half-day Sentosa Island tour. Enjoy a one-way cable car ride. Visit Madame Tussauds with the 4-in-1 Combo. Explore Images of Singapore, Spirit of Singapore Boat Ride and Ultimate Film Star. Return to the hotel.',
+        points: [
+          'Proceed for a three-hour Singapore city tour on a shared basis.',
+          'Drop-off at Little India after the city tour.',
+          'Continue for the half-day Sentosa Island tour.',
+          'Enjoy a one-way cable car ride.',
+          'Visit Madame Tussauds with the 4-in-1 Combo.',
+          'Explore Images of Singapore, Spirit of Singapore Boat Ride and Ultimate Film Star.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Marina Bay Sands and Gardens by the Bay',
+        details: 'Proceed for the tour on a shared basis. Visit Marina Bay Sands SkyPark during non-peak hours. Explore the Flower Dome and Cloud Forest. Experience Jurassic World: The Exhibition. Return to the hotel.',
+        points: [
+          'Proceed for the tour on a shared basis.',
+          'Visit Marina Bay Sands SkyPark during non-peak hours.',
+          'Explore the Flower Dome and Cloud Forest.',
+          'Experience Jurassic World: The Exhibition.',
+          'Return to the hotel.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Singapore to Kuala Lumpur',
+        details: 'Breakfast and hotel check-out. Private transfer from the hotel to the coach station. Travel from Singapore to Kuala Lumpur by shared coach. Approximate journey duration: 7–8 hours. Private transfer from Berjaya Times Square bus station to the hotel between 7:00 AM and 11:00 PM. Overnight stay in Kuala Lumpur.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Private transfer from the hotel to the coach station.',
+          'Travel from Singapore to Kuala Lumpur by shared coach (approx. 7–8 hours).',
+          'Private transfer from Berjaya Times Square bus station to the hotel between 7:00 AM and 11:00 PM.',
+          'Overnight stay in Kuala Lumpur.'
+        ]
+      },
+      {
+        day: 5,
+        title: 'Batu Caves and Genting Highlands',
+        details: 'Proceed for the full-day Genting Highlands tour on a shared basis. Enjoy a short photo stop at Batu Caves. Travel to Genting Highlands by two-way cable car. Spend leisure time exploring the resort destination. Return to the Kuala Lumpur hotel.',
+        points: [
+          'Proceed for the full-day Genting Highlands tour on a shared basis.',
+          'Enjoy a short photo stop at Batu Caves.',
+          'Travel to Genting Highlands by two-way cable car.',
+          'Spend leisure time exploring the resort destination.',
+          'Return to the Kuala Lumpur hotel.'
+        ]
+      },
+      {
+        day: 6,
+        title: 'Kuala Lumpur City Tour and Departure',
+        details: 'Breakfast and hotel check-out. Proceed for the Kuala Lumpur city tour on a shared basis. Photo stop at the Petronas Twin Towers. Visit Merdeka Square, National Mosque, King’s Palace and National Monument. See the Sultan Abdul Samad Building. Pass by the Malayan Railway Administration Building. Visit Beryl’s Chocolate Kingdom. Return to the hotel and collect the luggage. Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM. The tour ends with pleasant memories.',
+        points: [
+          'Breakfast and hotel check-out.',
+          'Proceed for the Kuala Lumpur city tour on a shared basis.',
+          'Photo stop at the Petronas Twin Towers.',
+          'Visit Merdeka Square, National Mosque, King’s Palace and National Monument.',
+          'See the Sultan Abdul Samad Building & pass by Malayan Railway Administration Building.',
+          'Visit Beryl’s Chocolate Kingdom.',
+          'Return to hotel and collect luggage.',
+          'Private transfer to Sultan Abdul Aziz Shah Airport between 6:00 AM and 11:00 PM.',
+          'The tour ends with pleasant memories.'
+        ]
+      }
+    ],
+    inclusions: [
+      "03 nights' accommodation in Singapore.",
+      "02 nights' accommodation in Kuala Lumpur.",
+      'Daily breakfast at the hotels.',
+      'Private Changi Airport arrival transfer.',
+      'Night Safari with shared transfers.',
+      'Singapore city tour on a shared basis.',
+      'Half-day Sentosa Island tour.',
+      'One-way cable car ride.',
+      'Madame Tussauds 4-in-1 Combo.',
+      'Marina Bay Sands SkyPark non-peak ticket.',
+      'Flower Dome and Cloud Forest admission.',
+      'Jurassic World: The Exhibition.',
+      'Private Singapore hotel-to-coach-station transfer.',
+      'Shared coach transfer from Singapore to Kuala Lumpur.',
+      'Private Berjaya Times Square-to-hotel transfer.',
+      'Genting Highlands tour on a shared basis.',
+      'Two-way Genting cable car ride.',
+      'Batu Caves photo stop.',
+      'Kuala Lumpur city tour on a shared basis.',
+      'Private Kuala Lumpur hotel-to-Sultan Abdul Aziz Shah Airport transfer.'
+    ],
+    exclusions: [
+      'International airfare.',
+      'Singapore and Malaysia visa charges.',
+      'Travel insurance.',
+      'Meals not mentioned.',
+      'Entrance tickets during the Kuala Lumpur city tour.',
+      'Petronas Twin Towers observation deck ticket.',
+      'Personal expenses and shopping.',
+      'Optional activities at Genting Highlands.',
+      'Tips and gratuities.',
+      'Transfers outside the specified operating hours.',
+      'Early check-in and late check-out.',
+      'Anything not mentioned under inclusions.'
+    ]
+  },
+
+  // --- DUBAI PACKAGES ---
+  {
+    id: 'dubai-land-4d',
     destinationId: 'dubai',
     destinationName: 'Dubai',
     category: 'International',
-    title: 'Dubai Shopping Festival & Global Village Special',
+    title: 'Dubai 04 Days Itinerary',
     duration: '4D / 3N',
-    price: '₹32,500',
-    originalPrice: '₹40,000',
-    rating: '4.88',
-    reviewsCount: 170,
-    image: 'https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?auto=format&fit=crop&w=800&q=80',
-    description: 'Visit Global Village multicultural pavilion, Miracle Garden flower installation, and Gold Souk shopping spree.',
-    itinerary: [
-      { day: 1, title: 'Dubai Arrival', details: 'Hotel check-in.' },
-      { day: 2, title: 'Dubai Miracle Garden & Global Village', details: 'World’s largest natural flower garden & cultural stalls.' },
-      { day: 3, title: 'Burj Khalifa & Desert Safari', details: 'Dune bashing & BBQ show.' },
-      { day: 4, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['3 Nights Hotel', 'Breakfast', 'Miracle Garden & Global Village Entry Tickets', 'Desert Safari', 'UAE Visa'],
-    exclusions: ['Airfare', 'Personal shopping']
-  },
-
-  // --- THAILAND PACKAGES (4) ---
-  {
-    id: 'thai-1',
-    destinationId: 'thailand',
-    destinationName: 'Thailand',
-    category: 'International',
-    title: 'Phuket Speedboat, Phi Phi Island & Bangkok Temples',
-    duration: '6D / 5N',
-    price: '₹22,900',
-    originalPrice: '₹31,000',
-    rating: '4.92',
-    reviewsCount: 340,
-    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
-    description: 'Phuket James Bond island, Maya Bay speedboat snorkeling, Big Buddha, and Bangkok Golden Buddha temple tour.',
-    itinerary: [
-      { day: 1, title: 'Phuket Arrival & Patong Beach Nightlife', details: 'Airport pickup. Check-in resort. Evening Bangla Road vibe.' },
-      { day: 2, title: 'Phi Phi Island & Maya Bay Speedboat Tour', details: 'Full day luxury speedboat excursion to Maya Bay (The Beach movie site), Monkey Beach & snorkeling with lunch.' },
-      { day: 3, title: 'James Bond Island & Phang Nga Bay Kayaking', details: 'Canoeing through limestone caves & James Bond Island needle rock.' },
-      { day: 4, title: 'Fly Phuket to Bangkok & Chao Phraya Cruise', details: 'Fly to Bangkok. Check-in hotel. Evening Chao Phraya Princess Dinner Cruise.' },
-      { day: 5, title: 'Bangkok City & Temple Tour', details: 'Visit Reclining Buddha (Wat Pho) and Marble Temple (Wat Benchamabophit).' },
-      { day: 6, title: 'Shopping at Platinum Mall & Departure', details: 'Souvenir shopping & airport drop.' }
-    ],
-    inclusions: ['5 Nights Hotel Stay (3N Phuket + 2N Bangkok)', 'Daily Breakfast & 2 Buffet Lunches', 'Phi Phi Island Speedboat Package with Snorkeling Gear', 'Chao Phraya Dinner Cruise Ticket', 'Private Airport Transfers'],
-    exclusions: ['Airfare (Internal flights optional)', 'National Park Fee (~400 THB)', 'Visa Fees (Visa on Arrival Free/Nominal)']
-  },
-  {
-    id: 'thai-2',
-    destinationId: 'thailand',
-    destinationName: 'Thailand',
-    category: 'International',
-    title: 'Krabi 4-Islands Speedboat & Emerald Pool Jungle Safari',
-    duration: '5D / 4N',
-    price: '₹19,500',
-    originalPrice: '₹26,000',
-    rating: '4.90',
-    reviewsCount: 180,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    description: 'Krabi 4 Islands (Phra Nang, Tup, Chicken, Poda), Tiger Cave Temple, Emerald Pool hot springs, and Ao Nang beach.',
-    itinerary: [
-      { day: 1, title: 'Krabi Arrival & Ao Nang Beach', details: 'Check-in beach resort.' },
-      { day: 2, title: 'Krabi 4 Islands Speedboat Tour', details: 'Snorkeling at Chicken Island & walking on sandbar between Tup and Mor islands.' },
-      { day: 3, title: 'Emerald Pool & Blue Lagoon Hot Springs', details: 'Jungle trek to natural thermal crystal pools.' },
-      { day: 4, title: 'Hong Island Catamaran Tour', details: 'Lagoon kayaking & white sand beaches.' },
-      { day: 5, title: 'Departure', details: 'Krabi airport drop.' }
-    ],
-    inclusions: ['4 Nights Beach Resort', 'Breakfast & 2 Lunches', '4 Islands Speedboat Package', 'Private Transfers'],
-    exclusions: ['Airfare', 'National park fee']
-  },
-  {
-    id: 'thai-3',
-    destinationId: 'thailand',
-    destinationName: 'Thailand',
-    category: 'International',
-    title: 'Chiang Mai Elephant Sanctuary & White Temple Safari',
-    duration: '5D / 4N',
-    price: '₹24,000',
-    originalPrice: '₹32,000',
-    rating: '4.96',
-    reviewsCount: 125,
-    image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80',
-    description: 'Bathe & feed elephants at ethical Chiang Mai sanctuary, visit Chiang Rai White Temple (Wat Rong Khun), and night markets.',
-    itinerary: [
-      { day: 1, title: 'Chiang Mai Arrival', details: 'Night bazaar explore.' },
-      { day: 2, title: 'Ethical Elephant Rescue Sanctuary', details: 'Feed, walk, and river bath with elephants.' },
-      { day: 3, title: 'Chiang Rai White Temple & Golden Triangle', details: 'Wat Rong Khun & Mekong river border view.' },
-      { day: 4, title: 'Doi Suthep Mountain Temple', details: 'Cable car & panoramic city view.' },
-      { day: 5, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['4 Nights Boutique Hotel', 'Breakfast & 2 Lunches', 'Elephant Sanctuary Pass', 'Private Transfers'],
-    exclusions: ['Airfare', 'Personal tips']
-  },
-  {
-    id: 'thai-4',
-    destinationId: 'thailand',
-    destinationName: 'Thailand',
-    category: 'International',
-    title: 'Pattaya Coral Island & Sanctuary of Truth Special',
-    duration: '5D / 4N',
-    price: '₹17,800',
-    originalPrice: '₹24,000',
-    rating: '4.86',
-    reviewsCount: 210,
-    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',
-    description: 'Pattaya Coral Island speedboat parasailing, Sanctuary of Truth wooden temple, Alcazar cabaret show, and Bangkok shopping.',
-    itinerary: [
-      { day: 1, title: 'Bangkok Airport to Pattaya Drive', details: 'Check-in hotel. Evening Alcazar Cabaret Show.' },
-      { day: 2, title: 'Coral Island Speedboat with Lunch', details: 'Parasailing, sea walking & Indian buffet lunch.' },
-      { day: 3, title: 'Sanctuary of Truth & Nong Nooch Garden', details: 'All-wooden temple architecture & botanical park.' },
-      { day: 4, title: 'Pattaya to Bangkok Transfer & Safari World', details: 'Open zoo drive.' },
-      { day: 5, title: 'Departure', details: 'Bangkok airport drop.' }
-    ],
-    inclusions: ['4 Nights Hotel Stay (2N Pattaya + 2N Bangkok)', 'Breakfast & Lunch', 'Coral Island Speedboat', 'Alcazar Show Ticket'],
-    exclusions: ['Airfare', 'Personal sports']
-  },
-
-  // --- SWITZERLAND PACKAGES (4) ---
-  {
-    id: 'swiss-1',
-    destinationId: 'switzerland',
-    destinationName: 'Switzerland & Alps',
-    category: 'International',
-    title: 'Jungfraujoch Top of Europe & Glacier Express Trail',
-    duration: '7D / 6N',
-    price: '₹1,25,000',
-    originalPrice: '₹1,55,000',
+    price: '₹11,500',
+    originalPrice: '₹16,000',
     rating: '4.98',
-    reviewsCount: 160,
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=800&q=80',
-    description: 'Eiger Express cogwheel train to Jungfraujoch (3,454m snow peak), Lucerne Chapel Bridge, Interlaken lake cruise, and Swiss Pass access.',
-    itinerary: [
-      { day: 1, title: 'Zurich Arrival & Lake Zurich Cruise', details: 'Airport pickup. Check-in hotel. Evening Bahnhofstrasse luxury street walk.' },
-      { day: 2, title: 'Zurich to Lucerne & Mount Titlis Cable Car', details: 'Lucerne Chapel Bridge, Lion Monument & Mount Titlis Revolving Rotair Cable Car.' },
-      { day: 3, title: 'Lucerne to Interlaken via GoldenPass Express', details: 'Panoramic train ride through Swiss countryside lakes & chalets.' },
-      { day: 4, title: 'Jungfraujoch — Top of Europe Snow Peak', details: 'Eiger Express cable car to Ice Palace & Sphinx Observatory (3,454m).' },
-      { day: 5, title: 'Interlaken Lake Brienz Cruise & Lauterbrunnen', details: 'Boat cruise on turquoise Lake Brienz & 72 waterfalls valley Lauterbrunnen.' },
-      { day: 6, title: 'Interlaken to Zermatt & Matterhorn View', details: 'Gornergrat rack railway ride to view iconic Matterhorn peak.' },
-      { day: 7, title: 'Geneva / Zurich Departure', details: 'Airport drop.' }
+    reviewsCount: 290,
+    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
+    description: '04 Days essential Dubai land vacation package covering private airport transfers, traditional Dubai Creek Dhow Dinner Cruise, guided city tour, Dubai Mall visit with Burj Khalifa Non-Prime entry ticket, and red dune Desert Safari with live BBQ dinner and cultural shows.',
+    hotel: 'Land Package (Accommodation Not Included)',
+    pricingNotes: 'Land Package Only — Price is in INR Per Person Basis: ₹13,500 (02 PAX) | ₹11,500 (04 PAX) [Hotels recommended in Deira/Bur Dubai for seamless SIC transfers]',
+    hotelPricingOptions: [
+      {
+        hotelName: 'Land Package (Hotel Not Included)',
+        category: 'Sightseeing, Transfers, Desert Safari & Burj Khalifa Tickets',
+        price2Pax: '₹13,500',
+        price4Pax: '₹11,500'
+      }
     ],
-    inclusions: ['6 Nights 4-Star Hotel Accommodation', 'Swiss Travel Pass (8 Days Consecutive - Unlimited Trains/Buses)', 'Jungfraujoch Mountain Cogwheel Ticket', 'Mount Titlis Cable Car Ticket', 'Daily Swiss Buffet Breakfast'],
-    exclusions: ['International Airfare', 'Lunch/Dinner', 'Swiss Visa']
-  },
-  {
-    id: 'swiss-2',
-    destinationId: 'switzerland',
-    destinationName: 'Switzerland & Alps',
-    category: 'International',
-    title: 'Swiss Alps Romance & Paris Eiffel Tower Special',
-    duration: '8D / 7N',
-    price: '₹1,45,000',
-    originalPrice: '₹1,80,000',
-    rating: '4.96',
-    reviewsCount: 120,
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
-    description: 'Combine Swiss alpine vistas in Interlaken with romantic Paris Eiffel Tower summit, Seine river cruise, and Louvre museum.',
     itinerary: [
-      { day: 1, title: 'Paris Arrival & Seine River Cruise', details: 'Illuminated evening boat cruise.' },
-      { day: 2, title: 'Eiffel Tower 2nd Level & Louvre Museum', details: 'Monuement tour.' },
-      { day: 3, title: 'Paris to Basel / Interlaken TGV High-Speed Train', details: 'Cross into Switzerland.' },
-      { day: 4, title: 'Jungfraujoch Top of Europe', details: 'Snow peak.' },
-      { day: 5, title: 'Lucerne & Mount Titlis', details: 'Revolving cable car.' },
-      { day: 6, title: 'Zurich City Tour & Lindt Chocolate Home', details: 'Chocolate fountain tour.' },
-      { day: 7, title: 'Rhine Falls Day Trip', details: 'Europe’s biggest waterfall boat ride.' },
-      { day: 8, title: 'Zurich Departure', details: 'Airport drop.' }
+      {
+        day: 1,
+        title: 'Arrival in Dubai + Creek Dinner Cruise',
+        details: 'Arrival at Dubai International Airport. Private airport pickup and transfer. Proceed for Dubai Creek Dinner Cruise on SIC basis. Enjoy dinner with scenic views along Dubai Creek. Overnight stay in Dubai.',
+        points: [
+          'Arrival at Dubai International Airport.',
+          'Private airport pickup and transfer.',
+          'Proceed for Dubai Creek Dinner Cruise on SIC basis.',
+          'Enjoy dinner with scenic views along Dubai Creek.',
+          'Overnight stay in Dubai.'
+        ]
+      },
+      {
+        day: 2,
+        title: 'Dubai City Tour + Dubai Mall + Burj Khalifa',
+        details: 'Proceed for Dubai City Tour on SIC basis. Visit major city highlights as per the scheduled tour. Visit Dubai Mall. Enjoy Burj Khalifa entry during Non-Prime Hours. Return to the hotel. Overnight stay in Dubai.',
+        points: [
+          'Proceed for Dubai City Tour on SIC basis.',
+          'Visit major city highlights as per the scheduled tour.',
+          'Visit Dubai Mall.',
+          'Enjoy Burj Khalifa entry during Non-Prime Hours.',
+          'Return to the hotel.',
+          'Overnight stay in Dubai.'
+        ]
+      },
+      {
+        day: 3,
+        title: 'Desert Safari + BBQ Dinner',
+        details: 'Proceed for Desert Safari on SIC basis. Enjoy the desert experience and scheduled activities. BBQ dinner included. Return to the hotel. Overnight stay in Dubai.',
+        points: [
+          'Proceed for Desert Safari on SIC basis.',
+          'Enjoy the desert experience and scheduled activities.',
+          'BBQ dinner included.',
+          'Return to the hotel.',
+          'Overnight stay in Dubai.'
+        ]
+      },
+      {
+        day: 4,
+        title: 'Departure',
+        details: 'Hotel check-out. Private transfer to Dubai International Airport. Tour ends with pleasant memories.',
+        points: [
+          'Hotel check-out.',
+          'Private transfer to Dubai International Airport.',
+          'Tour ends with pleasant memories.'
+        ]
+      }
     ],
-    inclusions: ['7 Nights Hotels (3N Paris + 4N Swiss)', 'Breakfast', 'TGV Train Paris to Swiss', 'Eiffel Tower & Jungfrau Tickets'],
-    exclusions: ['Airfare', 'Schengen Visa']
-  },
-  {
-    id: 'swiss-3',
-    destinationId: 'switzerland',
-    destinationName: 'Switzerland & Alps',
-    category: 'International',
-    title: 'Grand European 4-Country Circuit (Swiss, France, Italy, Austria)',
-    duration: '10D / 9N',
-    price: '₹1,85,000',
-    originalPrice: '₹2,30,000',
-    rating: '4.97',
-    reviewsCount: 105,
-    image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80',
-    description: 'Paris Eiffel Tower, Swiss Alps Interlaken, Venice Gondola cruise, Rome Colosseum, and Florence Renaissance tour.',
-    itinerary: [
-      { day: 1, title: 'Paris Arrival', details: 'Hotel check-in.' },
-      { day: 2, title: 'Paris Sightseeing & Eiffel', details: 'City tour.' },
-      { day: 3, title: 'Paris to Interlaken', details: 'Swiss Alps.' },
-      { day: 4, title: 'Jungfraujoch Snow Peak', details: 'Cogwheel train.' },
-      { day: 5, title: 'Interlaken to Venice', details: 'Canal city arrival.' },
-      { day: 6, title: 'Venice Gondola Ride & St. Mark Square', details: 'Private gondola ride.' },
-      { day: 7, title: 'Venice to Florence & Leaning Tower of Pisa', details: 'Tuscany countryside.' },
-      { day: 8, title: 'Florence to Rome & Colosseum', details: 'Ancient Rome.' },
-      { day: 9, title: 'Vatican City & St. Peter Basilica', details: 'Vatican museum.' },
-      { day: 10, title: 'Departure from Rome', details: 'Airport drop.' }
+    inclusions: [
+      'Private Dubai Airport pickup.',
+      'Private Dubai Airport drop.',
+      'Dubai Creek Dinner Cruise on SIC basis.',
+      'Dinner during the Creek Cruise.',
+      'Dubai City Tour on SIC basis.',
+      'Dubai Mall visit.',
+      'Burj Khalifa Non-Prime entry ticket.',
+      'Desert Safari on SIC basis.',
+      'BBQ dinner during Desert Safari.',
+      'Transfers and sightseeing specifically mentioned in the itinerary.',
+      'Attraction tickets specifically mentioned in the itinerary.'
     ],
-    inclusions: ['9 Nights 4-Star Hotels', 'Daily Breakfast', 'Venice Gondola Ride', 'Inter-country Rail/Coach', 'Schengen Guidance'],
-    exclusions: ['Airfare', 'Schengen Visa fee']
-  },
-  {
-    id: 'swiss-4',
-    destinationId: 'switzerland',
-    destinationName: 'Switzerland & Alps',
-    category: 'International',
-    title: 'Matterhorn Zermatt Glacier & Lake Geneva Trail',
-    duration: '6D / 5N',
-    price: '₹1,10,000',
-    originalPrice: '₹1,40,000',
-    rating: '4.92',
-    reviewsCount: 88,
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=800&q=80',
-    description: 'Car-free Zermatt village under Matterhorn peak, Montreux Chillon castle, and Geneva jet d’eau fountain.',
-    itinerary: [
-      { day: 1, title: 'Geneva Arrival & Lake Geneva Promenade', details: 'Jet d’eau & UN headquarters.' },
-      { day: 2, title: 'Geneva to Montreux & Chillon Castle', details: 'Lakefront promenade & castle entry.' },
-      { day: 3, title: 'Montreux to Zermatt (Car-Free Village)', details: 'Matterhorn viewing point.' },
-      { day: 4, title: 'Gornergrat Railway Ride', details: 'Panoramic platform at 3,089m.' },
-      { day: 5, title: 'Zermatt to Zurich', details: 'Old town walking tour.' },
-      { day: 6, title: 'Departure', details: 'Zurich airport drop.' }
-    ],
-    inclusions: ['5 Nights Hotel Accommodation', 'Swiss Travel Pass', 'Gornergrat Railway Ticket', 'Daily Breakfast'],
-    exclusions: ['Airfare', 'Schengen Visa']
-  },
-
-  // --- VIETNAM PACKAGES (4) ---
-  {
-    id: 'viet-1',
-    destinationId: 'vietnam',
-    destinationName: 'Vietnam',
-    category: 'International',
-    title: 'Ha Long Bay Junk Cruise, Hanoi & Hoi An Lanterns',
-    duration: '6D / 5N',
-    price: '₹26,900',
-    originalPrice: '₹35,000',
-    rating: '4.94',
-    reviewsCount: 215,
-    image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
-    description: 'Overnight 5-star Ha Long Bay luxury cruise with cave kayaking, Ninh Binh bamboo boat, Da Nang Golden Hands Bridge, and Hoi An lanterns.',
-    itinerary: [
-      { day: 1, title: 'Hanoi Arrival & Old Quarter Street Food Tour', details: 'Airport pickup. Egg coffee tasting & cyclo ride through 36 guild streets.' },
-      { day: 2, title: 'Hanoi to Ha Long Bay 5-Star Luxury Cruise Boarding', details: 'Board cruise, kayak through Sung Sot Cave, sunset party on deck & squid fishing.' },
-      { day: 3, title: 'Ha Long Bay Tai Chi & Drive to Ninh Binh (Trang An)', details: 'Morning Tai Chi on deck, bamboo boat row through Trang An karst caves.' },
-      { day: 4, title: 'Fly Hanoi to Da Nang & Golden Hands Bridge (Ba Na Hills)', details: 'Cable car up Ba Na Hills to giant Golden Hands Bridge.' },
-      { day: 5, title: 'Hoi An Ancient Town & Lantern Night Market', details: 'Japanese Covered Bridge, tailor shops & floating lantern boat ride.' },
-      { day: 6, title: 'Departure from Da Nang / Hanoi', details: 'Souvenir shopping & airport drop.' }
-    ],
-    inclusions: ['5-Star Ha Long Bay Cruise (1N) + 4-Star Hotels (4N)', 'All Meals on Cruise + Daily Hotel Breakfast', 'Trang An Bamboo Boat & Ba Na Hills Cable Car Pass', 'Private Airport & Intercity Transfers'],
-    exclusions: ['Airfare (Internal flight optional)', 'E-Visa fee ($25)', 'Personal tips']
-  },
-  {
-    id: 'viet-2',
-    destinationId: 'vietnam',
-    destinationName: 'Vietnam',
-    category: 'International',
-    title: 'Phu Quoc Tropical Beach Island & Sun World Cable Car',
-    duration: '5D / 4N',
-    price: '₹29,800',
-    originalPrice: '₹38,000',
-    rating: '4.91',
-    reviewsCount: 130,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    description: 'World’s longest non-stop 3-wire cable car to Sun World Hon Thom island, starfish beach, and Phu Quoc night market.',
-    itinerary: [
-      { day: 1, title: 'Phu Quoc Arrival & Sunset Sanato', details: 'Check-in beach resort.' },
-      { day: 2, title: '3-Islands Speedboat & Coral Reef Snorkeling', details: 'Gam Ghi, May Rut, Fingernail island hopping.' },
-      { day: 3, title: 'Hon Thom Cable Car & Waterpark', details: 'Over-sea cable car trip.' },
-      { day: 4, title: 'Grand World Phu Quoc Venice Water Show', details: 'Venetian gondola ride.' },
-      { day: 5, title: 'Departure', details: 'Phu Quoc airport drop.' }
-    ],
-    inclusions: ['4 Nights Beach Resort', 'Breakfast & 1 Island Lunch', 'Hon Thom Cable Car Ticket', 'Private Transfers'],
-    exclusions: ['Airfare', 'E-Visa']
-  },
-  {
-    id: 'viet-3',
-    destinationId: 'vietnam',
-    destinationName: 'Vietnam',
-    category: 'International',
-    title: 'Ho Chi Minh Cu Chi Tunnels & Mekong Delta Sampan Tour',
-    duration: '5D / 4N',
-    price: '₹24,500',
-    originalPrice: '₹32,000',
-    rating: '4.88',
-    reviewsCount: 160,
-    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80',
-    description: 'Explore subterranean Cu Chi tunnels from Vietnam War, coconut candy farms in Mekong Delta sampan boats, and Saigon Notre Dame.',
-    itinerary: [
-      { day: 1, title: 'Ho Chi Minh City Arrival', details: 'Ben Thanh market.' },
-      { day: 2, title: 'Cu Chi Tunnels Underground Safari', details: 'Crawl through war bunkers & AK47 shooting range option.' },
-      { day: 3, title: 'Mekong Delta My Tho Sampan Rowing', details: 'Traditional boat row through coconut channels & tropical fruit tasting.' },
-      { day: 4, title: 'Saigon French Architecture & War Remnants Museum', details: 'Post Office & Palace.' },
-      { day: 5, title: 'Departure', details: 'Ho Chi Minh airport drop.' }
-    ],
-    inclusions: ['4 Nights Hotel Stay', 'Breakfast & 2 Lunches', 'Cu Chi Tunnels & Mekong Delta Passes', 'Private Cab'],
-    exclusions: ['Airfare', 'E-Visa']
-  },
-  {
-    id: 'viet-4',
-    destinationId: 'vietnam',
-    destinationName: 'Vietnam',
-    category: 'International',
-    title: 'Complete Vietnam North to South Grand Heritage',
-    duration: '8D / 7N',
-    price: '₹39,500',
-    originalPrice: '₹51,000',
-    rating: '4.96',
-    reviewsCount: 185,
-    image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
-    description: 'Comprehensive 8-day tour covering Hanoi, Ha Long Bay overnight cruise, Da Nang Golden Bridge, Hoi An, and Ho Chi Minh.',
-    itinerary: [
-      { day: 1, title: 'Hanoi Arrival', details: 'Old Quarter.' },
-      { day: 2, title: 'Ha Long Bay Cruise Boarding', details: 'Overnight luxury cruise.' },
-      { day: 3, title: 'Ha Long to Hanoi & Fly to Da Nang', details: 'Flight to Central Vietnam.' },
-      { day: 4, title: 'Ba Na Hills Golden Bridge', details: 'Cable car.' },
-      { day: 5, title: 'Hoi An Lantern Town', details: 'Boat ride.' },
-      { day: 6, title: 'Fly to Ho Chi Minh City', details: 'City tour.' },
-      { day: 7, title: 'Mekong Delta Day Trip', details: 'Sampan boat.' },
-      { day: 8, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['7 Nights Hotels including Cruise', 'Breakfast & 3 Lunches', 'All Sightseeing Passes', 'Private Transfers'],
-    exclusions: ['Airfare', 'E-Visa']
-  },
-
-  // --- MALDIVES PACKAGES (4) ---
-  {
-    id: 'mald-1',
-    destinationId: 'maldives',
-    destinationName: 'Maldives',
-    category: 'International',
-    title: 'Overwater Pool Villa Escape & Sunset Dolphin Cruise',
-    duration: '4D / 3N',
-    price: '₹62,000',
-    originalPrice: '₹82,000',
-    rating: '4.98',
-    reviewsCount: 240,
-    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-    description: 'Stay in a luxury 5-star private overwater villa with direct ocean access, speedboat transfer, all-inclusive meals, and dolphin cruise.',
-    itinerary: [
-      { day: 1, title: 'Male Arrival & Speedboat Transfer to Resort', details: 'Welcome drinks at private island resort. Check-in Overwater Pool Villa.' },
-      { day: 2, title: 'Coral Reef Snorkeling & Sunset Dolphin Safari', details: 'Guided snorkeling with sea turtles & evening speed catamaran dolphin cruise.' },
-      { day: 3, title: 'Spa Wellness & Candlelit Beachfront Dinner', details: 'Relaxing Balinese massage & romantic candlelit 3-course dinner on private sandbank.' },
-      { day: 4, title: 'Speedboat Transfer & Departure', details: 'Buffet breakfast & speedboat drop to Male International Airport.' }
-    ],
-    inclusions: ['3 Nights Overwater Villa with Private Pool', 'All-Inclusive Meal Plan (Breakfast, Lunch, Dinner & Drinks)', 'Roundtrip Speedboat Transfers from Male Airport', 'Sunset Dolphin Cruise Ticket', 'Complimentary Snorkeling Equipment'],
-    exclusions: ['Airfare (Available on Request)', 'Green Tax ($6/person/night included or extra)', 'Personal shopping']
-  },
-  {
-    id: 'mald-2',
-    destinationId: 'maldives',
-    destinationName: 'Maldives',
-    category: 'International',
-    title: 'Maldives All-Inclusive Beach Villa & Seaplane Flight',
-    duration: '5D / 4N',
-    price: '₹78,000',
-    originalPrice: '₹98,000',
-    rating: '4.96',
-    reviewsCount: 150,
-    image: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80',
-    description: 'Panoramic seaplane flight over turquoise atolls, 2 nights Beach Villa + 2 nights Water Villa with unlimited cocktails.',
-    itinerary: [
-      { day: 1, title: 'Seaplane Flight from Male to Resort', details: 'Bird-eye view over coral atolls.' },
-      { day: 2, title: 'Beach Villa Tropical Relax', details: 'Direct white sand beach access.' },
-      { day: 3, title: 'Villa Switch to Overwater Lagoon Villa', details: 'Ocean glass floor view.' },
-      { day: 4, title: 'Underwater Dining & Water Sports', details: 'Paddleboarding & windsurfing.' },
-      { day: 5, title: 'Seaplane Transfer & Departure', details: 'Return seaplane to Male airport.' }
-    ],
-    inclusions: ['4 Nights Split Stay (2N Beach Villa + 2N Water Villa)', 'All-Inclusive Dine Around Meals & Drinks', 'Roundtrip Seaplane Transfers', 'Non-motorized Water Sports'],
-    exclusions: ['Airfare', 'Motorized sports']
-  },
-  {
-    id: 'mald-3',
-    destinationId: 'maldives',
-    destinationName: 'Maldives',
-    category: 'International',
-    title: 'Budget Paradise Island Guesthouse & Nurse Shark Swim',
-    duration: '5D / 4N',
-    price: '₹34,500',
-    originalPrice: '₹45,000',
-    rating: '4.91',
-    reviewsCount: 180,
-    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80',
-    description: 'Stay on Maafushi/Fulidhoo local island, swim with nurse sharks & stingrays at Vaavu atoll, sandbank picnic.',
-    itinerary: [
-      { day: 1, title: 'Speedboat to Maafushi Island', details: 'Check-in beachfront hotel.' },
-      { day: 2, title: 'Full Day Nurse Shark & Shipwreck Snorkeling', details: 'Swim with friendly nurse sharks & underwater photos.' },
-      { day: 3, title: 'Private Sandbank Picnic & Dolphin Watching', details: 'Uninhabited island beach picnic.' },
-      { day: 4, title: 'Luxury 5-Star Resort Day Pass Option', details: 'Access overwater bar & pool.' },
-      { day: 5, title: 'Departure', details: 'Speedboat to Male airport.' }
-    ],
-    inclusions: ['4 Nights Beachfront Hotel', 'Breakfast & Lunch on Tours', 'Nurse Shark Snorkeling Excursion with Drone Photos', 'Speedboat Transfers'],
-    exclusions: ['Airfare', 'Dinner']
-  },
-  {
-    id: 'mald-4',
-    destinationId: 'maldives',
-    destinationName: 'Maldives',
-    category: 'International',
-    title: 'Maldives Honeymoon Extravaganza & Floating Breakfast',
-    duration: '4D / 3N',
-    price: '₹68,500',
-    originalPrice: '₹89,000',
-    rating: '4.99',
-    reviewsCount: 165,
-    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-    description: 'Honeymoon special overwater villa stay with floating breakfast, bed decoration, sunset wine toast, and couple spa.',
-    itinerary: [
-      { day: 1, title: 'Speedboat Arrival & Honeymoon Setup', details: 'Bed flower arrangement & champagne.' },
-      { day: 2, title: 'Floating Pool Breakfast & Snorkel', details: 'Morning floating tray.' },
-      { day: 3, title: 'Couple Spa Session & Candlelit Dinner', details: 'Sunset beach setup.' },
-      { day: 4, title: 'Departure', details: 'Speedboat to Male.' }
-    ],
-    inclusions: ['3 Nights Overwater Villa', 'Full Board Meals (Breakfast, Lunch, Dinner)', 'Floating Breakfast In-Villa', 'Speedboat Transfers', 'Honeymoon Inclusions'],
-    exclusions: ['Airfare', 'Personal tips']
-  },
-
-  // --- SINGAPORE PACKAGES (4) ---
-  {
-    id: 'sing-1',
-    destinationId: 'singapore',
-    destinationName: 'Singapore & Malaysia',
-    category: 'International',
-    title: 'Marina Bay Sands, Universal Studios & Sentosa Fun',
-    duration: '5D / 4N',
-    price: '₹42,500',
-    originalPrice: '₹54,000',
-    rating: '4.93',
-    reviewsCount: 220,
-    image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=800&q=80',
-    description: 'Gardens by the Bay Light Show, Skypark Observation Deck, Sentosa Cable Car, Universal Studios rides, and Night Safari.',
-    itinerary: [
-      { day: 1, title: 'Singapore Arrival & Gardens by the Bay Light Show', details: 'Airport pickup. Visit Supertree Grove & Rhapsody light show.' },
-      { day: 2, title: 'Universal Studios Sentosa Island Full Day', details: 'Transformers 3D ride, Battlestar Galactica coaster, Revenge of the Mummy.' },
-      { day: 3, title: 'Sentosa Cable Car, Wings of Time & S.E.A. Aquarium', details: 'Cable car ride over harbor & evening ocean laser show.' },
-      { day: 4, title: 'Singapore City Tour & Night Safari', details: 'Merlion Park, Chinatown, Little India, & world’s 1st Night Safari tram.' },
-      { day: 5, title: 'Jewel Changi Rain Vortex & Departure', details: 'Visit 40m indoor waterfall Rain Vortex at Changi & flight home.' }
-    ],
-    inclusions: ['4-Star Hotel Accommodation (4N)', 'Daily Breakfast', 'Universal Studios Express/Standard Ticket', 'Night Safari & Gardens by the Bay Tickets', 'Private Airport & Sightseeing Transfers'],
-    exclusions: ['Airfare', 'Singapore Visa ($30)', 'Personal expenses']
-  },
-  {
-    id: 'sing-2',
-    destinationId: 'singapore',
-    destinationName: 'Singapore & Malaysia',
-    category: 'International',
-    title: 'Singapore & Kuala Lumpur Twin City Express',
-    duration: '6D / 5N',
-    price: '₹49,900',
-    originalPrice: '₹62,000',
-    rating: '4.91',
-    reviewsCount: 175,
-    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80',
-    description: 'Combine Singapore modern attractions with Kuala Lumpur Petronas Twin Towers, Batu Caves golden statue, and Genting Highlands.',
-    itinerary: [
-      { day: 1, title: 'Singapore Arrival & Merlion Park', details: 'City tour.' },
-      { day: 2, title: 'Universal Studios Sentosa', details: 'Full day rides.' },
-      { day: 3, title: 'Luxury Coach Singapore to Kuala Lumpur', details: 'Cross Causeway border into Malaysia.' },
-      { day: 4, title: 'KL City Tour & Petronas Twin Towers', details: 'Skybridge entry & KL Tower.' },
-      { day: 5, title: 'Batu Caves & Genting Highlands Cable Car', details: '272 rainbow steps & casino resort.' },
-      { day: 6, title: 'Departure from KLIA Airport', details: 'Airport drop.' }
-    ],
-    inclusions: ['5 Nights Hotel (3N Singapore + 2N KL)', 'Daily Breakfast', 'Intercity Coach Ticket', 'Theme Park Passes'],
-    exclusions: ['Airfare', 'Visas (Singapore & Malaysia)']
-  },
-  {
-    id: 'sing-3',
-    destinationId: 'singapore',
-    destinationName: 'Singapore & Malaysia',
-    category: 'International',
-    title: 'Langkawi Island SkyBridge & Mangrove Kayak Safari',
-    duration: '5D / 4N',
-    price: '₹28,900',
-    originalPrice: '₹37,000',
-    rating: '4.88',
-    reviewsCount: 140,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    description: 'Duty-free Langkawi island, cable car ride to curved SkyBridge suspension over rainforest, Kilim karst mangrove boat safari.',
-    itinerary: [
-      { day: 1, title: 'Langkawi Arrival & Cenang Beach Walk', details: 'Resort check-in.' },
-      { day: 2, title: 'Langkawi Cable Car & SkyBridge', details: 'Highest cable car & 3D art museum.' },
-      { day: 3, title: 'Kilim Karst Geoforest Mangrove Safari', details: 'Eagle feeding & bat cave boat tour.' },
-      { day: 4, title: 'Island Hopping Speedboat Tour', details: 'Pregnant Maiden island & freshwater lake.' },
-      { day: 5, title: 'Duty-Free Shopping & Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['4 Nights Beach Resort', 'Breakfast', 'Cable Car & SkyBridge Ticket', 'Mangrove Boat Pass'],
-    exclusions: ['Airfare', 'Malaysia Tourism Tax']
-  },
-  {
-    id: 'sing-4',
-    destinationId: 'singapore',
-    destinationName: 'Singapore & Malaysia',
-    category: 'International',
-    title: 'Singapore Cruise & Royal Caribbean Ocean Getaway',
-    duration: '6D / 5N',
-    price: '₹58,000',
-    originalPrice: '₹74,000',
-    rating: '4.95',
-    reviewsCount: 130,
-    image: 'https://images.unsplash.com/photo-1548574505-5e2386903b87?auto=format&fit=crop&w=800&q=80',
-    description: '2 nights Singapore hotel + 3 nights Royal Caribbean / Genting Dream luxury ocean cruise with unlimited dining & Broadway shows.',
-    itinerary: [
-      { day: 1, title: 'Singapore Arrival & Gardens by the Bay', details: 'Hotel check-in.' },
-      { day: 2, title: 'City Tour & Cruise Terminal Boarding', details: 'Board cruise ship in evening.' },
-      { day: 3, title: 'Cruising High Seas — Water Slides & Shows', details: 'Casino, theater & pool deck.' },
-      { day: 4, title: 'Port of Call Excursion (Penang / Phuket)', details: 'Disembark for shore tour.' },
-      { day: 5, title: 'Disembark Cruise & Sentosa Island', details: 'Resort stay in Singapore.' },
-      { day: 6, title: 'Departure', details: 'Airport drop.' }
-    ],
-    inclusions: ['3 Nights Royal Caribbean Cruise Cabin + 2 Nights Singapore Hotel', 'All Meals on Cruise', 'Cruise Taxes & Gratuities', 'Private Airport Transfers'],
-    exclusions: ['Airfare', 'Singapore Visa']
+    exclusions: [
+      'Hotel accommodation.',
+      'Airfare.',
+      'UAE visa charges.',
+      'Travel Insurance.',
+      'Breakfast, lunch and meals not specifically mentioned.',
+      'Tourism Dirham / hotel taxes, if applicable.',
+      'Personal expenses.',
+      'Optional activities and additional attraction tickets.',
+      'Tips and gratuities.',
+      'Early check-in and late check-out charges.',
+      'Any service not specifically mentioned under inclusions.'
+    ]
   }
 ];
 

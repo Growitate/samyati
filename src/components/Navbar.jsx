@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X, Plane } from 'lucide-react';
+import { scrollTo } from '../smoothScroll';
 
-export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate, currentView = 'home' }) {
+export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'home' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,23 +24,23 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
     if (target === 'home') {
       if (onNavigate) onNavigate('home');
       else window.location.hash = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0);
     } else if (target === 'desh') {
       if (onNavigate) onNavigate('desh');
       else window.location.hash = '#desh';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0);
     } else if (target === 'videsh') {
       if (onNavigate) onNavigate('videsh');
       else window.location.hash = '#videsh';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0);
     } else if (target === 'about') {
       if (onNavigate) onNavigate('about');
       else window.location.hash = '#about';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0);
     } else if (target === 'contact') {
       if (onNavigate) onNavigate('contact');
       else window.location.hash = '#contact';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0);
     }
   };
 
@@ -193,28 +194,41 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           left: 0;
           right: 0;
           z-index: 1000;
-          padding-top: 16px;
-          padding-bottom: 14px;
+          padding-top: 12px;
+          padding-bottom: 12px;
           background: transparent;
-          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .navbar-wrapper.scrolled,
         .navbar-wrapper.solid-header {
-          padding-top: 10px;
-          padding-bottom: 10px;
-          background: rgba(15, 23, 42, 0.92);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+          padding-top: 8px;
+          padding-bottom: 8px;
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .navbar-wrapper.scrolled .mobile-hamburger-btn,
+        .navbar-wrapper.solid-header .mobile-hamburger-btn {
+          background: #f1f5f9;
+          color: #0f172a;
+          border: 1px solid #e2e8f0;
+        }
+
+        .navbar-wrapper.scrolled .btn-pill-white,
+        .navbar-wrapper.solid-header .btn-pill-white {
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
         }
 
         .navbar-content {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 74px;
+          height: 58px;
         }
 
         .nav-zone-left {
@@ -229,13 +243,18 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .brand-logo-img {
-          height: 72px;
+          height: 56px;
           width: auto;
-          max-width: 250px;
+          max-width: 220px;
           object-fit: contain;
-          transition: transform 0.25s ease;
+          transition: transform 0.25s ease, height 0.25s ease;
           display: block;
           filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
+        }
+
+        .navbar-wrapper.scrolled .brand-logo-img,
+        .navbar-wrapper.solid-header .brand-logo-img {
+          height: 48px;
         }
 
         .brand-logo-img:hover {
@@ -243,7 +262,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .brand-logo-img-drawer {
-          height: 70px;
+          height: 58px;
           width: auto;
           object-fit: contain;
         }
@@ -252,17 +271,24 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         .nav-center-links {
           display: flex;
           align-items: center;
-          gap: 4px;
-          background: rgba(255, 255, 255, 0.72);
+          gap: 3px;
+          background: rgba(255, 255, 255, 0.85);
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
           border: 1px solid rgba(255, 255, 255, 0.85);
-          padding: 5px 6px;
+          padding: 4px 6px;
           border-radius: 9999px;
           box-shadow: 
-            0 10px 30px rgba(0, 0, 0, 0.08),
-            0 2px 8px rgba(0, 0, 0, 0.04),
+            0 6px 20px rgba(0, 0, 0, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.03),
             inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .navbar-wrapper.scrolled .nav-center-links,
+        .navbar-wrapper.solid-header .nav-center-links {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .nav-link-btn {
@@ -271,10 +297,10 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           color: #334155;
           font-size: 13.5px;
           font-weight: 600;
-          padding: 7px 18px;
+          padding: 6px 16px;
           border-radius: 9999px;
           cursor: pointer;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
           display: inline-flex;
           align-items: center;
         }
@@ -287,7 +313,7 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         .nav-link-btn.active {
           color: #ffffff;
           background: #0f172a;
-          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+          box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
           font-weight: 700;
         }
 
@@ -302,14 +328,14 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
           backdrop-filter: blur(6px);
           border: 1px solid rgba(255, 255, 255, 0.25);
           color: #ffffff;
-          padding: 8px 14px;
+          padding: 7px 13px;
           border-radius: 9999px;
           font-size: 13px;
           font-weight: 600;
           cursor: pointer;
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
           transition: var(--transition-smooth);
         }
 
@@ -318,7 +344,14 @@ export default function Navbar({ onOpenOfferModal, onOpenAdminModal, onNavigate,
         }
 
         .nav-cta {
-          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          padding: 7px 10px 7px 18px;
+          font-size: 13.5px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .nav-cta .btn-badge-icon {
+          width: 28px;
+          height: 28px;
         }
 
         .mobile-hamburger-btn {

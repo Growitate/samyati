@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, Calendar } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
 
 // Curated data collections matching reference images
 const ESCAPE_SECTIONS = [
@@ -56,15 +56,15 @@ const ESCAPE_SECTIONS = [
         packageId: 'thai-1'
       },
       {
-        id: 'maldives-honeymoon',
+        id: 'dubai-honeymoon',
         category: 'INTERNATIONAL',
-        duration: '5 DAYS',
-        title: 'Maldives — Overwater Villa · Coral Reefs',
-        desc: 'Crystal turquoise waters, private ocean deck sunrise and underwater marine life.',
-        price: '₹64,999',
-        priceLabel: 'Price on Request',
-        image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-        packageId: 'mald-1'
+        duration: '4-5 DAYS',
+        title: 'Dubai — Marina Yacht · Desert Safari · Burj Khalifa',
+        desc: 'Romantic Dubai Creek cruise, Burj Khalifa skyline views, luxury shopping and red dune desert dinner.',
+        price: '₹11,500',
+        priceLabel: 'Starting from',
+        image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
+        packageId: 'dubai-land-4d'
       },
       {
         id: 'rajasthan-honeymoon',
@@ -131,15 +131,15 @@ const ESCAPE_SECTIONS = [
         packageId: 'lad-1'
       },
       {
-        id: 'dubai-family',
+        id: 'vietnam-family',
         category: 'INTERNATIONAL',
-        duration: '5 DAYS',
-        title: 'Dubai — Burj Khalifa · Desert Safari · Atlantis',
-        desc: 'Theme parks, modern futuristic marvels, desert camps and luxury shopping.',
-        price: '₹42,500',
-        priceLabel: 'Price on Request',
-        image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
-        packageId: 'dub-1'
+        duration: '6 DAYS',
+        title: 'Vietnam — Hanoi · Halong Bay Cruise · Da Nang',
+        desc: 'Emerald cruise waters, Ba Na Hills Golden Bridge, lantern streets, and ancient heritage.',
+        price: '₹28,400',
+        priceLabel: 'Starting from',
+        image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80',
+        packageId: 'viet-hanoi-danang-6d'
       },
       {
         id: 'himachal-family',
@@ -217,21 +217,22 @@ const ESCAPE_SECTIONS = [
         packageId: 'goa-1'
       },
       {
-        id: 'maldives-beach',
+        id: 'thailand-beach',
         category: 'INTERNATIONAL',
         duration: '5 DAYS',
-        title: 'Maldives — Ocean Villas & Sandbank Cruising',
-        desc: 'Endless turquoise horizons, luxury overwater stays and private sunset dolphin safari.',
-        price: '₹64,999',
-        priceLabel: 'Price on Request',
-        image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
-        packageId: 'mald-1'
+        title: 'Thailand — Phuket · Phi Phi Speedboat · Krabi',
+        desc: 'Emerald Andaman seas, limestone lagoons, speedboat island hopping and sunset beach clubs.',
+        price: '₹22,800',
+        priceLabel: 'Starting from',
+        image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80',
+        packageId: 'thai-phuket-krabi-5d'
       }
     ]
   }
 ];
 
 function EscapeRow({ section, onSelectPackage, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   const rowScrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -474,23 +475,23 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
           font-weight: 700;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #486581;
+          color: #71717a;
           margin-bottom: 6px;
         }
 
         .escape-main-title {
-          font-family: var(--font-serif);
-          font-size: clamp(30px, 3.8vw, 44px);
-          font-weight: 700;
-          color: #102a43;
+          font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-size: clamp(28px, 3.6vw, 42px);
+          font-weight: 800;
+          color: #18181b;
           line-height: 1.15;
-          letter-spacing: -0.01em;
+          letter-spacing: -0.03em;
           margin-bottom: 8px;
         }
 
         .escape-sub-text {
           font-size: 14.5px;
-          color: #627d98;
+          color: #52525b;
           max-width: 650px;
           line-height: 1.5;
         }
@@ -505,18 +506,18 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
           background: none;
           border: none;
           font-size: 13px;
-          font-weight: 600;
-          color: #102a43;
+          font-weight: 700;
+          color: #18181b;
           cursor: pointer;
           padding: 4px 0;
-          border-bottom: 1px solid rgba(16, 42, 67, 0.4);
+          border-bottom: 1.5px solid rgba(24, 24, 27, 0.4);
           transition: all 0.2s ease;
           white-space: nowrap;
         }
 
         .escape-view-all-link:hover {
-          color: #b45309;
-          border-color: #b45309;
+          color: #d97706;
+          border-bottom-color: #d97706;
         }
 
         .escape-mini-arrows {

@@ -1,20 +1,30 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Clock, MapPin, Sparkles, Heart, Sun, ArrowRight, ShieldCheck, Crown } from 'lucide-react';
-import { PACKAGES } from '../data/travelData';
+import { usePackages } from '../context/PackageContext';
+import { scrollTo } from '../smoothScroll';
 
 export default function DestinationDetailPage({ destination, onBack, onSelectPackage, onOpenOfferModal }) {
+  const { packages: PACKAGES } = usePackages();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollTo(0, { immediate: true });
   }, [destination]);
 
   if (!destination) return null;
 
   // Filter packages for this destination
   const destinationPackages = PACKAGES.filter(p => {
-    const destName = destination.name.toLowerCase();
+    const destName = (destination.name || '').toLowerCase();
+    const destId = (destination.id || '').toLowerCase();
     const pkgDest = (p.destinationName || '').toLowerCase();
+    const pkgDestId = (p.destinationId || '').toLowerCase();
     const pkgTitle = (p.title || '').toLowerCase();
-    return pkgDest.includes(destName) || pkgTitle.includes(destName) || destName.includes(pkgDest);
+    return (
+      (destId && pkgDestId && destId === pkgDestId) ||
+      pkgDest.includes(destName) ||
+      pkgTitle.includes(destName) ||
+      destName.includes(pkgDest) ||
+      (destName.includes('uttar pradesh') && (pkgDest.includes('varanasi') || pkgTitle.includes('varanasi') || pkgTitle.includes('ayodhya') || pkgTitle.includes('prayagraj')))
+    );
   });
 
   // Fallback packages if no exact match found
@@ -24,8 +34,17 @@ export default function DestinationDetailPage({ destination, onBack, onSelectPac
 
   return (
     <div className="destination-detail-page">
-      {/* HERO BANNER */}
-      <div className="dest-hero-banner" style={{ backgroundImage: `url(${destination.image})` }}>
+      {/* HERO BANNER WITH VIBRANT DESTINATION SCENIC BACKGROUND */}
+      <div className="dest-hero-banner">
+        <img
+          src={destination.image || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=90'}
+          alt={destination.name}
+          className="dest-hero-bg-img"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=90';
+          }}
+        />
         <div className="dest-hero-overlay" />
 
         <div className="container relative-hero-content">
@@ -195,19 +214,31 @@ export default function DestinationDetailPage({ destination, onBack, onSelectPac
 
         .dest-hero-banner {
           position: relative;
-          min-height: 400px;
-          background-size: cover;
-          background-position: center center;
+          min-height: 420px;
           display: flex;
           align-items: flex-end;
           padding-bottom: 45px;
           padding-top: 120px;
+          overflow: hidden;
+          background: #0f172a;
+        }
+
+        .dest-hero-bg-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 40%;
+          z-index: 1;
+          transition: transform 0.6s ease;
         }
 
         .dest-hero-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.88) 100%);
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.65) 100%);
+          z-index: 2;
         }
 
         .relative-hero-content {

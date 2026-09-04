@@ -22,22 +22,26 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
         {/* Clean Title Header */}
         <div className="jaipur-header">
           <h2 className="jaipur-title">
-            Choose Your Realm — <span className="accent-serif">Desh</span> or <span className="accent-serif">Videsh</span>
+            <span className="realm-title-main">Choose Your Realm</span>
+            <span className="realm-title-dash"> — </span>
+            <span className="realm-title-sub">
+              <span className="accent-serif">Desh</span> or <span className="accent-serif">Videsh</span>
+            </span>
           </h2>
         </div>
 
         {/* Realm Cards Grid */}
         <div className="jaipur-window-grid">
           {/* Desh Card */}
-          <div 
+          <div
             className="jaipur-arch-card card-desh-arch"
             onClick={handleDeshClick}
           >
             <div className="arch-window-frame">
-              <img 
-                src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=85" 
-                alt="Desh Domestic Holidays" 
-                className="arch-img" 
+              <img
+                src="/desh-kerala-houseboat.jpg"
+                alt="Desh Domestic Holidays"
+                className="arch-img"
               />
               <div className="arch-overlay overlay-desh" />
 
@@ -45,7 +49,7 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
               <div className="arch-card-content">
                 <h3 className="arch-heading">Desh</h3>
 
-                <button 
+                <button
                   className="btn-explore btn-explore-desh"
                   onClick={handleDeshClick}
                 >
@@ -57,15 +61,15 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
           </div>
 
           {/* Videsh Card */}
-          <div 
+          <div
             className="jaipur-arch-card card-videsh-arch"
             onClick={handleVideshClick}
           >
             <div className="arch-window-frame">
-              <img 
-                src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=85" 
-                alt="Videsh International Holidays" 
-                className="arch-img" 
+              <img
+                src="/videsh-japan-fuji.jpg"
+                alt="Videsh International Holidays"
+                className="arch-img"
               />
               <div className="arch-overlay overlay-videsh" />
 
@@ -73,7 +77,7 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
               <div className="arch-card-content">
                 <h3 className="arch-heading">Videsh</h3>
 
-                <button 
+                <button
                   className="btn-explore btn-explore-videsh"
                   onClick={handleVideshClick}
                 >
@@ -98,10 +102,21 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
         }
 
         .jaipur-title {
-          font-size: clamp(28px, 4vw, 44px);
+          font-size: clamp(30px, 4vw, 48px);
           font-weight: 800;
           color: var(--text-dark);
-          line-height: 1.2;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+        }
+
+        .jaipur-title .accent-serif {
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 700;
+          font-size: 1.18em;
+          color: #d97706;
+          vertical-align: baseline;
+          padding: 0 0.08em;
         }
 
         /* Jaipur Window Grid */
@@ -109,35 +124,37 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 36px;
-          max-width: 800px;
+          gap: 32px;
+          max-width: 1120px;
           margin: 0 auto;
         }
 
         .jaipur-arch-card {
           position: relative;
-          width: 320px;
+          flex: 1;
+          max-width: 540px;
+          width: 100%;
           cursor: pointer;
           transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .jaipur-arch-card:hover {
-          transform: translateY(-8px);
+          transform: translateY(-6px);
         }
 
-        /* Curved Rectangle / Soft Square Window Frame */
+        /* Sleek Landscape Rectangular Window Frame */
         .arch-window-frame {
           position: relative;
-          height: 320px;
+          height: 300px;
           width: 100%;
           border-radius: 24px;
           overflow: hidden;
-          box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+          box-shadow: 0 12px 32px rgba(0,0,0,0.12);
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
-          padding: 32px 24px 28px;
-          border: 3px solid rgba(255, 255, 255, 0.8);
+          padding: 32px 30px 28px;
+          border: 3px solid rgba(255, 255, 255, 0.85);
           transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -188,7 +205,7 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
         }
 
         .arch-heading {
-          font-size: 32px;
+          font-size: 38px;
           font-weight: 800;
           line-height: 1;
           letter-spacing: -0.01em;
@@ -196,14 +213,14 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
 
         .btn-explore {
           border: none;
-          padding: 10px 22px;
-          border-radius: 8px;
-          font-size: 13px;
+          padding: 12px 26px;
+          border-radius: 10px;
+          font-size: 14px;
           font-weight: 700;
           cursor: pointer;
           display: inline-flex;
           align-items: center;
-          gap: 6px;
+          gap: 7px;
           transition: transform 0.2s, box-shadow 0.2s;
           box-shadow: 0 4px 14px rgba(0,0,0,0.25);
         }
@@ -222,10 +239,29 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
           transform: scale(1.05);
         }
 
+        .realm-title-main,
+        .realm-title-dash,
+        .realm-title-sub {
+          display: inline;
+        }
+
         @media (max-width: 720px) {
           .jaipur-window-section { padding: 32px 0 44px; }
-          .jaipur-header { margin-bottom: 24px; }
-          .jaipur-title { font-size: clamp(24px, 6vw, 30px); }
+          .jaipur-header { margin-bottom: 24px; padding: 0 16px; }
+          .jaipur-title { 
+            font-size: clamp(24px, 6.5vw, 32px); 
+            line-height: 1.25;
+          }
+          .realm-title-main {
+            display: block;
+          }
+          .realm-title-dash {
+            display: none;
+          }
+          .realm-title-sub {
+            display: block;
+            margin-top: 4px;
+          }
           .jaipur-window-grid { flex-direction: column; gap: 16px; padding: 0 16px; }
           .jaipur-arch-card { width: 100%; max-width: 100%; }
           .arch-window-frame { height: 210px; border-radius: 20px; padding: 20px 16px 16px; }

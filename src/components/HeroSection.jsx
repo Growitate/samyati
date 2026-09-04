@@ -18,11 +18,17 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         <div className="hero-combined-split">
           {/* Left Column: Professionally Aligned Headline, Subhead, Search & Badges */}
           <div className="hero-combined-left">
-            {/* Headline H1 */}
+            {/* Headline H1 with Staggered Word Reveal */}
             <h1 className="hero-combined-title">
-              <span className="title-white-bold">Rediscover Yourself </span>
-              <span className="title-white-bold">With Every </span>
-              <span className="title-teal-italic">Journey</span>
+              <span className="title-word-mask line-1">
+                <span className="reveal-word word-1">Rediscover</span>{' '}
+                <span className="reveal-word word-2">Yourself</span>
+              </span>{' '}
+              <span className="title-word-mask line-2">
+                <span className="reveal-word word-3">With</span>{' '}
+                <span className="reveal-word word-4">Every</span>{' '}
+                <span className="reveal-word word-5 title-gold-italic">Journey</span>
+              </span>
             </h1>
 
             {/* Subhead Paragraph */}
@@ -78,7 +84,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           min-height: 690px;
           background-image: url('/hero-bright-mountain.jpg');
           background-size: cover;
-          background-position: center 25%;
+          background-position: center 55%;
           display: flex;
           align-items: center;
           padding-top: 70px;
@@ -148,27 +154,73 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
 
         .hero-combined-title {
           font-size: clamp(38px, 5.2vw, 70px);
-          line-height: 1.38;
+          line-height: 1.35;
           letter-spacing: 0.035em;
           word-spacing: 0.08em;
           transform: translateY(35px);
           margin-bottom: 20px;
         }
 
-        .title-white-bold {
+        .title-word-mask {
+          display: inline-block;
+          overflow: hidden;
+          vertical-align: bottom;
+          padding-bottom: 4px;
+        }
+
+        .reveal-word {
+          display: inline-block;
           color: #ffffff;
           font-family: var(--font-sans);
           font-weight: 800;
           text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+          opacity: 0;
+          transform: translateY(115%);
+          animation: wordSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          will-change: transform, opacity;
         }
 
+        .word-1 { animation-delay: 0.1s; }
+        .word-2 { animation-delay: 0.22s; }
+        .word-3 { animation-delay: 0.36s; }
+        .word-4 { animation-delay: 0.48s; }
+        .word-5 {
+          animation: wordSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards, goldShimmer 4s ease-in-out 1s infinite;
+          animation-delay: 0.6s, 1s;
+        }
+
+        @keyframes wordSlideUp {
+          0% {
+            opacity: 0;
+            transform: translateY(115%);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .title-gold-italic,
         .title-teal-italic {
-          color: #2dd4bf;
           font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          font-weight: 600;
-          text-shadow: 0 0 24px rgba(45, 212, 191, 0.45), 0 4px 24px rgba(0, 0, 0, 0.6);
-          margin-left: 0.2em;
+          font-weight: 700;
+          font-size: 1.16em;
+          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef08a 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: #f59e0b;
+          margin-left: 0.15em;
+          display: inline-block;
+          vertical-align: baseline;
+          filter: drop-shadow(0 2px 14px rgba(245, 158, 11, 0.4));
+        }
+
+        @keyframes goldShimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         .hero-combined-subhead {
@@ -327,7 +379,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
             min-height: 85vh;
             padding-top: 55px;
             padding-bottom: 130px;
-            background-position: center 20%;
+            background-position: center 50%;
           }
           .hero-combined-left {
             transform: translateY(0px);

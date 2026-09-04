@@ -1,6 +1,5 @@
 import React from 'react';
-import { Sparkles, Heart, Target, Compass, ArrowUpRight } from 'lucide-react';
-import { BRAND_INFO } from '../data/travelData';
+import { Compass, ArrowUpRight } from 'lucide-react';
 
 export default function FounderStorySection({ onNavigate }) {
   return (
@@ -37,38 +36,19 @@ export default function FounderStorySection({ onNavigate }) {
           </p>
         </div>
 
-        {/* 2. Mission & Vision 2-Column Split */}
-        <div className="mission-vision-grid">
-          {/* Mission */}
-          <div className="mv-card mv-mission">
-            <div className="mv-icon-wrapper">
-              <Heart size={24} className="text-pink-500" />
-            </div>
-            <div className="mv-content">
-              <span className="mv-label">OUR MISSION</span>
-              <h3 className="mv-title">Personal, Transparent & Meaningful</h3>
-              <p className="mv-desc">{BRAND_INFO.mission}</p>
-            </div>
-          </div>
-
-          {/* Vision */}
-          <div className="mv-card mv-vision">
-            <div className="mv-icon-wrapper">
-              <Target size={24} className="text-amber-500" />
-            </div>
-            <div className="mv-content">
-              <span className="mv-label">OUR VISION</span>
-              <h3 className="mv-title">India’s Most Trusted Custom Travel Brand</h3>
-              <p className="mv-desc">{BRAND_INFO.vision}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* 4. View More About Us Button */}
+        {/* View More About Us Button */}
         <div className="story-cta-box">
           <button 
-            onClick={() => onNavigate ? onNavigate('about') : (window.location.hash = '#about')} 
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('about');
+              } else {
+                window.location.hash = '#about';
+              }
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            }} 
             className="btn-pill btn-pill-dark btn-story-more"
+            aria-label="View More About Us"
           >
             <span>View More About Us</span>
             <span className="btn-badge-icon">
@@ -121,6 +101,20 @@ export default function FounderStorySection({ onNavigate }) {
           line-height: 1.18;
           margin-top: 8px;
           text-align: center;
+        }
+
+        .story-h2 .accent-serif {
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 700;
+          font-size: 1.18em;
+          color: #d97706;
+          background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+          vertical-align: baseline;
+          padding: 0 0.08em;
         }
 
         /* Founders Grid */

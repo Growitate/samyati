@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plane, ArrowUpRight, PhoneCall, Mail, MapPin, ShieldCheck, Clock, Award, Sparkles, Heart, ArrowUp, CheckCircle2 } from 'lucide-react';
 import { BRAND_INFO } from '../data/travelData';
+import { scrollTo } from '../smoothScroll';
 
 const InstagramIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -26,17 +27,17 @@ const TOP_DOMESTIC = [
 
 const TOP_INTERNATIONAL = [
   { name: 'Bali Ubud Villas & Nusa Penida', dest: 'Bali' },
-  { name: 'Switzerland Swiss Alps & Lakes', dest: 'Switzerland' },
-  { name: 'Dubai Futuristic Wonders & Safari', dest: 'Dubai' },
-  { name: 'Thailand Phuket & Krabi Escapes', dest: 'Thailand' },
-  { name: 'Maldives Overwater Luxury Villas', dest: 'Maldives' },
   { name: 'Vietnam Halong Bay & Da Nang', dest: 'Vietnam' },
+  { name: 'Thailand Phuket & Krabi Escapes', dest: 'Thailand' },
+  { name: 'Kazakhstan Almaty & Charyn Canyon', dest: 'Kazakhstan' },
+  { name: 'Malaysia Kuala Lumpur & Genting', dest: 'Malaysia' },
+  { name: 'Dubai Marina & Desert Escapes', dest: 'Dubai' },
   { name: 'Singapore Marina Bay & Sentosa', dest: 'Singapore' },
 ];
 
 export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, onNavigate }) {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTo(0);
   };
 
   return (

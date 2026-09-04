@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  User, 
-  Phone, 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Send, 
-  CheckCircle2, 
-  Sparkles, 
-  Clock, 
-  ShieldCheck, 
+import {
+  User,
+  Phone,
+  MapPin,
+  Calendar,
+  Users,
+  Send,
+  CheckCircle2,
+  Sparkles,
+  Clock,
+  ShieldCheck,
   Award,
   MessageSquare,
   ChevronDown,
@@ -54,7 +54,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
     <section className="world-cta-section" id="plan">
       <div className="container">
         <div className="world-cta-content">
-          
+
           {/* Section Header */}
           <div className="cta-header">
             <div className="concierge-pill">
@@ -75,13 +75,13 @@ export default function WorldCTA({ onOpenOfferModal }) {
 
           {/* Luxury Inline Form Card */}
           <div className="world-form-card">
-            
+
             {/* Top Accent Line */}
             <div className="card-top-accent" />
 
             {!submitted ? (
               <form onSubmit={handleSubmit} className="pro-trip-form">
-                
+
                 {/* Category Switcher Tabs */}
                 <div className="category-tabs-wrapper">
                   <span className="tabs-label">Trip Type:</span>
@@ -105,7 +105,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
 
                 {/* Form Fields Grid */}
                 <div className="form-grid">
-                  
+
                   {/* Full Name */}
                   <div className="form-field-group">
                     <label className="field-label">
@@ -114,7 +114,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                     </label>
                     <div className="input-field-box">
                       <User size={16} className="field-icon" />
-                      <input 
+                      <input
                         type="text"
                         required
                         placeholder="e.g. Ananya Sharma"
@@ -133,7 +133,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                     </label>
                     <div className="input-field-box">
                       <Phone size={16} className="field-icon" />
-                      <input 
+                      <input
                         type="tel"
                         required
                         placeholder="10-digit mobile number"
@@ -239,7 +239,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                     </span>
                   </button>
 
-                  <a 
+                  <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -280,9 +280,9 @@ export default function WorldCTA({ onOpenOfferModal }) {
                 </p>
 
                 <div className="success-action-group">
-                  <a 
-                    href={whatsappUrl} 
-                    target="_blank" 
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="pro-submit-btn whatsapp-theme"
                   >
@@ -290,7 +290,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                     <span>Continue Instantly on WhatsApp</span>
                   </a>
 
-                  <button 
+                  <button
                     onClick={() => setSubmitted(false)}
                     className="pro-reset-btn"
                   >
@@ -808,3 +808,4 @@ export default function WorldCTA({ onOpenOfferModal }) {
     </section>
   );
 }
+

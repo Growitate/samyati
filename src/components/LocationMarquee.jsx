@@ -3,16 +3,16 @@ import React from 'react';
 const DESTINATIONS_MARQUEE = [
   { name: 'KASHMIR', flag: '🇮🇳' },
   { name: 'BALI', flag: '🇮🇩' },
-  { name: 'DUBAI', flag: '🇦🇪' },
   { name: 'KERALA', flag: '🇮🇳' },
-  { name: 'SWITZERLAND', flag: '🇨🇭' },
   { name: 'THAILAND', flag: '🇹🇭' },
   { name: 'LADAKH', flag: '🇮🇳' },
-  { name: 'MALDIVES', flag: '🇲🇻' },
   { name: 'GOA', flag: '🇮🇳' },
   { name: 'VIETNAM', flag: '🇻🇳' },
   { name: 'RAJASTHAN', flag: '🇮🇳' },
   { name: 'SINGAPORE', flag: '🇸🇬' },
+  { name: 'KAZAKHSTAN', flag: '🇰🇿' },
+  { name: 'MALAYSIA', flag: '🇲🇾' },
+  { name: 'DUBAI', flag: '🇦🇪' },
 ];
 
 export default function LocationMarquee() {

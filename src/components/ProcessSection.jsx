@@ -6,32 +6,32 @@ const PROCESS_STEPS = [
     step: '01',
     title: 'Consultation & Discovery',
     description: 'We listen to your travel aspirations, preferred pace, style, and culinary desires.',
-    badgeImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=85',
+    badgeImage: '/process-step-1.jpg',
+    heroImage: '/process-step-1.jpg',
     tagline: '100% Private Expeditions'
   },
   {
     step: '02',
     title: 'Tailored Route Design',
     description: 'Our local specialists handpick boutique lodges, private transfers, and unique insider access.',
-    badgeImage: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=85',
+    badgeImage: '/process-step-2.jpg',
+    heroImage: '/process-step-2.jpg',
     tagline: 'Curated Route Planning'
   },
   {
     step: '03',
     title: 'Refine & Confirm',
     description: 'Crafted to perfection. Accommodation, guides, transfers, experiences all arranged seamlessly.',
-    badgeImage: 'https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=400&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+    badgeImage: '/process-step-3.jpg',
+    heroImage: '/process-step-3.jpg',
     tagline: 'Seamless Confirmations'
   },
   {
     step: '04',
     title: 'Seamless Expedition',
     description: '24/7 dedicated concierge assistance on the ground for an effortless journey.',
-    badgeImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=400&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=85',
+    badgeImage: '/process-step-4.jpg',
+    heroImage: '/process-step-4.jpg',
     tagline: '24/7 Concierge Support'
   }
 ];
@@ -265,17 +265,24 @@ export default function ProcessSection() {
         }
 
         .process-heading {
-          font-size: clamp(24px, 3.2vw, 36px);
+          font-size: clamp(26px, 3.2vw, 38px);
           font-weight: 800;
           color: #ffffff;
-          line-height: 1.15;
+          line-height: 1.18;
           margin-bottom: 20px;
+          letter-spacing: -0.02em;
         }
 
+        .process-heading .accent-serif,
         .accent-serif {
-          font-family: 'Playfair Display', Georgia, serif;
+          font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
-          font-weight: 500;
+          font-weight: 700;
+          font-size: 1.18em;
+          color: #d97706;
+          vertical-align: baseline;
+          padding: 0 0.08em;
+          display: inline-block;
         }
 
         /* Step Indicator Row */
