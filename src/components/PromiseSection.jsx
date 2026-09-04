@@ -286,10 +286,10 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         /* Executive 2-Column Split Dashboard */
         .promise-split-dashboard {
           display: grid;
-          grid-template-columns: 1.05fr 1fr;
-          gap: 44px;
+          grid-template-columns: 0.88fr 1.12fr;
+          gap: 40px;
           align-items: center;
-          max-width: 1240px;
+          max-width: 1300px;
           margin: 0 auto;
         }
 
@@ -482,30 +482,31 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .chatbot-card-window {
           position: relative;
           background: #ffffff;
-          border-radius: 26px;
+          border-radius: 28px;
           box-shadow: 
-            0 25px 65px -10px rgba(15, 23, 42, 0.22), 
-            0 0 0 2.5px #d97706, 
-            0 0 35px rgba(217, 119, 6, 0.28);
+            0 28px 75px -10px rgba(15, 23, 42, 0.24), 
+            0 0 0 3px #d97706, 
+            0 0 45px rgba(217, 119, 6, 0.32);
           border: none;
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          min-height: 480px;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .chatbot-card-window:hover {
           box-shadow: 
-            0 30px 75px -10px rgba(15, 23, 42, 0.28), 
-            0 0 0 2.5px #f59e0b, 
-            0 0 45px rgba(245, 158, 11, 0.38);
+            0 34px 85px -10px rgba(15, 23, 42, 0.3), 
+            0 0 0 3px #f59e0b, 
+            0 0 55px rgba(245, 158, 11, 0.42);
         }
 
         .chatbot-header-bar {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 18px 24px;
+          padding: 22px 28px;
           background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -513,38 +514,38 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .bot-avatar-group {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 16px;
         }
 
         .bot-icon-circle {
-          width: 44px;
-          height: 44px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
           background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
           color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4);
-          border: 2px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 0 4px 16px rgba(217, 119, 6, 0.45);
+          border: 2px solid rgba(255, 255, 255, 0.35);
         }
 
         .bot-meta {
           display: flex;
           flex-direction: column;
           text-align: left;
-          gap: 2px;
+          gap: 3px;
         }
 
         .bot-title-flex {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           flex-wrap: wrap;
         }
 
         .bot-name {
-          font-size: 16.5px;
+          font-size: 18px;
           font-weight: 800;
           color: #ffffff;
           letter-spacing: -0.01em;
@@ -553,50 +554,50 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .ai-usp-pill {
           background: #d97706;
           color: #ffffff;
-          font-size: 9.5px;
+          font-size: 10px;
           font-weight: 800;
-          padding: 2px 8px;
+          padding: 3px 10px;
           border-radius: 9999px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4);
+          box-shadow: 0 2px 8px rgba(217, 119, 6, 0.45);
         }
 
         .bot-status {
-          font-size: 12px;
+          font-size: 13px;
           color: #cbd5e1;
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 7px;
           font-weight: 500;
         }
 
         .online-dot {
-          width: 8px;
-          height: 8px;
+          width: 9px;
+          height: 9px;
           background: #10b981;
           border-radius: 50%;
           display: inline-block;
-          box-shadow: 0 0 8px #10b981;
+          box-shadow: 0 0 10px #10b981;
         }
 
         .chatbot-feed {
-          padding: 20px;
+          padding: 24px 28px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 18px;
           background: #ffffff;
         }
 
         .chat-bubble-row {
           display: flex;
           align-items: flex-start;
-          gap: 10px;
+          gap: 12px;
         }
 
         .chat-avatar-mini {
-          width: 26px;
-          height: 26px;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
           background: #f1f5f9;
           color: #0f172a;
@@ -610,12 +611,12 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .chat-msg-content {
           background: #fefce8;
           border: 1px solid #e2e8f0;
-          padding: 12px 16px;
-          border-radius: 14px;
-          font-size: 13.5px;
+          padding: 15px 20px;
+          border-radius: 16px;
+          font-size: 15px;
           color: #1e293b;
-          line-height: 1.5;
-          max-width: 90%;
+          line-height: 1.55;
+          max-width: 92%;
         }
 
         .bubble-user .chat-msg-content {
@@ -626,48 +627,48 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         }
 
         .typing-indicator {
-          font-size: 12.5px;
+          font-size: 13.5px;
           color: #64748b;
           font-style: italic;
         }
 
         /* Quick 1-Tap Action Chips */
         .ai-quick-chips-bar {
-          margin-top: 8px;
+          margin-top: 10px;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
           background: #fefce8;
           border: 1px solid #fef08a;
-          padding: 12px 14px;
-          border-radius: 16px;
+          padding: 16px 18px;
+          border-radius: 18px;
         }
 
         .quick-chips-label {
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 800;
           color: #b45309;
           text-transform: uppercase;
-          letter-spacing: 0.06em;
+          letter-spacing: 0.07em;
         }
 
         .quick-chips-list {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
+          gap: 8px;
         }
 
         .ai-chip-pill {
           background: #ffffff;
           border: 1px solid #cbd5e1;
           color: #1e293b;
-          font-size: 11.5px;
+          font-size: 12.5px;
           font-weight: 700;
-          padding: 5px 12px;
+          padding: 7px 16px;
           border-radius: 9999px;
           cursor: pointer;
           transition: all 0.2s ease;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .ai-chip-pill:hover {
@@ -825,8 +826,8 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         /* Input Form Bar */
         .chatbot-input-bar {
           display: flex;
-          gap: 10px;
-          padding: 14px 18px;
+          gap: 12px;
+          padding: 16px 24px;
           background: #fefce8;
           border-top: 1px solid #e2e8f0;
         }
@@ -835,31 +836,33 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           flex: 1;
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           background: #ffffff;
           border: 2px solid #cbd5e1;
           border-radius: 9999px;
-          padding: 0 16px;
+          padding: 0 20px;
           transition: all 0.25s ease;
         }
 
         .chat-input-wrapper:focus-within {
           border-color: #d97706;
-          box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.25);
+          box-shadow: 0 0 0 3.5px rgba(217, 119, 6, 0.25);
         }
 
         .chat-input-icon {
           color: #d97706;
+          width: 18px;
+          height: 18px;
         }
 
         .chat-text-input {
           width: 100%;
           border: none;
           outline: none;
-          font-size: 13.5px;
+          font-size: 14.5px;
           font-weight: 600;
           color: #0f172a;
-          padding: 11px 0;
+          padding: 13px 0;
           font-family: inherit;
           background: transparent;
         }
@@ -867,13 +870,13 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .chat-send-btn {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 9px;
           background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: #ffffff;
           border: none;
-          padding: 11px 22px;
+          padding: 13px 26px;
           border-radius: 9999px;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 800;
           cursor: pointer;
           transition: all 0.25s ease;
@@ -890,11 +893,11 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          padding: 8px 16px;
+          gap: 8px;
+          padding: 11px 20px;
           background: #ffffff;
           border-top: 1px solid #f1f5f9;
-          font-size: 11px;
+          font-size: 12px;
           color: #64748b;
         }
 
