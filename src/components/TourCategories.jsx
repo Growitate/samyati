@@ -92,13 +92,13 @@ export default function TourCategories({ onSelectCategory, onNavigate }) {
 
       <style>{`
         .jaipur-window-section {
-          padding: 60px 0 80px;
+          padding: 36px 0 40px;
           background-color: #fefce8;
         }
 
         .jaipur-header {
           text-align: center;
-          margin-bottom: 40px;
+          margin-bottom: 22px;
         }
 
         .jaipur-title {

@@ -307,7 +307,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
       <style>{`
         .world-cta-section {
           position: relative;
-          padding: 60px 0 50px;
+          padding: 36px 0 38px;
           background-color: #fefce8;
           overflow: hidden;
         }
@@ -321,7 +321,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
         }
 
         .cta-header {
-          margin-bottom: 36px;
+          margin-bottom: 18px;
         }
 
         .concierge-pill {
@@ -386,10 +386,10 @@ export default function WorldCTA({ onOpenOfferModal }) {
           backdrop-filter: blur(20px);
           border: 1px solid rgba(228, 228, 231, 0.9);
           border-radius: 24px;
-          padding: 36px 40px;
+          padding: 32px 36px;
           box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.09), 0 10px 24px -8px rgba(0, 0, 0, 0.04);
           text-align: left;
-          margin-top: 24px;
+          margin-top: 12px;
           overflow: hidden;
         }
 

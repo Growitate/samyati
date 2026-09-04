@@ -220,7 +220,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
 
       <style>{`
         .featured-section {
-          padding: 90px 0;
+          padding: 38px 0 44px;
           background-color: #fefce8;
           overflow: hidden;
         }
@@ -279,7 +279,7 @@ export default function FeaturedTours({ onSelectPackage, onNavigate }) {
           align-items: flex-end;
           justify-content: space-between;
           gap: 30px;
-          margin-bottom: 36px;
+          margin-bottom: 22px;
         }
 
         .mb-2 { margin-bottom: 10px; }

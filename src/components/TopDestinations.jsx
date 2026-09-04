@@ -299,13 +299,13 @@ export default function TopDestinations({ onOpenOfferModal, onNavigate }) {
         .destinations-section {
           position: relative;
           background-color: #fefce8;
-          padding: 55px 0 65px;
+          padding: 36px 0 40px;
           overflow: hidden;
         }
 
         .destinations-header {
           text-align: center;
-          margin-bottom: 20px;
+          margin-bottom: 12px;
           display: flex;
           flex-direction: column;
           align-items: center;

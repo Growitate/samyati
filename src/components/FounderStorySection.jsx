@@ -62,7 +62,7 @@ export default function FounderStorySection({ onNavigate }) {
         .story-cta-box {
           display: flex;
           justify-content: center;
-          margin-top: 44px;
+          margin-top: 20px;
         }
 
         .btn-story-more {
@@ -78,13 +78,13 @@ export default function FounderStorySection({ onNavigate }) {
         }
 
         .founder-story-section {
-          padding: 100px 0;
+          padding: 48px 0 44px;
           background-color: var(--bg-card);
         }
 
         .story-header {
           text-align: center;
-          margin-bottom: 50px;
+          margin-bottom: 24px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -184,9 +184,9 @@ export default function FounderStorySection({ onNavigate }) {
           position: relative;
           background: #ffffff;
           border-radius: 28px;
-          padding: 44px 50px;
+          padding: 40px 48px;
           max-width: 900px;
-          margin: 0 auto 60px;
+          margin: 0 auto 28px;
           box-shadow: 0 8px 30px rgba(0,0,0,0.05);
         }
 

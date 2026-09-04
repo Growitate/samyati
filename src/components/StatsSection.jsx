@@ -326,14 +326,14 @@ export default function StatsSection() {
         .stats-section {
           position: relative;
           background-color: #fefce8;
-          padding-top: 80px;
-          padding-bottom: 75px;
+          padding-top: 42px;
+          padding-bottom: 36px;
           overflow: hidden;
         }
 
         .stats-header {
           text-align: center;
-          margin-bottom: 30px;
+          margin-bottom: 20px;
         }
 
         /* Hero Stat Block */
@@ -341,7 +341,7 @@ export default function StatsSection() {
           position: relative;
           display: flex;
           justify-content: center;
-          margin-bottom: 70px;
+          margin-bottom: 36px;
         }
 
         .numeral-container {
@@ -395,9 +395,9 @@ export default function StatsSection() {
         .secondary-stats-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 30px;
+          gap: 24px;
           max-width: 960px;
-          margin: 0 auto 55px;
+          margin: 0 auto 28px;
         }
 
         .stat-tile {

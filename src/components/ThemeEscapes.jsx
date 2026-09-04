@@ -396,10 +396,10 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
       <style>{`
         .theme-escapes-wrapper-section {
           background-color: #fefce8;
-          padding: 70px 0 80px;
+          padding: 36px 0 42px;
           display: flex;
           flex-direction: column;
-          gap: 60px;
+          gap: 36px;
         }
 
         .theme-escape-row-block {
@@ -460,7 +460,7 @@ export default function ThemeEscapes({ onSelectPackage, onOpenOfferModal }) {
           display: flex;
           align-items: flex-end;
           justify-content: space-between;
-          margin-bottom: 28px;
+          margin-bottom: 16px;
           gap: 24px;
         }
 

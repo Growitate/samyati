@@ -82,7 +82,7 @@ export default function TestimonialsSection() {
         /* ══ Header ════════════════════════════════════════════════ */
         .trev-header {
           background: #0f1410;
-          padding: 48px 0 36px;
+          padding: 36px 0 28px;
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -252,7 +252,7 @@ export default function TestimonialsSection() {
         .photo-marquee-container {
           position: relative;
           overflow: hidden;
-          padding: 36px 0 44px;
+          padding: 20px 0 24px;
           background: #ffffff;
         }
 

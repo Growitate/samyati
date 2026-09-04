@@ -271,7 +271,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .promise-ai-section {
           position: relative;
           background-color: #fefce8;
-          padding: 85px 0 95px;
+          padding: 40px 0 44px;
           border-top: 1px solid #e2e8f0;
           border-bottom: 1px solid #e2e8f0;
           font-family: var(--font-sans);
