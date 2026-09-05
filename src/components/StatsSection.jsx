@@ -51,18 +51,18 @@ function AnimatedCounter({ target, suffix = '', duration = 1800 }) {
 
 const STAT_TILES = [
   {
-    target: 60,
+    target: 25,
     suffix: '+',
     label: 'Destinations',
     labelBg: 'var(--bg-eyebrow-yellow)',
     caption: 'Handpicked countries across 6 continents'
   },
   {
-    target: 15,
+    target: 2,
     suffix: '+',
     label: 'Years Experience',
     labelBg: 'var(--bg-pink)',
-    caption: 'Creating bespoke expeditions since 2009'
+    caption: 'Creating bespoke expeditions & memories'
   },
   {
     target: 98,

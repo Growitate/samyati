@@ -44,10 +44,9 @@ export default function TestimonialsSection() {
                 </div>
                 <div className="trev-rating-sep" />
                 <div className="trev-review-count">
-                  <strong>2,400+</strong> verified reviews
+                  <strong>100+</strong> verified reviews
                   <div className="trev-platforms">
                     <span className="trev-platform-tag g-tag">G Google</span>
-                    <span className="trev-platform-tag t-tag">✦ TripAdvisor</span>
                   </div>
                 </div>
               </div>

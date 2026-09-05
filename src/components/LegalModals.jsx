@@ -31,7 +31,7 @@ export function PrivacyModal({ isOpen, onClose }) {
           <p>We do not sell, rent, or trade your personal data to third parties. Information is only shared with verified travel partners (hotels, airlines, local transport contractors) solely to complete your itinerary bookings.</p>
 
           <h3>4. Contact Us</h3>
-          <p>For any privacy inquiries or data update requests, email us at <strong>{BRAND_INFO.email}</strong> or call <strong>+91 {BRAND_INFO.phone}</strong>.</p>
+          <p>For any privacy inquiries or data update requests, email us at <strong>ops@samyatitheworld.co.in</strong> or <strong>sales@samyatitheworld.in</strong>, or call <strong>+91-9839640765</strong> / <strong>+91-9651640765</strong> / <strong>+91-9589110765</strong>.</p>
         </div>
 
         <div className="legal-footer">
@@ -71,7 +71,7 @@ export function TermsModal({ isOpen, onClose }) {
           <p>Travellers are responsible for maintaining valid passports (minimum 6 months validity for international destinations) and necessary visas. Samyati provides complete visa assistance and document guidance.</p>
 
           <h3>4. Contact & Support</h3>
-          <p>For support during your trip, contact our concierge at <strong>sales@samyatitheworld.in</strong> or WhatsApp <strong>+91 {BRAND_INFO.phone}</strong>.</p>
+          <p>For support during your trip, contact our concierge at <strong>sales@samyatitheworld.in</strong> or WhatsApp / Call <strong>+91-9589110765</strong> (Helplines: <strong>+91-9839640765</strong>, <strong>+91-9651640765</strong>).</p>
         </div>
 
         <div className="legal-footer">

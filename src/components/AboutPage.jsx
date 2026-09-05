@@ -3,6 +3,77 @@ import { Compass, Heart, Target, Users, ArrowUpRight, ShieldCheck, Sparkles, Che
 import { BRAND_INFO } from '../data/travelData';
 import { scrollTo } from '../smoothScroll';
 
+const FOUNDERS_DATA = [
+  {
+    name: 'Aniket Shrivastava',
+    role: 'Marketing & Growth',
+    image: '/founders/aniket.jpg',
+    fallbackIcon: Sparkles,
+    bio: 'Passionate about connecting travellers with hidden gems and building authentic brand narratives that inspire discovery.',
+    tags: ['Brand Vision', 'Growth Strategies']
+  },
+  {
+    name: 'Shardul Vikram Singh',
+    role: 'Operations & Finance',
+    image: '/founders/shardul.jpg',
+    fallbackIcon: ShieldCheck,
+    bio: 'Ensures flawless execution, transparent itemized pricing, and smooth logistics across every itinerary from start to finish.',
+    tags: ['Seamless Logistics', 'Financial Clarity']
+  },
+  {
+    name: 'Gourav Dixit',
+    role: 'Sales & Contracting',
+    image: '/founders/gourav.jpg',
+    imageStyle: { objectPosition: 'center 70%' },
+    fallbackIcon: Award,
+    bio: 'Secures premium hotel partnerships and curated local guide experiences to deliver maximum value to every guest.',
+    tags: ['Partner Relations', 'Curated Value']
+  }
+];
+
+function FounderCard({ founder }) {
+  const [imgError, setImgError] = React.useState(false);
+  const Icon = founder.fallbackIcon;
+
+  return (
+    <div className="founder-card-enhanced">
+      {/* Top Prominent Image Section */}
+      <div className="founder-card-img-banner">
+        {!imgError && founder.image ? (
+          <img
+            src={founder.image}
+            alt={founder.name}
+            className="founder-banner-photo"
+            style={founder.imageStyle}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="founder-banner-placeholder">
+            <div className="founder-avatar-chip">
+              <Icon size={32} />
+            </div>
+          </div>
+        )}
+        <div className="founder-banner-gradient" />
+        <span className="co-founder-badge">Co-Founder</span>
+      </div>
+
+      <div className="founder-card-body">
+        <h3 className="founder-name">{founder.name}</h3>
+        <span className="founder-role">{founder.role}</span>
+
+        <p className="founder-bio">{founder.bio}</p>
+
+        <div className="founder-tags-row">
+          {founder.tags.map((tag, idx) => (
+            <span key={idx} className="founder-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AboutPage({ onBack, onOpenOfferModal }) {
   useEffect(() => {
     scrollTo(0, { immediate: true });
@@ -65,7 +136,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         <div className="container">
           <div className="stats-ribbon-grid">
             <div className="stat-item">
-              <div className="stat-number">10,000+</div>
+              <div className="stat-number">1200+</div>
               <div className="stat-label">Happy Travelers</div>
             </div>
             <div className="stat-divider" />
@@ -75,7 +146,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
             </div>
             <div className="stat-divider" />
             <div className="stat-item">
-              <div className="stat-number">50+</div>
+              <div className="stat-number">25+</div>
               <div className="stat-label">Curated Destinations</div>
             </div>
             <div className="stat-divider" />
@@ -182,69 +253,46 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         </div>
 
         <div className="enhanced-founders-grid">
-          {/* Founder 1 */}
-          <div className="founder-card-enhanced">
-            <div className="founder-card-top">
-              <div className="founder-avatar-chip">
-                <Sparkles size={24} />
+          {FOUNDERS_DATA.map((founder, idx) => (
+            <FounderCard key={idx} founder={founder} />
+          ))}
+        </div>
+
+        {/* Leadership & Ground-Level Curation Visual Showcase Section */}
+        <div className="founders-ground-showcase">
+          <div className="ground-showcase-card">
+            <div className="ground-showcase-img-box">
+              <img
+                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=85"
+                alt="Samyati founders and specialists personally exploring and scouting destinations"
+                className="ground-showcase-img"
+              />
+              <div className="ground-showcase-gradient" />
+              <div className="ground-showcase-badge">
+                <Compass size={16} className="text-amber-400" />
+                <span>FIELD-VERIFIED DESTINATIONS</span>
               </div>
-              <span className="co-founder-badge">Co-Founder</span>
             </div>
-
-            <h3 className="founder-name">Aniket Shrivastava</h3>
-            <span className="founder-role">Marketing & Growth</span>
-
-            <p className="founder-bio">
-              Passionate about connecting travellers with hidden gems and building authentic brand narratives that inspire discovery.
-            </p>
-
-            <div className="founder-tags-row">
-              <span className="founder-tag">Brand Vision</span>
-              <span className="founder-tag">Growth Strategies</span>
-            </div>
-          </div>
-
-          {/* Founder 2 */}
-          <div className="founder-card-enhanced">
-            <div className="founder-card-top">
-              <div className="founder-avatar-chip">
-                <ShieldCheck size={24} />
+            <div className="ground-showcase-content">
+              <div className="ground-showcase-tag">LEADERSHIP ON THE GROUND</div>
+              <h3 className="ground-showcase-title">Personally Scouted Stays & Hidden Gems</h3>
+              <p className="ground-showcase-desc">
+                Our founders and senior travel designers actively travel to emerging destinations across India and overseas—auditing luxury resorts, inspecting private vehicles, and building direct relationships with local guides so our guests experience unmatched perfection.
+              </p>
+              <div className="ground-showcase-features">
+                <div className="showcase-feat-item">
+                  <CheckCircle2 size={16} className="text-amber-500" />
+                  <span>Direct Local Partner Contracts</span>
+                </div>
+                <div className="showcase-feat-item">
+                  <CheckCircle2 size={16} className="text-amber-500" />
+                  <span>Inspected Boutique Properties</span>
+                </div>
+                <div className="showcase-feat-item">
+                  <CheckCircle2 size={16} className="text-amber-500" />
+                  <span>24/7 Concierge Support On Tour</span>
+                </div>
               </div>
-              <span className="co-founder-badge">Co-Founder</span>
-            </div>
-
-            <h3 className="founder-name">Shardul Vikram Singh</h3>
-            <span className="founder-role">Operations & Finance</span>
-
-            <p className="founder-bio">
-              Ensures flawless execution, transparent itemized pricing, and smooth logistics across every itinerary from start to finish.
-            </p>
-
-            <div className="founder-tags-row">
-              <span className="founder-tag">Seamless Logistics</span>
-              <span className="founder-tag">Financial Clarity</span>
-            </div>
-          </div>
-
-          {/* Founder 3 */}
-          <div className="founder-card-enhanced">
-            <div className="founder-card-top">
-              <div className="founder-avatar-chip">
-                <Award size={24} />
-              </div>
-              <span className="co-founder-badge">Co-Founder</span>
-            </div>
-
-            <h3 className="founder-name">Gourav Dixit</h3>
-            <span className="founder-role">Sales & Contracting</span>
-
-            <p className="founder-bio">
-              Secures premium hotel partnerships and curated local guide experiences to deliver maximum value to every guest.
-            </p>
-
-            <div className="founder-tags-row">
-              <span className="founder-tag">Partner Relations</span>
-              <span className="founder-tag">Curated Value</span>
             </div>
           </div>
         </div>
@@ -375,7 +423,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
             </h2>
 
             <p className="cta-sub">
-              Let our founders & travel specialists craft your tailored itinerary within 2 hours.
+              Let our founders & travel specialists craft your tailored itinerary within 30 minutes.
             </p>
 
             <div className="cta-btn-group">
@@ -868,7 +916,6 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
         .founder-card-enhanced {
           background: #ffffff;
           border-radius: 24px;
-          padding: 34px 28px;
           border: 1px solid #e2e8f0;
           box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
           display: flex;
@@ -888,6 +935,7 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
           background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
           opacity: 0;
           transition: opacity 0.3s ease;
+          z-index: 10;
         }
 
         .founder-card-enhanced:hover::before {
@@ -900,36 +948,77 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
           border-color: #fcd34d;
         }
 
-        .founder-card-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 20px;
+        /* Top Card Image Banner */
+        .founder-card-img-banner {
+          position: relative;
+          width: 100%;
+          height: 180px;
+          background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+          overflow: hidden;
         }
 
-        .founder-avatar-chip {
-          width: 52px;
-          height: 52px;
-          border-radius: 16px;
-          background: linear-gradient(135deg, #fffbe6 0%, #fef3c7 100%);
-          color: #b45309;
-          border: 1px solid #fef08a;
+        .founder-banner-photo {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        .founder-card-enhanced:hover .founder-banner-photo {
+          transform: scale(1.06);
+        }
+
+        .founder-banner-placeholder {
+          width: 100%;
+          height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
+          background: radial-gradient(circle at center, #fef3c7 0%, #fde68a 100%);
         }
 
-        .co-founder-badge {
+        .founder-banner-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%);
+          pointer-events: none;
+        }
+
+        .founder-avatar-chip {
+          width: 64px;
+          height: 64px;
+          border-radius: 20px;
+          background: #ffffff;
+          color: #b45309;
+          border: 2px solid #fef08a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 6px 16px rgba(217, 119, 6, 0.15);
+        }
+
+        .founder-card-body {
+          padding: 24px 26px 30px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+
+        .founder-card-enhanced .co-founder-badge {
+          position: absolute;
+          top: 14px;
+          right: 14px;
           font-size: 10.5px;
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.08em;
           background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
           color: #ffffff;
-          padding: 4px 14px;
+          padding: 5px 14px;
           border-radius: 9999px;
-          box-shadow: 0 3px 10px rgba(217, 119, 6, 0.25);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+          z-index: 5;
         }
 
         .founder-name {
@@ -968,6 +1057,128 @@ export default function AboutPage({ onBack, onOpenOfferModal }) {
           padding: 5px 12px;
           border-radius: 8px;
           border: 1px solid #fef08a;
+        }
+
+        /* Ground-Level Curation Showcase */
+        .founders-ground-showcase {
+          max-width: 1100px;
+          margin: 0 auto 90px auto;
+        }
+
+        .ground-showcase-card {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+          transition: all 0.3s ease;
+        }
+
+        .ground-showcase-card:hover {
+          box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+          border-color: #fcd34d;
+        }
+
+        .ground-showcase-img-box {
+          position: relative;
+          min-height: 320px;
+          overflow: hidden;
+        }
+
+        .ground-showcase-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.6s ease;
+        }
+
+        .ground-showcase-card:hover .ground-showcase-img {
+          transform: scale(1.04);
+        }
+
+        .ground-showcase-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+        }
+
+        .ground-showcase-badge {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(15, 23, 42, 0.85);
+          backdrop-filter: blur(10px);
+          color: #ffffff;
+          padding: 7px 16px;
+          border-radius: 9999px;
+          font-size: 11.5px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+
+        .ground-showcase-content {
+          padding: 40px 36px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .ground-showcase-tag {
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          color: #d97706;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+        }
+
+        .ground-showcase-title {
+          font-size: clamp(22px, 2.2vw, 28px);
+          font-weight: 800;
+          color: #0f172a;
+          margin-bottom: 12px;
+          line-height: 1.25;
+        }
+
+        .ground-showcase-desc {
+          font-size: 14.5px;
+          color: #64748b;
+          line-height: 1.7;
+          margin-bottom: 22px;
+        }
+
+        .ground-showcase-features {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .showcase-feat-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 13.5px;
+          font-weight: 700;
+          color: #1e293b;
+        }
+
+        @media (max-width: 900px) {
+          .ground-showcase-card {
+            grid-template-columns: 1fr;
+          }
+          .ground-showcase-img-box {
+            min-height: 240px;
+          }
+          .ground-showcase-content {
+            padding: 28px 22px;
+          }
         }
 
         /* 5. Mission & Vision Grid */

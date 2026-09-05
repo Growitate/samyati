@@ -104,6 +104,29 @@ function mergePackages(existingPackages, codePackages) {
 }
 
 /**
+ * Synchronize and merge database with destinations from code.
+ */
+function mergeDestinations(existingDestinations = [], codeDestinations = []) {
+  const existingMap = new Map(existingDestinations.map(d => [d.id.toLowerCase(), d]));
+  const merged = [...existingDestinations];
+
+  let addedCount = 0;
+  for (const codeDest of codeDestinations) {
+    if (!existingMap.has(codeDest.id.toLowerCase())) {
+      merged.push(codeDest);
+      existingMap.set(codeDest.id.toLowerCase(), codeDest);
+      addedCount++;
+    }
+  }
+
+  if (addedCount > 0) {
+    console.log(`[DB] Auto-synced ${addedCount} new destination(s) from code into file database.`);
+  }
+
+  return merged;
+}
+
+/**
  * Initialize the database file
  */
 export async function initDatabase() {
@@ -112,11 +135,11 @@ export async function initDatabase() {
   return new Promise((resolve, reject) => {
     writeQueue = writeQueue.then(async () => {
       try {
-        const { packages: codePackages, destinations } = await loadCodePackages();
+        const { packages: codePackages, destinations: codeDestinations } = await loadCodePackages();
         let currentData = {
           version: '1.0.0',
           lastModified: new Date().toISOString(),
-          destinations: destinations,
+          destinations: codeDestinations,
           packages: []
         };
 
@@ -125,17 +148,20 @@ export async function initDatabase() {
             const raw = await fs.promises.readFile(DB_FILE, 'utf8');
             const parsed = JSON.parse(raw);
             const existingPackages = Array.isArray(parsed.packages) ? parsed.packages : [];
+            const existingDestinations = Array.isArray(parsed.destinations) ? parsed.destinations : [];
+            
             const mergedPackages = mergePackages(existingPackages, codePackages);
+            const mergedDestinations = mergeDestinations(existingDestinations, codeDestinations);
             
             currentData = {
               version: parsed.version || '1.0.0',
               lastModified: new Date().toISOString(),
-              destinations: parsed.destinations && parsed.destinations.length ? parsed.destinations : destinations,
+              destinations: mergedDestinations,
               packages: mergedPackages
             };
 
-            // Write back if packages were added
-            if (mergedPackages.length !== existingPackages.length) {
+            // Write back if packages or destinations were added
+            if (mergedPackages.length !== existingPackages.length || mergedDestinations.length !== existingDestinations.length) {
               await atomicWrite(DB_FILE, currentData);
             }
           } catch (readErr) {

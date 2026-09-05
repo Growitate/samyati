@@ -30,6 +30,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [selectedWaIndex, setSelectedWaIndex] = useState(2);
 
   const handleCategoryChange = (cat) => {
     setActiveCategory(cat);
@@ -39,16 +40,23 @@ export default function WorldCTA({ onOpenOfferModal }) {
     }
   };
 
+  const handleInputChange = (field, val) => {
+    setFormData((prev) => ({ ...prev, [field]: val }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
+  const currentWaRaw = BRAND_INFO.phones?.[selectedWaIndex]?.raw || '9589110765';
+  const currentWaFormatted = BRAND_INFO.phones?.[selectedWaIndex]?.number || '+91-9589110765';
+
   const whatsappMessage = encodeURIComponent(
     `Hi Samyati The World!\nI would like to get a personalized trip itinerary:\n\n• Traveler Name: ${formData.name}\n• Contact / WhatsApp: ${formData.phone}\n• Trip Type: ${activeCategory} Holidays\n• Preferred Destination: ${formData.destination}\n• Group Size: ${formData.travellers}\n• Travel Timeframe: ${formData.travelMonth}\n• Budget Range: ${formData.budget}\n\nPlease share the best custom plan and pricing!`
   );
 
-  const whatsappUrl = `https://wa.me/91${BRAND_INFO.phone}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/91${currentWaRaw}?text=${whatsappMessage}`;
 
   return (
     <section className="world-cta-section" id="plan">
@@ -69,7 +77,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
             </h2>
 
             <p className="world-cta-subheading">
-              Curate your dream escape with our luxury trip designers. Receive a bespoke day-by-day itinerary & transparent pricing in under 2 hours.
+              Curate your dream escape with our luxury trip designers. Receive a bespoke day-by-day itinerary & transparent pricing in under 30 minutes.
             </p>
           </div>
 
@@ -230,6 +238,24 @@ export default function WorldCTA({ onOpenOfferModal }) {
 
                 </div>
 
+                {/* 3-Number WhatsApp Selector Bar */}
+                <div className="cta-wa-selector-bar">
+                  <span className="cta-wa-label">WhatsApp Helpline:</span>
+                  <div className="cta-wa-pills">
+                    {BRAND_INFO.phones?.map((item, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setSelectedWaIndex(idx)}
+                        className={`cta-wa-pill ${selectedWaIndex === idx ? 'active' : ''}`}
+                      >
+                        <span className="cta-pill-dot" />
+                        <span>{item.number}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Form Actions Row */}
                 <div className="form-action-row">
                   <button type="submit" className="pro-submit-btn">
@@ -244,6 +270,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="pro-whatsapp-btn"
+                    title={`Chat on WhatsApp with ${currentWaFormatted}`}
                   >
                     <MessageSquare size={16} />
                     <span>Chat on WhatsApp</span>
@@ -254,7 +281,7 @@ export default function WorldCTA({ onOpenOfferModal }) {
                 <div className="pro-trust-footer">
                   <div className="trust-badge">
                     <Clock size={13} className="trust-icon" />
-                    <span>2-Hour Guaranteed Response</span>
+                    <span>30-Minute Guaranteed Response</span>
                   </div>
                   <div className="trust-sep">•</div>
                   <div className="trust-badge">
@@ -572,6 +599,67 @@ export default function WorldCTA({ onOpenOfferModal }) {
           display: flex;
           align-items: center;
           justify-content: center;
+        }
+
+        .cta-wa-selector-bar {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 14px;
+          flex-wrap: wrap;
+        }
+
+        .cta-wa-label {
+          font-size: 11.5px;
+          font-weight: 700;
+          color: #71717a;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+
+        .cta-wa-pills {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          flex-wrap: wrap;
+        }
+
+        .cta-wa-pill {
+          background: #f4f4f5;
+          border: 1px solid #e4e4e7;
+          color: #3f3f46;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 9999px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          transition: all 0.2s ease;
+        }
+
+        .cta-wa-pill:hover {
+          border-color: #10b981;
+          color: #059669;
+        }
+
+        .cta-wa-pill.active {
+          background: #ecfdf5;
+          border-color: #10b981;
+          color: #047857;
+          box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+        }
+
+        .cta-pill-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #d4d4d8;
+        }
+
+        .cta-wa-pill.active .cta-pill-dot {
+          background: #10b981;
         }
 
         .pro-whatsapp-btn {

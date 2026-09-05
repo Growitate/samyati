@@ -53,6 +53,27 @@ const VIDESH_DESTINATIONS = [
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=85',
     tagline: 'Burj Khalifa, Desert Safari & Luxury Escapes',
     category: 'International'
+  },
+  {
+    id: 'srilanka',
+    name: 'Sri Lanka',
+    image: 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Temple of the Tooth, Tea Hills & Bentota Beach',
+    category: 'International'
+  },
+  {
+    id: 'uzbekistan',
+    name: 'Uzbekistan',
+    image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Silk Road Registan, Tashkent & Bukhara Minarets',
+    category: 'International'
+  },
+  {
+    id: 'georgia',
+    name: 'Georgia',
+    image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Old Tbilisi, Kazbegi Peaks & Gudauri Slopes',
+    category: 'International'
   }
 ];
 

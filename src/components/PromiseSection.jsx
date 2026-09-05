@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Sparkles, 
   Bot, 
@@ -15,64 +15,108 @@ import {
   Heart, 
   Send,
   MessageSquare,
-  CheckCircle2
+  CheckCircle2,
+  RotateCcw,
+  Zap,
+  PhoneCall
 } from 'lucide-react';
 import { usePackages } from '../context/PackageContext';
+import { sendChatMessage, formatAiMarkdown, GROQ_MODELS } from '../utils/aiService';
 
 export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
   const { packages: PACKAGES } = usePackages();
   const [realm, setRealm] = useState('Domestic');
   const [vibe, setVibe] = useState('Mountains & Snow');
   const [customInput, setCustomInput] = useState('');
+  const [activeModel, setActiveModel] = useState(GROQ_MODELS.PRIMARY);
+  const [modelLabel, setModelLabel] = useState('Instant Concierge');
 
   const [chatLog, setChatLog] = useState([
     {
       id: 1,
       sender: 'ai',
-      text: "Hello! I'm Samyati AI, your personal travel advisor. Tell me what type of trip you are planning today or select your options below!"
+      text: "Hi! How can I help you today? I'm your travel expert and consultant here at Samyati. Where are you planning to travel, or what kind of trip do you have in mind?"
     }
   ]);
 
   const [isTyping, setIsTyping] = useState(false);
   const [recommendations, setRecommendations] = useState(null);
 
-  const handleConsultAI = (selectedRealm = realm, selectedVibe = vibe, userText = null) => {
+  const chatFeedRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  // Auto-scroll to bottom of chat feed on every message / recommendation (like WhatsApp)
+  useEffect(() => {
+    if (chatFeedRef.current) {
+      chatFeedRef.current.scrollTo({
+        top: chatFeedRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [chatLog, isTyping, recommendations]);
+
+  const handleConsultAI = async (selectedRealm = realm, selectedVibe = vibe, userText = null) => {
     const promptText = userText 
       ? userText 
       : `Looking for a ${selectedVibe} trip in ${selectedRealm === 'Any' ? 'Any destination' : selectedRealm}.`;
 
-    // Add user message
+    // Add user message to UI
     const userMsg = { id: Date.now(), sender: 'user', text: promptText };
-    setChatLog((prev) => [...prev, userMsg]);
+    const updatedLog = [...chatLog, userMsg];
+    setChatLog(updatedLog);
     setIsTyping(true);
     setRecommendations(null);
 
-    setTimeout(() => {
-      let filtered = PACKAGES.filter((p) => {
-        if (selectedRealm !== 'Any' && p.category !== selectedRealm) return false;
-        return true;
+    try {
+      const response = await sendChatMessage({
+        messages: updatedLog.map(m => ({
+          role: m.sender === 'user' ? 'user' : 'assistant',
+          content: m.text
+        })),
+        prompt: promptText,
+        category: userText ? '' : (selectedRealm === 'Any' ? '' : selectedRealm),
+        model: activeModel
       });
-
-      if (filtered.length < 2) filtered = PACKAGES;
-
-      const top2 = filtered.slice(0, 2).map((pkg, idx) => ({
-        ...pkg,
-        matchScore: idx === 0 ? '98% Match' : '94% Match',
-        aiReason: idx === 0 
-          ? `Highest match for your ${selectedVibe.toLowerCase()} preference.`
-          : `Top recommended for ${selectedRealm} travellers.`
-      }));
 
       const aiReply = {
         id: Date.now() + 1,
         sender: 'ai',
-        text: `Here are the top recommended packages matching your request for ${selectedVibe}:`
+        text: response.reply,
+        modelUsed: response.modelUsed,
+        latencyMs: response.latencyMs
       };
 
-      setChatLog((prev) => [...prev, aiReply]);
-      setRecommendations(top2);
+      setChatLog(prev => [...prev, aiReply]);
+      setModelLabel('Instant Concierge');
+
+      // Only show package recommendations if the consultant provided matched packages for a trip query
+      if (response.matchedPackages && response.matchedPackages.length > 0) {
+        setRecommendations(response.matchedPackages);
+      } else {
+        setRecommendations(null);
+      }
+    } catch (err) {
+      console.error('Chat error:', err);
+      setChatLog(prev => [...prev, {
+        id: Date.now() + 1,
+        sender: 'ai',
+        text: "I'm having a brief connection delay. Please feel free to select from our featured packages or reach our travel experts directly on WhatsApp (+91-9589110765)!"
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 700);
+    }
+  };
+
+  const handleResetChat = () => {
+    setChatLog([
+      {
+        id: Date.now(),
+        sender: 'ai',
+        text: "Conversation reset! How can I help you plan your next adventure today?"
+      }
+    ]);
+    setRecommendations(null);
+    setCustomInput('');
   };
 
   const handlePresetClick = (queryText) => {
@@ -96,11 +140,11 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         {/* EXECUTIVE 2-COLUMN SPLIT DASHBOARD LAYOUT */}
         <div className="promise-split-dashboard">
           
-          {/* LEFT COLUMN: Header, Description & Topic Tags from Img 1 */}
+          {/* LEFT COLUMN: Header, Description & Topic Tags */}
           <div className="promise-left-col">
             <div className="eyebrow-pill-gold mb-3">
               <Sparkles size={13} className="text-amber-600 flex-shrink-0" />
-              <span>MEET YOUR AI TRAVEL COMPANION</span>
+              <span>YOUR PERSONAL TRAVEL CONSULTANT</span>
             </div>
 
             <h2 className="promise-h2-title">
@@ -136,9 +180,9 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: AI Chatbot Dashboard Card */}
+          {/* RIGHT COLUMN: Chatbot Dashboard Card */}
           <div className="promise-right-col">
-            <div className="ai-main-card chatbot-card-window">
+            <div className="ai-main-card chatbot-card-window" data-lenis-prevent="true">
               
               {/* Chatbot Window Header */}
               <div className="chatbot-header-bar">
@@ -149,17 +193,35 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                   <div className="bot-meta">
                     <div className="bot-title-flex">
                       <h3 className="bot-name">Samyati Travel Advisor</h3>
-                      <span className="ai-usp-pill">✨ MAIN WEBSITE USP</span>
+                      <span className="ai-usp-pill">✨ Instant Concierge</span>
                     </div>
                     <span className="bot-status">
-                      <span className="online-dot" /> Live 24/7 Instant Itinerary Assistant
+                      <span className="online-dot" /> Live 24/7 Dedicated Specialist
                     </span>
                   </div>
                 </div>
+
+                <div className="chatbot-header-actions">
+                  <button 
+                    type="button" 
+                    onClick={handleResetChat} 
+                    className="btn-reset-chat" 
+                    title="Start fresh conversation"
+                  >
+                    <RotateCcw size={14} />
+                    <span>Reset</span>
+                  </button>
+                </div>
               </div>
 
-              {/* Chat Feed Messages Area */}
-              <div className="chatbot-feed">
+              {/* Chat Feed Messages Area (Scrollable with Auto-Scroll and Lenis Prevention) */}
+              <div 
+                className="chatbot-feed" 
+                ref={chatFeedRef}
+                data-lenis-prevent="true"
+                data-lenis-prevent-wheel="true"
+                data-lenis-prevent-touch="true"
+              >
                 {chatLog.map((msg) => (
                   <div 
                     key={msg.id} 
@@ -172,7 +234,20 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                     )}
 
                     <div className="chat-msg-content">
-                      <p className="msg-text">{msg.text}</p>
+                      {msg.sender === 'ai' ? (
+                        <div 
+                          className="msg-text ai-markdown-body" 
+                          dangerouslySetInnerHTML={{ __html: formatAiMarkdown(msg.text) }} 
+                        />
+                      ) : (
+                        <p className="msg-text">{msg.text}</p>
+                      )}
+
+                      {msg.latencyMs > 0 && (
+                        <span className="msg-meta-latency">
+                          ⚡ {msg.latencyMs}ms response time
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -184,8 +259,10 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                       <Bot size={14} />
                     </div>
                     <div className="chat-msg-content typing-indicator">
-                      <span>Samyati AI is crafting your recommendations</span>
-                      <span className="dot-pulse">...</span>
+                      <div className="typing-pulse-row">
+                        <Sparkles size={13} className="text-amber-500 animate-spin" />
+                        <span>Crafting your personalized itinerary...</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -203,19 +280,22 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                     <button type="button" onClick={() => handlePresetClick('Rajasthan fort and desert safari')} className="ai-chip-pill">
                       🏰 Rajasthan Forts
                     </button>
-                    <button type="button" onClick={() => handlePresetClick('Himachal 5-day mountain escape')} className="ai-chip-pill">
-                      ⛰️ Himachal Escapes
+                    <button type="button" onClick={() => handlePresetClick('Kerala 5-day backwaters & tea hills')} className="ai-chip-pill">
+                      🌴 Kerala Backwaters
+                    </button>
+                    <button type="button" onClick={() => handlePresetClick('Dubai 5-day luxury city & desert')} className="ai-chip-pill">
+                      🏙️ Dubai Highlights
                     </button>
                   </div>
                 </div>
                 
 
-                {/* AI Recommendation Output Cards */}
+                {/* Recommendation Output Cards */}
                 {recommendations && (
                   <div className="chat-results-area">
                     <div className="results-header-tag">
                       <CheckCircle2 size={15} className="text-amber-600" />
-                      <span>Top Matched Packages</span>
+                      <span>Top Recommended Samyati Packages</span>
                     </div>
 
                     <div className="results-grid">
@@ -234,8 +314,24 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                         </div>
                       ))}
                     </div>
+
+                    {/* Direct WhatsApp Consultation Button with Chat Context */}
+                    <div className="chat-wa-handshake">
+                      <a 
+                        href={`https://wa.me/919589110765?text=${encodeURIComponent('Hi Samyati Team, I just generated an itinerary on your website for: ' + (chatLog[chatLog.length - 2]?.text || 'a custom trip') + '. Can you help customize and book it?')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-chat-wa-handoff"
+                      >
+                        <PhoneCall size={14} />
+                        <span>Send this Plan to WhatsApp Expert (+91-9589110765) →</span>
+                      </a>
+                    </div>
                   </div>
                 )}
+
+                {/* Bottom marker for WhatsApp-like auto scroll */}
+                <div ref={messagesEndRef} />
               </div>
 
               {/* Chatbot Bottom Interactive Input Bar */}
@@ -244,7 +340,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                   <MessageSquare size={16} className="chat-input-icon" />
                   <input
                     type="text"
-                    placeholder="Ask Samyati AI (e.g. Recommend a 5-day snow trip in Kashmir...)"
+                    placeholder="Ask Samyati Travel Advisor (e.g. Recommend a 5-day trip for 2 people with budget...)"
                     value={customInput}
                     onChange={(e) => setCustomInput(e.target.value)}
                     className="chat-text-input"
@@ -257,10 +353,10 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                 </button>
               </form>
 
-              {/* AI Card Footer Note */}
+              {/* Card Footer Note */}
               <div className="ai-card-footer-caption">
                 <Bot size={14} className="footer-bot-icon" />
-                <span>Smart AI recommendations. <strong className="highlight-text">Real human-crafted experiences.</strong></span>
+                <span>Verified Travel Guidance • <strong className="highlight-text">Handcrafted Journeys & 24/7 Support</strong></span>
               </div>
             </div>
           </div>
@@ -492,7 +588,8 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           overflow: hidden;
           display: flex;
           flex-direction: column;
-          min-height: 480px;
+          height: 560px;
+          max-height: 560px;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -507,9 +604,10 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 22px 28px;
+          padding: 18px 24px;
           background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          flex-shrink: 0;
         }
 
         .bot-avatar-group {
@@ -583,11 +681,32 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         }
 
         .chatbot-feed {
-          padding: 24px 28px;
+          padding: 20px 24px;
           display: flex;
           flex-direction: column;
-          gap: 18px;
-          background: #ffffff;
+          gap: 16px;
+          background: #f8fafc;
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
+          touch-action: pan-y;
+          scroll-behavior: smooth;
+        }
+
+        .chatbot-feed::-webkit-scrollbar {
+          width: 6px;
+        }
+        .chatbot-feed::-webkit-scrollbar-track {
+          background: #f1f5f9;
+        }
+        .chatbot-feed::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 4px;
+        }
+        .chatbot-feed::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
         }
 
         .chat-bubble-row {
@@ -607,6 +726,50 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           justify-content: center;
           flex-shrink: 0;
           margin-top: 2px;
+        }
+
+        .chatbot-header-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .groq-model-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(245, 158, 11, 0.15);
+          border: 1px solid rgba(245, 158, 11, 0.4);
+          color: #fbbf24;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 9999px;
+          letter-spacing: 0.02em;
+        }
+
+        .groq-zap-icon {
+          color: #f59e0b;
+        }
+
+        .btn-reset-chat {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: #e2e8f0;
+          font-size: 11.5px;
+          font-weight: 600;
+          padding: 5px 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-reset-chat:hover {
+          background: rgba(255, 255, 255, 0.18);
+          color: #ffffff;
         }
 
         .chat-msg-content {
@@ -631,6 +794,182 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           font-size: 13.5px;
           color: #64748b;
           font-style: italic;
+        }
+
+        .ai-markdown-body {
+          font-size: 14.5px;
+          line-height: 1.65;
+          color: #1e293b;
+        }
+
+        .ai-markdown-body .ai-msg-h3 {
+          font-size: 16px;
+          font-weight: 800;
+          color: #0f172a;
+          margin: 14px 0 6px;
+        }
+
+        .ai-markdown-body .ai-msg-h4 {
+          font-size: 14.5px;
+          font-weight: 700;
+          color: #b45309;
+          margin: 12px 0 4px;
+        }
+
+        .ai-markdown-body .ai-msg-h5 {
+          font-size: 13.5px;
+          font-weight: 700;
+          color: #334155;
+          margin: 10px 0 4px;
+        }
+
+        .ai-markdown-body .ai-msg-p {
+          margin: 0 0 10px;
+        }
+
+        .ai-markdown-body .ai-msg-list {
+          margin: 6px 0 12px 18px;
+          padding: 0;
+          list-style-type: disc;
+        }
+
+        .ai-markdown-body .ai-msg-list li {
+          margin-bottom: 5px;
+        }
+
+        .ai-msg-media-card {
+          margin: 12px 0 14px 0;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #0f172a;
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+          max-width: 100%;
+        }
+
+        .ai-msg-img {
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.3s ease;
+        }
+
+        .ai-msg-img:hover {
+          transform: scale(1.02);
+        }
+
+        .ai-msg-img-caption {
+          display: block;
+          padding: 7px 12px;
+          font-size: 12px;
+          font-weight: 600;
+          color: #e2e8f0;
+          background: rgba(15, 23, 42, 0.95);
+          letter-spacing: 0.2px;
+        }
+
+        .ai-msg-link {
+          color: #b45309;
+          font-weight: 700;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          transition: color 0.2s ease;
+        }
+
+        .ai-msg-link:hover {
+          color: #92400e;
+        }
+
+        .ai-table-wrap {
+          margin: 12px 0;
+          overflow-x: auto;
+          border-radius: 10px;
+          border: 1px solid #e2e8f0;
+          background: #ffffff;
+        }
+
+        .ai-msg-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 13px;
+          text-align: left;
+        }
+
+        .ai-msg-table th {
+          background: #f8fafc;
+          color: #0f172a;
+          font-weight: 700;
+          padding: 8px 12px;
+          border-bottom: 2px solid #e2e8f0;
+          white-space: nowrap;
+        }
+
+        .ai-msg-table td {
+          padding: 8px 12px;
+          border-bottom: 1px solid #f1f5f9;
+          color: #334155;
+          vertical-align: top;
+        }
+
+        .ai-msg-table tr:last-child td {
+          border-bottom: none;
+        }
+
+        .ai-msg-table tr:hover {
+          background: #fdfaf6;
+        }
+
+        .ai-msg-hr {
+          border: none;
+          height: 1px;
+          background: #e2e8f0;
+          margin: 14px 0;
+        }
+
+        .msg-meta-latency {
+          display: block;
+          margin-top: 6px;
+          font-size: 10.5px;
+          color: #94a3b8;
+          font-weight: 600;
+        }
+
+        .typing-pulse-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #b45309;
+          font-weight: 600;
+        }
+
+        .chat-wa-handshake {
+          margin-top: 14px;
+          text-align: center;
+        }
+
+        .btn-chat-wa-handoff {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+          color: #ffffff;
+          font-size: 13px;
+          font-weight: 700;
+          padding: 10px 20px;
+          border-radius: 9999px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+          width: 100%;
+        }
+
+        .btn-chat-wa-handoff:hover {
+          background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+          transform: translateY(-1px);
+          color: #ffffff;
+          box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
         }
 
         /* Quick 1-Tap Action Chips */
@@ -828,9 +1167,10 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         .chatbot-input-bar {
           display: flex;
           gap: 12px;
-          padding: 16px 24px;
-          background: #fefce8;
+          padding: 14px 20px;
+          background: #ffffff;
           border-top: 1px solid #e2e8f0;
+          flex-shrink: 0;
         }
 
         .chat-input-wrapper {
@@ -895,11 +1235,12 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          padding: 11px 20px;
-          background: #ffffff;
+          padding: 10px 20px;
+          background: #f8fafc;
           border-top: 1px solid #f1f5f9;
-          font-size: 12px;
+          font-size: 11.5px;
           color: #64748b;
+          flex-shrink: 0;
         }
 
         .highlight-text {

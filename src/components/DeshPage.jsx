@@ -46,6 +46,18 @@ const DESH_DESTINATIONS = [
     name: 'Uttar Pradesh',
     image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=85',
     tagline: 'Spiritual Capital & Heritage of India'
+  },
+  {
+    id: 'goa',
+    name: 'Goa',
+    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Sun, Sand & Coastal Luxury'
+  },
+  {
+    id: 'ladakh',
+    name: 'Ladakh',
+    image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=85',
+    tagline: 'Land of High Mountain Passes'
   }
 ];
 

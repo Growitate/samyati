@@ -5,7 +5,7 @@ import { BRAND_INFO } from '../data/travelData';
 const FAQS = [
   {
     q: "How fast will I receive my customized itinerary quote?",
-    a: "Our senior travel specialists prepare day-by-day customized itineraries with accurate hotel and transport pricing within 30 minutes to 2 hours during business hours (9:30 AM – 8:30 PM IST)."
+    a: "Our senior travel specialists prepare day-by-day customized itineraries with accurate hotel and transport pricing within 30 minutes during business hours (9:30 AM – 8:30 PM IST)."
   },
   {
     q: "Is there any fee for requesting a custom trip plan?",

@@ -61,7 +61,7 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
                 <Clock size={18} className="text-emerald-400" />
               </div>
               <div className="trust-strip-text">
-                <span className="trust-strip-title">Rapid 2-Hour Response</span>
+                <span className="trust-strip-title">Rapid 30-Minute Response</span>
                 <span className="trust-strip-desc">Instant WhatsApp & phone proposals</span>
               </div>
             </div>
@@ -204,27 +204,49 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
 
               <div className="contact-row-pro">
                 <PhoneCall size={16} className="contact-icon-pro text-emerald-400" />
-                <div>
+                <div style={{ flex: 1 }}>
                   <span className="contact-label-pro">Direct WhatsApp & Helpline</span>
-                  <a 
-                    href={`https://wa.me/91${BRAND_INFO.phone}`} 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="contact-highlight-link"
-                  >
-                    +91 {BRAND_INFO.phone}
-                  </a>
+                  <div className="footer-contacts-list">
+                    <a 
+                      href="tel:+919839640765" 
+                      className="contact-highlight-link"
+                      title="Call +91-9839640765"
+                    >
+                      +91-9839640765
+                    </a>
+                    <a 
+                      href="tel:+919651640765" 
+                      className="contact-highlight-link"
+                      title="Call +91-9651640765"
+                    >
+                      +91-9651640765
+                    </a>
+                    <a 
+                      href={`https://wa.me/91${BRAND_INFO.phone}`} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="contact-highlight-link"
+                      title="WhatsApp +91-9589110765"
+                    >
+                      +91-9589110765
+                    </a>
+                  </div>
                   <span className="badge-available">24/7 Available</span>
                 </div>
               </div>
 
               <div className="contact-row-pro">
                 <Mail size={16} className="contact-icon-pro text-rose-400" />
-                <div>
+                <div style={{ flex: 1 }}>
                   <span className="contact-label-pro">Email Inquiries</span>
-                  <a href={`mailto:${BRAND_INFO.email}`} className="contact-email-link">
-                    {BRAND_INFO.email}
-                  </a>
+                  <div className="footer-contacts-list">
+                    <a href="mailto:ops@samyatitheworld.co.in" className="contact-email-link">
+                      ops@samyatitheworld.co.in
+                    </a>
+                    <a href="mailto:sales@samyatitheworld.in" className="contact-email-link">
+                      sales@samyatitheworld.in
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -538,13 +560,19 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
           line-height: 1.45;
         }
 
+        .footer-contacts-list {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          margin-bottom: 4px;
+        }
+
         .contact-highlight-link {
-          font-size: 13.5px;
-          font-weight: 800;
+          font-size: 13px;
+          font-weight: 700;
           color: #4ade80;
           text-decoration: none;
-          display: inline-block;
-          margin-right: 6px;
+          display: block;
           transition: color 0.2s;
         }
 

@@ -15,8 +15,12 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [selectedWaIndex, setSelectedWaIndex] = useState(2);
 
   if (!isOpen) return null;
+
+  const currentWaRaw = BRAND_INFO.phones?.[selectedWaIndex]?.raw || '9589110765';
+  const currentWaFormatted = BRAND_INFO.phones?.[selectedWaIndex]?.number || '+91-9589110765';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +62,7 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
               <div className="trust-pills-row">
                 <div className="trust-pill-item">
                   <Clock size={12} className="pill-icon" />
-                  <span>2-Hour Fast Response</span>
+                  <span>30-Minute Fast Response</span>
                 </div>
                 <div className="trust-pill-item">
                   <Award size={12} className="pill-icon" />
@@ -190,9 +194,6 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
               {/* Submit CTA */}
               <button type="submit" className="pro-submit-btn">
                 <span>Request Custom Itinerary & Offer</span>
-                <span className="submit-arrow-ring">
-                  <Send size={15} />
-                </span>
               </button>
 
               <p className="privacy-micro-note">
@@ -235,17 +236,32 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
             <div className="whatsapp-quick-connect-pro">
               <div className="wa-prompt-text">
                 <p className="wa-title-pro">Need an instant itinerary quote?</p>
-                <p className="wa-sub-pro">Connect directly with our senior travel specialist on WhatsApp.</p>
+                <p className="wa-sub-pro">Select a travel specialist line to connect on WhatsApp:</p>
+              </div>
+
+              <div className="wa-number-selector-pills">
+                {BRAND_INFO.phones?.map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setSelectedWaIndex(idx)}
+                    className={`wa-number-pill ${selectedWaIndex === idx ? 'active' : ''}`}
+                  >
+                    <span className="wa-pill-dot" />
+                    <span className="wa-pill-num">{item.number}</span>
+                    <span className="wa-pill-tag">{item.label}</span>
+                  </button>
+                ))}
               </div>
 
               <a
-                href={`https://wa.me/91${BRAND_INFO.phone}?text=${whatsappMessage}`}
+                href={`https://wa.me/91${currentWaRaw}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-whatsapp-action"
               >
                 <PhoneCall size={17} />
-                <span>Chat Instantly on WhatsApp (+91 {BRAND_INFO.phone})</span>
+                <span>Chat Instantly on WhatsApp ({currentWaFormatted})</span>
               </a>
             </div>
 
@@ -575,7 +591,61 @@ export default function OfferModal({ isOpen, onClose, initialDestination = '' })
           .wa-sub-pro {
             font-size: 12px;
             color: #15803d;
+            margin-bottom: 12px;
+          }
+
+          .wa-number-selector-pills {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             margin-bottom: 14px;
+            flex-wrap: wrap;
+          }
+
+          .wa-number-pill {
+            background: #ffffff;
+            border: 1px solid #86efac;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .wa-number-pill:hover {
+            border-color: #16a34a;
+            transform: translateY(-1px);
+          }
+
+          .wa-number-pill.active {
+            background: #15803d;
+            border-color: #15803d;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+          }
+
+          .wa-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+          }
+
+          .wa-number-pill.active .wa-pill-dot {
+            background: #fef08a;
+          }
+
+          .wa-pill-num {
+            font-size: 12px;
+            font-weight: 700;
+          }
+
+          .wa-pill-tag {
+            font-size: 10px;
+            opacity: 0.8;
           }
 
           .btn-whatsapp-action {

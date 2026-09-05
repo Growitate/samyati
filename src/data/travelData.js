@@ -1,4 +1,4 @@
-// Samyati The World - Destinations & Packages Data Store (7 Domestic + 7 International = 14 Destinations, 56 Packages)
+// Samyati The World - Destinations & Packages Data Store (9 Domestic + 10 International = 19 Destinations, 75 Packages)
 
 export const DESTINATIONS = [
   // --- DOMESTIC DESTINATIONS (7) ---
@@ -163,10 +163,40 @@ export const DESTINATIONS = [
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80',
     description: 'Burj Khalifa, Dubai Marina yacht cruises, exhilarating red dune Desert Safari with BBQ dinner, and luxury shopping.',
     packagesCount: 1
+  },
+  {
+    id: 'srilanka',
+    name: 'Sri Lanka',
+    category: 'International',
+    tagline: 'Emerald Tear of the Indian Ocean & Cultural Relics',
+    flag: '🇱🇰',
+    image: 'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80',
+    description: 'Kandy Temple of the Tooth, Nuwara Eliya tea hill mist, Bentota golden beach, and Madhu River safari.',
+    packagesCount: 2
+  },
+  {
+    id: 'uzbekistan',
+    name: 'Uzbekistan',
+    category: 'International',
+    tagline: 'Silk Road Wonders & Turquoise Domes',
+    flag: '🇺🇿',
+    image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=800&q=80',
+    description: 'Tashkent modern avenues, Samarkand Registan madrasas, and Bukhara ancient Silk Road minarets.',
+    packagesCount: 3
+  },
+  {
+    id: 'georgia',
+    name: 'Georgia',
+    category: 'International',
+    tagline: 'Caucasus Mountain Peaks, Old Tbilisi & Vineyards',
+    flag: '🇬🇪',
+    image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80',
+    description: 'Old Tbilisi sulfur bath domes, Kazbegi Gergeti Trinity Church, Gudauri ski slopes, and ancient wine valleys.',
+    packagesCount: 3
   }
 ];
 
-// --- 56 PACKAGES (4 PER DESTINATION) ---
+// --- 75 PACKAGES (9 DOMESTIC + 10 INTERNATIONAL DESTINATIONS) ---
 export const PACKAGES = [
   // --- KASHMIR PACKAGES ---
   {
@@ -8998,7 +9028,19 @@ Because with Samyati The World, every destination is more than a place—it is a
   mission: 'Our mission is to make travel personal, transparent, and meaningful by creating thoughtfully curated journeys that inspire every traveller to rediscover themselves.',
   vision: "Our vision is to become India’s most trusted travel brand, known for creating personalized journeys that turn every trip into a meaningful and memorable experience.",
   phone: '9589110765',
+  phoneFormatted: '+91-9589110765',
+  phones: [
+    { number: '+91-9839640765', raw: '9839640765', label: 'Helpline 1' },
+    { number: '+91-9651640765', raw: '9651640765', label: 'Helpline 2' },
+    { number: '+91-9589110765', raw: '9589110765', label: 'WhatsApp & Support' }
+  ],
   email: 'sales@samyatitheworld.in',
+  emails: [
+    { address: 'ops@samyatitheworld.co.in', label: 'Operations & Bookings' },
+    { address: 'sales@samyatitheworld.in', label: 'Sales & Inquiries' }
+  ],
+  opsEmail: 'ops@samyatitheworld.co.in',
+  salesEmail: 'sales@samyatitheworld.in',
   instagram: 'https://www.instagram.com/samyatitheworld?igsh=OHpyMm9uNGNoMTg=',
   linkedin: 'https://www.linkedin.com/company/samyati-the-world/'
 };

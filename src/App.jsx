@@ -390,7 +390,10 @@ function MainApp() {
             onNavigate={(view) => handleNavigate(view)}
           />
 
-          <PromiseSection />
+          <PromiseSection
+            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onOpenOfferModal={handleOpenOfferModal}
+          />
 
           <FeaturedTours
             onSelectPackage={(pkg) => setSelectedPackage(pkg)}

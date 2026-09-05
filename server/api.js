@@ -12,6 +12,7 @@ import {
   initDatabase
 } from './db.js';
 import { authenticateAdmin, verifyToken, checkRateLimit } from './auth.js';
+import { buildFullKnowledgeBase, buildDeepInquiryKnowledge } from '../src/data/knowledgeBase.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -150,6 +151,291 @@ export async function handleApiRequest(req, res) {
       } else {
         sendJson(res, 404, { success: false, message: 'Package not found' });
       }
+      return true;
+    }
+
+    // --- SENIOR TRAVEL CONSULTANT & KNOWLEDGE BASE RETRIEVAL ENDPOINT: POST /api/chat ---
+    if (pathname === '/api/chat' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const { messages = [], prompt, destination, category, model: requestedModel } = body;
+
+      const userMessages = Array.isArray(messages) && messages.length > 0 
+        ? messages 
+        : (prompt ? [{ role: 'user', content: prompt }] : []);
+
+      if (userMessages.length === 0) {
+        sendJson(res, 400, { success: false, message: 'No message prompt provided' });
+        return true;
+      }
+
+      // Fetch active catalog for grounding AI knowledge
+      const dbData = await getAllPackages().catch(() => ({ packages: [], destinations: [] }));
+      const allPkgs = dbData.packages || [];
+      const allDests = dbData.destinations || [];
+
+      // Separate actual user messages from bot history
+      const actualUserMessages = userMessages.filter(m => m.sender === 'user' || m.role === 'user');
+      const lastUserObj = actualUserMessages[actualUserMessages.length - 1] || userMessages[userMessages.length - 1] || {};
+      const latestUserMsg = (lastUserObj.content || lastUserObj.text || prompt || '').trim().toLowerCase();
+      const userTextCombined = actualUserMessages.map(m => m.content || m.text || '').join(' ').toLowerCase();
+
+      // Check if user's latest input is purely a greeting
+      const cleanLatest = latestUserMsg.replace(/[^a-z0-9\s]/gi, '').trim();
+      const greetingWords = ['hi', 'hello', 'hey', 'namaste', 'hola', 'good morning', 'good afternoon', 'good evening', 'hi there', 'hello there', 'hey there', 'who are you', 'how are you', 'help', 'help me', 'whats up', 'whatsup', 'yo', 'sup'];
+      const isGreeting = greetingWords.includes(cleanLatest) || (cleanLatest.split(/\s+/).length <= 2 && greetingWords.some(g => cleanLatest.startsWith(g)));
+
+      // 1. Detect Destination & City from user messages
+      let detectedDest = null;
+      if (destination) {
+        detectedDest = allDests.find(d => d.id.toLowerCase() === destination.toLowerCase() || d.name.toLowerCase() === destination.toLowerCase());
+      }
+
+      if (!detectedDest) {
+        for (const dest of allDests) {
+          if (userTextCombined.includes(dest.name.toLowerCase()) || userTextCombined.includes(dest.id.toLowerCase())) {
+            detectedDest = dest;
+            break;
+          }
+        }
+      }
+
+      const cityMap = {
+        'srinagar': 'kashmir', 'gulmarg': 'kashmir', 'pahalgam': 'kashmir', 'sonamarg': 'kashmir', 'dal lake': 'kashmir',
+        'manali': 'himachal', 'shimla': 'himachal', 'dharamshala': 'himachal', 'kasol': 'himachal', 'spiti': 'himachal', 'sissu': 'himachal', 'atal tunnel': 'himachal',
+        'munnar': 'kerala', 'alleppey': 'kerala', 'kochi': 'kerala', 'thekkady': 'kerala', 'kovalam': 'kerala', 'wayanad': 'kerala',
+        'calangute': 'goa', 'baga': 'goa', 'panaji': 'goa', 'dudhsagar': 'goa', 'anjuna': 'goa', 'candolim': 'goa',
+        'jaipur': 'rajasthan', 'udaipur': 'rajasthan', 'jodhpur': 'rajasthan', 'jaisalmer': 'rajasthan', 'pushkar': 'rajasthan',
+        'havelock': 'andaman', 'port blair': 'andaman', 'neil': 'andaman', 'radhanagar': 'andaman', 'elephant beach': 'andaman',
+        'leh': 'ladakh', 'nubra': 'ladakh', 'pangong': 'ladakh', 'khardung la': 'ladakh', 'hanle': 'ladakh', 'zanskar': 'ladakh',
+        'varanasi': 'uttar-pradesh', 'kashi': 'uttar-pradesh', 'ayodhya': 'uttar-pradesh', 'prayagraj': 'uttar-pradesh', 'ram mandir': 'uttar-pradesh', 'mathura': 'uttar-pradesh', 'vrindavan': 'uttar-pradesh',
+        'shillong': 'northeast', 'cherrapunji': 'northeast', 'kaziranga': 'northeast', 'tawang': 'northeast', 'meghalaya': 'northeast', 'assam': 'northeast', 'dawki': 'northeast', 'gangtok': 'northeast', 'darjeeling': 'northeast', 'pelling': 'northeast',
+        'ubud': 'bali', 'kuta': 'bali', 'seminyak': 'bali', 'nusa penida': 'bali', 'kintamani': 'bali', 'tanah lot': 'bali', 'gili': 'bali',
+        'hanoi': 'vietnam', 'halong': 'vietnam', 'ha long': 'vietnam', 'da nang': 'vietnam', 'hoi an': 'vietnam', 'saigon': 'vietnam', 'bana hills': 'vietnam', 'ninh binh': 'vietnam',
+        'sentosa': 'singapore', 'marina bay': 'singapore', 'universal studios': 'singapore',
+        'almaty': 'kazakhstan', 'shymbulak': 'kazakhstan', 'charyn': 'kazakhstan', 'kok tobe': 'kazakhstan', 'medeu': 'kazakhstan', 'kolsai': 'kazakhstan',
+        'kuala lumpur': 'malaysia', 'genting': 'malaysia', 'langkawi': 'malaysia', 'batu caves': 'malaysia', 'penang': 'malaysia',
+        'burj khalifa': 'dubai', 'abu dhabi': 'dubai', 'desert safari': 'dubai', 'dubai marina': 'dubai',
+        'bangkok': 'thailand', 'pattaya': 'thailand', 'phuket': 'thailand', 'krabi': 'thailand', 'phi phi': 'thailand', 'coral island': 'thailand',
+        // Sri Lanka
+        'sri lanka': 'srilanka', 'srilanka': 'srilanka', 'colombo': 'srilanka', 'kandy': 'srilanka', 'bentota': 'srilanka', 'nuwara eliya': 'srilanka', 'sigiriya': 'srilanka', 'galle': 'srilanka', 'madhu river': 'srilanka',
+        // Uzbekistan
+        'uzbekistan': 'uzbekistan', 'uzbek': 'uzbekistan', 'tashkent': 'uzbekistan', 'samarkand': 'uzbekistan', 'bukhara': 'uzbekistan', 'khiva': 'uzbekistan',
+        // Georgia
+        'georgia': 'georgia', 'tbilisi': 'georgia', 'kazbegi': 'georgia', 'gudauri': 'georgia', 'batumi': 'georgia', 'mtskheta': 'georgia'
+      };
+
+      if (!detectedDest) {
+        for (const [city, destId] of Object.entries(cityMap)) {
+          if (userTextCombined.includes(city)) {
+            detectedDest = allDests.find(d => d.id === destId);
+            if (detectedDest) break;
+          }
+        }
+      }
+
+      // Detect duration intent
+      const daysMatch = userTextCombined.match(/(\d+)\s*(?:day|days|d)/i);
+      const words = userTextCombined.split(/[\s,!?]+/).filter(w => w.length > 2);
+      const hasSpecificTripIntent = Boolean(detectedDest || daysMatch || destination || category || (words.length > 3 && !isGreeting));
+
+      // If user is just saying hi or greeting without any trip details, respond like a human consultant immediately
+      if (isGreeting && !hasSpecificTripIntent) {
+        sendJson(res, 200, {
+          success: true,
+          reply: "Hi! How can I help you today? I'm your dedicated travel consultant here at Samyati. Where are you planning to travel, or what kind of trip do you have in mind?",
+          modelUsed: 'Samyati Senior Travel Advisor',
+          latencyMs: 20,
+          matchedPackages: []
+        });
+        return true;
+      }
+
+      // 2. Score and Rank Packages strictly from catalog database based on user intent
+      const scored = allPkgs.map(pkg => {
+        let score = 0;
+        const title = (pkg.title || '').toLowerCase();
+        const destId = (pkg.destinationId || '').toLowerCase();
+        const destName = (pkg.destinationName || '').toLowerCase();
+        const desc = (pkg.description || '').toLowerCase();
+        const cat = (pkg.category || '').toLowerCase();
+
+        if (detectedDest && (destId === detectedDest.id.toLowerCase() || destName.includes(detectedDest.name.toLowerCase()))) {
+          score += 150;
+        }
+
+        if (title.includes(latestUserMsg)) score += 80;
+
+        if (daysMatch) {
+          const numDays = daysMatch[1];
+          if (title.includes(`${numDays} days`) || title.includes(`0${numDays} days`) || (pkg.duration || '').startsWith(`${numDays}D`)) {
+            score += 50;
+          }
+        }
+
+        words.forEach(w => {
+          if (title.includes(w)) score += 10;
+          if (destName.includes(w)) score += 8;
+          if (desc.includes(w)) score += 3;
+          if (cat.includes(w)) score += 3;
+        });
+
+        return { pkg, score };
+      });
+
+      const sorted = scored.sort((a, b) => b.score - a.score);
+      const topMatched = (sorted.filter(s => s.score > 0).length > 0 ? sorted.filter(s => s.score > 0) : sorted)
+        .slice(0, 3)
+        .map(s => s.pkg);
+
+      // 3. Build Grounded Official Knowledge Base
+      // A) Full Catalog Grounding: All 75 packages across all 19 destinations
+      const fullCatalogKB = buildFullKnowledgeBase(allPkgs, allDests, detectedDest);
+
+      // B) Deep Grounding: Detailed day-by-day itineraries & inclusions for top matched packages
+      const deepDetails = buildDeepInquiryKnowledge(topMatched);
+
+      let systemPrompt = '';
+
+      if (isGreeting && !hasSpecificTripIntent) {
+        // Natural human greeting response
+        systemPrompt = `You are a Senior Human Travel Consultant at "Samyati The World" (samyati.com).
+The traveler has just initiated a conversation with a greeting (like "Hi" or "Hello").
+
+YOUR CONVERSATIONAL GOAL:
+1. TALK LIKE A REAL HUMAN TRAVEL ADVISOR:
+   - Greet them warmly and naturally (e.g. "Hello! Welcome to Samyati. I'm your dedicated travel consultant.").
+   - Ask clarifying questions to understand what they have in mind:
+     * Domestic (Kashmir, Himachal, Kerala, Goa, Rajasthan, Andaman, Ladakh, Uttar Pradesh, North East) or International (Bali, Thailand, Vietnam, Singapore, Kazakhstan, Malaysia, Dubai, Sri Lanka, Uzbekistan, Georgia)?
+     * What vibe (snow & mountain peaks, tropical beaches, honeymoon luxury, family leisure, cultural heritage, spiritual)?
+     * How many days do they have in mind and who is traveling?
+   - DO NOT dump unsolicited package itineraries, pricing breakdowns, or photos yet. Keep it warm, consultative, and inviting.
+
+2. ZERO AI / BOT / SYSTEM MENTIONS:
+   - NEVER refer to yourself as an AI, bot, virtual assistant, language model, Groq, or prompt. You are a senior human travel advisor at Samyati.`;
+      } else {
+        // Specific itinerary & package recommendation
+        systemPrompt = `You are a Senior Human Travel Consultant and Destination Specialist at "Samyati The World" (samyati.com).
+You are consulting directly with a traveler. Your style is professional, sharp, factual, authoritative, and straight to the point.
+
+STRICT CONSULTANT GUIDELINES:
+1. TALK LIKE A REAL HUMAN TRAVEL EXPERT:
+   - Speak naturally in first person ("I recommend...", "In this route...", "Our on-ground team arranges...").
+   - Direct and concise: Avoid fluff, generic sales pitches, robotic greetings ("As an AI...", "I am happy to assist..."), or exaggerated hype.
+   - Give realistic travel advice: Pacing, altitude/weather tips, recommended seasons, and practical tips.
+
+2. STRICT DATA GROUNDING (OFFICIAL SAMYATI KNOWLEDGE BASE):
+   - You have access to the complete official knowledge base containing ALL 75 packages across all destinations below.
+   - You MUST use ONLY the exact package names, exact durations, exact prices, and inclusions provided in the Knowledge Base below.
+   - Never invent imaginary packages or random prices. Quote the exact numbers from the catalog.
+
+3. EMBED OFFICIAL PACKAGE IMAGES:
+   - When recommending a specific package, ALWAYS embed its official image using markdown:
+     ![Exact Package Title](official_image_url)
+
+4. STRUCTURED FORMAT:
+   - Highlight the recommended package name, duration, and starting price in bold.
+   - Provide a clean day-wise breakdown and what makes this route optimal.
+   - Include key inclusions and realistic consultant tips (weather, packing, permits).
+
+5. ZERO AI / BOT / SYSTEM MENTIONS:
+   - NEVER mention that you are an AI, bot, virtual assistant, language model, Groq, dataset, system prompt, or computer program. You are a senior human travel advisor at Samyati.
+
+6. PERSONAL CONSULTATION & BOOKINGS:
+   - For customized dates, hotel upgrades (3★/4★/5★), or private bookings, remind the traveler they can connect directly with you on WhatsApp (+91-9589110765).
+
+=== OFFICIAL SAMYATI COMPLETE TRAVEL KNOWLEDGE BASE (ALL 75 PACKAGES) ===
+${fullCatalogKB}
+========================================================================
+
+=== INQUIRY GROUND TRUTH & TOP MATCHED PACKAGE OPTIONS ===
+${deepDetails}
+=========================================================
+${category ? `User preference category: ${category}` : ''}`;
+      }
+
+      const groqApiKey = process.env.GROQ_API_KEY || 'REMOVED_GROQ_API_KEY';
+      const modelsToTry = [
+        requestedModel || 'qwen/qwen3.8-27b',
+        'openai/gpt-oss-120b',
+        'openai/gpt-oss-20b'
+      ].filter((v, i, a) => a.indexOf(v) === i);
+
+      let aiReply = '';
+      let usedModel = modelsToTry[0];
+      let latencyMs = 0;
+
+      const startTime = Date.now();
+
+      for (const modelCandidate of modelsToTry) {
+        try {
+          const groqPayload = {
+            model: modelCandidate,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              ...userMessages.map(m => ({
+                role: m.sender === 'user' || m.role === 'user' ? 'user' : 'assistant',
+                content: m.text || m.content || ''
+              }))
+            ],
+            temperature: 0.5,
+            max_tokens: 750
+          };
+
+          const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${groqApiKey}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(groqPayload)
+          });
+
+          if (groqRes.ok) {
+            const data = await groqRes.json();
+            const choice = data.choices && data.choices[0];
+            let content = choice?.message?.content || choice?.message?.reasoning || '';
+            
+            // Clean thinking tags if any
+            content = content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+
+            if (content) {
+              aiReply = content;
+              usedModel = data.model || modelCandidate;
+              latencyMs = Date.now() - startTime;
+              break;
+            }
+          } else {
+            const errBody = await groqRes.text();
+            console.warn(`[Chat API] Model ${modelCandidate} failed:`, errBody);
+          }
+        } catch (callErr) {
+          console.warn(`[Chat API] Error with model ${modelCandidate}:`, callErr.message);
+        }
+      }
+
+      if (!aiReply) {
+        // Fallback grounded response if offline
+        const topPkg = topMatched[0] || allPkgs[0];
+        aiReply = `I'd recommend checking our **${topPkg.title}** (${topPkg.duration}, starting from ${topPkg.price} per person).\n\n![${topPkg.title}](${topPkg.image})\n\nIt offers a perfectly balanced route covering all key highlights with private cab transfers and accommodation. Connect with me on WhatsApp (+91-9589110765) for custom dates and hotel upgrades!`;
+      }
+
+      const formattedRecommendations = (isGreeting && !hasSpecificTripIntent)
+        ? []
+        : topMatched.map((pkg, idx) => ({
+            ...pkg,
+            matchScore: idx === 0 ? '98% Match' : (idx === 1 ? '95% Match' : '92% Match'),
+            aiReason: idx === 0 
+              ? `Top verified itinerary from our official catalog.`
+              : `Alternative route option matching your preferences.`
+          }));
+
+      sendJson(res, 200, {
+        success: true,
+        reply: aiReply,
+        modelUsed: 'Samyati Senior Travel Advisor',
+        latencyMs,
+        matchedPackages: formattedRecommendations
+      });
       return true;
     }
 

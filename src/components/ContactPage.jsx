@@ -21,8 +21,9 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [copiedPhone, setCopiedPhone] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
+  const [selectedWaIndex, setSelectedWaIndex] = useState(2);
+  const [selectedPhoneIndex, setSelectedPhoneIndex] = useState(2);
   const [openFaq, setOpenFaq] = useState(0);
 
   useEffect(() => {
@@ -33,15 +34,10 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
     setFormData(prev => ({ ...prev, destination: dest }));
   };
 
-  const handleCopy = (text, type) => {
+  const handleCopy = (text, id) => {
     navigator.clipboard.writeText(text);
-    if (type === 'phone') {
-      setCopiedPhone(true);
-      setTimeout(() => setCopiedPhone(false), 2000);
-    } else {
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
-    }
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   const handleSubmit = (e) => {
@@ -111,7 +107,7 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
       {/* 2. MAIN CONTENT AREA */}
       <div className="container contact-main-container">
         
-        {/* DIRECT CONTACT CHANNELS (4 CARDS) */}
+        {/* DIRECT CONTACT CHANNELS (3 CARDS) */}
         <div className="contact-channels-grid">
           {/* Phone Card */}
           <div 
@@ -123,27 +119,59 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
               <div className="channel-icon-box bg-amber-500/10 text-amber-500 border-amber-500/20">
                 <PhoneCall size={22} />
               </div>
-              <span className="channel-badge badge-green">24/7 Helpline</span>
+              <span className="channel-badge badge-green">3 Helplines</span>
             </div>
 
-            <h3 className="channel-title">Direct Phone Call</h3>
-            <p className="channel-desc">Speak directly with our senior holiday concierges.</p>
+            <h3 className="channel-title">Direct Phone Calls</h3>
+            <p className="channel-desc">Select a line below to call directly or speak with our senior holiday specialists.</p>
 
-            <div className="channel-value-row">
-              <span className="channel-number">+91 {BRAND_INFO.phone}</span>
-              <button 
-                onClick={() => handleCopy(`+91${BRAND_INFO.phone}`, 'phone')} 
-                className="btn-copy-chip"
-                title="Copy phone number"
-              >
-                <Copy size={13} />
-                <span>{copiedPhone ? 'Copied!' : 'Copy'}</span>
-              </button>
+            <div className="channel-values-list">
+              {BRAND_INFO.phones.map((item, idx) => {
+                const isSelected = selectedPhoneIndex === idx;
+                return (
+                  <div 
+                    key={idx} 
+                    className={`channel-value-row selectable-row ${isSelected ? 'selected-phone' : ''}`}
+                    onClick={() => setSelectedPhoneIndex(idx)}
+                    title={`Click to select ${item.number}`}
+                  >
+                    <div className="channel-val-info">
+                      <div className="channel-number-wrapper">
+                        <span className={`radio-dot amber ${isSelected ? 'active' : ''}`}></span>
+                        <span className="channel-number">{item.number}</span>
+                      </div>
+                      <span className="channel-number-tag">{item.label}</span>
+                    </div>
+                    <div className="channel-row-actions" onClick={(e) => e.stopPropagation()}>
+                      <button 
+                        type="button"
+                        onClick={() => handleCopy(item.number, `phone-${idx}`)} 
+                        className="btn-copy-chip"
+                        title="Copy phone number"
+                      >
+                        <Copy size={12} />
+                        <span>{copiedId === `phone-${idx}` ? 'Copied!' : 'Copy'}</span>
+                      </button>
+                      <a 
+                        href={`tel:${item.number.replace(/[^0-9+]/g, '')}`} 
+                        className="btn-dial-chip"
+                        title={`Call ${item.number}`}
+                      >
+                        <PhoneCall size={12} />
+                        <span>Call</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            <a href={`tel:+91${BRAND_INFO.phone}`} className="channel-action-btn btn-call">
+            <a 
+              href={`tel:${BRAND_INFO.phones[selectedPhoneIndex]?.number.replace(/[^0-9+]/g, '') || '+919589110765'}`} 
+              className="channel-action-btn btn-call"
+            >
               <PhoneCall size={15} />
-              <span>Call +91 {BRAND_INFO.phone}</span>
+              <span>Call ({BRAND_INFO.phones[selectedPhoneIndex]?.number || '+91-9589110765'})</span>
             </a>
           </div>
 
@@ -157,24 +185,65 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
               <div className="channel-icon-box bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
                 <MessageSquare size={22} />
               </div>
-              <span className="channel-badge badge-emerald">Instant PDF Quotes</span>
+              <span className="channel-badge badge-emerald">Instant Quotes</span>
             </div>
 
             <h3 className="channel-title">WhatsApp Support</h3>
-            <p className="channel-desc">Get instant itinerary suggestions & PDF price quotes.</p>
+            <p className="channel-desc">Select one of the 3 numbers below to start your WhatsApp conversation.</p>
 
-            <div className="channel-value-row">
-              <span className="channel-number">+91 {BRAND_INFO.phone}</span>
+            <div className="channel-values-list">
+              {BRAND_INFO.phones.map((item, idx) => {
+                const isSelected = selectedWaIndex === idx;
+                return (
+                  <div 
+                    key={idx} 
+                    className={`channel-value-row selectable-row ${isSelected ? 'selected-wa' : ''}`}
+                    onClick={() => setSelectedWaIndex(idx)}
+                    title={`Click to select ${item.number} for chat`}
+                  >
+                    <div className="channel-val-info">
+                      <div className="channel-number-wrapper">
+                        <span className={`radio-dot ${isSelected ? 'active' : ''}`}></span>
+                        <span className="channel-number">{item.number}</span>
+                      </div>
+                      <span className="channel-number-tag">{item.label}</span>
+                    </div>
+
+                    <div className="channel-row-actions" onClick={(e) => e.stopPropagation()}>
+                      <button 
+                        type="button"
+                        onClick={() => handleCopy(item.number, `wa-${idx}`)} 
+                        className="btn-copy-chip"
+                        title="Copy number"
+                      >
+                        <Copy size={12} />
+                        <span>{copiedId === `wa-${idx}` ? 'Copied!' : 'Copy'}</span>
+                      </button>
+
+                      <a 
+                        href={`https://wa.me/91${item.raw}?text=Hi%20Samyati%20Team!%20I%20would%20like%20to%20inquire%20about%20planning%20a%20customized%20vacation.`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="btn-chat-direct-chip"
+                        title={`Chat directly with ${item.number}`}
+                      >
+                        <MessageSquare size={12} />
+                        <span>Chat</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <a 
-              href={`https://wa.me/91${BRAND_INFO.phone}?text=Hi%20Samyati%20Team!%20I%20would%20like%20to%20inquire%20about%20planning%20a%20customized%20vacation.`} 
+              href={`https://wa.me/91${BRAND_INFO.phones[selectedWaIndex]?.raw || '9589110765'}?text=Hi%20Samyati%20Team!%20I%20would%20like%20to%20inquire%20about%20planning%20a%20customized%20vacation.`} 
               target="_blank" 
               rel="noreferrer" 
               className="channel-action-btn btn-whatsapp"
             >
               <MessageSquare size={15} />
-              <span>Chat on WhatsApp &rarr;</span>
+              <span>Chat on WhatsApp ({BRAND_INFO.phones[selectedWaIndex]?.number || '+91-9589110765'}) &rarr;</span>
             </a>
           </div>
 
@@ -188,27 +257,44 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
               <div className="channel-icon-box bg-sky-500/10 text-sky-500 border-sky-500/20">
                 <Mail size={22} />
               </div>
-              <span className="channel-badge badge-sky">B2B & Custom</span>
+              <span className="channel-badge badge-sky">2 Official Desks</span>
             </div>
 
             <h3 className="channel-title">Email Inquiries</h3>
-            <p className="channel-desc">Send us detailed specifications or custom corporate requests.</p>
+            <p className="channel-desc">Send us detailed specifications, group travel requirements, or custom requests.</p>
 
-            <div className="channel-value-row">
-              <span className="channel-email">{BRAND_INFO.email}</span>
-              <button 
-                onClick={() => handleCopy(BRAND_INFO.email, 'email')} 
-                className="btn-copy-chip"
-                title="Copy email address"
-              >
-                <Copy size={13} />
-                <span>{copiedEmail ? 'Copied!' : 'Copy'}</span>
-              </button>
+            <div className="channel-values-list">
+              {BRAND_INFO.emails.map((item, idx) => (
+                <div key={idx} className="channel-value-row">
+                  <div className="channel-val-info">
+                    <span className="channel-email">{item.address}</span>
+                    <span className="channel-number-tag">{item.label}</span>
+                  </div>
+                  <div className="channel-row-actions">
+                    <button 
+                      type="button"
+                      onClick={() => handleCopy(item.address, `email-${idx}`)} 
+                      className="btn-copy-chip"
+                      title="Copy email address"
+                    >
+                      <Copy size={13} />
+                      <span>{copiedId === `email-${idx}` ? 'Copied!' : 'Copy'}</span>
+                    </button>
+                    <a 
+                      href={`mailto:${item.address}`} 
+                      className="btn-dial-chip"
+                      title={`Send email to ${item.address}`}
+                    >
+                      <Mail size={12} />
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
 
             <a href={`mailto:${BRAND_INFO.email}`} className="channel-action-btn btn-email">
               <Mail size={15} />
-              <span>Send Official Email</span>
+              <span>Send Email to {BRAND_INFO.email}</span>
             </a>
           </div>
         </div>
@@ -732,24 +818,50 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           margin-bottom: 14px;
         }
 
+        .channel-values-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 18px;
+        }
+
         .channel-value-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: #fefce8;
+          background: #f8fafc;
           border: 1px solid #e2e8f0;
           padding: 8px 12px;
           border-radius: 12px;
-          margin-bottom: 16px;
           transition: border-color 0.25s ease, background 0.25s ease;
         }
         .channel-card:hover .channel-value-row {
           border-color: #cbd5e1;
-          background: #ffffff;
+          background: #f1f5f9;
+        }
+
+        .channel-val-info {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .channel-number-tag {
+          font-size: 10px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          color: #64748b;
+        }
+
+        .channel-row-actions {
+          display: flex;
+          align-items: center;
+          gap: 6px;
         }
 
         .channel-number, .channel-email {
-          font-size: 13.5px;
+          font-size: 13px;
           font-weight: 700;
           color: #0f172a;
           word-break: break-all;
@@ -773,6 +885,93 @@ export default function ContactPage({ onBack, onOpenOfferModal }) {
           background: #0f172a;
           color: #ffffff;
           transform: scale(1.05);
+        }
+
+        .selectable-row {
+          cursor: pointer;
+        }
+
+        .selectable-row:hover {
+          transform: translateY(-1px);
+        }
+
+        .selectable-row.selected-wa {
+          background: #ecfdf5 !important;
+          border-color: #10b981 !important;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        }
+
+        .selectable-row.selected-phone {
+          background: #fffbeb !important;
+          border-color: #f59e0b !important;
+          box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+        }
+
+        .channel-number-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .radio-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          border: 1.5px solid #cbd5e1;
+          background: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .radio-dot.active {
+          background: #10b981;
+          border-color: #10b981;
+          box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+        }
+
+        .radio-dot.amber.active {
+          background: #f59e0b;
+          border-color: #f59e0b;
+          box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
+        }
+
+        .btn-chat-direct-chip {
+          background: #10b981;
+          color: #ffffff;
+          padding: 4px 8px;
+          border-radius: 6px;
+          font-size: 11px;
+          font-weight: 700;
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+        .btn-chat-direct-chip:hover {
+          background: #059669;
+          transform: scale(1.06);
+          color: #ffffff;
+        }
+
+        .btn-dial-chip {
+          background: #ffffff;
+          border: 1px solid #cbd5e1;
+          color: #059669;
+          padding: 4px 7px;
+          border-radius: 6px;
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          font-size: 11px;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+        .btn-dial-chip:hover {
+          background: #059669;
+          color: #ffffff;
+          border-color: #059669;
+          transform: scale(1.06);
         }
 
         .channel-action-btn {

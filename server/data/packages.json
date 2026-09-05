@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastModified": "2026-09-02T04:40:24.731Z",
+  "lastModified": "2026-09-04T15:27:40.741Z",
   "destinations": [
     {
       "id": "kashmir",
@@ -161,6 +161,36 @@
       "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
       "description": "Burj Khalifa, Dubai Marina yacht cruises, exhilarating red dune Desert Safari with BBQ dinner, and luxury shopping.",
       "packagesCount": 1
+    },
+    {
+      "id": "srilanka",
+      "name": "Sri Lanka",
+      "category": "International",
+      "tagline": "Emerald Tear of the Indian Ocean & Cultural Relics",
+      "flag": "🇱🇰",
+      "image": "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80",
+      "description": "Kandy Temple of the Tooth, Nuwara Eliya tea hill mist, Bentota golden beach, and Madhu River safari.",
+      "packagesCount": 2
+    },
+    {
+      "id": "uzbekistan",
+      "name": "Uzbekistan",
+      "category": "International",
+      "tagline": "Silk Road Wonders & Turquoise Domes",
+      "flag": "🇺🇿",
+      "image": "https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=800&q=80",
+      "description": "Tashkent modern avenues, Samarkand Registan madrasas, and Bukhara ancient Silk Road minarets.",
+      "packagesCount": 3
+    },
+    {
+      "id": "georgia",
+      "name": "Georgia",
+      "category": "International",
+      "tagline": "Caucasus Mountain Peaks, Old Tbilisi & Vineyards",
+      "flag": "🇬🇪",
+      "image": "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80",
+      "description": "Old Tbilisi sulfur bath domes, Kazbegi Gergeti Trinity Church, Gudauri ski slopes, and ancient wine valleys.",
+      "packagesCount": 3
     }
   ],
   "packages": [

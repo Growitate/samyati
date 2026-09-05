@@ -96,9 +96,9 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           position: absolute;
           inset: 0;
           background: 
-            radial-gradient(ellipse at 35% 35%, rgba(254, 243, 199, 0.22) 0%, rgba(0, 0, 0, 0) 70%),
-            linear-gradient(90deg, rgba(16, 24, 34, 0.82) 0%, rgba(16, 24, 34, 0.5) 52%, rgba(0, 0, 0, 0.05) 100%),
-            linear-gradient(180deg, rgba(16, 24, 34, 0.28) 0%, rgba(0, 0, 0, 0) 50%, rgba(16, 24, 34, 0.25) 100%);
+            radial-gradient(ellipse at 35% 35%, rgba(254, 243, 199, 0.15) 0%, rgba(0, 0, 0, 0) 70%),
+            linear-gradient(90deg, rgba(16, 24, 34, 0.42) 0%, rgba(16, 24, 34, 0.18) 55%, rgba(0, 0, 0, 0) 100%),
+            linear-gradient(180deg, rgba(16, 24, 34, 0.08) 0%, rgba(0, 0, 0, 0) 45%, rgba(16, 24, 34, 0.15) 100%);
           z-index: 1;
         }
 
@@ -173,7 +173,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           color: #ffffff;
           font-family: var(--font-sans);
           font-weight: 800;
-          text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+          text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
           opacity: 0;
           transform: translateY(115%);
           animation: wordSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -185,8 +185,8 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         .word-3 { animation-delay: 0.36s; }
         .word-4 { animation-delay: 0.48s; }
         .word-5 {
-          animation: wordSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards, goldShimmer 4s ease-in-out 1s infinite;
-          animation-delay: 0.6s, 1s;
+          animation: wordSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.6s;
         }
 
         @keyframes wordSlideUp {
@@ -205,22 +205,12 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           font-family: var(--font-serif-italic), 'Cormorant Garamond', Georgia, serif;
           font-style: italic;
           font-weight: 700;
-          font-size: 1.16em;
-          background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #fef08a 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          color: #f59e0b;
+          font-size: 1.28em;
+          color: #fef08a;
           margin-left: 0.15em;
           display: inline-block;
           vertical-align: baseline;
-          filter: drop-shadow(0 2px 14px rgba(245, 158, 11, 0.4));
-        }
-
-        @keyframes goldShimmer {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
         }
 
         .hero-combined-subhead {
@@ -235,7 +225,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           margin-top: 8px;
           transform: translateY(30px);
           margin-bottom: 28px;
-          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* Search Form Pill */
