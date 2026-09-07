@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import {
-  ShieldCheck,
   Package,
   Layers,
   Search,
@@ -11,9 +10,7 @@ import {
   ExternalLink,
   RefreshCw,
   Download,
-  Upload,
   LogOut,
-  SlidersHorizontal,
   LayoutGrid,
   Table as TableIcon,
   CheckCircle2,
@@ -22,7 +19,15 @@ import {
   Clock,
   Sparkles,
   ArrowUpDown,
-  FileJson
+  FileJson,
+  Image as ImageIcon,
+  ArrowRight,
+  MapPin,
+  Check,
+  X,
+  Plane,
+  ArrowUpRight,
+  Building2
 } from 'lucide-react';
 import { usePackages } from '../../context/PackageContext';
 import { ADMIN_STORAGE_KEYS } from '../../config/adminConfig';
@@ -103,25 +108,29 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
       })
       .sort((a, b) => {
         if (sortBy === 'title-asc') return (a.title || '').localeCompare(b.title || '');
-        if (sortBy === 'title-desc') return (b.title || '').localeCompare(a.title || '');
         if (sortBy === 'price-asc') return parsePriceNum(a.price) - parsePriceNum(b.price);
         if (sortBy === 'price-desc') return parsePriceNum(b.price) - parsePriceNum(a.price);
-        if (sortBy === 'rating-desc') return parseFloat(b.rating || '0') - parseFloat(a.rating || '0');
+        if (sortBy === 'rating-desc') return parseFloat(b.rating || 0) - parseFloat(a.rating || 0);
         return 0;
       });
   }, [packages, searchQuery, selectedCategory, selectedDestination, sortBy]);
 
-  // Metrics calculations
-  const domesticCount = useMemo(() => packages.filter(p => p.category === 'Domestic').length, [packages]);
-  const internationalCount = useMemo(() => packages.filter(p => p.category === 'International').length, [packages]);
-  const avgPrice = useMemo(() => {
-    if (!packages.length) return '₹0';
-    const sum = packages.reduce((acc, p) => acc + parsePriceNum(p.price), 0);
-    return `₹${Math.round(sum / packages.length).toLocaleString('en-IN')}`;
-  }, [packages]);
+  // Statistics
+  const stats = useMemo(() => {
+    const total = packages.length;
+    const domestic = packages.filter(p => p.category === 'Domestic').length;
+    const international = packages.filter(p => p.category === 'International').length;
+    const destSet = new Set(packages.map(p => p.destinationName || p.destinationId).filter(Boolean));
+    return {
+      total,
+      domestic,
+      international,
+      destinationsCount: destSet.size || destinations.length
+    };
+  }, [packages, destinations]);
 
   // Handlers
-  const handleOpenNew = () => {
+  const handleOpenCreate = () => {
     setEditingPackage(null);
     setIsNewPackage(true);
     setIsEditorOpen(true);
@@ -133,90 +142,83 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
     setIsEditorOpen(true);
   };
 
+  const handleCloseEditor = () => {
+    setIsEditorOpen(false);
+    setEditingPackage(null);
+    setIsNewPackage(false);
+  };
+
+  const handleSavePackage = async (formData, isNew) => {
+    try {
+      if (isNew) {
+        await createPackage(formData);
+        showToast(`Package "${formData.title}" created successfully!`, 'success');
+      } else {
+        await updatePackage(formData.id, formData);
+        showToast(`Package "${formData.title}" updated successfully!`, 'success');
+      }
+      handleCloseEditor();
+    } catch (err) {
+      showToast(err.message || 'Failed to save package', 'error');
+    }
+  };
+
+  const handleDeletePackageConfirm = async () => {
+    if (!deleteConfirmPkg) return;
+    try {
+      await deletePackage(deleteConfirmPkg.id);
+      showToast(`Package "${deleteConfirmPkg.title}" deleted from database.`, 'success');
+      setDeleteConfirmPkg(null);
+    } catch (err) {
+      showToast(err.message || 'Failed to delete package', 'error');
+    }
+  };
+
   const handleClonePackage = async (pkg) => {
     try {
       const cloned = {
         ...pkg,
-        id: `pkg-${Date.now().toString(36)}`,
+        id: `${pkg.id}-copy-${Date.now().toString(36)}`,
         title: `${pkg.title} (Copy)`,
         _createdAt: new Date().toISOString()
       };
       await createPackage(cloned);
-      showToast(`Cloned package "${cloned.title}" saved to file database.`);
+      showToast(`Cloned "${pkg.title}" as a new package!`, 'success');
     } catch (err) {
-      showToast(`Clone failed: ${err.message}`, 'error');
+      showToast(err.message || 'Failed to clone package', 'error');
     }
   };
 
-  const handleSavePackage = async (data, isNew) => {
+  const handleDownloadBackup = () => {
     try {
-      if (isNew) {
-        await createPackage(data);
-        showToast(`Created new package "${data.title}" successfully!`);
-      } else {
-        await updatePackage(data.id, data);
-        showToast(`Updated package "${data.title}" in file database.`);
-      }
-      setIsEditorOpen(false);
+      const exportData = {
+        exportedAt: new Date().toISOString(),
+        totalPackages: packages.length,
+        destinations,
+        packages
+      };
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `samyati-packages-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Database backup downloaded successfully!', 'success');
     } catch (err) {
-      showToast(`Save failed: ${err.message}`, 'error');
-      throw err;
-    }
-  };
-
-  const handleDeleteConfirm = async () => {
-    if (!deleteConfirmPkg) return;
-    try {
-      await deletePackage(deleteConfirmPkg.id);
-      showToast(`Deleted package "${deleteConfirmPkg.title}" from file database.`);
-      setDeleteConfirmPkg(null);
-    } catch (err) {
-      showToast(`Delete failed: ${err.message}`, 'error');
+      showToast('Backup export failed', 'error');
     }
   };
 
   const handleSyncWithCode = async () => {
     try {
       const res = await syncWithCode();
-      showToast(res.message || 'Synchronized database with code packages.');
+      showToast(res.message || 'Packages re-synchronized with code!', 'success');
     } catch (err) {
-      showToast(`Sync failed: ${err.message}`, 'error');
+      showToast(err.message || 'Sync failed', 'error');
     }
-  };
-
-  const handleExportJson = () => {
-    const dataStr = JSON.stringify({ packages, destinations, exportedAt: new Date().toISOString() }, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `samyati-packages-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-    showToast('Database JSON exported successfully.');
-  };
-
-  const handleImportJson = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      try {
-        const parsed = JSON.parse(event.target.result);
-        if (Array.isArray(parsed.packages)) {
-          for (const pkg of parsed.packages) {
-            await createPackage(pkg);
-          }
-          showToast(`Imported ${parsed.packages.length} packages into database.`);
-        } else {
-          showToast('Invalid backup JSON format.', 'error');
-        }
-      } catch (err) {
-        showToast(`Import failed: ${err.message}`, 'error');
-      }
-    };
-    reader.readAsText(file);
   };
 
   return (
@@ -224,304 +226,370 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
       {/* Toast Notification */}
       {toast && (
         <div className={`admin-toast toast-${toast.type}`}>
-          <CheckCircle2 size={16} />
+          {toast.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
           <span>{toast.message}</span>
         </div>
       )}
 
-      {/* Top Main Navigation Header */}
+      {/* Top Navigation Bar styled like Samyati Navbar */}
       <header className="super-admin-header">
-        <div className="header-brand-flex">
-          <div className="brand-shield-icon">
-            <ShieldCheck size={26} className="text-gold" />
+        <div className="header-left">
+          <div className="brand-logo-wrap">
+            <img
+              src="/Logo (2).png"
+              alt="Samyati The World"
+              className="brand-logo-img"
+              onError={(e) => { e.target.src = '/samyati-logo.png'; }}
+            />
           </div>
-          <div>
-            <div className="header-brand-title">
-              <span>Samyati Super Admin Vault</span>
-              <span className="db-status-pill">
+          <div className="header-title-block">
+            <div className="header-title-row">
+              <span className="admin-brand-name">
+                Control <span className="accent-serif">Vault</span>
+              </span>
+              <span className="db-live-pill">
                 <span className="live-dot"></span>
-                <span>File DB: <code>server/data/packages.json</code></span>
+                <span>File Database Active</span>
               </span>
             </div>
-            <span className="header-subtitle">
-              Central Package & Pricing Control Engine • Auto-Seeding & Sync Active
-            </span>
+            <p className="admin-subtitle"><code>server/data/packages.json</code> • {packages.length} Curated Packages</p>
           </div>
         </div>
 
-        <div className="header-action-group">
+        {/* Center Pill Capsule Navigation matching Website */}
+        <div className="nav-center-links">
           <button
-            onClick={handleSyncWithCode}
-            className="btn-header-action"
-            title="Auto-merge any new packages added to code"
+            onClick={() => { setSelectedCategory('All'); setSelectedDestination('All'); }}
+            className={`nav-link-btn ${selectedCategory === 'All' ? 'active' : ''}`}
           >
-            <RefreshCw size={14} />
-            <span>Sync with Code</span>
+            All ({packages.length})
           </button>
+          <button
+            onClick={() => setSelectedCategory('Domestic')}
+            className={`nav-link-btn ${selectedCategory === 'Domestic' ? 'active' : ''}`}
+          >
+            🇮🇳 Desh ({stats.domestic})
+          </button>
+          <button
+            onClick={() => setSelectedCategory('International')}
+            className={`nav-link-btn ${selectedCategory === 'International' ? 'active' : ''}`}
+          >
+            ✈️ Videsh ({stats.international})
+          </button>
+          <button
+            onClick={handleOpenCreate}
+            className="nav-link-btn btn-nav-create"
+            title="Create a new package"
+          >
+            <Plus size={14} />
+            <span>Add Package</span>
+          </button>
+        </div>
+
+        <div className="header-actions">
+          {onNavigateToSite && (
+            <button
+              onClick={onNavigateToSite}
+              className="btn-pill-white"
+              title="Return to customer-facing website"
+            >
+              <span>Live Website</span>
+              <ArrowUpRight size={14} />
+            </button>
+          )}
 
           <button
-            onClick={handleExportJson}
-            className="btn-header-action"
-            title="Download full database JSON backup"
+            onClick={handleDownloadBackup}
+            className="btn-pill-white"
+            title="Download JSON file database backup"
           >
             <Download size={14} />
-            <span>Export JSON</span>
+            <span>Backup</span>
           </button>
 
-          <label className="btn-header-action cursor-pointer" title="Import JSON packages">
-            <Upload size={14} />
-            <span>Import JSON</span>
-            <input
-              type="file"
-              accept=".json"
-              onChange={handleImportJson}
-              style={{ display: 'none' }}
-            />
-          </label>
-
           <button
-            onClick={onNavigateToSite}
-            className="btn-header-action btn-site-view"
+            onClick={handleSyncWithCode}
+            className="btn-pill-white"
+            title="Sync any new packages added in code"
           >
-            <ExternalLink size={14} />
-            <span>View Public Site</span>
+            <RefreshCw size={13} />
+            <span>Sync</span>
           </button>
 
           <button
             onClick={onLogout}
-            className="btn-header-action btn-logout"
-            title="End Vault Session"
+            className="btn-logout-pill"
+            title="Lock session & Logout"
           >
-            <LogOut size={14} />
-            <span>Exit Vault</span>
+            <LogOut size={13} />
+            <span>Lock</span>
           </button>
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="super-admin-main container-fluid">
-        {/* Top Stats Row */}
-        <section className="admin-metrics-row">
-          <div className="metric-card">
-            <div className="metric-icon-wrap icon-amber">
+      {/* Main Content Area */}
+      <main className="super-admin-main">
+        {/* Banner Section matching Samyati Hero / Eyebrow typography */}
+        <section className="vault-welcome-banner">
+          <div className="vault-banner-inner">
+            <div className="eyebrow-pill mb-2">
+              <span className="star-accent">✦</span>
+              <span>RESTRICTED SUPER ADMIN CONTROL VAULT</span>
+              <span className="star-accent">✦</span>
+            </div>
+            <h2 className="section-h2">
+              <span className="h2-line">Package Catalog & <span className="accent-serif">Galleries</span></span>
+            </h2>
+            <p className="vault-main-desc">
+              Curate, edit, and publish all 75 travel packages stored in your file-based database. Edit primary hero photos, upload multi-image galleries, customize 3★/4★/5★ pricing tiers, and configure day-by-day itineraries.
+            </p>
+          </div>
+        </section>
+
+        {/* Statistics Cards Row */}
+        <section className="stats-cards-grid">
+          <div className="admin-stat-card">
+            <div className="stat-icon-wrap icon-amber">
               <Package size={22} />
             </div>
-            <div className="metric-info">
-              <span className="metric-label">Total Managed Packages</span>
-              <div className="metric-value-flex">
-                <strong className="metric-number">{packages.length}</strong>
-                <span className="metric-badge">
-                  {domesticCount} Desh • {internationalCount} Videsh
-                </span>
-              </div>
+            <div className="stat-content">
+              <span className="stat-num">{stats.total}</span>
+              <span className="stat-label">Total Packages in DB</span>
             </div>
           </div>
 
-          <div className="metric-card">
-            <div className="metric-icon-wrap icon-blue">
+          <div className="admin-stat-card">
+            <div className="stat-icon-wrap icon-emerald">
               <Layers size={22} />
             </div>
-            <div className="metric-info">
-              <span className="metric-label">Covered Destinations</span>
-              <div className="metric-value-flex">
-                <strong className="metric-number">{destinations.length}</strong>
-                <span className="metric-subtext">Active Regions</span>
-              </div>
+            <div className="stat-content">
+              <span className="stat-num">{stats.domestic}</span>
+              <span className="stat-label">Domestic Tours (Desh)</span>
             </div>
           </div>
 
-          <div className="metric-card">
-            <div className="metric-icon-wrap icon-emerald">
-              <Sparkles size={22} />
+          <div className="admin-stat-card">
+            <div className="stat-icon-wrap icon-blue">
+              <ExternalLink size={22} />
             </div>
-            <div className="metric-info">
-              <span className="metric-label">Average Package Price</span>
-              <div className="metric-value-flex">
-                <strong className="metric-number text-emerald-400">{avgPrice}</strong>
-                <span className="metric-subtext">Across all tours</span>
-              </div>
+            <div className="stat-content">
+              <span className="stat-num">{stats.international}</span>
+              <span className="stat-label">International Tours (Videsh)</span>
             </div>
           </div>
 
-          <div className="metric-card">
-            <div className="metric-icon-wrap icon-purple">
-              <FileJson size={22} />
+          <div className="admin-stat-card">
+            <div className="stat-icon-wrap icon-rose">
+              <MapPin size={22} />
             </div>
-            <div className="metric-info">
-              <span className="metric-label">File Database Sync</span>
-              <div className="metric-value-flex">
-                <strong className="metric-status text-emerald-400">Synced & Protected</strong>
-                <span className="metric-subtext">Atomic File Writes</span>
-              </div>
+            <div className="stat-content">
+              <span className="stat-num">{stats.destinationsCount}</span>
+              <span className="stat-label">Active Destinations</span>
             </div>
           </div>
         </section>
 
-        {/* Toolbar & Filter Bar */}
-        <section className="admin-toolbar-card">
-          <div className="toolbar-top-flex">
-            {/* Search Input */}
-            <div className="admin-search-wrapper">
-              <Search size={16} className="search-icon" />
-              <input
-                type="text"
-                placeholder="Search packages by title, destination, ID, or keywords..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="admin-search-input"
-              />
-              {searchQuery && (
-                <button className="clear-search-btn" onClick={() => setSearchQuery('')}>
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Right Action: Add New Package */}
-            <button onClick={handleOpenNew} className="btn-add-primary">
-              <Plus size={16} />
-              <span>Add New Package</span>
-            </button>
+        {/* Section Divider Header with Flight Trace matching Desh / Videsh */}
+        <div className="desh-section-header">
+          <div className="header-title-flex">
+            <span className="star-accent">✦</span>
+            <h2 className="desh-section-heading">LIVE CATALOG PACKAGES</h2>
+            <span className="star-accent">✦</span>
           </div>
 
-          {/* Filters and View Toggles */}
-          <div className="toolbar-bottom-flex">
-            {/* Category Pills */}
-            <div className="category-pills-flex">
-              {['All', 'Domestic', 'International'].map((cat) => (
-                <button
-                  key={cat}
-                  className={`cat-filter-btn ${selectedCategory === cat ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat === 'All' ? 'All Packages' : cat === 'Domestic' ? 'Desh (Domestic)' : 'Videsh (International)'}
-                  <span className="cat-count">
-                    {cat === 'All'
-                      ? packages.length
-                      : cat === 'Domestic'
-                      ? domesticCount
-                      : internationalCount}
-                  </span>
-                </button>
+          <div className="flight-path-decoration">
+            <svg viewBox="0 0 120 30" className="flight-line-svg">
+              <path d="M5,25 Q60,-5 115,20" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+            </svg>
+            <Plane size={14} className="flight-plane-icon" />
+          </div>
+        </div>
+
+        {/* Filter and Search Bar Card */}
+        <section className="admin-filters-card">
+          <div className="search-input-wrap">
+            <Search size={17} className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search by package title, destination, ID, or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input-field"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')} className="btn-clear-search">
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          <div className="filters-group-row">
+            {/* Category Pills matching website filter-pill-group */}
+            <div className="filter-pill-group" role="tablist">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('All')}
+                className={`filter-btn ${selectedCategory === 'All' ? 'active' : ''}`}
+              >
+                All Packages ({packages.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('Domestic')}
+                className={`filter-btn ${selectedCategory === 'Domestic' ? 'active' : ''}`}
+              >
+                🇮🇳 Desh ({stats.domestic})
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('International')}
+                className={`filter-btn ${selectedCategory === 'International' ? 'active' : ''}`}
+              >
+                ✈️ Videsh ({stats.international})
+              </button>
+            </div>
+
+            {/* Destination Dropdown */}
+            <select
+              value={selectedDestination}
+              onChange={(e) => setSelectedDestination(e.target.value)}
+              className="admin-select-field"
+            >
+              <option value="All">All Destinations ({destinations.length})</option>
+              {destinations.map((d) => (
+                <option key={d.id} value={d.name || d.id}>
+                  {d.flag || '📍'} {d.name}
+                </option>
               ))}
-            </div>
+            </select>
 
-            {/* Destination Selector */}
-            <div className="filter-select-group">
-              <select
-                value={selectedDestination}
-                onChange={(e) => setSelectedDestination(e.target.value)}
-                className="admin-filter-select"
+            {/* Sort Dropdown */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="admin-select-field"
+            >
+              <option value="default">Sort by: Default Catalog</option>
+              <option value="title-asc">Sort: Title (A-Z)</option>
+              <option value="price-asc">Sort: Price (Lowest First)</option>
+              <option value="price-desc">Sort: Price (Highest First)</option>
+              <option value="rating-desc">Sort: Rating (Highest First)</option>
+            </select>
+
+            {/* View Mode Toggle */}
+            <div className="view-mode-toggle">
+              <button
+                type="button"
+                className={`btn-view-toggle ${viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+                title="Grid Card View"
               >
-                <option value="All">All Destinations ({destinations.length})</option>
-                {destinations.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.flag} {d.name} ({d.category})
-                  </option>
-                ))}
-              </select>
-
-              {/* Sort Selector */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="admin-filter-select"
+                <LayoutGrid size={16} />
+              </button>
+              <button
+                type="button"
+                className={`btn-view-toggle ${viewMode === 'table' ? 'active' : ''}`}
+                onClick={() => setViewMode('table')}
+                title="Table List View"
               >
-                <option value="default">Default Order</option>
-                <option value="title-asc">Title (A to Z)</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="rating-desc">Rating: Highest</option>
-              </select>
-
-              {/* View Mode Toggle */}
-              <div className="view-mode-toggle">
-                <button
-                  className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                  onClick={() => setViewMode('grid')}
-                  title="Grid Card View"
-                >
-                  <LayoutGrid size={16} />
-                </button>
-                <button
-                  className={`view-toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
-                  onClick={() => setViewMode('table')}
-                  title="Data Table View"
-                >
-                  <TableIcon size={16} />
-                </button>
-              </div>
+                <TableIcon size={16} />
+              </button>
             </div>
           </div>
         </section>
 
-        {/* Results Counter */}
-        <div className="results-count-bar">
-          <span>
-            Showing <strong>{filteredPackages.length}</strong> of <strong>{packages.length}</strong> total packages
+        {/* Results Counter & Active Filter Strip */}
+        <div className="results-counter-bar">
+          <span className="results-count-text">
+            Showing <strong>{filteredPackages.length}</strong> of {packages.length} packages
+            {selectedCategory !== 'All' && ` in ${selectedCategory}`}
+            {selectedDestination !== 'All' && ` • ${selectedDestination}`}
           </span>
-          {searchQuery && (
-            <span className="search-tag-active">Filtering for: "{searchQuery}"</span>
-          )}
         </div>
 
         {/* Packages Grid View */}
         {viewMode === 'grid' && (
-          <div className="packages-grid">
+          <div className="packages-card-grid">
             {filteredPackages.map((pkg) => (
-              <div key={pkg.id} className="pkg-admin-card">
-                {/* Image Thumbnail */}
-                <div className="pkg-card-media">
+              <div key={pkg.id} className="pkg-luxury-card">
+                {/* Photo & Badge Wrapper */}
+                <div className="pkg-photo-container">
                   <img
-                    src={pkg.image || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80'}
+                    src={pkg.image || 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=800&q=85'}
                     alt={pkg.title}
+                    className="pkg-photo-img"
+                    onError={(e) => {
+                      e.target.src = 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=800&q=85';
+                    }}
                   />
-                  <span className={`pkg-cat-pill ${pkg.category === 'Domestic' ? 'cat-dom' : 'cat-int'}`}>
-                    {pkg.category}
-                  </span>
-                  <div className="pkg-rating-badge">
-                    <Star size={12} className="text-amber-400 fill-amber-400" />
-                    <span>{pkg.rating}</span>
+                  <div className="photo-top-badges">
+                    <span className="category-tag-pill">
+                      {pkg.category === 'Domestic' ? '🇮🇳 Domestic' : '✈️ International'}
+                    </span>
+                    <span className="rating-badge">
+                      <Star size={11} className="star-icon" />
+                      <span>{pkg.rating || '4.9'}</span>
+                    </span>
+                  </div>
+
+                  <div className="photo-bottom-badges">
+                    <span className="badge-destination">
+                      <MapPin size={11} />
+                      <span>{pkg.destinationName}</span>
+                    </span>
+                    {Array.isArray(pkg.gallery) && pkg.gallery.length > 0 && (
+                      <span className="badge-gallery-count" title={`${pkg.gallery.length} photos in gallery`}>
+                        <ImageIcon size={11} />
+                        <span>{pkg.gallery.length} Photos</span>
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {/* Card Content */}
+                {/* Card Body matching website */}
                 <div className="pkg-card-body">
-                  <div className="pkg-dest-line">
-                    <span>📍 {pkg.destinationName}</span>
-                    <span className="pkg-duration-pill"><Clock size={11} /> {pkg.duration}</span>
+                  <div className="pkg-header-line">
+                    <h3 className="pkg-title" title={pkg.title}>{pkg.title}</h3>
                   </div>
 
-                  <h3 className="pkg-card-title" title={pkg.title}>
-                    {pkg.title}
-                  </h3>
-
-                  <p className="pkg-card-desc">
-                    {pkg.description || 'No detailed description.'}
+                  <p className="pkg-description-preview">
+                    {pkg.description || 'Curated luxury package with stays, transfers and sightseeing.'}
                   </p>
 
-                  <div className="pkg-card-pricing-row">
-                    <div>
-                      <span className="price-tag-sub">Starting Price</span>
-                      <div className="price-tag-flex">
-                        <strong className="price-current">{pkg.price}</strong>
+                  {/* Hotel Tiers & Duration Meta Pills */}
+                  <div className="pkg-meta-tags-row">
+                    <span className="itinerary-pill">
+                      <Clock size={11} />
+                      <span>{pkg.duration}</span>
+                    </span>
+                    {Array.isArray(pkg.hotelPricingOptions) && pkg.hotelPricingOptions.length > 0 && (
+                      <span className="hotel-tiers-pill" title="Hotel pricing options available">
+                        <Building2 size={11} className="text-gold" />
+                        <span>{pkg.hotelPricingOptions.length} Hotel Tiers</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="card-divider"></div>
+
+                  <div className="pkg-pricing-strip">
+                    <div className="price-col">
+                      <span className="price-label">Starting From</span>
+                      <div className="price-flex">
+                        <strong className="main-price-val">{pkg.price}</strong>
                         {pkg.originalPrice && pkg.originalPrice !== pkg.price && (
-                          <span className="price-original">{pkg.originalPrice}</span>
+                          <span className="strike-price-val">{pkg.originalPrice}</span>
                         )}
                       </div>
                     </div>
-
-                    <span className="itinerary-count-badge">
-                      {Array.isArray(pkg.itinerary) ? pkg.itinerary.length : 0} Days
-                    </span>
                   </div>
 
                   {/* Actions Bar */}
                   <div className="pkg-card-actions">
                     <button
                       onClick={() => handleOpenEdit(pkg)}
-                      className="card-action-btn btn-edit"
-                      title="Edit package content, pricing & images"
+                      className="btn-action btn-edit"
+                      title="Edit package content, images & pricing"
                     >
                       <Edit size={14} />
                       <span>Edit</span>
@@ -529,23 +597,24 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
 
                     <button
                       onClick={() => setPreviewingPackage(pkg)}
-                      className="card-action-btn btn-preview"
-                      title="Preview live customer view"
+                      className="btn-action btn-preview"
+                      title="Live Customer Preview"
                     >
                       <ExternalLink size={14} />
+                      <span>Preview</span>
                     </button>
 
                     <button
                       onClick={() => handleClonePackage(pkg)}
-                      className="card-action-btn btn-clone"
-                      title="Duplicate / Clone package"
+                      className="btn-action btn-clone"
+                      title="Duplicate package"
                     >
                       <Copy size={14} />
                     </button>
 
                     <button
                       onClick={() => setDeleteConfirmPkg(pkg)}
-                      className="card-action-btn btn-delete"
+                      className="btn-action btn-delete"
                       title="Delete package"
                     >
                       <Trash2 size={14} />
@@ -559,17 +628,18 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
 
         {/* Packages Table View */}
         {viewMode === 'table' && (
-          <div className="admin-table-container">
-            <table className="packages-table">
+          <div className="admin-table-card">
+            <table className="packages-luxury-table">
               <thead>
                 <tr>
                   <th>Photo</th>
-                  <th>Title & ID</th>
+                  <th>Package Title & ID</th>
                   <th>Destination</th>
                   <th>Category</th>
                   <th>Duration</th>
-                  <th>Price</th>
+                  <th>Starting Price</th>
                   <th>Rating</th>
+                  <th>Gallery</th>
                   <th>Days</th>
                   <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
@@ -582,60 +652,69 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
                         src={pkg.image}
                         alt=""
                         className="table-pkg-thumb"
+                        onError={(e) => {
+                          e.target.src = 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=200&q=80';
+                        }}
                       />
                     </td>
                     <td>
-                      <div className="table-pkg-title">
+                      <div className="table-pkg-title-cell">
                         <strong>{pkg.title}</strong>
                         <code>{pkg.id}</code>
                       </div>
                     </td>
                     <td>{pkg.destinationName}</td>
                     <td>
-                      <span className={`cat-pill ${pkg.category === 'Domestic' ? 'cat-dom' : 'cat-int'}`}>
+                      <span className={`badge-category-sm ${pkg.category === 'Domestic' ? 'cat-dom' : 'cat-int'}`}>
                         {pkg.category}
                       </span>
                     </td>
                     <td>{pkg.duration}</td>
                     <td>
-                      <div className="table-price-cell">
-                        <strong className="text-emerald-400">{pkg.price}</strong>
-                        {pkg.originalPrice && pkg.originalPrice !== pkg.price && (
-                          <span className="text-slate-500 line-through text-xs">{pkg.originalPrice}</span>
-                        )}
+                      <strong className="table-price">{pkg.price}</strong>
+                    </td>
+                    <td>
+                      <div className="table-rating">
+                        <Star size={12} className="star-fill" />
+                        <span>{pkg.rating || '4.9'}</span>
                       </div>
                     </td>
-                    <td>⭐ {pkg.rating}</td>
-                    <td>{Array.isArray(pkg.itinerary) ? pkg.itinerary.length : 0}D</td>
                     <td>
-                      <div className="table-actions-flex">
+                      <span className="table-gallery-tag">
+                        <ImageIcon size={11} />
+                        <span>{Array.isArray(pkg.gallery) ? pkg.gallery.length : 0}</span>
+                      </span>
+                    </td>
+                    <td>{Array.isArray(pkg.itinerary) ? pkg.itinerary.length : 0}d</td>
+                    <td style={{ textAlign: 'right' }}>
+                      <div className="table-actions-cell">
                         <button
                           onClick={() => handleOpenEdit(pkg)}
-                          className="table-action-icon text-amber-400"
+                          className="table-btn btn-table-edit"
                           title="Edit"
                         >
-                          <Edit size={14} />
+                          <Edit size={13} />
                         </button>
                         <button
                           onClick={() => setPreviewingPackage(pkg)}
-                          className="table-action-icon text-blue-400"
+                          className="table-btn btn-table-preview"
                           title="Preview"
                         >
-                          <ExternalLink size={14} />
+                          <ExternalLink size={13} />
                         </button>
                         <button
                           onClick={() => handleClonePackage(pkg)}
-                          className="table-action-icon text-emerald-400"
-                          title="Duplicate"
+                          className="table-btn btn-table-clone"
+                          title="Clone"
                         >
-                          <Copy size={14} />
+                          <Copy size={13} />
                         </button>
                         <button
                           onClick={() => setDeleteConfirmPkg(pkg)}
-                          className="table-action-icon text-rose-400"
+                          className="table-btn btn-table-delete"
                           title="Delete"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={13} />
                         </button>
                       </div>
                     </td>
@@ -648,76 +727,82 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
 
         {filteredPackages.length === 0 && (
           <div className="admin-empty-state">
-            <Package size={48} className="text-slate-600" />
-            <h3>No matching packages found</h3>
-            <p>Try refining your search query or category filters.</p>
+            <Package size={42} className="text-slate-400" />
+            <h3>No packages match your search filters</h3>
+            <p>Try clearing your search query or selecting a different category or destination.</p>
             <button
               onClick={() => { setSearchQuery(''); setSelectedCategory('All'); setSelectedDestination('All'); }}
-              className="btn-reset-filters"
+              className="btn-clear-filters"
             >
-              Reset All Filters
+              Reset Filters
             </button>
           </div>
         )}
       </main>
 
       {/* Package Editor Modal */}
-      <PackageEditorModal
-        isOpen={isEditorOpen}
-        packageData={editingPackage}
-        isNew={isNewPackage}
-        destinations={destinations}
-        onClose={() => setIsEditorOpen(false)}
-        onSave={handleSavePackage}
-        onPreview={(pkg) => setPreviewingPackage(pkg)}
-      />
+      {isEditorOpen && (
+        <PackageEditorModal
+          isOpen={isEditorOpen}
+          packageData={editingPackage}
+          isNew={isNewPackage}
+          destinations={destinations}
+          onClose={handleCloseEditor}
+          onSave={handleSavePackage}
+          onPreview={(pkg) => setPreviewingPackage(pkg)}
+        />
+      )}
 
-      {/* Package Preview Modal */}
-      <PackagePreviewModal
-        isOpen={Boolean(previewingPackage)}
-        packageData={previewingPackage}
-        onClose={() => setPreviewingPackage(null)}
-      />
+      {/* Package Sandbox Live Preview Modal */}
+      {previewingPackage && (
+        <PackagePreviewModal
+          isOpen={Boolean(previewingPackage)}
+          packageData={previewingPackage}
+          onClose={() => setPreviewingPackage(null)}
+        />
+      )}
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Dialog */}
       {deleteConfirmPkg && (
         <div className="delete-modal-backdrop" onClick={() => setDeleteConfirmPkg(null)}>
           <div className="delete-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="delete-icon-circle">
-              <AlertTriangle size={32} className="text-rose-500" />
+              <Trash2 size={24} className="text-rose-500" />
             </div>
-            <h3>Delete Package Confirmation</h3>
-            <p>
+            <h3 className="delete-modal-title">Delete Travel Package?</h3>
+            <p className="delete-modal-desc">
               Are you sure you want to permanently delete <strong>"{deleteConfirmPkg.title}"</strong> (ID: <code>{deleteConfirmPkg.id}</code>)?
-              This will update <code>server/data/packages.json</code> immediately.
+              This will remove it from <code>server/data/packages.json</code> and live website catalogs immediately.
             </p>
             <div className="delete-modal-actions">
               <button
-                className="btn-cancel"
                 onClick={() => setDeleteConfirmPkg(null)}
+                className="btn-cancel-delete"
               >
                 Cancel
               </button>
               <button
+                onClick={handleDeletePackageConfirm}
                 className="btn-confirm-delete"
-                onClick={handleDeleteConfirm}
               >
-                Yes, Delete Package
+                Delete Permanently
               </button>
             </div>
           </div>
         </div>
       )}
 
+      {/* STYLES matching Samyati Design System */}
       <style>{`
         .super-admin-layout {
           min-height: 100vh;
-          background: #090d16;
-          color: #f8fafc;
+          background-color: #fefce8;
+          color: #141613;
           font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          padding-bottom: 60px;
+          padding-bottom: 80px;
         }
 
+        /* Toast Notification */
         .admin-toast {
           position: fixed;
           top: 24px;
@@ -726,178 +811,338 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
           display: flex;
           align-items: center;
           gap: 10px;
-          padding: 12px 20px;
-          border-radius: 12px;
+          padding: 14px 22px;
+          border-radius: 9999px;
           font-size: 13.5px;
-          font-weight: 600;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-          animation: slideIn 0.3s ease-out;
+          font-weight: 700;
+          box-shadow: 0 12px 32px rgba(15, 23, 42, 0.15);
+          animation: toastSlide 0.3s ease-out;
         }
 
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(-10px); }
+        @keyframes toastSlide {
+          from { opacity: 0; transform: translateY(-12px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
         .toast-success {
-          background: #064e3b;
-          color: #34d399;
-          border: 1px solid #059669;
+          background: #0f172a;
+          color: #fef08a;
+          border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
         .toast-error {
           background: #7f1d1d;
-          color: #fca5a5;
-          border: 1px solid #dc2626;
+          color: #fef2f2;
+          border: 1px solid #ef4444;
         }
 
+        /* Header matching Samyati Navbar */
         .super-admin-header {
-          background: rgba(15, 23, 42, 0.95);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding: 18px 32px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
           position: sticky;
           top: 0;
           z-index: 1000;
-          backdrop-filter: blur(16px);
+          padding-top: 10px;
+          padding-bottom: 10px;
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+          padding-left: 32px;
+          padding-right: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
         }
 
-        .header-brand-flex {
+        .header-left {
           display: flex;
           align-items: center;
           gap: 16px;
         }
 
-        .brand-shield-icon {
-          width: 48px;
-          height: 48px;
-          background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(16, 185, 129, 0.2));
-          border: 1px solid rgba(245, 158, 11, 0.4);
-          border-radius: 14px;
+        .brand-logo-wrap {
           display: flex;
           align-items: center;
-          justify-content: center;
         }
 
-        .text-gold { color: #f59e0b; }
-
-        .header-brand-title {
-          font-size: 19px;
-          font-weight: 800;
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .db-status-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          background: rgba(16, 185, 129, 0.12);
-          border: 1px solid rgba(16, 185, 129, 0.3);
-          color: #34d399;
-          font-size: 11px;
-          font-weight: 600;
-          padding: 3px 10px;
-          border-radius: 9999px;
-        }
-
-        .db-status-pill code {
-          color: #6ee7b7;
-          font-size: 10.5px;
-        }
-
-        .live-dot {
-          width: 7px;
-          height: 7px;
-          background: #10b981;
-          border-radius: 50%;
-          box-shadow: 0 0 8px #10b981;
-        }
-
-        .header-subtitle {
-          font-size: 12px;
-          color: #94a3b8;
+        .brand-logo-img {
+          height: 52px;
+          width: auto;
+          max-width: 220px;
+          object-fit: contain;
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.18));
           display: block;
-          margin-top: 2px;
         }
 
-        .header-action-group {
+        .header-title-block {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .header-title-row {
           display: flex;
           align-items: center;
           gap: 10px;
         }
 
-        .btn-header-action {
+        .admin-brand-name {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 22px;
+          font-weight: 700;
+          color: #141613;
+          margin: 0;
+          line-height: 1;
+        }
+
+        .accent-serif {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 700;
+          color: #d97706;
+        }
+
+        .db-live-pill {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          color: #cbd5e1;
-          padding: 8px 14px;
-          border-radius: 10px;
-          font-size: 12.5px;
+          background: #f0fdf4;
+          border: 1px solid #bbf7d0;
+          color: #166534;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 10px;
+          border-radius: 9999px;
+        }
+
+        .db-live-pill code {
+          color: #15803d;
+          font-family: monospace;
+          font-size: 10.5px;
+        }
+
+        .live-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #22c55e;
+          box-shadow: 0 0 6px #22c55e;
+        }
+
+        .admin-subtitle {
+          font-size: 11.5px;
+          color: #64748b;
+          margin: 3px 0 0;
+          font-weight: 500;
+        }
+
+        /* Center Luxury Pill Capsule Navigation */
+        .nav-center-links {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          padding: 4px 6px;
+          border-radius: 9999px;
+          box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.03),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-link-btn {
+          background: transparent;
+          border: none;
+          color: #334155;
+          font-size: 13px;
+          font-weight: 600;
+          padding: 6px 14px;
+          border-radius: 9999px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .nav-link-btn:hover {
+          color: #0f172a;
+          background: rgba(15, 23, 42, 0.06);
+        }
+
+        .nav-link-btn.active {
+          color: #ffffff;
+          background: #0f172a;
+          box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
+          font-weight: 700;
+        }
+
+        .btn-nav-create {
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fde68a;
+          font-weight: 700;
+        }
+
+        .btn-nav-create:hover {
+          background: #fde68a;
+          color: #78350f;
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .btn-pill-white {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          color: #0f172a;
+          padding: 7px 15px;
+          border-radius: 9999px;
+          font-size: 13px;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.2s;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          transition: all 0.2s ease;
         }
 
-        .btn-header-action:hover {
-          background: rgba(255, 255, 255, 0.15);
-          color: #ffffff;
+        .btn-pill-white:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        .btn-site-view {
-          background: rgba(245, 158, 11, 0.15);
-          border-color: rgba(245, 158, 11, 0.3);
-          color: #f59e0b;
+        .btn-logout-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: #991b1b;
+          padding: 7px 14px;
+          border-radius: 9999px;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
         }
 
-        .btn-site-view:hover {
-          background: rgba(245, 158, 11, 0.25);
-          color: #fbbf24;
+        .btn-logout-pill:hover {
+          background: #fecaca;
         }
 
-        .btn-logout {
-          background: rgba(239, 68, 68, 0.15);
-          border-color: rgba(239, 68, 68, 0.3);
-          color: #f87171;
-        }
-
-        .btn-logout:hover {
-          background: rgba(239, 68, 68, 0.25);
-          color: #ffffff;
-        }
-
+        /* Main Container */
         .super-admin-main {
-          max-width: 1440px;
+          max-width: 1280px;
           margin: 0 auto;
-          padding: 28px 32px 0;
+          padding: 28px 24px 0;
         }
 
-        /* Metrics Row */
-        .admin-metrics-row {
+        /* Welcome Banner */
+        .vault-welcome-banner {
+          text-align: center;
+          margin-bottom: 28px;
+        }
+
+        .vault-banner-inner {
+          max-width: 760px;
+          margin: 0 auto;
+        }
+
+        .eyebrow-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #92400e;
+          background: #fef3c7;
+          border: 1px solid #fde68a;
+          padding: 5px 16px;
+          border-radius: 9999px;
+        }
+
+        .mb-2 { margin-bottom: 10px; }
+
+        .star-accent {
+          color: #d97706;
+          font-size: 11px;
+        }
+
+        .section-h2 {
+          font-size: clamp(32px, 4vw, 44px);
+          font-weight: 800;
+          color: #0f172a;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          margin: 10px 0;
+        }
+
+        .section-h2 .accent-serif {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 700;
+          font-size: 1.15em;
+          color: #d97706;
+          vertical-align: baseline;
+          padding: 0 0.05em;
+          display: inline-block;
+        }
+
+        .vault-main-desc {
+          font-size: 14.5px;
+          color: #64748b;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        .vault-main-desc code {
+          background: #f1f5f9;
+          padding: 2px 6px;
+          border-radius: 4px;
+          color: #0f172a;
+          font-family: monospace;
+          font-size: 12px;
+        }
+
+        /* Stats Cards */
+        .stats-cards-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 18px;
           margin-bottom: 24px;
         }
 
-        .metric-card {
-          background: rgba(15, 23, 42, 0.7);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 18px;
-          padding: 18px 20px;
+        .admin-stat-card {
+          background: #ffffff;
+          border-radius: 20px;
+          padding: 20px 22px;
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
           display: flex;
           align-items: center;
           gap: 16px;
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .metric-icon-wrap {
+        .admin-stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-icon-wrap {
           width: 48px;
           height: 48px;
           border-radius: 14px;
@@ -907,73 +1152,87 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
           flex-shrink: 0;
         }
 
-        .icon-amber { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-        .icon-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .icon-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+        .icon-amber { background: #fef3c7; color: #d97706; }
+        .icon-emerald { background: #dcfce7; color: #15803d; }
+        .icon-blue { background: #e0f2fe; color: #0369a1; }
+        .icon-rose { background: #ffe4e6; color: #e11d48; }
 
-        .metric-info {
+        .stat-content {
           display: flex;
           flex-direction: column;
-          gap: 4px;
         }
 
-        .metric-label {
-          font-size: 11.5px;
+        .stat-num {
+          font-size: 26px;
+          font-weight: 800;
+          color: #0f172a;
+          line-height: 1.1;
+        }
+
+        .stat-label {
+          font-size: 12.5px;
           font-weight: 600;
-          color: #94a3b8;
+          color: #64748b;
+          margin-top: 2px;
+        }
+
+        /* Section Divider with Flight Path Trace */
+        .desh-section-header {
+          position: relative;
+          text-align: center;
+          margin: 28px 0 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .header-title-flex {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .desh-section-heading {
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.25em;
+          color: #475569;
           text-transform: uppercase;
         }
 
-        .metric-value-flex {
+        .flight-path-decoration {
+          position: absolute;
+          right: 24px;
+          top: -8px;
           display: flex;
-          align-items: baseline;
-          gap: 8px;
+          align-items: center;
         }
 
-        .metric-number {
-          font-size: 22px;
-          font-weight: 800;
-          color: #ffffff;
+        .flight-line-svg {
+          width: 80px;
+          height: 24px;
         }
 
-        .metric-badge {
-          font-size: 11px;
-          color: #cbd5e1;
-          background: rgba(255, 255, 255, 0.08);
-          padding: 2px 8px;
-          border-radius: 6px;
+        .flight-plane-icon {
+          color: #92400e;
+          transform: rotate(15deg);
+          margin-left: -6px;
         }
 
-        .metric-subtext {
-          font-size: 11.5px;
-          color: #94a3b8;
-        }
-
-        .metric-status {
-          font-size: 14px;
-          font-weight: 700;
-        }
-
-        /* Toolbar */
-        .admin-toolbar-card {
-          background: rgba(15, 23, 42, 0.7);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Filter Card */
+        .admin-filters-card {
+          background: #ffffff;
           border-radius: 20px;
-          padding: 20px;
-          margin-bottom: 20px;
+          padding: 18px 22px;
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
+          margin-bottom: 18px;
         }
 
-        .toolbar-top-flex {
-          display: flex;
-          gap: 16px;
-        }
-
-        .admin-search-wrapper {
-          flex: 1;
+        .search-input-wrap {
           position: relative;
           display: flex;
           align-items: center;
@@ -982,534 +1241,699 @@ export default function SuperAdminDashboard({ onLogout, onNavigateToSite }) {
         .search-icon {
           position: absolute;
           left: 16px;
-          color: #64748b;
+          color: #94a3b8;
+          pointer-events: none;
         }
 
-        .admin-search-input {
+        .search-input-field {
           width: 100%;
-          background: rgba(10, 15, 30, 0.8);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 14px;
-          padding: 12px 40px 12px 44px;
+          padding: 13px 40px 13px 44px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 9999px;
           font-size: 14px;
-          color: #ffffff;
+          color: #0f172a;
           outline: none;
+          transition: all 0.2s ease;
         }
 
-        .admin-search-input:focus {
-          border-color: #f59e0b;
+        .search-input-field:focus {
+          background: #ffffff;
+          border-color: #d97706;
+          box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12);
         }
 
-        .clear-search-btn {
+        .btn-clear-search {
           position: absolute;
           right: 14px;
           background: none;
           border: none;
+          color: #94a3b8;
+          cursor: pointer;
+          padding: 4px;
+        }
+
+        .filters-group-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+
+        /* Filter Pills matching website filter-pill-group */
+        .filter-pill-group {
+          display: flex;
+          gap: 6px;
+          background: #f1f5f9;
+          padding: 4px;
+          border-radius: 9999px;
+          border: 1px solid #e2e8f0;
+        }
+
+        .filter-btn {
+          border: none;
+          background: transparent;
+          padding: 7px 18px;
+          border-radius: 9999px;
+          font-size: 13px;
+          font-weight: 700;
           color: #64748b;
           cursor: pointer;
+          transition: all 0.25s ease;
         }
 
-        .btn-add-primary {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-          color: #0f172a;
-          border: none;
-          border-radius: 14px;
-          padding: 12px 24px;
-          font-size: 14px;
-          font-weight: 700;
-          cursor: pointer;
-          white-space: nowrap;
-          box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
-          transition: transform 0.2s;
+        .filter-btn.active {
+          background: #0f172a;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
 
-        .btn-add-primary:hover {
-          transform: translateY(-1px);
-        }
-
-        .toolbar-bottom-flex {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 16px;
-          flex-wrap: wrap;
-        }
-
-        .category-pills-flex {
-          display: flex;
-          gap: 8px;
-        }
-
-        .cat-filter-btn {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          color: #94a3b8;
-          padding: 8px 16px;
+        .admin-select-field {
+          padding: 8px 14px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
           border-radius: 10px;
           font-size: 13px;
           font-weight: 600;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          transition: all 0.2s;
-        }
-
-        .cat-filter-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
-          color: #f1f5f9;
-        }
-
-        .cat-filter-btn.active {
-          background: #f59e0b;
-          color: #0f172a;
-          border-color: #f59e0b;
-        }
-
-        .cat-count {
-          background: rgba(0, 0, 0, 0.2);
-          padding: 1px 6px;
-          border-radius: 9999px;
-          font-size: 11px;
-        }
-
-        .filter-select-group {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .admin-filter-select {
-          background: rgba(10, 15, 30, 0.8);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 10px;
-          padding: 8px 12px;
-          font-size: 13px;
-          color: #cbd5e1;
+          color: #334155;
           outline: none;
+          cursor: pointer;
+        }
+
+        .admin-select-field:focus {
+          border-color: #d97706;
         }
 
         .view-mode-toggle {
           display: flex;
-          background: rgba(0, 0, 0, 0.4);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 10px;
+          align-items: center;
+          gap: 2px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
           padding: 3px;
+          border-radius: 8px;
         }
 
-        .view-toggle-btn {
-          background: none;
+        .btn-view-toggle {
+          width: 32px;
+          height: 30px;
+          border-radius: 6px;
           border: none;
+          background: none;
           color: #64748b;
-          padding: 6px 10px;
-          border-radius: 7px;
           cursor: pointer;
           display: flex;
-        }
-
-        .view-toggle-btn.active {
-          background: rgba(255, 255, 255, 0.15);
-          color: #ffffff;
-        }
-
-        .results-count-bar {
-          display: flex;
           align-items: center;
-          gap: 12px;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .btn-view-toggle.active {
+          background: #ffffff;
+          color: #0f172a;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Results Counter */
+        .results-counter-bar {
+          margin-bottom: 16px;
+          padding: 0 4px;
+        }
+
+        .results-count-text {
           font-size: 13px;
-          color: #94a3b8;
-          margin-bottom: 18px;
+          color: #64748b;
         }
 
-        .search-tag-active {
-          background: rgba(245, 158, 11, 0.15);
-          color: #f59e0b;
-          padding: 2px 10px;
-          border-radius: 9999px;
-          font-size: 11.5px;
+        .results-count-text strong {
+          color: #0f172a;
         }
 
-        /* Packages Grid */
-        .packages-grid {
+        /* Package Cards Grid matching Website */
+        .packages-card-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-          gap: 20px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
         }
 
-        .pkg-admin-card {
-          background: rgba(15, 23, 42, 0.85);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+        .pkg-luxury-card {
+          background: #ffffff;
           border-radius: 20px;
           overflow: hidden;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           flex-direction: column;
-          transition: transform 0.2s, border-color 0.2s;
         }
 
-        .pkg-admin-card:hover {
-          transform: translateY(-3px);
-          border-color: rgba(245, 158, 11, 0.3);
+        .pkg-luxury-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
         }
 
-        .pkg-card-media {
+        .pkg-photo-container {
           position: relative;
-          height: 180px;
           width: 100%;
-          background: #000;
+          height: 220px;
+          overflow: hidden;
+          background: #e2e8f0;
         }
 
-        .pkg-card-media img {
+        .pkg-photo-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          transition: transform 0.6s ease;
         }
 
-        .pkg-cat-pill {
+        .pkg-luxury-card:hover .pkg-photo-img {
+          transform: scale(1.06);
+        }
+
+        .photo-top-badges {
           position: absolute;
-          top: 12px;
-          left: 12px;
-          font-size: 10px;
-          font-weight: 700;
-          padding: 3px 8px;
-          border-radius: 9999px;
-          backdrop-filter: blur(8px);
+          top: 14px;
+          left: 14px;
+          right: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          pointer-events: none;
         }
 
-        .cat-dom { background: rgba(59, 130, 246, 0.85); color: #fff; }
-        .cat-int { background: rgba(236, 72, 153, 0.85); color: #fff; }
+        .category-tag-pill {
+          background: #ffffff;
+          color: #0f172a;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 4px 12px;
+          border-radius: 9999px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
 
-        .pkg-rating-badge {
+        .rating-badge {
+          background: rgba(0,0,0,0.7);
+          backdrop-filter: blur(4px);
+          color: #ffffff;
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 9999px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .star-icon {
+          color: #f59e0b;
+          fill: #f59e0b;
+        }
+
+        .photo-bottom-badges {
           position: absolute;
           bottom: 12px;
           left: 12px;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(8px);
-          color: #fff;
-          font-size: 11.5px;
-          font-weight: 700;
-          padding: 3px 8px;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .pkg-card-body {
-          padding: 18px;
-          display: flex;
-          flex-direction: column;
-          flex: 1;
-        }
-
-        .pkg-dest-line {
+          right: 12px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-size: 12px;
-          color: #94a3b8;
+          pointer-events: none;
+        }
+
+        .badge-destination {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(15, 23, 42, 0.75);
+          backdrop-filter: blur(6px);
+          color: #ffffff;
+          font-size: 11px;
+          font-weight: 600;
+          padding: 3px 9px;
+          border-radius: 9999px;
+        }
+
+        .badge-gallery-count {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(254, 252, 232, 0.9);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          color: #92400e;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 8px;
+          border-radius: 9999px;
+        }
+
+        /* Card Content */
+        .pkg-card-body {
+          padding: 20px 22px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+
+        .pkg-header-line {
           margin-bottom: 8px;
         }
 
-        .pkg-duration-pill {
+        .pkg-title {
+          font-size: 16px;
+          font-weight: 700;
+          color: #0f172a;
+          line-height: 1.35;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .pkg-description-preview {
+          font-size: 13px;
+          color: #64748b;
+          line-height: 1.5;
+          margin: 0 0 12px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .pkg-meta-tags-row {
           display: flex;
           align-items: center;
+          gap: 8px;
+          margin-bottom: 6px;
+          flex-wrap: wrap;
+        }
+
+        .itinerary-pill {
+          display: inline-flex;
+          align-items: center;
           gap: 4px;
-          background: rgba(255, 255, 255, 0.06);
-          padding: 2px 8px;
-          border-radius: 6px;
-        }
-
-        .pkg-card-title {
-          font-size: 15px;
+          font-size: 11px;
           font-weight: 700;
-          color: #ffffff;
-          margin: 0 0 8px;
-          line-height: 1.4;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          min-height: 42px;
+          color: #475569;
+          background: #f1f5f9;
+          padding: 3px 9px;
+          border-radius: 9999px;
         }
 
-        .pkg-card-desc {
-          font-size: 12px;
-          color: #94a3b8;
-          line-height: 1.5;
-          margin: 0 0 16px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          flex: 1;
+        .hotel-tiers-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 11px;
+          font-weight: 700;
+          color: #92400e;
+          background: #fef3c7;
+          border: 1px solid #fde68a;
+          padding: 3px 9px;
+          border-radius: 9999px;
         }
 
-        .pkg-card-pricing-row {
+        .card-divider {
+          height: 1px;
+          background-color: #e2e8f0;
+          margin: 12px 0 14px;
+        }
+
+        .pkg-pricing-strip {
           display: flex;
           align-items: flex-end;
           justify-content: space-between;
-          padding-top: 12px;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
-          margin-bottom: 14px;
+          margin-bottom: 16px;
         }
 
-        .price-tag-sub {
+        .price-col {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .price-label {
           font-size: 10px;
-          color: #64748b;
+          font-weight: 600;
+          color: #94a3b8;
           text-transform: uppercase;
-          display: block;
+          letter-spacing: 0.05em;
         }
 
-        .price-tag-flex {
+        .price-flex {
           display: flex;
           align-items: baseline;
           gap: 6px;
         }
 
-        .price-current {
-          font-size: 18px;
+        .main-price-val {
+          font-size: 20px;
           font-weight: 800;
-          color: #34d399;
+          color: #0f172a;
         }
 
-        .price-original {
+        .strike-price-val {
           font-size: 12px;
-          color: #64748b;
+          color: #94a3b8;
           text-decoration: line-through;
         }
 
-        .itinerary-count-badge {
-          background: rgba(245, 158, 11, 0.12);
-          color: #f59e0b;
-          font-size: 11px;
-          font-weight: 700;
-          padding: 2px 8px;
-          border-radius: 6px;
+
+        /* Card Action Buttons */
+        .pkg-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: auto;
         }
 
-        .pkg-card-actions {
-          display: grid;
-          grid-template-columns: 1fr auto auto auto;
+        .btn-action {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 8px 12px;
+          border-radius: 10px;
+          font-size: 12.5px;
+          font-weight: 700;
+          border: 1px solid transparent;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+          background: #0f172a;
+          color: #ffffff;
+          flex: 1;
+        }
+
+        .btn-edit:hover {
+          background: #1e293b;
+        }
+
+        .btn-preview {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+          color: #334155;
+          flex: 1;
+        }
+
+        .btn-preview:hover {
+          background: #f1f5f9;
+          color: #0f172a;
+        }
+
+        .btn-clone {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+          color: #64748b;
+          width: 34px;
+          height: 34px;
+          padding: 0;
+        }
+
+        .btn-clone:hover {
+          background: #e0f2fe;
+          color: #0284c7;
+          border-color: #bae6fd;
+        }
+
+        .btn-delete {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+          color: #64748b;
+          width: 34px;
+          height: 34px;
+          padding: 0;
+        }
+
+        .btn-delete:hover {
+          background: #fee2e2;
+          color: #dc2626;
+          border-color: #fecaca;
+        }
+
+        /* Table View */
+        .admin-table-card {
+          background: #ffffff;
+          border-radius: 20px;
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+          overflow: hidden;
+        }
+
+        .packages-luxury-table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
+        }
+
+        .packages-luxury-table th {
+          padding: 14px 18px;
+          background: #f8fafc;
+          font-size: 11.5px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: #475569;
+          border-bottom: 1px solid #e2e8f0;
+        }
+
+        .packages-luxury-table td {
+          padding: 12px 18px;
+          border-bottom: 1px solid #f1f5f9;
+          font-size: 13.5px;
+          color: #334155;
+          vertical-align: middle;
+        }
+
+        .packages-luxury-table tr:hover {
+          background: #fefce8;
+        }
+
+        .table-pkg-thumb {
+          width: 44px;
+          height: 44px;
+          border-radius: 10px;
+          object-fit: cover;
+        }
+
+        .table-pkg-title-cell {
+          display: flex;
+          flex-direction: column;
+          max-width: 280px;
+        }
+
+        .table-pkg-title-cell strong {
+          color: #0f172a;
+          font-size: 13.5px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .table-pkg-title-cell code {
+          font-size: 10.5px;
+          color: #94a3b8;
+          font-family: monospace;
+        }
+
+        .badge-category-sm {
+          font-size: 10.5px;
+          font-weight: 800;
+          padding: 3px 8px;
+          border-radius: 9999px;
+          text-transform: uppercase;
+        }
+
+        .table-price {
+          color: #0f172a;
+          font-weight: 700;
+        }
+
+        .table-rating {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          font-weight: 700;
+          font-size: 12.5px;
+          color: #92400e;
+        }
+
+        .table-gallery-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          font-size: 11.5px;
+          font-weight: 600;
+          color: #64748b;
+        }
+
+        .table-actions-cell {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
           gap: 6px;
         }
 
-        .card-action-btn {
-          border: none;
-          padding: 8px 12px;
-          border-radius: 10px;
-          font-size: 12px;
-          font-weight: 600;
+        .table-btn {
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+          background: #f8fafc;
+          color: #475569;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          transition: all 0.15s;
+          transition: all 0.15s ease;
         }
 
-        .btn-edit {
-          background: #f59e0b;
-          color: #0f172a;
-          font-weight: 700;
+        .table-btn:hover {
+          background: #0f172a;
+          color: #ffffff;
+          border-color: #0f172a;
         }
 
-        .btn-edit:hover {
-          background: #fbbf24;
-        }
-
-        .btn-preview {
-          background: rgba(59, 130, 246, 0.15);
-          color: #60a5fa;
-        }
-
-        .btn-preview:hover {
-          background: rgba(59, 130, 246, 0.25);
-        }
-
-        .btn-clone {
-          background: rgba(255, 255, 255, 0.08);
-          color: #cbd5e1;
-        }
-
-        .btn-clone:hover {
-          background: rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-delete {
-          background: rgba(239, 68, 68, 0.15);
-          color: #f87171;
-        }
-
-        .btn-delete:hover {
-          background: rgba(239, 68, 68, 0.25);
-        }
-
-        /* Table View */
-        .admin-table-container {
-          background: rgba(15, 23, 42, 0.85);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 20px;
-          overflow-x: auto;
-        }
-
-        .packages-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 13px;
-        }
-
-        .packages-table th, .packages-table td {
-          padding: 12px 16px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-          text-align: left;
-        }
-
-        .packages-table th {
-          background: rgba(0, 0, 0, 0.3);
-          color: #94a3b8;
-          font-size: 11.5px;
-          text-transform: uppercase;
-        }
-
-        .table-pkg-thumb {
-          width: 48px;
-          height: 36px;
-          object-fit: cover;
-          border-radius: 6px;
-        }
-
-        .table-pkg-title {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        .table-pkg-title code {
-          font-size: 10.5px;
-          color: #64748b;
-        }
-
-        .table-price-cell {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .table-actions-flex {
-          display: flex;
-          gap: 8px;
-          justify-content: flex-end;
-        }
-
-        .table-action-icon {
-          background: rgba(255, 255, 255, 0.06);
-          border: none;
-          padding: 6px;
-          border-radius: 6px;
-          cursor: pointer;
-        }
-
-        .table-action-icon:hover {
-          background: rgba(255, 255, 255, 0.15);
-        }
-
+        /* Empty State */
         .admin-empty-state {
           text-align: center;
           padding: 60px 20px;
-          background: rgba(15, 23, 42, 0.5);
+          background: #ffffff;
           border-radius: 20px;
-          border: 1px dashed rgba(255, 255, 255, 0.1);
+          border: 1px solid #e2e8f0;
+          margin-top: 20px;
         }
 
-        .btn-reset-filters {
-          background: #f59e0b;
+        .admin-empty-state h3 {
+          font-size: 18px;
+          font-weight: 700;
           color: #0f172a;
+          margin: 14px 0 6px;
+        }
+
+        .admin-empty-state p {
+          color: #64748b;
+          font-size: 14px;
+          margin: 0 0 16px;
+        }
+
+        .btn-clear-filters {
+          background: #0f172a;
+          color: #ffffff;
           border: none;
-          padding: 8px 18px;
-          border-radius: 10px;
+          padding: 8px 16px;
+          border-radius: 9999px;
           font-size: 13px;
           font-weight: 700;
           cursor: pointer;
-          margin-top: 12px;
         }
 
         /* Delete Confirmation Modal */
         .delete-modal-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.85);
+          background: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(6px);
+          z-index: 10002;
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 10002;
           padding: 20px;
         }
 
         .delete-modal-card {
-          background: #0f172a;
-          border: 1px solid rgba(239, 68, 68, 0.3);
+          background: #ffffff;
           border-radius: 24px;
-          padding: 32px;
-          max-width: 460px;
+          padding: 32px 28px;
+          max-width: 440px;
           width: 100%;
           text-align: center;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 25px 50px rgba(15, 23, 42, 0.18);
+          animation: popIn 0.25s ease-out;
+        }
+
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
         }
 
         .delete-icon-circle {
-          width: 64px;
-          height: 64px;
-          background: rgba(239, 68, 68, 0.12);
-          border-radius: 20px;
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          background: #fee2e2;
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 0 auto 16px;
         }
 
-        .delete-modal-card h3 {
-          font-size: 18px;
+        .delete-modal-title {
+          font-size: 20px;
           font-weight: 800;
-          color: #ffffff;
+          color: #0f172a;
           margin: 0 0 10px;
         }
 
-        .delete-modal-card p {
+        .delete-modal-desc {
           font-size: 13.5px;
-          color: #94a3b8;
-          line-height: 1.5;
+          color: #64748b;
+          line-height: 1.55;
           margin: 0 0 24px;
+        }
+
+        .delete-modal-desc strong {
+          color: #0f172a;
         }
 
         .delete-modal-actions {
           display: flex;
           gap: 12px;
-          justify-content: center;
         }
 
-        .btn-confirm-delete {
-          background: #ef4444;
-          color: #ffffff;
-          border: none;
-          padding: 10px 20px;
+        .btn-cancel-delete {
+          flex: 1;
+          padding: 11px 16px;
+          background: #f1f5f9;
+          border: 1px solid #e2e8f0;
           border-radius: 12px;
-          font-size: 13.5px;
+          font-size: 14px;
           font-weight: 700;
+          color: #475569;
           cursor: pointer;
         }
 
-        @media (max-width: 1024px) {
-          .admin-metrics-row { grid-template-columns: repeat(2, 1fr); }
-          .super-admin-header { flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 20px; }
-          .header-action-group { width: 100%; overflow-x: auto; padding-bottom: 4px; }
+        .btn-confirm-delete {
+          flex: 1;
+          padding: 11px 16px;
+          background: #dc2626;
+          border: none;
+          border-radius: 12px;
+          font-size: 14px;
+          font-weight: 700;
+          color: #ffffff;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
         }
 
-        @media (max-width: 640px) {
-          .admin-metrics-row { grid-template-columns: 1fr; }
-          .toolbar-top-flex { flex-direction: column; }
-          .super-admin-main { padding: 16px 14px 0; }
+        .btn-confirm-delete:hover {
+          background: #b91c1c;
+        }
+
+        @media (max-width: 1080px) {
+          .packages-card-grid { grid-template-columns: repeat(2, 1fr); }
+          .stats-cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 720px) {
+          .super-admin-header { padding: 12px 16px; flex-direction: column; align-items: flex-start; }
+          .header-actions { width: 100%; flex-wrap: wrap; }
+          .packages-card-grid { grid-template-columns: 1fr; }
+          .stats-cards-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </div>

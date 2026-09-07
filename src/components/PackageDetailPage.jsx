@@ -328,7 +328,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
     ];
   };
 
-  const galleryImages = (packageData.gallery && packageData.gallery.length >= 5)
+  const galleryImages = (packageData.gallery && packageData.gallery.length > 0)
     ? packageData.gallery
     : getDestinationGallery(packageData.destinationName || packageData.title, packageData.category, packageData.image);
 

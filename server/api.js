@@ -482,7 +482,7 @@ ${category ? `User preference category: ${category}` : ''}`;
 
     // --- PROTECTED MUTATION ENDPOINTS (Requires Admin Token) ---
     const isProtected = 
-      (pathname === '/api/upload' && method === 'POST') ||
+      (pathname === '/api/upload' && (method === 'POST' || method === 'DELETE')) ||
       (pathname === '/api/packages' && method === 'POST') ||
       (singlePkgMatch && (method === 'PUT' || method === 'DELETE')) ||
       (pathname === '/api/packages/sync' && method === 'POST') ||
@@ -549,6 +549,35 @@ ${category ? `User preference category: ${category}` : ''}`;
       });
       return true;
     }
+
+    // 4c. Delete Uploaded Image: DELETE /api/upload
+    if (pathname === '/api/upload' && method === 'DELETE') {
+      const body = await parseJsonBody(req).catch(() => ({}));
+      const filename = body.filename || parsedUrl.searchParams.get('filename') || (body.url ? path.basename(body.url) : null);
+      if (!filename) {
+        sendJson(res, 400, { success: false, message: 'Filename or URL required to delete' });
+        return true;
+      }
+
+      const safeName = path.basename(filename);
+      const targetFilePath = path.resolve(UPLOADS_DIR, safeName);
+      const distFilePath = path.resolve(DIST_UPLOADS_DIR, safeName);
+
+      try {
+        if (fs.existsSync(targetFilePath)) {
+          await fs.promises.unlink(targetFilePath);
+        }
+        if (fs.existsSync(distFilePath)) {
+          await fs.promises.unlink(distFilePath);
+        }
+        console.log(`[Upload] Image deleted: ${safeName}`);
+        sendJson(res, 200, { success: true, message: `Image ${safeName} deleted successfully` });
+      } catch (err) {
+        sendJson(res, 500, { success: false, message: `Failed to delete file: ${err.message}` });
+      }
+      return true;
+    }
+
 
     // 5. Create Package: POST /api/packages
     if (pathname === '/api/packages' && method === 'POST') {

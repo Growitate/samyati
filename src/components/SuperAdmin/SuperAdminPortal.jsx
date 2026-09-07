@@ -57,24 +57,26 @@ export default function SuperAdminPortal({ onNavigateToSite }) {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#090d16',
+        background: '#fefce8',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#f59e0b',
-        fontFamily: 'sans-serif'
+        color: '#141613',
+        fontFamily: "'Plus Jakarta Sans', sans-serif"
       }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{
-            width: '32px',
-            height: '32px',
-            border: '3px solid rgba(245, 158, 11, 0.2)',
-            borderTopColor: '#f59e0b',
+            width: '38px',
+            height: '38px',
+            border: '3px solid rgba(212, 175, 55, 0.25)',
+            borderTopColor: '#d97706',
             borderRadius: '50%',
             animation: 'spin 0.8s linear infinite',
-            margin: '0 auto 12px'
+            margin: '0 auto 14px'
           }}></div>
-          <span>Verifying Vault Authorization...</span>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: '#475569' }}>
+            Authorizing Samyati Control Vault...
+          </span>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
