@@ -56,7 +56,7 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
               className="nav-logo"
             >
               <img
-                src="/samyati-logo.png"
+                src="/Logo (2).png"
                 alt="Samyati The World"
                 className="brand-logo-img"
               />
@@ -134,7 +134,7 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
                 className="nav-logo"
               >
                 <img
-                  src="/samyati-logo.png"
+                  src="/Logo (2).png"
                   alt="Samyati The World"
                   className="brand-logo-img-drawer"
                 />
@@ -196,7 +196,11 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
           z-index: 1000;
           padding-top: 12px;
           padding-bottom: 12px;
-          background: transparent;
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -243,9 +247,9 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
         }
 
         .brand-logo-img {
-          height: 56px;
+          height: 70px;
           width: auto;
-          max-width: 220px;
+          max-width: 260px;
           object-fit: contain;
           transition: transform 0.25s ease, height 0.25s ease;
           display: block;
@@ -254,7 +258,7 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
 
         .navbar-wrapper.scrolled .brand-logo-img,
         .navbar-wrapper.solid-header .brand-logo-img {
-          height: 48px;
+          height: 60px;
         }
 
         .brand-logo-img:hover {
@@ -262,7 +266,7 @@ export default function Navbar({ onOpenOfferModal, onNavigate, currentView = 'ho
         }
 
         .brand-logo-img-drawer {
-          height: 58px;
+          height: 72px;
           width: auto;
           object-fit: contain;
         }

@@ -73,6 +73,28 @@ function getAuthToken(req) {
 }
 
 /**
+ * Strips all internal thinking tags, reasoning scratchpads, and chain-of-thought blocks
+ */
+export function stripThinkingProcess(text) {
+  if (!text) return '';
+  let cleaned = text;
+
+  // 1. Remove XML-style think blocks (both closed and unclosed)
+  cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, '');
+  if (cleaned.includes('<think>')) {
+    cleaned = cleaned.replace(/<think>[\s\S]*$/gi, '');
+  }
+
+  // 2. Remove common reasoning intro blocks
+  cleaned = cleaned.replace(/^(?:Here'?s\s+(?:a\s+)?thinking\s+process|Thinking\s+Process|Thought|Reasoning|Internal\s+Reasoning)[:\s][\s\S]*?(?=\n\n(?:[#A-Z*]|---|\b(?:Hi|Hello|Namaste|Welcome|I|Package|Here are)\b)|$)/i, '');
+
+  // 3. Remove raw scratchpad patterns if model starts talking to itself
+  cleaned = cleaned.replace(/^(?:We need to|The user (?:wants|asked|is asking|said)|Let's (?:analyze|list|think|pick|choose)|1\.\s+\*\*Analyze)[\s\S]*?(?=\n\n(?:[#A-Z*]|---|\b(?:Hi|Hello|Namaste|Welcome|I|Package|Here are)\b)|$)/i, '');
+
+  return cleaned.trim();
+}
+
+/**
  * Main API request handler
  */
 export async function handleApiRequest(req, res) {
@@ -354,11 +376,12 @@ ${category ? `User preference category: ${category}` : ''}`;
       }
 
       const groqApiKey = process.env.GROQ_API_KEY || 'REMOVED_GROQ_API_KEY';
+      // Cost-optimal model hierarchy: openai/gpt-oss-20b ($0.075/1M input, $0.30/1M output - 92% cheaper than 27b)
       const modelsToTry = [
-        requestedModel || 'qwen/qwen3.8-27b',
-        'openai/gpt-oss-120b',
-        'openai/gpt-oss-20b'
-      ].filter((v, i, a) => a.indexOf(v) === i);
+        requestedModel || 'openai/gpt-oss-20b',
+        'qwen/qwen3.6-27b',
+        'qwen/qwen3.8-27b'
+      ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i);
 
       let aiReply = '';
       let usedModel = modelsToTry[0];
@@ -368,6 +391,7 @@ ${category ? `User preference category: ${category}` : ''}`;
 
       for (const modelCandidate of modelsToTry) {
         try {
+          const isReasoningModel = modelCandidate.startsWith('openai/gpt-oss-');
           const groqPayload = {
             model: modelCandidate,
             messages: [
@@ -378,7 +402,8 @@ ${category ? `User preference category: ${category}` : ''}`;
               }))
             ],
             temperature: 0.5,
-            max_tokens: 750
+            max_tokens: 850,
+            ...(isReasoningModel ? { reasoning_format: 'hidden', reasoning_effort: 'low' } : {})
           };
 
           const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -393,10 +418,11 @@ ${category ? `User preference category: ${category}` : ''}`;
           if (groqRes.ok) {
             const data = await groqRes.json();
             const choice = data.choices && data.choices[0];
-            let content = choice?.message?.content || choice?.message?.reasoning || '';
+            // Strictly take content — never leak internal reasoning field to traveler
+            let content = choice?.message?.content || '';
             
-            // Clean thinking tags if any
-            content = content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+            // Strip any thinking process or scratchpad traces
+            content = stripThinkingProcess(content);
 
             if (content) {
               aiReply = content;

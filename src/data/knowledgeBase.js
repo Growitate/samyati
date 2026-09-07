@@ -60,40 +60,50 @@ export function buildFullKnowledgeBase(packages = DEFAULT_PACKAGES, destinations
   const sections = [];
   const focusedId = focusedDest?.id?.toLowerCase();
 
-  // 3. Format destination blocks with all packages
-  for (const [id, dest] of destMap.entries()) {
-    const isFocused = focusedId && (id === focusedId || dest.name.toLowerCase().includes(focusedId));
-
-    const pkgLines = dest.packages.map(p => {
-      const priceStr = p.price ? p.price : 'On Request';
-      const stops = (p.itinerary || [])
-        .map(day => day.title.replace(/^Day \d+[:\s-]*/i, ''))
-        .slice(0, 3)
-        .join(' → ');
-
-      if (isFocused || dest.packages.length <= 2) {
-        return `  • "${p.title}" (${p.duration}, Starting: ${priceStr}) [Sights: ${stops || (p.description ? p.description.slice(0, 80) : '')}]`;
+  // 3. Format destination blocks
+  if (focusedId) {
+    const otherDestSummaries = [];
+    for (const [id, dest] of destMap.entries()) {
+      const isFocused = id === focusedId || dest.name.toLowerCase().includes(focusedId);
+      if (isFocused) {
+        const pkgLines = dest.packages.map(p => {
+          const priceStr = p.price ? p.price : 'On Request';
+          const stops = (p.itinerary || [])
+            .map(day => day.title.replace(/^Day \d+[:\s-]*/i, ''))
+            .slice(0, 3)
+            .join(' → ');
+          return `  • "${p.title}" (${p.duration}, Starting: ${priceStr})${stops ? ` [Route: ${stops}]` : ''}`;
+        }).join('\n');
+        sections.push(`### FOCUSED DESTINATION: ${dest.name} (${dest.category}, ${dest.packages.length} Packages)\n${pkgLines || '  (Custom itineraries available)'}`);
       } else {
-        return `  • "${p.title}" (${p.duration}, Starting: ${priceStr})${stops ? ` — ${stops}` : ''}`;
+        const prices = dest.packages.map(p => parseInt((p.price || '').replace(/[^0-9]/g, ''))).filter(Boolean);
+        const minPrice = prices.length > 0 ? '₹' + Math.min(...prices).toLocaleString('en-IN') : 'On Request';
+        otherDestSummaries.push(`• ${dest.name} (${dest.category}): ${dest.packages.length} pkgs, starting ${minPrice}`);
       }
-    }).join('\n');
+    }
 
-    sections.push(`### ${dest.name} (${dest.category}, ${dest.packages.length} Packages)
-${pkgLines || '  (Contact consultant for bespoke itineraries)'}`);
+    if (otherDestSummaries.length > 0) {
+      sections.push(`### OTHER SAMYATI CATALOG DESTINATIONS:\n${otherDestSummaries.join('\n')}`);
+    }
+  } else {
+    // Unfocused overview: concise package titles & starting prices to minimize token overhead
+    for (const [id, dest] of destMap.entries()) {
+      const pkgLines = dest.packages.map(p => {
+        const priceStr = p.price ? p.price : 'On Request';
+        return `  • "${p.title}" (${p.duration}, Starting: ${priceStr})`;
+      }).join('\n');
+
+      sections.push(`### ${dest.name} (${dest.category}, ${dest.packages.length} Packages)\n${pkgLines || '  (Custom itineraries available)'}`);
+    }
   }
 
   // 4. Format multi-destination / regional combo packages
   if (unassignedPackages.length > 0) {
     const comboLines = unassignedPackages.map(p => {
-      const stops = (p.itinerary || [])
-        .map(day => day.title.replace(/^Day \d+[:\s-]*/i, ''))
-        .slice(0, 3)
-        .join(' → ');
-      return `  • "${p.title}" [${p.destinationName}] (${p.duration}, Starting: ${p.price || 'On Request'})${stops ? ` — ${stops}` : ''}`;
+      return `  • "${p.title}" [${p.destinationName}] (${p.duration}, Starting: ${p.price || 'On Request'})`;
     }).join('\n');
 
-    sections.push(`### Multi-Destination & Regional Itineraries (${unassignedPackages.length} Packages)
-${comboLines}`);
+    sections.push(`### Multi-Destination & Regional Itineraries (${unassignedPackages.length} Packages)\n${comboLines}`);
   }
 
   return sections.join('\n\n');

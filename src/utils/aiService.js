@@ -3,9 +3,9 @@ import { PACKAGES, DESTINATIONS } from '../data/travelData';
 import { buildFullKnowledgeBase, buildDeepInquiryKnowledge } from '../data/knowledgeBase';
 
 export const GROQ_MODELS = {
-  PRIMARY: 'qwen/qwen3.8-27b',
-  FALLBACK_120B: 'openai/gpt-oss-120b',
-  FALLBACK_20B: 'openai/gpt-oss-20b'
+  PRIMARY: 'openai/gpt-oss-20b',
+  FALLBACK_QWEN_36: 'qwen/qwen3.6-27b',
+  FALLBACK_QWEN_38: 'qwen/qwen3.8-27b'
 };
 
 const DEFAULT_GROQ_KEY = 'REMOVED_GROQ_API_KEY';
@@ -42,7 +42,7 @@ export async function sendChatMessage({
       const data = await res.json();
       if (data.success) {
         return {
-          reply: data.reply,
+          reply: stripThinkingProcess(data.reply),
           modelUsed: data.modelUsed || model,
           latencyMs: data.latencyMs,
           matchedPackages: data.matchedPackages || []
@@ -81,7 +81,7 @@ Direct travelers to WhatsApp (+91-9589110765) for custom dates and hotel booking
 ${fullCatalogKB}
 ==============================================================`;
 
-    const start = Date.now();
+    const isReasoningModel = model && model.startsWith('openai/gpt-oss-');
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -98,14 +98,19 @@ ${fullCatalogKB}
           }))
         ],
         temperature: 0.5,
-        max_tokens: 650
+        max_tokens: 850,
+        ...(isReasoningModel ? { reasoning_format: 'hidden', reasoning_effort: 'low' } : {})
       })
     });
 
     if (groqRes.ok) {
       const gData = await groqRes.json();
-      let content = gData.choices?.[0]?.message?.content || gData.choices?.[0]?.message?.reasoning || '';
-      content = content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+      let content = gData.choices?.[0]?.message?.content || '';
+      content = content.replace(/<think>[\s\S]*?<\/think>/gi, '');
+      if (content.includes('<think>')) {
+        content = content.replace(/<think>[\s\S]*$/gi, '');
+      }
+      content = content.trim();
       return {
         reply: content || 'I am ready to plan your trip! Tell me your destination and preferences.',
         modelUsed: 'Samyati Travel Advisor',
@@ -126,13 +131,35 @@ ${fullCatalogKB}
 }
 
 /**
+ * Strips all internal thinking tags, reasoning scratchpads, and chain-of-thought blocks
+ */
+export function stripThinkingProcess(text = '') {
+  if (!text) return '';
+  let cleaned = text;
+
+  // 1. Remove XML-style think blocks (both closed and unclosed)
+  cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, '');
+  if (cleaned.includes('<think>')) {
+    cleaned = cleaned.replace(/<think>[\s\S]*$/gi, '');
+  }
+
+  // 2. Remove common reasoning intro blocks
+  cleaned = cleaned.replace(/^(?:Here'?s\s+(?:a\s+)?thinking\s+process|Thinking\s+Process|Thought|Reasoning|Internal\s+Reasoning)[:\s][\s\S]*?(?=\n\n(?:[#A-Z*]|---|\b(?:Hi|Hello|Namaste|Welcome|I|Package|Here are)\b)|$)/i, '');
+
+  // 3. Remove raw scratchpad patterns if model starts talking to itself
+  cleaned = cleaned.replace(/^(?:We need to|The user (?:wants|asked|is asking|said)|Let's (?:analyze|list|think|pick|choose)|1\.\s+\*\*Analyze)[\s\S]*?(?=\n\n(?:[#A-Z*]|---|\b(?:Hi|Hello|Namaste|Welcome|I|Package|Here are)\b)|$)/i, '');
+
+  return cleaned.trim();
+}
+
+/**
  * Format markdown string into rich HTML with image embeds, tables, paragraphs, headers and lists
  */
 export function formatAiMarkdown(text = '') {
   if (!text) return '';
   
   // Clean thinking blocks if present
-  let cleanText = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  let cleanText = stripThinkingProcess(text);
 
   // Split into lines
   const lines = cleanText.split('\n');

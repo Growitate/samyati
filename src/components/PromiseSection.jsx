@@ -21,7 +21,36 @@ import {
   PhoneCall
 } from 'lucide-react';
 import { usePackages } from '../context/PackageContext';
-import { sendChatMessage, formatAiMarkdown, GROQ_MODELS } from '../utils/aiService';
+import { sendChatMessage, formatAiMarkdown, stripThinkingProcess, GROQ_MODELS } from '../utils/aiService';
+
+/**
+ * Splits markdown response into streamable tokens/chunks for an organic typing feel
+ * while keeping images, table rows, and horizontal rules atomic to prevent syntax flickering.
+ */
+function splitIntoTypingChunks(text) {
+  if (!text) return [];
+  const chunks = [];
+  const lines = text.split('\n');
+  for (let li = 0; li < lines.length; li++) {
+    const line = lines[li];
+    if (line.trim().startsWith('![') && line.includes('](')) {
+      chunks.push(line);
+    } else if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      chunks.push(line);
+    } else if (/^---+$/.test(line.trim())) {
+      chunks.push(line);
+    } else {
+      const parts = line.split(/(\s+)/);
+      for (const p of parts) {
+        if (p) chunks.push(p);
+      }
+    }
+    if (li < lines.length - 1) {
+      chunks.push('\n');
+    }
+  }
+  return chunks;
+}
 
 export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
   const { packages: PACKAGES } = usePackages();
@@ -43,19 +72,25 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
   const [recommendations, setRecommendations] = useState(null);
 
   const chatFeedRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  const typingTimerRef = useRef(null);
 
-  // Auto-scroll to bottom of chat feed on every message / recommendation (like WhatsApp)
+  // Clean up any running typewriter animation on component unmount
   useEffect(() => {
-    if (chatFeedRef.current) {
-      chatFeedRef.current.scrollTo({
-        top: chatFeedRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  }, [chatLog, isTyping, recommendations]);
+    return () => {
+      if (typingTimerRef.current) {
+        clearInterval(typingTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleConsultAI = async (selectedRealm = realm, selectedVibe = vibe, userText = null) => {
+    // Clear any active typing animation before initiating new query
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current);
+      typingTimerRef.current = null;
+      setChatLog(prev => prev.map(m => m.isStreaming ? { ...m, isStreaming: false } : m));
+    }
+
     const promptText = userText 
       ? userText 
       : `Looking for a ${selectedVibe} trip in ${selectedRealm === 'Any' ? 'Any destination' : selectedRealm}.`;
@@ -66,6 +101,14 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
     setChatLog(updatedLog);
     setIsTyping(true);
     setRecommendations(null);
+
+    // Keep user view at the top — user manually scrolls down at their own pace
+    if (chatFeedRef.current) {
+      chatFeedRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
 
     try {
       const response = await sendChatMessage({
@@ -78,36 +121,74 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         model: activeModel
       });
 
-      const aiReply = {
-        id: Date.now() + 1,
+      setIsTyping(false);
+
+      const aiMsgId = Date.now() + 1;
+      const fullReply = stripThinkingProcess(response.reply || '');
+
+      // Initialize AI message with streaming mode for typewriter effect
+      const initialAiReply = {
+        id: aiMsgId,
         sender: 'ai',
-        text: response.reply,
+        text: '',
+        isStreaming: true,
         modelUsed: response.modelUsed,
         latencyMs: response.latencyMs
       };
 
-      setChatLog(prev => [...prev, aiReply]);
+      setChatLog(prev => [...prev, initialAiReply]);
       setModelLabel('Instant Concierge');
 
-      // Only show package recommendations if the consultant provided matched packages for a trip query
-      if (response.matchedPackages && response.matchedPackages.length > 0) {
-        setRecommendations(response.matchedPackages);
-      } else {
-        setRecommendations(null);
+      // Stay positioned at top so user starts reading from the beginning
+      if (chatFeedRef.current) {
+        chatFeedRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       }
+
+      // Progressive typewriter streaming cadence
+      const chunks = splitIntoTypingChunks(fullReply);
+      let currentIndex = 0;
+      const step = Math.max(1, Math.ceil(chunks.length / 65)); // Smooth ~1.5s total animation
+
+      typingTimerRef.current = setInterval(() => {
+        currentIndex += step;
+        if (currentIndex >= chunks.length) {
+          clearInterval(typingTimerRef.current);
+          typingTimerRef.current = null;
+
+          setChatLog(prev => prev.map(m => 
+            m.id === aiMsgId ? { ...m, text: fullReply, isStreaming: false } : m
+          ));
+
+          if (response.matchedPackages && response.matchedPackages.length > 0) {
+            setRecommendations(response.matchedPackages);
+          } else {
+            setRecommendations(null);
+          }
+          return;
+        }
+
+        const partial = chunks.slice(0, currentIndex).join('');
+        setChatLog(prev => prev.map(m => 
+          m.id === aiMsgId ? { ...m, text: partial, isStreaming: true } : m
+        ));
+      }, 22);
+
     } catch (err) {
       console.error('Chat error:', err);
+      setIsTyping(false);
       setChatLog(prev => [...prev, {
         id: Date.now() + 1,
         sender: 'ai',
         text: "I'm having a brief connection delay. Please feel free to select from our featured packages or reach our travel experts directly on WhatsApp (+91-9589110765)!"
       }]);
-    } finally {
-      setIsTyping(false);
     }
   };
 
   const handleResetChat = () => {
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
     setChatLog([
       {
         id: Date.now(),
@@ -117,6 +198,9 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
     ]);
     setRecommendations(null);
     setCustomInput('');
+    if (chatFeedRef.current) {
+      chatFeedRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handlePresetClick = (queryText) => {
@@ -235,15 +319,19 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
 
                     <div className="chat-msg-content">
                       {msg.sender === 'ai' ? (
-                        <div 
-                          className="msg-text ai-markdown-body" 
-                          dangerouslySetInnerHTML={{ __html: formatAiMarkdown(msg.text) }} 
-                        />
+                        <div className="msg-text ai-markdown-body">
+                          <div 
+                            dangerouslySetInnerHTML={{ __html: formatAiMarkdown(msg.text) }} 
+                          />
+                          {msg.isStreaming && (
+                            <span className="ai-typing-cursor" aria-hidden="true" />
+                          )}
+                        </div>
                       ) : (
                         <p className="msg-text">{msg.text}</p>
                       )}
 
-                      {msg.latencyMs > 0 && (
+                      {msg.latencyMs > 0 && !msg.isStreaming && (
                         <span className="msg-meta-latency">
                           ⚡ {msg.latencyMs}ms response time
                         </span>
@@ -329,9 +417,6 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                     </div>
                   </div>
                 )}
-
-                {/* Bottom marker for WhatsApp-like auto scroll */}
-                <div ref={messagesEndRef} />
               </div>
 
               {/* Chatbot Bottom Interactive Input Bar */}
@@ -794,6 +879,22 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           font-size: 13.5px;
           color: #64748b;
           font-style: italic;
+        }
+
+        .ai-typing-cursor {
+          display: inline-block;
+          width: 6px;
+          height: 15px;
+          background: #d97706;
+          margin-left: 4px;
+          vertical-align: -1px;
+          border-radius: 2px;
+          animation: cursorBlink 0.65s infinite ease-in-out;
+        }
+
+        @keyframes cursorBlink {
+          0%, 100% { opacity: 1; transform: scaleY(1); }
+          50% { opacity: 0.15; transform: scaleY(0.6); }
         }
 
         .ai-markdown-body {

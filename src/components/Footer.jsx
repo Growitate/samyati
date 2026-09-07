@@ -96,7 +96,7 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
           <div className="footer-col-pro brand-col-pro">
             <a href="#" className="footer-logo-pro" onClick={(e) => { e.preventDefault(); scrollToTop(); }}>
               <img 
-                src="/samyati-logo.png" 
+                src="/Logo (2).png" 
                 alt="Samyati The World" 
                 className="footer-brand-logo-img" 
               />
