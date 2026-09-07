@@ -553,7 +553,7 @@ ${category ? `User preference category: ${category}` : ''}`;
     // 4c. Delete Uploaded Image: DELETE /api/upload
     if (pathname === '/api/upload' && method === 'DELETE') {
       const body = await parseJsonBody(req).catch(() => ({}));
-      const filename = body.filename || parsedUrl.searchParams.get('filename') || (body.url ? path.basename(body.url) : null);
+      const filename = body.filename || url.searchParams.get('filename') || (body.url ? path.basename(body.url) : null);
       if (!filename) {
         sendJson(res, 400, { success: false, message: 'Filename or URL required to delete' });
         return true;
