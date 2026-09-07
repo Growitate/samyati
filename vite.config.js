@@ -3,6 +3,13 @@ import react from '@vitejs/plugin-react'
 import { handleApiRequest } from './server/api.js'
 import { initDatabase } from './server/db.js'
 
+// Load environment variables for local Vite dev / preview server
+try {
+  process.loadEnvFile();
+} catch (e) {
+  // .env may not exist if injected via system environment
+}
+
 function samyatiApiPlugin() {
   return {
     name: 'samyati-api-plugin',

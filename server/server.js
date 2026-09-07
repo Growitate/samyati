@@ -2,6 +2,13 @@ import http from 'http';
 import { handleApiRequest } from './api.js';
 import { initDatabase } from './db.js';
 
+// Load .env configuration
+try {
+  process.loadEnvFile();
+} catch (e) {
+  // .env may not exist if injected via system environment
+}
+
 const PORT = process.env.PORT || 7392;
 
 async function startServer() {

@@ -8,7 +8,7 @@ export const GROQ_MODELS = {
   FALLBACK_QWEN_38: 'qwen/qwen3.8-27b'
 };
 
-const DEFAULT_GROQ_KEY = 'REMOVED_GROQ_API_KEY';
+const DEFAULT_GROQ_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
 
 /**
  * Send chat message to backend /api/chat (with direct Groq fallback if needed)
@@ -80,6 +80,16 @@ Direct travelers to WhatsApp (+91-9589110765) for custom dates and hotel booking
 === OFFICIAL SAMYATI TRAVEL KNOWLEDGE BASE (ALL 75 PACKAGES) ===
 ${fullCatalogKB}
 ==============================================================`;
+
+    if (!DEFAULT_GROQ_KEY) {
+      console.warn('[AI Service] Direct client fallback bypassed: no VITE_GROQ_API_KEY configured.');
+      return {
+        reply: "Our travel advisors are available to assist you. Please connect directly with us on WhatsApp at +91-9589110765 or click 'Plan My Trip' to get a customized quote!",
+        modelUsed: 'Samyati Travel Desk',
+        latencyMs: 10,
+        matchedPackages: []
+      };
+    }
 
     const isReasoningModel = model && model.startsWith('openai/gpt-oss-');
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {

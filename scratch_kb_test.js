@@ -1,7 +1,11 @@
 import https from 'https';
 import { PACKAGES, DESTINATIONS } from './src/data/travelData.js';
 
-const apiKey = "REMOVED_GROQ_API_KEY";
+try {
+  process.loadEnvFile();
+} catch (e) {}
+
+const apiKey = process.env.GROQ_API_KEY || '';
 
 // Build full knowledge base
 const destSummaries = DESTINATIONS.map(d => {

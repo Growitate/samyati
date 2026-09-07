@@ -18,6 +18,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const UPLOADS_DIR = path.resolve(ROOT_DIR, 'public', 'uploads');
+
+// Ensure environment variables are loaded
+try {
+  process.loadEnvFile();
+} catch (e) {
+  // .env may not exist if injected via environment
+}
 const DIST_UPLOADS_DIR = path.resolve(ROOT_DIR, 'dist', 'uploads');
 
 function ensureUploadsDir() {
@@ -375,7 +382,15 @@ ${deepDetails}
 ${category ? `User preference category: ${category}` : ''}`;
       }
 
-      const groqApiKey = process.env.GROQ_API_KEY || 'REMOVED_GROQ_API_KEY';
+      const groqApiKey = process.env.GROQ_API_KEY || '';
+      if (!groqApiKey) {
+        console.error('[API /api/chat] Missing GROQ_API_KEY environment variable');
+        sendJsonResponse(res, 500, {
+          success: false,
+          error: 'GROQ_API_KEY is not configured in server environment (.env)'
+        });
+        return true;
+      }
       // Cost-optimal model hierarchy: openai/gpt-oss-20b ($0.075/1M input, $0.30/1M output - 92% cheaper than 27b)
       const modelsToTry = [
         requestedModel || 'openai/gpt-oss-20b',
