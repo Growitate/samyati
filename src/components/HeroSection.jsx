@@ -1,12 +1,142 @@
-import React, { useState } from 'react';
-import { Compass, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Compass, ArrowRight, ShieldCheck, Sparkles, X, ChevronRight, MapPin } from 'lucide-react';
+import { usePackages } from '../context/PackageContext';
 
-export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
+export default function HeroSection({ onOpenOfferModal, onSelectDestination, onSelectPackage }) {
+  const { packages: PACKAGES = [], destinations: DESTINATIONS = [] } = usePackages();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const searchContainerRef = useRef(null);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onOpenOfferModal(searchQuery || 'Custom Trip');
+  const cleanQ = searchQuery.trim().toLowerCase();
+
+  // Matched Destinations
+  const matchedDestinations = useMemo(() => {
+    if (!cleanQ) return [];
+
+    const cityMap = {
+      'srinagar': 'kashmir', 'gulmarg': 'kashmir', 'pahalgam': 'kashmir', 'sonamarg': 'kashmir', 'dal lake': 'kashmir',
+      'manali': 'himachal', 'shimla': 'himachal', 'dharamshala': 'himachal', 'kasol': 'himachal', 'spiti': 'himachal',
+      'munnar': 'kerala', 'alleppey': 'kerala', 'kochi': 'kerala', 'thekkady': 'kerala', 'kovalam': 'kerala', 'wayanad': 'kerala',
+      'calangute': 'goa', 'baga': 'goa', 'panaji': 'goa', 'dudhsagar': 'goa', 'anjuna': 'goa',
+      'jaipur': 'rajasthan', 'udaipur': 'rajasthan', 'jodhpur': 'rajasthan', 'jaisalmer': 'rajasthan', 'pushkar': 'rajasthan',
+      'havelock': 'andaman', 'port blair': 'andaman', 'neil': 'andaman', 'radhanagar': 'andaman',
+      'leh': 'ladakh', 'nubra': 'ladakh', 'pangong': 'ladakh', 'khardung la': 'ladakh',
+      'varanasi': 'uttar-pradesh', 'kashi': 'uttar-pradesh', 'ayodhya': 'uttar-pradesh', 'mathura': 'uttar-pradesh', 'vrindavan': 'uttar-pradesh',
+      'shillong': 'northeast', 'cherrapunji': 'northeast', 'kaziranga': 'northeast', 'tawang': 'northeast', 'gangtok': 'northeast', 'darjeeling': 'northeast',
+      'ubud': 'bali', 'kuta': 'bali', 'seminyak': 'bali', 'nusa penida': 'bali',
+      'hanoi': 'vietnam', 'halong': 'vietnam', 'da nang': 'vietnam', 'hoi an': 'vietnam',
+      'sentosa': 'singapore', 'marina bay': 'singapore',
+      'almaty': 'kazakhstan', 'shymbulak': 'kazakhstan',
+      'kuala lumpur': 'malaysia', 'genting': 'malaysia', 'langkawi': 'malaysia',
+      'burj khalifa': 'dubai', 'abu dhabi': 'dubai',
+      'bangkok': 'thailand', 'pattaya': 'thailand', 'phuket': 'thailand', 'krabi': 'thailand',
+      'colombo': 'srilanka', 'kandy': 'srilanka', 'bentota': 'srilanka', 'sigiriya': 'srilanka', 'galle': 'srilanka',
+      'tashkent': 'uzbekistan', 'samarkand': 'uzbekistan', 'bukhara': 'uzbekistan',
+      'tbilisi': 'georgia', 'kazbegi': 'georgia', 'batumi': 'georgia'
+    };
+
+    const destIdFromCity = cityMap[cleanQ] || Object.entries(cityMap).find(([city]) => cleanQ.includes(city))?.[1];
+
+    return (DESTINATIONS || []).filter(d => {
+      const name = (d.name || '').toLowerCase();
+      const id = (d.id || '').toLowerCase();
+      const tagline = (d.tagline || '').toLowerCase();
+      const desc = (d.description || '').toLowerCase();
+      const cat = (d.category || '').toLowerCase();
+
+      return (
+        name.includes(cleanQ) ||
+        id.includes(cleanQ) ||
+        (destIdFromCity && id === destIdFromCity) ||
+        tagline.includes(cleanQ) ||
+        desc.includes(cleanQ) ||
+        cat.includes(cleanQ)
+      );
+    }).slice(0, 4);
+  }, [DESTINATIONS, cleanQ]);
+
+  // Matched Packages
+  const matchedPackages = useMemo(() => {
+    if (!cleanQ) return [];
+    return (PACKAGES || []).filter(p => {
+      const title = (p.title || '').toLowerCase();
+      const destName = (p.destinationName || '').toLowerCase();
+      const destId = (p.destinationId || '').toLowerCase();
+      const desc = (p.description || '').toLowerCase();
+      const cat = (p.category || '').toLowerCase();
+      const duration = (p.duration || '').toLowerCase();
+
+      return (
+        title.includes(cleanQ) ||
+        destName.includes(cleanQ) ||
+        destId.includes(cleanQ) ||
+        desc.includes(cleanQ) ||
+        cat.includes(cleanQ) ||
+        duration.includes(cleanQ)
+      );
+    }).slice(0, 5);
+  }, [PACKAGES, cleanQ]);
+
+  const hasResults = matchedDestinations.length > 0 || matchedPackages.length > 0;
+
+  // Click outside to close dropdown
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('touchstart', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('touchstart', handleOutsideClick);
+    };
+  }, []);
+
+  const handleSelectDestItem = (dest) => {
+    setIsDropdownOpen(false);
+    setSearchQuery(dest.name);
+    if (onSelectDestination) {
+      onSelectDestination(dest);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  };
+
+  const handleSelectPkgItem = (pkg) => {
+    setIsDropdownOpen(false);
+    setSearchQuery(pkg.title);
+    if (onSelectPackage) {
+      onSelectPackage(pkg);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (!cleanQ) {
+      if (onOpenOfferModal) onOpenOfferModal('Custom Trip');
+      return;
+    }
+
+    // 1. If direct destination match
+    if (matchedDestinations.length > 0) {
+      handleSelectDestItem(matchedDestinations[0]);
+      return;
+    }
+
+    // 2. If direct package match
+    if (matchedPackages.length > 0) {
+      handleSelectPkgItem(matchedPackages[0]);
+      return;
+    }
+
+    // 3. Fallback to offer modal
+    setIsDropdownOpen(false);
+    if (onOpenOfferModal) {
+      onOpenOfferModal(searchQuery.trim());
+    }
   };
 
   return (
@@ -36,26 +166,153 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
               Handcrafted domestic & international journeys with luxury stays, smooth transfers, and 24/7 dedicated support.
             </p>
 
-            {/* Quick Search Bar Pill */}
-            <form onSubmit={handleSearch} className="hero-combined-search-form">
-              <div className="hero-combined-search-pill">
-                <div className="search-input-wrapper">
-                  <Compass size={18} className="search-icon-left" />
-                  <input
-                    type="text"
-                    placeholder="Search e.g. Kashmir, Bali, Dubai..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="search-input-field"
-                  />
-                </div>
+            {/* Quick Search Bar Pill with Live Interactive Autocomplete */}
+            <div className="hero-search-outer-container" ref={searchContainerRef}>
+              <form onSubmit={handleSearchSubmit} className="hero-combined-search-form">
+                <div className="hero-combined-search-pill">
+                  <div className="search-input-wrapper">
+                    <Compass size={18} className="search-icon-left" />
+                    <input
+                      type="text"
+                      placeholder="Search e.g. Kashmir, Bali, Dubai, Kerala, Goa..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setIsDropdownOpen(true);
+                      }}
+                      onFocus={() => {
+                        if (searchQuery.trim().length > 0) {
+                          setIsDropdownOpen(true);
+                        }
+                      }}
+                      className="search-input-field"
+                    />
+                    {searchQuery.trim().length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setIsDropdownOpen(false);
+                        }}
+                        className="search-clear-btn"
+                        title="Clear search"
+                      >
+                        <X size={15} />
+                      </button>
+                    )}
+                  </div>
 
-                <button type="submit" className="search-submit-btn-dark">
-                  <span>Get Your Offer</span>
-                  <ArrowRight size={15} />
-                </button>
-              </div>
-            </form>
+                  <button type="submit" className="search-submit-btn-dark">
+                    <span>Search</span>
+                    <ArrowRight size={15} />
+                  </button>
+                </div>
+              </form>
+
+              {/* Live Search Autocomplete Dropdown */}
+              {isDropdownOpen && cleanQ.length > 0 && (
+                <div className="hero-search-dropdown" data-lenis-prevent="true">
+                  {hasResults ? (
+                    <>
+                      {/* Matching Destinations */}
+                      {matchedDestinations.length > 0 && (
+                        <div className="search-dropdown-section">
+                          <div className="search-section-label">
+                            <MapPin size={12} className="text-amber-600" />
+                            <span>Destinations ({matchedDestinations.length})</span>
+                          </div>
+                          <div className="search-items-list">
+                            {matchedDestinations.map(dest => (
+                              <div
+                                key={dest.id}
+                                className="search-dropdown-item dest-item"
+                                onClick={() => handleSelectDestItem(dest)}
+                              >
+                                <div className="item-icon-col">
+                                  {dest.image ? (
+                                    <img src={dest.image} alt={dest.name} className="dest-mini-thumb" />
+                                  ) : (
+                                    <span className="dest-flag-emoji">{dest.flag || '🌍'}</span>
+                                  )}
+                                </div>
+                                <div className="item-info-col">
+                                  <div className="item-title-row">
+                                    <span className="item-name">{dest.name}</span>
+                                    <span className="item-badge">{dest.category}</span>
+                                  </div>
+                                  <span className="item-subtext">{dest.tagline || dest.description}</span>
+                                </div>
+                                <ChevronRight size={15} className="item-arrow" />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Matching Tour Packages */}
+                      {matchedPackages.length > 0 && (
+                        <div className="search-dropdown-section">
+                          <div className="search-section-label">
+                            <Sparkles size={12} className="text-amber-600" />
+                            <span>Tour Packages ({matchedPackages.length})</span>
+                          </div>
+                          <div className="search-items-list">
+                            {matchedPackages.map(pkg => (
+                              <div
+                                key={pkg.id}
+                                className="search-dropdown-item pkg-item"
+                                onClick={() => handleSelectPkgItem(pkg)}
+                              >
+                                <img src={pkg.image} alt={pkg.title} className="pkg-mini-thumb" />
+                                <div className="item-info-col">
+                                  <span className="item-name">{pkg.title}</span>
+                                  <div className="pkg-meta-row">
+                                    <span className="pkg-dest-tag">{pkg.destinationName || pkg.destinationId}</span>
+                                    <span className="pkg-dur-tag">{pkg.duration}</span>
+                                  </div>
+                                </div>
+                                <div className="pkg-price-col">
+                                  <span className="pkg-price-num">{pkg.price}</span>
+                                  <span className="pkg-price-sub">per person</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Custom Offer Footer */}
+                      <div 
+                        className="search-dropdown-footer"
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          if (onOpenOfferModal) onOpenOfferModal(searchQuery);
+                        }}
+                      >
+                        <Sparkles size={14} className="text-amber-500" />
+                        <span>Looking for something else? Get a customized quote for <strong>"{searchQuery}"</strong> →</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="search-dropdown-empty">
+                      <p className="empty-title">No direct catalog match for "{searchQuery}"</p>
+                      <p className="empty-sub">Our travel consultants can customize this exact trip for you!</p>
+                      <button
+                        type="button"
+                        className="btn-custom-quote-search"
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          if (onOpenOfferModal) onOpenOfferModal(searchQuery);
+                        }}
+                      >
+                        <Sparkles size={14} />
+                        <span>Get Custom Itinerary & Quote for "{searchQuery}" →</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* Trust Badges Bar */}
             <div className="hero-combined-trust-bar">
@@ -81,15 +338,16 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
       <style>{`
         .hero-combined-section {
           position: relative;
-          min-height: 690px;
+          min-height: 700px;
           background-image: url('/hero-bright-mountain.jpg');
           background-size: cover;
           background-position: center 55%;
           display: flex;
           align-items: center;
-          padding-top: 70px;
-          padding-bottom: 80px;
-          overflow: hidden;
+          padding-top: 75px;
+          padding-bottom: 85px;
+          overflow: visible;
+          z-index: 40;
         }
 
         .hero-combined-overlay {
@@ -100,6 +358,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
             linear-gradient(90deg, rgba(16, 24, 34, 0.42) 0%, rgba(16, 24, 34, 0.18) 55%, rgba(0, 0, 0, 0) 100%),
             linear-gradient(180deg, rgba(16, 24, 34, 0.08) 0%, rgba(0, 0, 0, 0) 45%, rgba(16, 24, 34, 0.15) 100%);
           z-index: 1;
+          pointer-events: none;
         }
 
         .hero-combined-container {
@@ -110,11 +369,10 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
 
         .hero-combined-split {
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           justify-content: space-between;
           position: relative;
-          min-height: 490px;
-          transform: translateY(-25px);
+          min-height: 480px;
         }
 
         .hero-combined-left {
@@ -157,7 +415,6 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           line-height: 1.35;
           letter-spacing: 0.035em;
           word-spacing: 0.08em;
-          transform: translateY(35px);
           margin-bottom: 20px;
         }
 
@@ -223,18 +480,22 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           max-width: 900px;
           width: 100%;
           margin-top: 8px;
-          transform: translateY(30px);
-          margin-bottom: 28px;
+          margin-bottom: 24px;
           text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* Search Form Pill */
-        .hero-combined-search-form {
+        .hero-search-outer-container {
+          position: relative;
           width: 100%;
           max-width: 680px;
-          margin-top: 18px;
-          transform: translateY(4px);
-          margin-bottom: 34px;
+          margin-top: 14px;
+          margin-bottom: 28px;
+          z-index: 60;
+        }
+
+        .hero-combined-search-form {
+          width: 100%;
         }
 
         .hero-combined-search-pill {
@@ -249,7 +510,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
         }
 
         .hero-combined-search-pill:focus-within {
-          box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(45, 212, 191, 0.5);
+          box-shadow: 0 16px 44px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(217, 119, 6, 0.4);
         }
 
         .search-input-wrapper {
@@ -273,6 +534,24 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           background: transparent;
         }
 
+        .search-clear-btn {
+          background: transparent;
+          border: none;
+          color: #94a3b8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+          cursor: pointer;
+          border-radius: 50%;
+          margin-right: 4px;
+          transition: color 0.15s ease;
+        }
+
+        .search-clear-btn:hover {
+          color: #0f172a;
+        }
+
         .search-submit-btn-dark {
           display: inline-flex;
           align-items: center;
@@ -294,6 +573,237 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           transform: translateY(-1px);
         }
 
+        /* Autocomplete Dropdown */
+        .hero-search-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          background: #ffffff;
+          border-radius: 20px;
+          box-shadow: 
+            0 28px 65px -10px rgba(15, 23, 42, 0.4), 
+            0 12px 24px -4px rgba(0, 0, 0, 0.15), 
+            0 0 0 1px rgba(226, 232, 240, 0.9);
+          max-height: 400px;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          z-index: 1000;
+          animation: dropdownSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes dropdownSlideIn {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-search-dropdown::-webkit-scrollbar {
+          width: 6px;
+        }
+        .hero-search-dropdown::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 4px;
+        }
+
+        .search-dropdown-section {
+          padding: 10px 14px 6px;
+          border-bottom: 1px solid #f1f5f9;
+        }
+
+        .search-section-label {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 11px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: #64748b;
+          margin-bottom: 6px;
+          padding-left: 6px;
+        }
+
+        .search-items-list {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .search-dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 10px;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        .search-dropdown-item:hover {
+          background: #f8fafc;
+          transform: translateX(2px);
+        }
+
+        .dest-mini-thumb {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          object-fit: cover;
+        }
+
+        .dest-flag-emoji {
+          font-size: 24px;
+          line-height: 1;
+        }
+
+        .item-info-col {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .item-title-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .item-name {
+          font-size: 13.5px;
+          font-weight: 700;
+          color: #0f172a;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .item-badge {
+          font-size: 10px;
+          font-weight: 800;
+          padding: 2px 7px;
+          border-radius: 9999px;
+          background: #eff6ff;
+          color: #2563eb;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .item-subtext {
+          display: block;
+          font-size: 11.5px;
+          color: #64748b;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .item-arrow {
+          color: #94a3b8;
+          flex-shrink: 0;
+        }
+
+        .pkg-mini-thumb {
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          object-fit: cover;
+          flex-shrink: 0;
+        }
+
+        .pkg-meta-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 11px;
+          color: #64748b;
+          margin-top: 2px;
+        }
+
+        .pkg-dest-tag {
+          font-weight: 600;
+          color: #b45309;
+        }
+
+        .pkg-dur-tag {
+          background: #f1f5f9;
+          padding: 1px 6px;
+          border-radius: 4px;
+        }
+
+        .pkg-price-col {
+          text-align: right;
+          flex-shrink: 0;
+        }
+
+        .pkg-price-num {
+          display: block;
+          font-size: 13px;
+          font-weight: 800;
+          color: #0f172a;
+        }
+
+        .pkg-price-sub {
+          font-size: 10px;
+          color: #94a3b8;
+        }
+
+        .search-dropdown-footer {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 18px;
+          background: #f8fafc;
+          font-size: 12.5px;
+          color: #334155;
+          cursor: pointer;
+          border-top: 1px solid #f1f5f9;
+          border-radius: 0 0 20px 20px;
+          transition: background 0.15s ease;
+        }
+
+        .search-dropdown-footer:hover {
+          background: #f1f5f9;
+          color: #0f172a;
+        }
+
+        .search-dropdown-empty {
+          padding: 24px 20px;
+          text-align: center;
+          border-radius: 20px;
+        }
+
+        .empty-title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #0f172a;
+          margin-bottom: 4px;
+        }
+
+        .empty-sub {
+          font-size: 12.5px;
+          color: #64748b;
+          margin-bottom: 14px;
+        }
+
+        .btn-custom-quote-search {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #0f172a;
+          color: #ffffff;
+          border: none;
+          padding: 9px 18px;
+          border-radius: 9999px;
+          font-size: 12.5px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-custom-quote-search:hover {
+          background: #d97706;
+          transform: translateY(-1px);
+        }
+
         /* Trust Bar */
         .hero-combined-trust-bar {
           display: flex;
@@ -304,8 +814,7 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
           font-weight: 600;
           letter-spacing: 0.03em;
           flex-wrap: wrap;
-          margin-top: 16px;
-          transform: translateY(12px);
+          margin-top: 14px;
         }
 
         .trust-item {
@@ -386,9 +895,16 @@ export default function HeroSection({ onOpenOfferModal, onSelectDestination }) {
             line-height: 1.75;
             letter-spacing: 0.02em;
           }
+          .hero-search-outer-container {
+            max-width: 100%;
+            margin-bottom: 24px;
+          }
           .hero-combined-search-form {
             max-width: 100%;
-            margin-bottom: 28px;
+            margin-bottom: 0;
+          }
+          .hero-search-dropdown {
+            max-height: 300px;
           }
           .hero-combined-search-pill {
             flex-direction: row;

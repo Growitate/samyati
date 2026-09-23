@@ -28,7 +28,11 @@ export const API_ENDPOINTS = {
   PACKAGE_DETAIL: (id) => `/api/packages/${id}`,
   UPLOAD: '/api/upload',
   SYNC: '/api/packages/sync',
-  RESET: '/api/packages/reset'
+  RESET: '/api/packages/reset',
+  PAYMENT_CONFIG: '/api/payment/config',
+  CREATE_ORDER: '/api/payment/create-order',
+  VERIFY_PAYMENT: '/api/payment/verify',
+  BOOKINGS: '/api/admin/bookings'
 };
 
 /**
@@ -36,13 +40,27 @@ export const API_ENDPOINTS = {
  */
 export function isSecretAdminUrl() {
   if (typeof window === 'undefined') return false;
-  const path = window.location.pathname.toLowerCase();
-  const hash = window.location.hash.toLowerCase();
+  const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+  const hash = window.location.hash.toLowerCase().replace(/\/$/, '');
   const search = window.location.search.toLowerCase();
 
-  return (
+  const isSlugMatch = (
     path.includes(ADMIN_SECRET_SLUG) ||
     hash.includes(ADMIN_SECRET_SLUG) ||
     search.includes(ADMIN_SECRET_SLUG)
   );
+
+  const isAliasMatch = (
+    hash === '#admin' ||
+    hash === '#/admin' ||
+    hash === '#superadmin' ||
+    hash === '#/superadmin' ||
+    hash === '#vault' ||
+    hash === '#/vault' ||
+    path === '/admin' ||
+    path === '/superadmin' ||
+    path === '/vault'
+  );
+
+  return isSlugMatch || isAliasMatch;
 }

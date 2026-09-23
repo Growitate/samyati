@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Clock, MapPin, CheckCircle2, XCircle, Calendar, Sparkles, ShieldCheck, PhoneCall, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Share2, Star, Send, Image as ImageIcon, Check, Building2, Utensils, Car, Compass, CreditCard, QrCode, Users, Lock, Download, Printer, Plus, Minus, ArrowRight, MessageSquare, Wallet, Tag } from 'lucide-react';
 import { usePackages } from '../context/PackageContext';
 import { scrollTo } from '../smoothScroll';
+import { executeRazorpayBookingPayment } from '../utils/razorpay';
 
 export default function PackageDetailPage({ packageData, onBack, onOpenOfferModal }) {
   const { packages: PACKAGES } = usePackages();
@@ -68,12 +69,11 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
   const [guestEmail, setGuestEmail] = useState('');
   const [specialNotes, setSpecialNotes] = useState('');
   const [paymentOption, setPaymentOption] = useState('advance'); // 'advance' (25%), 'full' (100%)
-  const [paymentMethod, setPaymentMethod] = useState('upi'); // 'upi', 'card', 'netbanking'
-  const [selectedUpiApp, setSelectedUpiApp] = useState('gpay'); // 'gpay', 'phonepe', 'paytm'
-  const [selectedBank, setSelectedBank] = useState('hdfc');
   const [isProcessing, setIsProcessing] = useState(false);
   const [bookingSuccessModal, setBookingSuccessModal] = useState(false);
   const [bookingId, setBookingId] = useState('');
+  const [paymentId, setPaymentId] = useState('');
+  const [paymentError, setPaymentError] = useState('');
   const [isDirectBookingModalOpen, setIsDirectBookingModalOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -153,20 +153,53 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
   const amountPayableNow = paymentOption === 'advance' ? advanceTokenAmount : netTripTotal;
   const remainingBalance = paymentOption === 'advance' ? (netTripTotal - advanceTokenAmount) : 0;
 
-  const handleExecutePayment = (e) => {
-    e.preventDefault();
+  const handleExecutePayment = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
     if (!guestName || !guestPhone || !guestEmail) {
       setBookingStep(2);
       alert('Please complete your Guest Contact Details before proceeding to payment.');
       return;
     }
+    setPaymentError('');
     setIsProcessing(true);
-    setTimeout(() => {
+
+    try {
+      await executeRazorpayBookingPayment({
+        amount: amountPayableNow,
+        packageId: packageData?.id || '',
+        packageTitle: packageData?.title || 'Samyati Tour Package',
+        destinationName: packageData?.destinationName || '',
+        travelerName: guestName,
+        travelerEmail: guestEmail,
+        travelerPhone: guestPhone,
+        travelDate: travelDate,
+        adults: adults,
+        children: children,
+        hotelClass: hotelClass,
+        addons: addons,
+        paymentOption: paymentOption,
+        totalTripAmount: netTripTotal,
+        remainingBalance: remainingBalance,
+        onSuccess: (result) => {
+          setIsProcessing(false);
+          setBookingId(result.bookingId || `SAM-${Math.floor(100000 + Math.random() * 900000)}`);
+          setPaymentId(result.paymentId || '');
+          setIsDirectBookingModalOpen(false);
+          setBookingSuccessModal(true);
+        },
+        onError: (err) => {
+          setIsProcessing(false);
+          setPaymentError(err.message || 'Payment could not be completed.');
+          console.error('[Payment Error]', err);
+        },
+        onDismiss: () => {
+          setIsProcessing(false);
+        }
+      });
+    } catch (err) {
       setIsProcessing(false);
-      const randomId = 'SAM-' + Math.floor(100000 + Math.random() * 900000);
-      setBookingId(randomId);
-      setBookingSuccessModal(true);
-    }, 1200);
+      setPaymentError(err.message || 'Payment gateway initialization failed.');
+    }
   };
 
   // Dedicated gallery fallback mapper returning 5 dummy images per destination keyword
@@ -1104,11 +1137,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (onOpenOfferModal) {
-                    onOpenOfferModal(packageData.title);
-                  } else {
-                    setIsDirectBookingModalOpen(true);
-                  }
+                  setIsDirectBookingModalOpen(true);
                 }}
                 className="booking-form-wrapper"
               >
@@ -1147,12 +1176,13 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                 </div>
 
 
-                {/* Request Button */}
+                {/* Direct Payment Button */}
                 <button
                   type="submit"
                   className="btn-pro-instant-book"
                 >
-                  REQUEST A QUOTE →
+                  <Lock size={15} className="inline mr-1.5" />
+                  BOOK & PAY DIRECTLY →
                 </button>
               </form>
 
@@ -1450,7 +1480,7 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
               </div>
             )}
 
-            {/* STEP 3: DIRECT PAYMENT GATEWAY */}
+            {/* STEP 3: DIRECT PAYMENT VIA RAZORPAY */}
             {bookingStep === 3 && (
               <div className="booking-step-content step-3-fade">
                 {/* Payment Deposit Option Toggle Cards */}
@@ -1486,110 +1516,64 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   </div>
                 </div>
 
-                {/* Payment Mode Selector Tabs */}
-                <div className="payment-gateway-container">
-                  <h3 className="gateway-title"><Lock size={15} className="text-emerald-600 inline mr-1.5" /> Select Secure Bank Payment Method</h3>
-
-                  <div className="gateway-tabs-row">
-                    <button
-                      className={`gw-tab-btn ${paymentMethod === 'upi' ? 'active' : ''}`}
-                      onClick={() => setPaymentMethod('upi')}
-                    >
-                      <QrCode size={16} />
-                      <span>UPI / QR Code</span>
-                    </button>
-
-                    <button
-                      className={`gw-tab-btn ${paymentMethod === 'card' ? 'active' : ''}`}
-                      onClick={() => setPaymentMethod('card')}
-                    >
-                      <CreditCard size={16} />
-                      <span>Credit / Debit Card</span>
-                    </button>
-
-                    <button
-                      className={`gw-tab-btn ${paymentMethod === 'netbanking' ? 'active' : ''}`}
-                      onClick={() => setPaymentMethod('netbanking')}
-                    >
-                      <Wallet size={16} />
-                      <span>Net Banking / EMI</span>
-                    </button>
+                {/* Single Official Razorpay Payment Gateway Card */}
+                <div className="razorpay-official-gateway-card">
+                  <div className="rzp-gateway-header">
+                    <div className="rzp-brand-badge">
+                      <div className="rzp-icon-circle">
+                        <ShieldCheck size={20} className="text-emerald-400" />
+                      </div>
+                      <div>
+                        <div className="rzp-title-row">
+                          <span className="rzp-brand-name">Razorpay Secure Checkout</span>
+                          <span className="rzp-official-tag">Official Partner</span>
+                        </div>
+                        <span className="rzp-subtitle">Direct, 256-Bit SSL Encrypted Instant Payment</span>
+                      </div>
+                    </div>
+                    <div className="rzp-ssl-pill">
+                      <Lock size={12} />
+                      <span>RBI Compliant</span>
+                    </div>
                   </div>
 
-                  {/* Mode 1: UPI */}
-                  {paymentMethod === 'upi' && (
-                    <div className="upi-payment-box">
-                      <p className="gw-instructions">Scan QR Code or pay directly using any UPI App:</p>
+                  <p className="rzp-methods-desc">
+                    All major payment methods are supported inside the Razorpay checkout window:
+                  </p>
 
-                      <div className="upi-apps-row">
-                        <button
-                          className={`upi-app-chip ${selectedUpiApp === 'gpay' ? 'active' : ''}`}
-                          onClick={() => setSelectedUpiApp('gpay')}
-                        >
-                          Google Pay
-                        </button>
-                        <button
-                          className={`upi-app-chip ${selectedUpiApp === 'phonepe' ? 'active' : ''}`}
-                          onClick={() => setSelectedUpiApp('phonepe')}
-                        >
-                          PhonePe
-                        </button>
-                        <button
-                          className={`upi-app-chip ${selectedUpiApp === 'paytm' ? 'active' : ''}`}
-                          onClick={() => setSelectedUpiApp('paytm')}
-                        >
-                          Paytm UPI
-                        </button>
-                      </div>
-
-                      <div className="qr-simulated-container">
-                        <div className="qr-code-box">
-                          <QrCode size={110} className="text-slate-800" />
-                        </div>
-                        <div className="vpa-info">
-                          <span className="vpa-label">Merchant VPA ID:</span>
-                          <strong className="vpa-id">samyati@icici</strong>
-                          <span className="vpa-sub font-semibold text-emerald-600 mt-1 block">✓ Verified Instant Booking Gateway</span>
-                        </div>
+                  <div className="rzp-methods-grid">
+                    <div className="rzp-method-item">
+                      <QrCode size={16} className="text-amber-500 flex-shrink-0" />
+                      <div>
+                        <strong>UPI & QR Code</strong>
+                        <span>Google Pay, PhonePe, Paytm, BHIM</span>
                       </div>
                     </div>
-                  )}
 
-                  {/* Mode 2: CARD */}
-                  {paymentMethod === 'card' && (
-                    <div className="card-payment-form">
-                      <div className="form-group-full">
-                        <label>Card Number</label>
-                        <input type="text" placeholder="4532 •••• •••• 8942" className="form-input" defaultValue="4532 8912 3456 8942" />
-                      </div>
-                      <div className="form-group-half">
-                        <label>Expiry Date</label>
-                        <input type="text" placeholder="MM / YY" className="form-input" defaultValue="08 / 28" />
-                      </div>
-                      <div className="form-group-half">
-                        <label>CVV / CVC</label>
-                        <input type="password" maxLength={4} placeholder="•••" className="form-input" defaultValue="894" />
+                    <div className="rzp-method-item">
+                      <CreditCard size={16} className="text-sky-500 flex-shrink-0" />
+                      <div>
+                        <strong>Credit & Debit Cards</strong>
+                        <span>Visa, MasterCard, RuPay, Maestro</span>
                       </div>
                     </div>
-                  )}
 
-                  {/* Mode 3: NETBANKING */}
-                  {paymentMethod === 'netbanking' && (
-                    <div className="netbanking-box">
-                      <label className="text-xs font-bold text-slate-700 block mb-2">Select Your Bank</label>
-                      <select
-                        value={selectedBank}
-                        onChange={(e) => setSelectedBank(e.target.value)}
-                        className="form-input"
-                      >
-                        <option value="hdfc">HDFC Bank</option>
-                        <option value="icici">ICICI Bank</option>
-                        <option value="sbi">State Bank of India (SBI)</option>
-                        <option value="axis">Axis Bank</option>
-                        <option value="kotak">Kotak Mahindra Bank</option>
-                      </select>
+                    <div className="rzp-method-item">
+                      <Building2 size={16} className="text-emerald-500 flex-shrink-0" />
+                      <div>
+                        <strong>Net Banking</strong>
+                        <span>HDFC, ICICI, SBI, Axis & 50+ Banks</span>
+                      </div>
                     </div>
-                  )}
+
+                    <div className="rzp-method-item">
+                      <Wallet size={16} className="text-purple-500 flex-shrink-0" />
+                      <div>
+                        <strong>Wallets & Easy EMI</strong>
+                        <span>Amazon Pay, Mobikwik, Easy EMI</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Summary & Execute Button */}
@@ -1599,6 +1583,13 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                     <span>₹{rawTripSubtotal.toLocaleString('en-IN')}</span>
                   </div>
 
+                  {couponDiscountAmount > 0 && (
+                    <div className="summary-line green">
+                      <span>Coupon Discount ({appliedCoupon?.code || 'PROMO'})</span>
+                      <span>-₹{couponDiscountAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
                   {fullPayDiscount > 0 && (
                     <div className="summary-line green">
                       <span>100% Full Payment Discount (5%)</span>
@@ -1607,31 +1598,35 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   )}
 
                   <div className="summary-line total-due">
-                    <span>AMOUNT TO PAY NOW</span>
+                    <span>AMOUNT TO PAY VIA RAZORPAY</span>
                     <span className="due-amount">₹{amountPayableNow.toLocaleString('en-IN')}</span>
                   </div>
 
+                  {paymentError && (
+                    <div className="p-3 mb-3 text-xs bg-rose-50 text-rose-700 border border-rose-200 rounded-lg font-medium">
+                      ⚠️ {paymentError}
+                    </div>
+                  )}
+
                   <button
-                    onClick={(e) => {
-                      handleExecutePayment(e);
-                      setIsDirectBookingModalOpen(false);
-                    }}
+                    onClick={(e) => handleExecutePayment(e)}
                     disabled={isProcessing}
                     className="btn-pay-now-gold"
                   >
                     {isProcessing ? (
-                      <span>Processing Bank Payment...</span>
+                      <span>Opening Secure Razorpay Gateway...</span>
                     ) : (
                       <>
                         <Lock size={16} />
-                        <span>PAY ₹{amountPayableNow.toLocaleString('en-IN')} & BOOK INSTANTLY</span>
+                        <span>PAY ₹{amountPayableNow.toLocaleString('en-IN')} VIA RAZORPAY</span>
+                        <ArrowRight size={16} />
                       </>
                     )}
                   </button>
 
                   <div className="security-badges-row">
-                    <span>🔒 256-Bit Bank Grade SSL Encrypted</span>
-                    <span>🛡️ 100% Flexible Refund Assurance</span>
+                    <span>🔒 100% Secured by Razorpay • UPI, Cards, NetBanking</span>
+                    <span>🛡️ Instant Booking ID & Tax Invoice</span>
                   </div>
                 </div>
               </div>
@@ -1678,6 +1673,12 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
                   <span className="v-lbl">Amount Paid Now:</span>
                   <strong className="v-val text-emerald-600 font-extrabold text-base">₹{amountPayableNow.toLocaleString('en-IN')} ({paymentOption === 'advance' ? '25% Advance Token' : '100% Paid'})</strong>
                 </div>
+                {paymentId && (
+                  <div className="v-item">
+                    <span className="v-lbl">Payment Ref ID:</span>
+                    <strong className="v-val text-emerald-700 font-mono text-xs">{paymentId}</strong>
+                  </div>
+                )}
                 {remainingBalance > 0 && (
                   <div className="v-item">
                     <span className="v-lbl">Remaining Balance:</span>
@@ -3771,106 +3772,139 @@ export default function PackageDetailPage({ packageData, onBack, onOpenOfferModa
           color: #166534;
         }
 
-        /* Gateway Container */
-        .payment-gateway-container {
-          background: #fefce8;
-          border: 1.5px solid #e2e8f0;
-          border-radius: 18px;
+        /* Official Razorpay Gateway Card */
+        .razorpay-official-gateway-card {
+          background: linear-gradient(145deg, #0b1528 0%, #0f224a 100%);
+          border: 1.5px solid #1e3a8a;
+          border-radius: 20px;
           padding: 22px;
           margin-bottom: 24px;
+          color: #ffffff;
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
         }
 
-        .gateway-title {
-          font-size: 14.5px;
-          font-weight: 800;
-          color: #0f172a;
+        .rzp-gateway-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 16px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
           margin-bottom: 16px;
+          gap: 12px;
         }
 
-        .gateway-tabs-row {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
-          margin-bottom: 18px;
+        .rzp-brand-badge {
+          display: flex;
+          align-items: center;
+          gap: 12px;
         }
 
-        .gw-tab-btn {
+        .rzp-icon-circle {
+          width: 38px;
+          height: 38px;
+          border-radius: 12px;
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(16, 185, 129, 0.3);
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          background: #ffffff;
-          border: 1.5px solid #cbd5e1;
-          border-radius: 12px;
-          padding: 12px;
-          font-size: 13px;
-          font-weight: 700;
-          color: #475569;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .gw-tab-btn.active {
-          border-color: #0f172a;
-          background: #0f172a;
-          color: #ffffff;
+          flex-shrink: 0;
         }
 
-        .gw-instructions {
-          font-size: 13px;
-          font-weight: 600;
-          color: #475569;
-          margin-bottom: 12px;
-        }
-
-        .upi-apps-row {
-          display: flex;
-          gap: 10px;
-          margin-bottom: 18px;
-        }
-
-        .upi-app-chip {
-          background: #ffffff;
-          border: 1.5px solid #cbd5e1;
-          border-radius: 10px;
-          padding: 8px 16px;
-          font-size: 12.5px;
-          font-weight: 700;
-          color: #334155;
-          cursor: pointer;
-        }
-        .upi-app-chip.active {
-          background: #d97706;
-          color: #ffffff;
-          border-color: #d97706;
-        }
-
-        .qr-simulated-container {
+        .rzp-title-row {
           display: flex;
           align-items: center;
-          gap: 20px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 16px;
-          padding: 18px;
+          gap: 8px;
+          flex-wrap: wrap;
         }
 
-        .qr-code-box {
-          padding: 10px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-        }
-
-        .vpa-label {
-          font-size: 12px;
-          color: #64748b;
-          display: block;
-        }
-
-        .vpa-id {
-          font-size: 18px;
+        .rzp-brand-name {
+          font-size: 15px;
           font-weight: 800;
-          color: #0f172a;
+          color: #ffffff;
+          letter-spacing: -0.01em;
+        }
+
+        .rzp-official-tag {
+          font-size: 10px;
+          font-weight: 800;
+          text-transform: uppercase;
+          background: #2563eb;
+          color: #ffffff;
+          padding: 2px 8px;
+          border-radius: 9999px;
+          letter-spacing: 0.04em;
+        }
+
+        .rzp-subtitle {
+          font-size: 12px;
+          color: #94a3b8;
+          display: block;
+          margin-top: 2px;
+        }
+
+        .rzp-ssl-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          padding: 5px 10px;
+          border-radius: 9999px;
+          font-size: 11px;
+          font-weight: 700;
+          color: #cbd5e1;
+          white-space: nowrap;
+        }
+
+        .rzp-methods-desc {
+          font-size: 12.5px;
+          color: #cbd5e1;
+          margin-bottom: 14px;
+          font-weight: 500;
+        }
+
+        .rzp-methods-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+
+        .rzp-method-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          padding: 10px 14px;
+          transition: background 0.2s ease;
+        }
+
+        .rzp-method-item:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        .rzp-method-item strong {
+          display: block;
+          font-size: 12.5px;
+          color: #ffffff;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+
+        .rzp-method-item span {
+          display: block;
+          font-size: 11px;
+          color: #94a3b8;
+          line-height: 1.3;
+          margin-top: 2px;
+        }
+
+        @media (max-width: 640px) {
+          .rzp-methods-grid {
+            grid-template-columns: 1fr;
+          }
         }
 
         /* Summary Block */

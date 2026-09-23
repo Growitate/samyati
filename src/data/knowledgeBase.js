@@ -72,7 +72,7 @@ export function buildFullKnowledgeBase(packages = DEFAULT_PACKAGES, destinations
             .map(day => day.title.replace(/^Day \d+[:\s-]*/i, ''))
             .slice(0, 3)
             .join(' → ');
-          return `  • "${p.title}" (${p.duration}, Starting: ${priceStr})${stops ? ` [Route: ${stops}]` : ''}`;
+          return `  • "${p.title}" (${p.duration}, Starting: ${priceStr}) [Link: #package/${p.id}]${stops ? ` [Route: ${stops}]` : ''}`;
         }).join('\n');
         sections.push(`### FOCUSED DESTINATION: ${dest.name} (${dest.category}, ${dest.packages.length} Packages)\n${pkgLines || '  (Custom itineraries available)'}`);
       } else {
@@ -90,7 +90,7 @@ export function buildFullKnowledgeBase(packages = DEFAULT_PACKAGES, destinations
     for (const [id, dest] of destMap.entries()) {
       const pkgLines = dest.packages.map(p => {
         const priceStr = p.price ? p.price : 'On Request';
-        return `  • "${p.title}" (${p.duration}, Starting: ${priceStr})`;
+        return `  • "${p.title}" (${p.duration}, Starting: ${priceStr}) [Link: #package/${p.id}]`;
       }).join('\n');
 
       sections.push(`### ${dest.name} (${dest.category}, ${dest.packages.length} Packages)\n${pkgLines || '  (Custom itineraries available)'}`);
@@ -100,7 +100,7 @@ export function buildFullKnowledgeBase(packages = DEFAULT_PACKAGES, destinations
   // 4. Format multi-destination / regional combo packages
   if (unassignedPackages.length > 0) {
     const comboLines = unassignedPackages.map(p => {
-      return `  • "${p.title}" [${p.destinationName}] (${p.duration}, Starting: ${p.price || 'On Request'})`;
+      return `  • "${p.title}" [${p.destinationName}] (${p.duration}, Starting: ${p.price || 'On Request'}) [Link: #package/${p.id}]`;
     }).join('\n');
 
     sections.push(`### Multi-Destination & Regional Itineraries (${unassignedPackages.length} Packages)\n${comboLines}`);
@@ -118,7 +118,7 @@ export function buildFullKnowledgeBase(packages = DEFAULT_PACKAGES, destinations
  */
 export function buildDeepInquiryKnowledge(matchedPackages = []) {
   if (!matchedPackages || matchedPackages.length === 0) {
-    return 'No specific package selected. Reference the complete directory above.';
+    return 'No specific catalog package found matching this inquiry. If the traveler asked about a destination not listed in our catalog, follow the unlisted destination guideline and provide the direct option to connect with our Destination Expert on WhatsApp.';
   }
 
   return matchedPackages.map((p, index) => {
@@ -138,6 +138,8 @@ export function buildDeepInquiryKnowledge(matchedPackages = []) {
     }).filter(Boolean).join(' | ');
 
     return `### Top Option ${index + 1}: ${p.title}
+- Package ID: ${p.id}
+- Package Page Link: #package/${p.id}
 - Title: "${p.title}"
 - Destination: ${p.destinationName || p.destinationId} (${p.category || 'Travel'})
 - Duration: ${p.duration}

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastModified": "2026-09-19T09:38:20.603Z",
+  "lastModified": "2026-09-19T09:38:20.520Z",
   "destinations": [
     {
       "id": "kashmir",
@@ -194,6 +194,46 @@
     }
   ],
   "packages": [
+    {
+      "id": "test-pkg-1789810700461",
+      "title": "Updated Test CRUD Package Title",
+      "destinationId": "kashmir",
+      "destinationName": "Kashmir",
+      "category": "Domestic",
+      "duration": "5D / 4N",
+      "price": "₹16,500",
+      "originalPrice": "₹20,000",
+      "rating": "4.9",
+      "reviewsCount": 10,
+      "description": "Test description",
+      "hotelPricingOptions": [
+        {
+          "hotelName": "Test 3 Star",
+          "price2Pax": "INR 15,000",
+          "price4Pax": "INR 11,000"
+        }
+      ],
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Day 1 Arrival",
+          "description": "Arrival test",
+          "highlights": [
+            "Pickup"
+          ]
+        }
+      ],
+      "inclusions": [
+        "Breakfast",
+        "Private cab"
+      ],
+      "exclusions": [
+        "Flights"
+      ],
+      "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+      "_createdAt": "2026-09-19T09:38:20.476Z",
+      "_updatedAt": "2026-09-19T09:38:20.520Z"
+    },
     {
       "id": "kash-srinagar-srinagar-5d",
       "destinationId": "kashmir",

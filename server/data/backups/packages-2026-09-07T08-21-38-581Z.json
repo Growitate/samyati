@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastModified": "2026-09-19T09:38:20.603Z",
+  "lastModified": "2026-09-07T08:21:38.581Z",
   "destinations": [
     {
       "id": "kashmir",
@@ -195,6 +195,50 @@
   ],
   "packages": [
     {
+      "id": "temp-verify-test-pkg-1788769298516",
+      "title": "Updated Verification Tour",
+      "category": "Domestic",
+      "destinationId": "kashmir",
+      "destinationName": "Kashmir",
+      "duration": "4D / 3N",
+      "price": "₹21,500",
+      "originalPrice": "₹25,000",
+      "rating": "4.9",
+      "reviewsCount": 10,
+      "image": "https://images.unsplash.com/photo-1598091383021-15ddea10925d",
+      "gallery": [
+        "https://images.unsplash.com/photo-1598091383021-15ddea10925d",
+        "https://images.unsplash.com/photo-1595815771614-ade9d652a65d"
+      ],
+      "hotelPricingOptions": [
+        {
+          "hotelName": "03 Star Deluxe",
+          "price2Pax": "INR 19,999",
+          "price4Pax": "INR 15,999"
+        }
+      ],
+      "description": "Temporary test package to verify Super Admin CRUD functionality.",
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Arrival",
+          "description": "Arrival in Srinagar",
+          "highlights": [
+            "Welcome"
+          ]
+        }
+      ],
+      "inclusions": [
+        "Breakfast",
+        "Private Cab"
+      ],
+      "exclusions": [
+        "Airfare"
+      ],
+      "_createdAt": "2026-09-07T08:21:38.529Z",
+      "_updatedAt": "2026-09-07T08:21:38.581Z"
+    },
+    {
       "id": "kash-srinagar-srinagar-5d",
       "destinationId": "kashmir",
       "destinationName": "Kashmir",
@@ -322,9 +366,7 @@
           "price4Pax": "INR 8,700"
         }
       ],
-      "_createdAt": "2026-09-02T10:00:00.000Z",
-      "_testEdit": 1789810358045,
-      "_updatedAt": "2026-09-19T09:32:47.900Z"
+      "_createdAt": "2026-09-02T10:00:00.000Z"
     },
     {
       "id": "kash-jammu-jammu-6d",

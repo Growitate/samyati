@@ -259,9 +259,15 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
             <span className="copyright-text">
               © {new Date().getFullYear()} Samyati World Private Limited · All Rights Reserved.
             </span>
-            <span className="crafted-text">
-              Crafted with <Heart size={12} className="inline text-rose-500 fill-rose-500 mx-1" /> for unforgettable journeys. Built by <a href="https://growitate.com" target="_blank" rel="noreferrer" className="growitate-link">Growitate</a>
-            </span>
+            <div className="footer-credits-line">
+              <span className="crafted-text">
+                Crafted with <Heart size={12} className="inline text-rose-500 fill-rose-500 mx-1" /> for unforgettable journeys
+              </span>
+              <span className="credit-dot">·</span>
+              <span className="built-by-wrap">
+                Built by <a href="https://growitate.com" target="_blank" rel="noopener noreferrer" className="growitate-link">Growitate</a>
+              </span>
+            </div>
           </div>
 
           <div className="bottom-right-pro">
@@ -627,21 +633,54 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
           font-weight: 500;
         }
 
+        .footer-credits-line {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 6px;
+          font-size: 12.5px;
+          color: rgba(255, 255, 255, 0.65);
+          margin-top: 1px;
+        }
+
+        .credit-dot {
+          color: rgba(255, 255, 255, 0.35);
+        }
+
         .crafted-text {
-          font-size: 11px;
-          color: rgba(255, 255, 255, 0.4);
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        .built-by-wrap {
+          font-size: 12.5px;
+          color: rgba(255, 255, 255, 0.85);
+          font-weight: 500;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
         }
 
         .growitate-link {
-          color: rgba(255, 255, 255, 0.8);
-          text-decoration: underline;
-          text-underline-offset: 3px;
-          font-weight: 600;
-          transition: color 0.2s ease;
+          color: #38bdf8;
+          text-decoration: none;
+          font-weight: 700;
+          background: rgba(56, 189, 248, 0.1);
+          border: 1px solid rgba(56, 189, 248, 0.28);
+          padding: 1.5px 8px;
+          border-radius: 6px;
+          letter-spacing: 0.25px;
+          transition: all 0.2s ease;
+          display: inline-flex;
+          align-items: center;
         }
 
         .growitate-link:hover {
-          color: #38bdf8;
+          color: #ffffff;
+          background: rgba(56, 189, 248, 0.28);
+          border-color: rgba(56, 189, 248, 0.65);
+          box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+          transform: translateY(-1px);
         }
 
         .bottom-right-pro {
@@ -735,7 +774,9 @@ export default function Footer({ onOpenOfferModal, onOpenPrivacy, onOpenTerms, o
           }
           .bottom-left-pro { text-align: center; align-items: center; gap: 4px; }
           .copyright-text { font-size: 11.5px; }
-          .crafted-text { font-size: 10.5px; }
+          .footer-credits-line { justify-content: center; gap: 6px; font-size: 11.5px; }
+          .crafted-text { font-size: 11px; }
+          .built-by-wrap { font-size: 11.5px; }
           .bottom-right-pro { flex-direction: column; gap: 10px; align-items: center; width: 100%; }
           .social-links-group { justify-content: center; }
           .btn-back-to-top { width: 100%; max-width: 200px; justify-content: center; }

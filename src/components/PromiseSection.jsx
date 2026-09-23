@@ -7,6 +7,8 @@ import {
   UserCheck, 
   Sliders, 
   ArrowRight, 
+  ArrowDown,
+  Square,
   Plane, 
   Compass, 
   Mountain, 
@@ -23,35 +25,6 @@ import {
 import { usePackages } from '../context/PackageContext';
 import { sendChatMessage, formatAiMarkdown, stripThinkingProcess, GROQ_MODELS } from '../utils/aiService';
 
-/**
- * Splits markdown response into streamable tokens/chunks for an organic typing feel
- * while keeping images, table rows, and horizontal rules atomic to prevent syntax flickering.
- */
-function splitIntoTypingChunks(text) {
-  if (!text) return [];
-  const chunks = [];
-  const lines = text.split('\n');
-  for (let li = 0; li < lines.length; li++) {
-    const line = lines[li];
-    if (line.trim().startsWith('![') && line.includes('](')) {
-      chunks.push(line);
-    } else if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
-      chunks.push(line);
-    } else if (/^---+$/.test(line.trim())) {
-      chunks.push(line);
-    } else {
-      const parts = line.split(/(\s+)/);
-      for (const p of parts) {
-        if (p) chunks.push(p);
-      }
-    }
-    if (li < lines.length - 1) {
-      chunks.push('\n');
-    }
-  }
-  return chunks;
-}
-
 export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
   const { packages: PACKAGES } = usePackages();
   const [realm, setRealm] = useState('Domestic');
@@ -64,51 +37,326 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
     {
       id: 1,
       sender: 'ai',
-      text: "Hi! How can I help you today? I'm your travel expert and consultant here at Samyati. Where are you planning to travel, or what kind of trip do you have in mind?"
+      text: "Hello hello! 🎉 Welcome to Samyati! I'm your super excited and happy travel consultant here today! ✈️✨ Where are you dreaming of heading, or what kind of magical getaway do you have in mind?"
     }
   ]);
 
   const [isTyping, setIsTyping] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [userScrolledUp, setUserScrolledUp] = useState(false);
   const [recommendations, setRecommendations] = useState(null);
 
   const chatFeedRef = useRef(null);
-  const typingTimerRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const isUserScrolledUpRef = useRef(false);
 
-  // Clean up any running typewriter animation on component unmount
+  // Typewriter Engine Refs for smooth human typing effect
+  const typingTimerRef = useRef(null);
+  const typewriterStateRef = useRef({
+    activeMsgId: null,
+    targetText: '',
+    displayedText: '',
+    isTyping: false,
+    networkDone: false,
+    metadata: null
+  });
+
+  // Stop / clear active typing timer
+  const stopTypewriter = () => {
+    if (typingTimerRef.current) {
+      clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+    typewriterStateRef.current.isTyping = false;
+  };
+
+  // Finalize the message bubble once typing is complete
+  const finalizeTypewriterMessage = () => {
+    stopTypewriter();
+    const st = typewriterStateRef.current;
+    const msgId = st.activeMsgId;
+    if (!msgId) return;
+
+    const finalText = st.targetText || st.displayedText;
+    const meta = st.metadata || {};
+
+    setChatLog(prev => prev.map(m => 
+      m.id === msgId ? {
+        ...m,
+        text: finalText,
+        isStreaming: false,
+        modelUsed: meta.modelUsed || m.modelUsed || 'Samyati Senior Travel Advisor',
+        latencyMs: meta.latencyMs || m.latencyMs || 0,
+        matchedPackages: meta.matchedPackages || []
+      } : m
+    ));
+
+    if (meta.matchedPackages && meta.matchedPackages.length > 0) {
+      setRecommendations(meta.matchedPackages);
+    } else {
+      setRecommendations(null);
+    }
+
+    setIsGenerating(false);
+    setIsTyping(false);
+    typewriterStateRef.current.activeMsgId = null;
+
+    if (!isUserScrolledUpRef.current && chatFeedRef.current) {
+      const feed = chatFeedRef.current;
+      const activeBubble = feed.querySelector(`[data-msg-id="${msgId}"]`);
+      if (activeBubble) {
+        const bubbleBottom = activeBubble.offsetTop + activeBubble.offsetHeight;
+        const visibleBottom = feed.scrollTop + feed.clientHeight;
+        if (bubbleBottom > visibleBottom - 20) {
+          feed.scrollTo({
+            top: bubbleBottom - feed.clientHeight + 28,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  };
+
+  // Core recursive typewriter loop with human-like rhythm and dynamic catch-up
+  const runTypewriterTick = () => {
+    const st = typewriterStateRef.current;
+    if (!st.isTyping || !st.activeMsgId) return;
+
+    const currentLen = st.displayedText.length;
+    const targetLen = st.targetText.length;
+
+    if (currentLen < targetLen) {
+      const backlog = targetLen - currentLen;
+
+      // Dynamic pacing: human slow speed (~24-30ms) when close to target, progressive catch-up for large text
+      let stepSize = 1;
+      if (backlog > 200) {
+        stepSize = Math.min(4, backlog);
+      } else if (backlog > 90) {
+        stepSize = Math.min(3, backlog);
+      } else if (backlog > 40) {
+        stepSize = Math.min(2, backlog);
+      }
+
+      const nextChunk = st.targetText.slice(currentLen, currentLen + stepSize);
+      const nextText = st.displayedText + nextChunk;
+      st.displayedText = nextText;
+
+      const currentMsgId = st.activeMsgId;
+      setChatLog(prev => prev.map(m => 
+        m.id === currentMsgId ? { ...m, text: nextText, isStreaming: true } : m
+      ));
+
+      // ChatGPT behavior: keep the top of the response showing, and only scroll down as typing progresses below viewport
+      if (!isUserScrolledUpRef.current && chatFeedRef.current) {
+        const feed = chatFeedRef.current;
+        const activeBubble = feed.querySelector(`[data-msg-id="${currentMsgId}"]`);
+        if (activeBubble) {
+          const bubbleBottom = activeBubble.offsetTop + activeBubble.offsetHeight;
+          const visibleBottom = feed.scrollTop + feed.clientHeight;
+          // Only scroll if the active typing content reaches near the bottom of the visible area
+          if (bubbleBottom > visibleBottom - 20) {
+            feed.scrollTop = bubbleBottom - feed.clientHeight + 28;
+          }
+        }
+      }
+
+      // Calculate organic human delay with punctuation pauses
+      const lastChar = nextChunk[nextChunk.length - 1];
+      const charAhead = st.targetText[nextText.length] || '';
+      
+      // Base natural human typing speed: 22-30ms with subtle organic variance
+      let delay = 24 + Math.floor(Math.random() * 8 - 4);
+
+      // Punctuation nuances (thinking and breath pauses):
+      if (lastChar === '\n') {
+        delay = 140 + Math.floor(Math.random() * 30);
+      } else if (['.', '!', '?'].includes(lastChar) && (charAhead === ' ' || charAhead === '\n' || nextText.length === targetLen)) {
+        delay = 150 + Math.floor(Math.random() * 40);
+      } else if ([',', ';', ':', '—', '-'].includes(lastChar)) {
+        delay = 65 + Math.floor(Math.random() * 25);
+      }
+
+      // Proportional speed-up if backlog is large to avoid prolonged lag
+      if (backlog > 200) {
+        delay = Math.min(delay, 10);
+      } else if (backlog > 90) {
+        delay = Math.min(delay, 16);
+      } else if (backlog > 40) {
+        delay = Math.min(delay, 22);
+      }
+
+      typingTimerRef.current = setTimeout(runTypewriterTick, delay);
+    } else {
+      // Caught up with current targetText
+      if (st.networkDone) {
+        // Stream completed and typewriter finished typing all characters
+        finalizeTypewriterMessage();
+      } else {
+        // Waiting for more network chunks: pause tick until next chunk arrives
+        typingTimerRef.current = null;
+      }
+    }
+  };
+
+  // Push new incoming text to typewriter target buffer
+  const pushTypewriterText = (newTargetText) => {
+    const st = typewriterStateRef.current;
+    st.targetText = newTargetText;
+
+    if (st.isTyping && !typingTimerRef.current) {
+      runTypewriterTick();
+    }
+  };
+
+  // Clean up any running stream fetch and typewriter timer on component unmount
   useEffect(() => {
     return () => {
-      if (typingTimerRef.current) {
-        clearInterval(typingTimerRef.current);
+      stopTypewriter();
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
   }, []);
 
+  const handleChatFeedClick = (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+    if (
+      link.dataset.packageLink === 'true' ||
+      href.startsWith('#package') ||
+      href.startsWith('#pkg') ||
+      href.includes('#package')
+    ) {
+      e.preventDefault();
+      const hashPart = href.includes('#') ? href.split('#')[1] : href;
+      const cleanId = hashPart.replace(/^(package[\/-]|pkg[\/-]|package\?id=)/i, '').trim();
+
+      const matched = (PACKAGES || []).find(p => 
+        p.id.toLowerCase() === cleanId.toLowerCase() ||
+        p.id.toLowerCase() === decodeURIComponent(cleanId).toLowerCase() ||
+        (p.title && p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === cleanId.toLowerCase())
+      );
+
+      if (matched && onSelectPackage) {
+        onSelectPackage(matched);
+      } else if (onSelectPackage) {
+        const text = link.textContent.trim().toLowerCase();
+        const byTitle = (PACKAGES || []).find(p => p.title.toLowerCase().includes(text) || text.includes(p.title.toLowerCase()));
+        if (byTitle) {
+          onSelectPackage(byTitle);
+        } else if (cleanId) {
+          const byDest = (PACKAGES || []).find(p => (p.destinationId || '').toLowerCase() === cleanId.toLowerCase());
+          if (byDest) onSelectPackage(byDest);
+        }
+      }
+    }
+  };
+
+  const handleFeedScroll = (e) => {
+    const feed = e.currentTarget;
+    if (!feed) return;
+    const distanceFromBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight;
+    // If scrolled more than 60px up from bottom, pause auto-scroll and show button
+    const isUp = distanceFromBottom > 60;
+    setUserScrolledUp(isUp);
+    isUserScrolledUpRef.current = isUp;
+  };
+
+  const scrollToBottom = () => {
+    if (chatFeedRef.current) {
+      chatFeedRef.current.scrollTo({
+        top: chatFeedRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+    setUserScrolledUp(false);
+    isUserScrolledUpRef.current = false;
+  };
+
+  const handleStopGeneration = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    stopTypewriter();
+    typewriterStateRef.current.isTyping = false;
+    typewriterStateRef.current.networkDone = true;
+
+    const currentMsgId = typewriterStateRef.current.activeMsgId;
+    const currentText = typewriterStateRef.current.displayedText;
+
+    setIsGenerating(false);
+    setIsTyping(false);
+    setChatLog(prev => prev.map(m => 
+      m.id === currentMsgId || m.isStreaming ? { ...m, text: m.text || currentText, isStreaming: false } : m
+    ));
+  };
+
   const handleConsultAI = async (selectedRealm = realm, selectedVibe = vibe, userText = null) => {
-    // Clear any active typing animation before initiating new query
-    if (typingTimerRef.current) {
-      clearInterval(typingTimerRef.current);
-      typingTimerRef.current = null;
-      setChatLog(prev => prev.map(m => m.isStreaming ? { ...m, isStreaming: false } : m));
+    // Abort any active streaming query and stop active typewriter
+    stopTypewriter();
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
     }
 
     const promptText = userText 
       ? userText 
       : `Looking for a ${selectedVibe} trip in ${selectedRealm === 'Any' ? 'Any destination' : selectedRealm}.`;
 
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    // Reset scroll lock to bottom when sending new message
+    isUserScrolledUpRef.current = false;
+    setUserScrolledUp(false);
+
     // Add user message to UI
     const userMsg = { id: Date.now(), sender: 'user', text: promptText };
+    const aiMsgId = Date.now() + 1;
+
+    // Initialize streaming AI message bubble immediately
+    const initialAiReply = {
+      id: aiMsgId,
+      sender: 'ai',
+      text: '',
+      isStreaming: true,
+      modelUsed: 'Instant Concierge',
+      matchedPackages: []
+    };
+
+    // Initialize typewriter state for this new response
+    typewriterStateRef.current = {
+      activeMsgId: aiMsgId,
+      targetText: '',
+      displayedText: '',
+      isTyping: true,
+      networkDone: false,
+      metadata: null
+    };
+
     const updatedLog = [...chatLog, userMsg];
-    setChatLog(updatedLog);
+    setChatLog([...updatedLog, initialAiReply]);
+    setIsGenerating(true);
     setIsTyping(true);
     setRecommendations(null);
 
-    // Keep user view at the top — user manually scrolls down at their own pace
-    if (chatFeedRef.current) {
-      chatFeedRef.current.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
+    // ChatGPT behavior: Smoothly align the top of this newly generated turn on top of the chat feed
+    requestAnimationFrame(() => {
+      if (chatFeedRef.current) {
+        const userMsgEl = chatFeedRef.current.querySelector(`[data-msg-id="${userMsg.id}"]`);
+        if (userMsgEl) {
+          chatFeedRef.current.scrollTo({
+            top: Math.max(0, userMsgEl.offsetTop - 12),
+            behavior: 'smooth'
+          });
+        } else {
+          chatFeedRef.current.scrollTop = chatFeedRef.current.scrollHeight;
+        }
+      }
+    });
 
     try {
       const response = await sendChatMessage({
@@ -118,82 +366,84 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         })),
         prompt: promptText,
         category: userText ? '' : (selectedRealm === 'Any' ? '' : selectedRealm),
-        model: activeModel
+        model: activeModel,
+        signal: controller.signal,
+        onChunk: ({ text }) => {
+          // Push progressive text to human typewriter buffer
+          const cleaned = stripThinkingProcess(text);
+          pushTypewriterText(cleaned);
+        }
       });
 
-      setIsTyping(false);
-
-      const aiMsgId = Date.now() + 1;
-      const fullReply = stripThinkingProcess(response.reply || '');
-
-      // Initialize AI message with streaming mode for typewriter effect
-      const initialAiReply = {
-        id: aiMsgId,
-        sender: 'ai',
-        text: '',
-        isStreaming: true,
-        modelUsed: response.modelUsed,
-        latencyMs: response.latencyMs
+      abortControllerRef.current = null;
+      const finalReply = stripThinkingProcess(response.reply || typewriterStateRef.current.targetText);
+      typewriterStateRef.current.targetText = finalReply;
+      typewriterStateRef.current.metadata = {
+        modelUsed: response.modelUsed || 'Samyati Senior Travel Advisor',
+        latencyMs: response.latencyMs || 0,
+        matchedPackages: response.matchedPackages || []
       };
+      typewriterStateRef.current.networkDone = true;
 
-      setChatLog(prev => [...prev, initialAiReply]);
-      setModelLabel('Instant Concierge');
-
-      // Stay positioned at top so user starts reading from the beginning
-      if (chatFeedRef.current) {
-        chatFeedRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      // If typewriter already caught up, finalize immediately; otherwise let the human loop finish typing
+      if (typewriterStateRef.current.displayedText.length >= finalReply.length) {
+        finalizeTypewriterMessage();
+      } else if (typewriterStateRef.current.isTyping && !typingTimerRef.current) {
+        runTypewriterTick();
       }
 
-      // Progressive typewriter streaming cadence
-      const chunks = splitIntoTypingChunks(fullReply);
-      let currentIndex = 0;
-      const step = Math.max(1, Math.ceil(chunks.length / 65)); // Smooth ~1.5s total animation
-
-      typingTimerRef.current = setInterval(() => {
-        currentIndex += step;
-        if (currentIndex >= chunks.length) {
-          clearInterval(typingTimerRef.current);
-          typingTimerRef.current = null;
-
-          setChatLog(prev => prev.map(m => 
-            m.id === aiMsgId ? { ...m, text: fullReply, isStreaming: false } : m
-          ));
-
-          if (response.matchedPackages && response.matchedPackages.length > 0) {
-            setRecommendations(response.matchedPackages);
-          } else {
-            setRecommendations(null);
-          }
-          return;
-        }
-
-        const partial = chunks.slice(0, currentIndex).join('');
-        setChatLog(prev => prev.map(m => 
-          m.id === aiMsgId ? { ...m, text: partial, isStreaming: true } : m
-        ));
-      }, 22);
-
     } catch (err) {
+      if (err.name === 'AbortError') {
+        // User stopped generation
+        stopTypewriter();
+        setIsGenerating(false);
+        setIsTyping(false);
+        setChatLog(prev => prev.map(m => 
+          m.id === aiMsgId ? { ...m, isStreaming: false } : m
+        ));
+        return;
+      }
+
       console.error('Chat error:', err);
+      stopTypewriter();
+      setIsGenerating(false);
       setIsTyping(false);
-      setChatLog(prev => [...prev, {
-        id: Date.now() + 1,
-        sender: 'ai',
-        text: "I'm having a brief connection delay. Please feel free to select from our featured packages or reach our travel experts directly on WhatsApp (+91-9589110765)!"
-      }]);
+      abortControllerRef.current = null;
+
+      const fallbackErr = "Oops, just a tiny connection delay on our journey! 🎒 But I'm still so excited to help—feel free to explore our featured tours below or message our happy travel specialists directly on WhatsApp (+91-9589110765)! ✨";
+      setChatLog(prev => prev.map(m => 
+        m.id === aiMsgId ? {
+          ...m,
+          text: m.text || fallbackErr,
+          isStreaming: false
+        } : m
+      ));
     }
   };
 
   const handleResetChat = () => {
-    if (typingTimerRef.current) {
-      clearInterval(typingTimerRef.current);
-      typingTimerRef.current = null;
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
     }
+    stopTypewriter();
+    typewriterStateRef.current = {
+      activeMsgId: null,
+      targetText: '',
+      displayedText: '',
+      isTyping: false,
+      networkDone: false,
+      metadata: null
+    };
+    setIsGenerating(false);
+    setIsTyping(false);
+    setUserScrolledUp(false);
+    isUserScrolledUpRef.current = false;
     setChatLog([
       {
         id: Date.now(),
         sender: 'ai',
-        text: "Conversation reset! How can I help you plan your next adventure today?"
+        text: "Fresh start, yay! 🥳 I am SO excited to help you plan your next dream adventure! Where in the world shall we head next? ✈️✨"
       }
     ]);
     setRecommendations(null);
@@ -210,6 +460,9 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (isGenerating) {
+      handleStopGeneration();
+    }
     if (customInput.trim()) {
       handleConsultAI(realm, vibe, customInput);
       setCustomInput('');
@@ -302,6 +555,8 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
               <div 
                 className="chatbot-feed" 
                 ref={chatFeedRef}
+                onScroll={handleFeedScroll}
+                onClick={handleChatFeedClick}
                 data-lenis-prevent="true"
                 data-lenis-prevent-wheel="true"
                 data-lenis-prevent-touch="true"
@@ -309,6 +564,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                 {chatLog.map((msg) => (
                   <div 
                     key={msg.id} 
+                    data-msg-id={msg.id}
                     className={`chat-bubble-row ${msg.sender === 'user' ? 'bubble-user' : 'bubble-ai'}`}
                   >
                     {msg.sender === 'ai' && (
@@ -320,11 +576,64 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                     <div className="chat-msg-content">
                       {msg.sender === 'ai' ? (
                         <div className="msg-text ai-markdown-body">
-                          <div 
-                            dangerouslySetInnerHTML={{ __html: formatAiMarkdown(msg.text) }} 
-                          />
-                          {msg.isStreaming && (
-                            <span className="ai-typing-cursor" aria-hidden="true" />
+                          {msg.text ? (
+                            <>
+                              <div 
+                                dangerouslySetInnerHTML={{ __html: formatAiMarkdown(msg.text) }} 
+                              />
+                              {msg.isStreaming && (
+                                <span className="ai-typing-cursor" aria-hidden="true" />
+                              )}
+                            </>
+                          ) : (
+                            <div className="ai-starting-dots">
+                              <span className="starting-dot" />
+                              <span className="starting-dot" />
+                              <span className="starting-dot" />
+                            </div>
+                          )}
+
+                          {/* Suggested packages with direct link to learn more */}
+                          {msg.matchedPackages && msg.matchedPackages.length > 0 && !msg.isStreaming && (
+                            <div className="ai-msg-suggested-pkgs">
+                              <div className="ai-suggested-header">
+                                <Sparkles size={12} className="text-amber-600" />
+                                <span>Suggested Package{msg.matchedPackages.length > 1 ? 's' : ''} — Tap to learn more:</span>
+                              </div>
+                              <div className="ai-suggested-cards">
+                                {msg.matchedPackages.map((pkg) => (
+                                  <div 
+                                    key={pkg.id} 
+                                    className="ai-suggested-card-mini"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (onSelectPackage) onSelectPackage(pkg);
+                                    }}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                      if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        if (onSelectPackage) onSelectPackage(pkg);
+                                      }
+                                    }}
+                                  >
+                                    <img src={pkg.image} alt={pkg.title} className="mini-pkg-img" loading="lazy" />
+                                    <div className="mini-pkg-body">
+                                      <div className="mini-pkg-top">
+                                        <span className="mini-pkg-dest">{pkg.destinationName || pkg.destinationId}</span>
+                                        <span className="mini-pkg-dur">{pkg.duration}</span>
+                                      </div>
+                                      <h5 className="mini-pkg-title">{pkg.title}</h5>
+                                      <div className="mini-pkg-action">
+                                        <span className="mini-pkg-price">{pkg.price}</span>
+                                        <span className="mini-pkg-btn">View Package & Learn More →</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
                           )}
                         </div>
                       ) : (
@@ -339,21 +648,6 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                     </div>
                   </div>
                 ))}
-
-                {/* Typing Indicator */}
-                {isTyping && (
-                  <div className="chat-bubble-row bubble-ai">
-                    <div className="chat-avatar-mini">
-                      <Bot size={14} />
-                    </div>
-                    <div className="chat-msg-content typing-indicator">
-                      <div className="typing-pulse-row">
-                        <Sparkles size={13} className="text-amber-500 animate-spin" />
-                        <span>Crafting your personalized itinerary...</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* Interactive 1-Tap Quick Action Chips */}
                 <div className="ai-quick-chips-bar">
@@ -379,7 +673,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                 
 
                 {/* Recommendation Output Cards */}
-                {recommendations && (
+                {recommendations && recommendations.length > 0 && (
                   <div className="chat-results-area">
                     <div className="results-header-tag">
                       <CheckCircle2 size={15} className="text-amber-600" />
@@ -396,7 +690,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                             <p className="res-reason">{pkg.aiReason}</p>
                             <div className="res-footer">
                               <strong className="res-price">{pkg.price}</strong>
-                              <span className="res-link">View Package →</span>
+                              <span className="res-link">Learn More & View Package →</span>
                             </div>
                           </div>
                         </div>
@@ -419,6 +713,20 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                 )}
               </div>
 
+              {/* Floating Scroll-to-Bottom button (ChatGPT-style) */}
+              {userScrolledUp && (
+                <button
+                  type="button"
+                  onClick={scrollToBottom}
+                  className="chat-scroll-to-bottom-btn"
+                  title="Scroll to bottom"
+                  aria-label="Scroll to bottom"
+                >
+                  <ArrowDown size={15} />
+                  {isGenerating && <span className="scroll-unread-dot" />}
+                </button>
+              )}
+
               {/* Chatbot Bottom Interactive Input Bar */}
               <form onSubmit={handleFormSubmit} className="chatbot-input-bar">
                 <div className="chat-input-wrapper">
@@ -432,16 +740,33 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
                   />
                 </div>
 
-                <button type="submit" className="chat-send-btn" disabled={isTyping}>
-                  <span>Send</span>
-                  <Send size={14} />
-                </button>
+                {isGenerating ? (
+                  <button 
+                    type="button" 
+                    onClick={handleStopGeneration} 
+                    className="chat-stop-btn"
+                    title="Stop generating"
+                  >
+                    <Square size={12} fill="currentColor" />
+                    <span>Stop</span>
+                  </button>
+                ) : (
+                  <button type="submit" className="chat-send-btn">
+                    <span>Send</span>
+                    <Send size={14} />
+                  </button>
+                )}
               </form>
 
               {/* Card Footer Note */}
               <div className="ai-card-footer-caption">
-                <Bot size={14} className="footer-bot-icon" />
-                <span>Verified Travel Guidance • <strong className="highlight-text">Handcrafted Journeys & 24/7 Support</strong></span>
+                <div className="caption-left-info">
+                  <Bot size={13} className="footer-bot-icon" />
+                  <span>Verified Travel Guidance • <strong className="highlight-text">Handcrafted Journeys & 24/7 Support</strong></span>
+                </div>
+                <div className="caption-right-credit">
+                  <span>Built by <a href="https://growitate.com" target="_blank" rel="noopener noreferrer" className="bot-growitate-link">Growitate</a></span>
+                </div>
               </div>
             </div>
           </div>
@@ -777,7 +1102,7 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
           touch-action: pan-y;
-          scroll-behavior: smooth;
+          scroll-behavior: auto;
         }
 
         .chatbot-feed::-webkit-scrollbar {
@@ -883,18 +1208,50 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
 
         .ai-typing-cursor {
           display: inline-block;
-          width: 6px;
-          height: 15px;
+          width: 7px;
+          height: 16px;
           background: #d97706;
           margin-left: 4px;
-          vertical-align: -1px;
+          vertical-align: -2px;
           border-radius: 2px;
-          animation: cursorBlink 0.65s infinite ease-in-out;
+          box-shadow: 0 0 10px rgba(217, 119, 6, 0.7);
+          animation: cursorBlink 0.7s infinite ease-in-out;
         }
 
         @keyframes cursorBlink {
           0%, 100% { opacity: 1; transform: scaleY(1); }
           50% { opacity: 0.15; transform: scaleY(0.6); }
+        }
+
+        .ai-msg-media-placeholder {
+          background: #0f172a;
+          border: 1px dashed rgba(217, 119, 6, 0.4);
+          border-radius: 12px;
+          overflow: hidden;
+          margin: 10px 0;
+        }
+
+        .ai-msg-img-skeleton {
+          width: 100%;
+          height: 130px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+          background-size: 200% 100%;
+          animation: skeletonShimmer 1.5s infinite linear;
+        }
+
+        .skeleton-pulse-text {
+          font-size: 13px;
+          font-weight: 700;
+          color: #fbbf24;
+          letter-spacing: 0.02em;
+        }
+
+        @keyframes skeletonShimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
         }
 
         .ai-markdown-body {
@@ -980,6 +1337,187 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
 
         .ai-msg-link:hover {
           color: #92400e;
+        }
+
+        /* Direct package link styling inside AI markdown */
+        .ai-pkg-direct-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+          color: #92400e !important;
+          border: 1px solid #fcd34d;
+          padding: 6px 14px;
+          border-radius: 9999px;
+          font-size: 13.5px;
+          font-weight: 700;
+          text-decoration: none !important;
+          margin: 6px 4px 6px 0;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 2px 6px rgba(245, 158, 11, 0.12);
+          cursor: pointer;
+        }
+
+        .ai-pkg-direct-link:hover {
+          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          color: #78350f !important;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(245, 158, 11, 0.22);
+          border-color: #f59e0b;
+        }
+
+        .ai-pkg-direct-link .ai-pkg-link-arrow {
+          transition: transform 0.2s ease;
+          font-weight: 800;
+        }
+
+        .ai-pkg-direct-link:hover .ai-pkg-link-arrow {
+          transform: translateX(3px);
+        }
+
+        /* Direct WhatsApp Destination Expert button styling inside AI markdown */
+        .ai-wa-direct-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+          color: #ffffff !important;
+          border: 1px solid #1ebe5d;
+          padding: 8px 18px;
+          border-radius: 9999px;
+          font-size: 13.5px;
+          font-weight: 700;
+          text-decoration: none !important;
+          margin: 8px 4px 6px 0;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 3px 10px rgba(37, 211, 102, 0.25);
+          cursor: pointer;
+        }
+
+        .ai-wa-direct-link:hover {
+          background: linear-gradient(135deg, #2ee06e 0%, #0d7065 100%);
+          color: #ffffff !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.38);
+          border-color: #25D366;
+        }
+
+        .ai-wa-direct-link .ai-wa-link-arrow {
+          transition: transform 0.2s ease;
+          font-weight: 800;
+        }
+
+        .ai-wa-direct-link:hover .ai-wa-link-arrow {
+          transform: translateX(4px);
+        }
+
+        /* In-message suggested package cards */
+        .ai-msg-suggested-pkgs {
+          margin-top: 14px;
+          padding-top: 12px;
+          border-top: 1px dashed #e2e8f0;
+        }
+
+        .ai-suggested-header {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 12px;
+          font-weight: 700;
+          color: #92400e;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          margin-bottom: 10px;
+        }
+
+        .ai-suggested-cards {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .ai-suggested-card-mini {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 8px 12px 8px 8px;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+          text-align: left;
+        }
+
+        .ai-suggested-card-mini:hover {
+          border-color: #f59e0b;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(245, 158, 11, 0.14);
+          background: #fffdf5;
+        }
+
+        .mini-pkg-img {
+          width: 58px;
+          height: 58px;
+          border-radius: 8px;
+          object-fit: cover;
+          flex-shrink: 0;
+        }
+
+        .mini-pkg-body {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .mini-pkg-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 11px;
+          font-weight: 700;
+          color: #b45309;
+          margin-bottom: 2px;
+        }
+
+        .mini-pkg-dur {
+          background: #fef3c7;
+          color: #92400e;
+          padding: 1px 6px;
+          border-radius: 4px;
+          font-size: 10.5px;
+        }
+
+        .mini-pkg-title {
+          font-size: 13px;
+          font-weight: 700;
+          color: #0f172a;
+          margin: 0 0 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .mini-pkg-action {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 12px;
+        }
+
+        .mini-pkg-price {
+          font-weight: 800;
+          color: #0f172a;
+        }
+
+        .mini-pkg-btn {
+          font-weight: 700;
+          color: #d97706;
+          transition: color 0.15s ease;
+        }
+
+        .ai-suggested-card-mini:hover .mini-pkg-btn {
+          color: #b45309;
         }
 
         .ai-table-wrap {
@@ -1331,17 +1869,142 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
           box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
         }
 
-        .ai-card-footer-caption {
+        .chat-stop-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          background: #0f172a;
+          color: #ef4444;
+          border: 1.5px solid #ef4444;
+          padding: 13px 24px;
+          border-radius: 9999px;
+          font-size: 14px;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+        }
+
+        .chat-stop-btn:hover {
+          background: #ef4444;
+          color: #ffffff;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+        }
+
+        .chat-scroll-to-bottom-btn {
+          position: absolute;
+          bottom: 78px;
+          right: 24px;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: #ffffff;
+          color: #0f172a;
+          border: 1.5px solid #cbd5e1;
+          box-shadow: 0 6px 20px rgba(15, 23, 42, 0.2);
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          padding: 10px 20px;
+          cursor: pointer;
+          z-index: 25;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          animation: popIn 0.2s ease-out;
+        }
+
+        .chat-scroll-to-bottom-btn:hover {
+          background: #f8fafc;
+          transform: translateY(-2px);
+          border-color: #94a3b8;
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+        }
+
+        .scroll-unread-dot {
+          position: absolute;
+          top: -2px;
+          right: -2px;
+          width: 10px;
+          height: 10px;
+          background: #d97706;
+          border: 2px solid #ffffff;
+          border-radius: 50%;
+        }
+
+        .ai-starting-dots {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 4px;
+        }
+
+        .starting-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #d97706;
+          animation: dotBounce 1.2s infinite ease-in-out;
+        }
+
+        .starting-dot:nth-child(1) { animation-delay: 0s; }
+        .starting-dot:nth-child(2) { animation-delay: 0.2s; }
+        .starting-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBounce {
+          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+          40% { transform: scale(1.15); opacity: 1; }
+        }
+
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.7); }
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        .ai-card-footer-caption {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 8px 18px;
           background: #f8fafc;
           border-top: 1px solid #f1f5f9;
-          font-size: 11.5px;
+          font-size: 11px;
           color: #64748b;
           flex-shrink: 0;
+        }
+
+        .caption-left-info {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          min-width: 0;
+        }
+
+        .caption-right-credit {
+          display: inline-flex;
+          align-items: center;
+          font-size: 10.5px;
+          color: #94a3b8;
+          font-weight: 500;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        .bot-growitate-link {
+          color: #475569;
+          font-weight: 700;
+          text-decoration: none;
+          margin-left: 3px;
+          padding: 1px 5px;
+          background: rgba(100, 116, 139, 0.08);
+          border: 1px solid rgba(100, 116, 139, 0.18);
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+
+        .bot-growitate-link:hover {
+          color: #d97706;
+          background: rgba(217, 119, 6, 0.1);
+          border-color: rgba(217, 119, 6, 0.3);
         }
 
         .highlight-text {
@@ -1385,6 +2048,19 @@ export default function PromiseSection({ onSelectPackage, onOpenOfferModal }) {
         }
 
         @media (max-width: 600px) {
+          .ai-card-footer-caption {
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px 12px;
+            text-align: center;
+          }
+          .caption-left-info {
+            justify-content: center;
+            font-size: 10.5px;
+          }
+          .caption-right-credit {
+            font-size: 10px;
+          }
           .promise-pillars-grid {
             grid-template-columns: 1fr;
             gap: 12px;

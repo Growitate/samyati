@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "lastModified": "2026-09-18T11:01:42.265Z",
+  "total": 2,
+  "bookings": [
+    {
+      "bookingId": "SAM-450533",
+      "orderId": "order_TdTZEf6C08Kp3J",
+      "paymentId": "pay_1789729302259_test",
+      "status": "CONFIRMED",
+      "paymentGateway": "Razorpay",
+      "packageId": "kashmir-paradise-luxury",
+      "packageTitle": "Kashmir Paradise Luxury Tour",
+      "destinationName": "Kashmir",
+      "guestName": "Test Traveler",
+      "guestEmail": "traveler@test.com",
+      "guestPhone": "9876543210",
+      "travelDate": "2026-10-20",
+      "adults": 2,
+      "children": 0,
+      "hotelClass": "deluxe",
+      "addons": {},
+      "paymentOption": "advance",
+      "amountPaid": 15400,
+      "totalTripAmount": 61600,
+      "remainingBalance": 46200,
+      "concierge": {
+        "name": "Aniket Shrivastava",
+        "phone": "+91-9589110765"
+      },
+      "paymentVerifiedAt": "2026-09-18T11:01:42.263Z",
+      "updatedAt": "2026-09-18T11:01:42.265Z",
+      "createdAt": "2026-09-18T11:01:42.265Z"
+    },
+    {
+      "bookingId": "SAM-264488",
+      "orderId": "order_Td24H94orfX2y8",
+      "paymentId": "pay_test_12345678",
+      "status": "CONFIRMED",
+      "paymentGateway": "Razorpay",
+      "packageId": "",
+      "packageTitle": "Kashmir 5D Tour",
+      "destinationName": "",
+      "guestName": "Aditi Sharma",
+      "guestEmail": "",
+      "guestPhone": "",
+      "travelDate": "",
+      "adults": 1,
+      "children": 0,
+      "hotelClass": "standard",
+      "addons": {},
+      "paymentOption": "advance",
+      "amountPaid": 12500,
+      "totalTripAmount": 0,
+      "remainingBalance": 0,
+      "concierge": {
+        "name": "Aniket Shrivastava",
+        "phone": "+91-9589110765"
+      },
+      "paymentVerifiedAt": "2026-09-17T08:08:07.172Z",
+      "updatedAt": "2026-09-17T08:08:07.173Z",
+      "createdAt": "2026-09-17T08:08:07.173Z"
+    }
+  ]
+}

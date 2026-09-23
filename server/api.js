@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import {
   getAllPackages,
@@ -9,7 +10,9 @@ import {
   deletePackage,
   syncFromCode,
   resetToDefault,
-  initDatabase
+  initDatabase,
+  getAllBookings,
+  saveBookingRecord
 } from './db.js';
 import { authenticateAdmin, verifyToken, checkRateLimit } from './auth.js';
 import { buildFullKnowledgeBase, buildDeepInquiryKnowledge } from '../src/data/knowledgeBase.js';
@@ -183,6 +186,192 @@ export async function handleApiRequest(req, res) {
       return true;
     }
 
+    // --- RAZORPAY PAYMENT GATEWAY ENDPOINTS ---
+
+    // A. Get Razorpay Public Config: GET /api/payment/config or GET /api/razorpay/config
+    if ((pathname === '/api/payment/config' || pathname === '/api/razorpay/config') && method === 'GET') {
+      sendJson(res, 200, {
+        success: true,
+        keyId: process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_Td1Eea273FcCNR',
+        currency: 'INR'
+      });
+      return true;
+    }
+
+    // B. Create Razorpay Order: POST /api/payment/create-order or POST /api/razorpay/create-order
+    if ((pathname === '/api/payment/create-order' || pathname === '/api/razorpay/create-order') && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const {
+        amount,
+        currency = 'INR',
+        receipt,
+        packageId,
+        packageTitle,
+        travelerName,
+        travelerEmail,
+        travelerPhone,
+        travelDate,
+        paymentOption
+      } = body;
+
+      const numAmount = parseFloat(amount);
+      if (isNaN(numAmount) || numAmount <= 0) {
+        sendJson(res, 400, { success: false, message: 'Valid payment amount is required' });
+        return true;
+      }
+
+      const amountInPaise = Math.round(numAmount * 100);
+      const receiptId = receipt || `rcpt_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      const keyId = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_Td1Eea273FcCNR';
+      const keySecret = process.env.RAZORPAY_KEY_SECRET || 'MnBYSG5G4IkMCjEQLGOu8Os4';
+
+      try {
+        const authHeader = 'Basic ' + Buffer.from(`${keyId}:${keySecret}`).toString('base64');
+        const rzpResponse = await fetch('https://api.razorpay.com/v1/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authHeader
+          },
+          body: JSON.stringify({
+            amount: amountInPaise,
+            currency: currency,
+            receipt: receiptId.substring(0, 40),
+            notes: {
+              packageId: String(packageId || '').substring(0, 40),
+              packageTitle: String(packageTitle || '').substring(0, 40),
+              travelerName: String(travelerName || '').substring(0, 40),
+              travelerPhone: String(travelerPhone || '').substring(0, 20),
+              travelDate: String(travelDate || '').substring(0, 30),
+              paymentOption: String(paymentOption || '')
+            }
+          })
+        });
+
+        const orderData = await rzpResponse.json();
+
+        if (!rzpResponse.ok) {
+          console.error('[Razorpay Order Creation Failed]', orderData);
+          sendJson(res, rzpResponse.status || 500, {
+            success: false,
+            message: orderData.error?.description || 'Failed to create Razorpay order',
+            error: orderData.error
+          });
+          return true;
+        }
+
+        console.log(`[Razorpay Order Created] ID: ${orderData.id}, Amount: ₹${numAmount} (${amountInPaise} paise)`);
+        sendJson(res, 200, {
+          success: true,
+          order: orderData,
+          keyId: keyId,
+          amount: numAmount,
+          amountInPaise,
+          currency
+        });
+        return true;
+      } catch (error) {
+        console.error('[Razorpay Order Error]', error);
+        sendJson(res, 500, {
+          success: false,
+          message: error.message || 'Error communicating with Razorpay server'
+        });
+        return true;
+      }
+    }
+
+    // C. Verify Razorpay Payment Signature: POST /api/payment/verify or POST /api/razorpay/verify
+    if ((pathname === '/api/payment/verify' || pathname === '/api/razorpay/verify') && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const {
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature,
+        bookingData = {}
+      } = body;
+
+      if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        sendJson(res, 400, { success: false, message: 'Missing Razorpay signature verification parameters' });
+        return true;
+      }
+
+      const keySecret = process.env.RAZORPAY_KEY_SECRET || 'MnBYSG5G4IkMCjEQLGOu8Os4';
+      const expectedSignature = crypto
+        .createHmac('sha256', keySecret)
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        .digest('hex');
+
+      const isAuthentic = expectedSignature === razorpay_signature;
+
+      if (!isAuthentic) {
+        console.error(`[Razorpay Signature Mismatch] Expected: ${expectedSignature}, Received: ${razorpay_signature}`);
+        sendJson(res, 400, {
+          success: false,
+          message: 'Payment signature verification failed. Untrusted transaction.'
+        });
+        return true;
+      }
+
+      const bookingId = bookingData.bookingId || `SAM-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      const verifiedBooking = await saveBookingRecord({
+        bookingId,
+        orderId: razorpay_order_id,
+        paymentId: razorpay_payment_id,
+        status: 'CONFIRMED',
+        paymentGateway: 'Razorpay',
+        packageId: bookingData.packageId || '',
+        packageTitle: bookingData.packageTitle || '',
+        destinationName: bookingData.destinationName || '',
+        guestName: bookingData.guestName || bookingData.travelerName || '',
+        guestEmail: bookingData.guestEmail || bookingData.travelerEmail || '',
+        guestPhone: bookingData.guestPhone || bookingData.travelerPhone || '',
+        travelDate: bookingData.travelDate || '',
+        adults: bookingData.adults || 1,
+        children: bookingData.children || 0,
+        hotelClass: bookingData.hotelClass || 'standard',
+        addons: bookingData.addons || {},
+        paymentOption: bookingData.paymentOption || 'advance',
+        amountPaid: bookingData.amountPaid || 0,
+        totalTripAmount: bookingData.totalTripAmount || 0,
+        remainingBalance: bookingData.remainingBalance || 0,
+        concierge: {
+          name: 'Aniket Shrivastava',
+          phone: '+91-9589110765'
+        },
+        paymentVerifiedAt: new Date().toISOString()
+      });
+
+      console.log(`[Payment Verified & Confirmed] Booking ID: ${bookingId}, Payment ID: ${razorpay_payment_id}`);
+
+      sendJson(res, 200, {
+        success: true,
+        message: 'Payment verified and booking confirmed successfully!',
+        bookingId: bookingId,
+        paymentId: razorpay_payment_id,
+        orderId: razorpay_order_id,
+        booking: verifiedBooking
+      });
+      return true;
+    }
+
+    // D. Admin Bookings Retrieval: GET /api/admin/bookings
+    if (pathname === '/api/admin/bookings' && method === 'GET') {
+      const token = getAuthToken(req);
+      if (!verifyToken(token)) {
+        sendJson(res, 401, { success: false, message: 'Unauthorized: Valid admin token required' });
+        return true;
+      }
+      const bookingsData = await getAllBookings();
+      sendJson(res, 200, {
+        success: true,
+        bookings: bookingsData.bookings,
+        total: bookingsData.total,
+        lastModified: bookingsData.lastModified
+      });
+      return true;
+    }
+
     // --- SENIOR TRAVEL CONSULTANT & KNOWLEDGE BASE RETRIEVAL ENDPOINT: POST /api/chat ---
     if (pathname === '/api/chat' && method === 'POST') {
       const body = await parseJsonBody(req);
@@ -264,19 +453,41 @@ export async function handleApiRequest(req, res) {
 
       // Detect duration intent
       const daysMatch = userTextCombined.match(/(\d+)\s*(?:day|days|d)/i);
-      const words = userTextCombined.split(/[\s,!?]+/).filter(w => w.length > 2);
-      const hasSpecificTripIntent = Boolean(detectedDest || daysMatch || destination || category || (words.length > 3 && !isGreeting));
+      const stopWords = new Set([
+        'trip', 'tour', 'tours', 'plan', 'package', 'packages', 'holiday', 'holidays', 
+        'vacation', 'vacations', 'travel', 'travelling', 'traveling', 'want', 'need', 
+        'give', 'recommend', 'show', 'suggest', 'looking', 'with', 'from', 'days', 
+        'nights', 'family', 'couple', 'honeymoon', 'budget', 'luxury', 'please', 
+        'help', 'best', 'good', 'some', 'about', 'destination', 'places', 'place',
+        'what', 'have', 'tell', 'like', 'interested', 'there', 'book', 'booking'
+      ]);
+      const words = userTextCombined.split(/[\s,!?]+/).filter(w => w.length > 2 && !stopWords.has(w));
+      const hasSpecificTripIntent = Boolean(detectedDest || daysMatch || destination || category || (words.length > 0 && !isGreeting));
 
       // If user is just saying hi or greeting without any trip details, respond like a human consultant immediately
       if (isGreeting && !hasSpecificTripIntent) {
-        sendJson(res, 200, {
-          success: true,
-          reply: "Hi! How can I help you today? I'm your dedicated travel consultant here at Samyati. Where are you planning to travel, or what kind of trip do you have in mind?",
-          modelUsed: 'Samyati Senior Travel Advisor',
-          latencyMs: 20,
-          matchedPackages: []
-        });
-        return true;
+        const greetingReply = "Hello hello! 🎉 Welcome to Samyati The World! I am super excited and so happy to connect with you today! ✈️✨ Where are you dreaming of traveling next? Tell me what kind of magical getaway you have in mind, and let's craft an unforgettable trip together! 🌟";
+        if (body.stream !== false) {
+          res.writeHead(200, {
+            'Content-Type': 'text/event-stream; charset=utf-8',
+            'Cache-Control': 'no-cache, no-transform',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*'
+          });
+          res.write(`data: ${JSON.stringify({ chunk: greetingReply })}\n\n`);
+          res.write(`data: ${JSON.stringify({ done: true, reply: greetingReply, modelUsed: 'Samyati Senior Travel Advisor', latencyMs: 20, matchedPackages: [] })}\n\n`);
+          res.end();
+          return true;
+        } else {
+          sendJson(res, 200, {
+            success: true,
+            reply: greetingReply,
+            modelUsed: 'Samyati Senior Travel Advisor',
+            latencyMs: 20,
+            matchedPackages: []
+          });
+          return true;
+        }
       }
 
       // 2. Score and Rank Packages strictly from catalog database based on user intent
@@ -288,33 +499,43 @@ export async function handleApiRequest(req, res) {
         const desc = (pkg.description || '').toLowerCase();
         const cat = (pkg.category || '').toLowerCase();
 
+        // High priority: matched destination
         if (detectedDest && (destId === detectedDest.id.toLowerCase() || destName.includes(detectedDest.name.toLowerCase()))) {
           score += 150;
         }
 
-        if (title.includes(latestUserMsg)) score += 80;
+        // Exact match in title
+        if (title.includes(latestUserMsg) && latestUserMsg.length > 3) {
+          score += 80;
+        }
 
-        if (daysMatch) {
+        // Duration match only if destination is detected
+        if (daysMatch && detectedDest) {
           const numDays = daysMatch[1];
           if (title.includes(`${numDays} days`) || title.includes(`0${numDays} days`) || (pkg.duration || '').startsWith(`${numDays}D`)) {
             score += 50;
           }
         }
 
+        // Word matches only if destination is detected or word matches destination / title directly
         words.forEach(w => {
-          if (title.includes(w)) score += 10;
-          if (destName.includes(w)) score += 8;
-          if (desc.includes(w)) score += 3;
-          if (cat.includes(w)) score += 3;
+          if (w.length > 3) {
+            if (title.includes(w)) score += (detectedDest ? 10 : 25);
+            if (destName.includes(w)) score += 30;
+            if (detectedDest && desc.includes(w)) score += 3;
+            if (detectedDest && cat.includes(w)) score += 3;
+          }
         });
 
         return { pkg, score };
       });
 
       const sorted = scored.sort((a, b) => b.score - a.score);
-      const topMatched = (sorted.filter(s => s.score > 0).length > 0 ? sorted.filter(s => s.score > 0) : sorted)
-        .slice(0, 3)
-        .map(s => s.pkg);
+      // Require a genuine match threshold (>= 20)
+      const positiveMatches = sorted.filter(s => s.score >= 20);
+      const topMatched = positiveMatches.length > 0
+        ? positiveMatches.slice(0, 3).map(s => s.pkg)
+        : [];
 
       // 3. Build Grounded Official Knowledge Base
       // A) Full Catalog Grounding: All 75 packages across all 19 destinations
@@ -326,51 +547,68 @@ export async function handleApiRequest(req, res) {
       let systemPrompt = '';
 
       if (isGreeting && !hasSpecificTripIntent) {
-        // Natural human greeting response
-        systemPrompt = `You are a Senior Human Travel Consultant at "Samyati The World" (samyati.com).
-The traveler has just initiated a conversation with a greeting (like "Hi" or "Hello").
+        // Natural excited & happy human greeting response
+        systemPrompt = `You are an extremely EXCITED, cheerful, and genuinely happy Senior Travel Consultant at "Samyati The World" (samyati.com).
+The traveler has just greeted you.
 
-YOUR CONVERSATIONAL GOAL:
-1. TALK LIKE A REAL HUMAN TRAVEL ADVISOR:
-   - Greet them warmly and naturally (e.g. "Hello! Welcome to Samyati. I'm your dedicated travel consultant.").
-   - Ask clarifying questions to understand what they have in mind:
-     * Domestic (Kashmir, Himachal, Kerala, Goa, Rajasthan, Andaman, Ladakh, Uttar Pradesh, North East) or International (Bali, Thailand, Vietnam, Singapore, Kazakhstan, Malaysia, Dubai, Sri Lanka, Uzbekistan, Georgia)?
-     * What vibe (snow & mountain peaks, tropical beaches, honeymoon luxury, family leisure, cultural heritage, spiritual)?
-     * How many days do they have in mind and who is traveling?
-   - DO NOT dump unsolicited package itineraries, pricing breakdowns, or photos yet. Keep it warm, consultative, and inviting.
+YOUR CONVERSATIONAL STYLE & GOAL:
+1. TALK LIKE AN EXCITED, HAPPY-HAPPY TRAVEL CONSULTANT:
+   - Greet them with infectious enthusiasm, sunshine, and joyful energy! (e.g. "Hello hello! 🎉 Welcome to Samyati! I am SO excited you're here today! ✈️✨").
+   - Radiate passion for travel, vacations, and creating lifelong memories!
+   - Use cheerful emojis naturally (🎉, ✨, ✈️, 🌴, 🏔️, 🌟, 💛).
+   - Ask clarifying questions with genuine excitement to discover their dream trip:
+     * Are we thinking Domestic wonders (Kashmir, Himachal, Kerala, Goa, Rajasthan, Andaman, Ladakh, Uttar Pradesh, North East) or an epic International journey (Bali, Thailand, Vietnam, Singapore, Kazakhstan, Malaysia, Dubai, Sri Lanka, Uzbekistan, Georgia)?
+     * What kind of vibe makes your heart smile (snowy mountain peaks, tropical beaches, romantic honeymoon, fun family escape, cultural royalty)?
+     * How many days do you have in mind and who is coming along on this fun adventure?
+   - If they are interested in any other destination across the globe, let them know our Destination Experts can customize it for them!
+   - DO NOT dump long unsolicited itineraries or price lists yet. Keep it warm, bubbly, excited, and inviting!
 
 2. ZERO AI / BOT / SYSTEM MENTIONS:
-   - NEVER refer to yourself as an AI, bot, virtual assistant, language model, Groq, or prompt. You are a senior human travel advisor at Samyati.`;
+   - NEVER refer to yourself as an AI, bot, virtual assistant, language model, Groq, or prompt. You are a real, dedicated human travel advisor bursting with excitement to plan trips!`;
       } else {
-        // Specific itinerary & package recommendation
-        systemPrompt = `You are a Senior Human Travel Consultant and Destination Specialist at "Samyati The World" (samyati.com).
-You are consulting directly with a traveler. Your style is professional, sharp, factual, authoritative, and straight to the point.
+        // Specific itinerary & package recommendation with high energy and joy
+        systemPrompt = `You are an extremely EXCITED, PASSIONATE, and HAPPY-HAPPY Senior Travel Consultant and Destination Specialist at "Samyati The World" (samyati.com).
+You are consulting directly with a traveler. You truly LOVE travel and your joyful enthusiasm is contagious!
 
-STRICT CONSULTANT GUIDELINES:
-1. TALK LIKE A REAL HUMAN TRAVEL EXPERT:
-   - Speak naturally in first person ("I recommend...", "In this route...", "Our on-ground team arranges...").
-   - Direct and concise: Avoid fluff, generic sales pitches, robotic greetings ("As an AI...", "I am happy to assist..."), or exaggerated hype.
-   - Give realistic travel advice: Pacing, altitude/weather tips, recommended seasons, and practical tips.
+EXCITED & HAPPY CONSULTANT GUIDELINES:
+1. TALK LIKE AN ECSTATIC, DELIGHTED TRAVEL CONSULTANT:
+   - Speak naturally with high energy, warmth, and cheerful excitement ("Oh, I am SO excited for this trip!", "You are going to fall completely in love with this route!", "Get ready for pure magic!").
+   - Use cheerful, celebratory travel emojis throughout your response (🎉, ✨, ✈️, 🏔️, 🌴, 🌟, 🥳, 💛).
+   - Show genuine joy for their destination choice. Every journey is a celebration!
+   - Keep your advice practical, uplifting, and encouraging.
 
 2. STRICT DATA GROUNDING (OFFICIAL SAMYATI KNOWLEDGE BASE):
-   - You have access to the complete official knowledge base containing ALL 75 packages across all destinations below.
-   - You MUST use ONLY the exact package names, exact durations, exact prices, and inclusions provided in the Knowledge Base below.
-   - Never invent imaginary packages or random prices. Quote the exact numbers from the catalog.
+   - Even though you are super excited and happy, your recommendations for listed packages MUST BE 100% FACTUAL and strictly grounded in the official Samyati knowledge base below.
+   - Quote the EXACT package title, exact duration, exact starting price, and exact inclusions from the catalog.
+   - Never invent imaginary tour names or fake rates.
 
-3. EMBED OFFICIAL PACKAGE IMAGES:
-   - When recommending a specific package, ALWAYS embed its official image using markdown:
+3. EMBED OFFICIAL PACKAGE IMAGES & DIRECT PAGE LINKS:
+   - When recommending a specific catalog package, ALWAYS embed its official image using markdown:
      ![Exact Package Title](official_image_url)
+   - CRITICAL REQUIREMENT — DIRECT LINK TO LEARN MORE:
+     Whenever you suggest or mention a package, you MUST ALWAYS provide a direct markdown link for the traveler to go to that package's page and learn more about it:
+     [👉 View Package Details & Itinerary: {Package Title}](#package/{package_id})
+     or
+     [✨ Learn More & Explore Full Itinerary →](#package/{package_id})
+     Place this link prominently right above or below the package image so the traveler can click it to view the complete day-by-day itinerary, stay details, and booking options.
 
-4. STRUCTURED FORMAT:
-   - Highlight the recommended package name, duration, and starting price in bold.
-   - Provide a clean day-wise breakdown and what makes this route optimal.
-   - Include key inclusions and realistic consultant tips (weather, packing, permits).
+4. DESTINATIONS NOT LISTED IN THE WEBSITE (CUSTOM DESTINATION EXPERT HANDOFF):
+   - If the traveler asks about or requests ANY destination, city, country, or region that is NOT listed on the Samyati website catalog (our official listed destinations are: Kashmir, Himachal Pradesh, Kerala, Goa, Rajasthan, Andaman Islands, Ladakh, Uttar Pradesh, North East, Bali, Thailand, Vietnam, Singapore, Kazakhstan, Malaysia, Dubai, Sri Lanka, Uzbekistan, Georgia):
+   - DO NOT fabricate, invent, or hallucinate fake packages, prices, or fake itineraries for unlisted destinations.
+   - DO NOT recommend unrelated catalog packages (e.g. do not suggest Kashmir or Bali if they asked for Paris, Switzerland, Maldives, Japan, USA, Italy, Mauritius, etc.).
+   - Simply, warmly, and cheerfully inform the traveler that while this destination is not currently listed directly on the website catalog, our specialized Destination Experts can handcraft a 100% custom-tailored itinerary and personalized quote for them!
+   - Simply provide a clear, direct option/link to connect with our Destination Expert on WhatsApp:
+     [💬 Connect with Destination Expert on WhatsApp](https://wa.me/919589110765?text=Hi%20Samyati%20Team%2C%20I%20would%20like%20to%20plan%20a%20custom%20trip%20to%20{RequestedDestination})
+   - You can also warmly mention our 19 featured destinations in case they'd love to explore other popular options.
 
-5. ZERO AI / BOT / SYSTEM MENTIONS:
-   - NEVER mention that you are an AI, bot, virtual assistant, language model, Groq, dataset, system prompt, or computer program. You are a senior human travel advisor at Samyati.
+5. STRUCTURED, VIBRANT FORMAT:
+   - For catalog packages: Highlight the recommended package name, duration, and starting price in bold with celebratory flair, include the direct link, give an exciting day-wise breakdown, and list key inclusions.
 
-6. PERSONAL CONSULTATION & BOOKINGS:
-   - For customized dates, hotel upgrades (3★/4★/5★), or private bookings, remind the traveler they can connect directly with you on WhatsApp (+91-9589110765).
+6. ZERO AI / BOT / SYSTEM MENTIONS:
+   - NEVER state that you are an AI, bot, virtual assistant, language model, Groq, dataset, or prompt. You are a real, dedicated travel expert at Samyati who is genuinely thrilled to help!
+
+7. PERSONAL CONSULTATION & BOOKINGS:
+   - Cheerfully remind the traveler that for custom dates, private cab bookings, or dreamy hotel upgrades (3★/4★/5★), they can message you directly on WhatsApp (+91-9589110765) anytime!
 
 === OFFICIAL SAMYATI COMPLETE TRAVEL KNOWLEDGE BASE (ALL 75 PACKAGES) ===
 ${fullCatalogKB}
@@ -385,7 +623,7 @@ ${category ? `User preference category: ${category}` : ''}`;
       const groqApiKey = process.env.GROQ_API_KEY || '';
       if (!groqApiKey) {
         console.error('[API /api/chat] Missing GROQ_API_KEY environment variable');
-        sendJsonResponse(res, 500, {
+        sendJson(res, 500, {
           success: false,
           error: 'GROQ_API_KEY is not configured in server environment (.env)'
         });
@@ -394,15 +632,135 @@ ${category ? `User preference category: ${category}` : ''}`;
       // Cost-optimal model hierarchy: openai/gpt-oss-20b ($0.075/1M input, $0.30/1M output - 92% cheaper than 27b)
       const modelsToTry = [
         requestedModel || 'openai/gpt-oss-20b',
-        'qwen/qwen3.6-27b',
-        'qwen/qwen3.8-27b'
+        'qwen/qwen3.8-27b',
+        'openai/gpt-oss-120b'
       ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i);
 
+      const formattedRecommendations = (isGreeting && !hasSpecificTripIntent)
+        ? []
+        : topMatched.map((pkg, idx) => ({
+            ...pkg,
+            pageLink: `#package/${pkg.id}`,
+            matchScore: idx === 0 ? '98% Match' : (idx === 1 ? '95% Match' : '92% Match'),
+            aiReason: idx === 0 
+              ? `Top verified itinerary from our official catalog.`
+              : `Alternative route option matching your preferences.`
+          }));
+
+      const startTime = Date.now();
+
+      // --- REAL-TIME SSE STREAMING (CHATGPT-STYLE INSTANT RESPONSE) ---
+      if (body.stream !== false) {
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+          'Connection': 'keep-alive',
+          'Access-Control-Allow-Origin': '*'
+        });
+
+        let streamedSuccess = false;
+
+        for (const modelCandidate of modelsToTry) {
+          try {
+            const isReasoningModel = modelCandidate.startsWith('openai/gpt-oss-');
+            const groqPayload = {
+              model: modelCandidate,
+              stream: true,
+              messages: [
+                { role: 'system', content: systemPrompt },
+                ...userMessages.map(m => ({
+                  role: m.sender === 'user' || m.role === 'user' ? 'user' : 'assistant',
+                  content: m.text || m.content || ''
+                }))
+              ],
+              temperature: 0.5,
+              max_tokens: 850,
+              ...(isReasoningModel ? { reasoning_format: 'hidden', reasoning_effort: 'low' } : {})
+            };
+
+            const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${groqApiKey}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(groqPayload)
+            });
+
+            if (groqRes.ok && groqRes.body) {
+              const reader = groqRes.body.getReader();
+              const decoder = new TextDecoder();
+              let buffer = '';
+              let fullStreamed = '';
+              let inThinkTag = false;
+
+              while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+
+                for (const line of lines) {
+                  const trimmed = line.trim();
+                  if (!trimmed || !trimmed.startsWith('data:')) continue;
+                  const jsonStr = trimmed.replace(/^data:\s*/, '');
+                  if (jsonStr === '[DONE]') break;
+                  try {
+                    const parsed = JSON.parse(jsonStr);
+                    const delta = parsed.choices?.[0]?.delta?.content || '';
+                    if (delta) {
+                      if (delta.includes('<think>')) inThinkTag = true;
+                      if (inThinkTag) {
+                        if (delta.includes('</think>')) inThinkTag = false;
+                        continue;
+                      }
+                      fullStreamed += delta;
+                      res.write(`data: ${JSON.stringify({ chunk: delta })}\n\n`);
+                    }
+                  } catch {
+                    // skip malformed chunk
+                  }
+                }
+              }
+
+              const cleanedFull = stripThinkingProcess(fullStreamed);
+              res.write(`data: ${JSON.stringify({
+                done: true,
+                reply: cleanedFull,
+                modelUsed: modelCandidate,
+                latencyMs: Date.now() - startTime,
+                matchedPackages: formattedRecommendations
+              })}\n\n`);
+              res.end();
+              streamedSuccess = true;
+              return true;
+            }
+          } catch (streamErr) {
+            console.warn(`[Chat Stream API] Error with model ${modelCandidate}:`, streamErr.message);
+          }
+        }
+
+        if (!streamedSuccess) {
+          const topPkg = topMatched[0] || allPkgs[0];
+          const fallbackReply = `Yay! 🎉 I am SO excited to recommend our incredible **${topPkg.title}** (${topPkg.duration}, starting from only ${topPkg.price} per person)! ✈️✨\n\n![${topPkg.title}](${topPkg.image})\n\n[👉 View Package Details & Itinerary: ${topPkg.title}](#package/${topPkg.id})\n\nIt offers a perfectly balanced dream route covering all top highlights with private transfers and lovely stays! Chat with me on WhatsApp (+91-9589110765) for custom dates and luxury hotel upgrades—I'd love to help you plan this! 🌟`;
+          res.write(`data: ${JSON.stringify({ chunk: fallbackReply })}\n\n`);
+          res.write(`data: ${JSON.stringify({
+            done: true,
+            reply: fallbackReply,
+            modelUsed: 'Samyati Senior Travel Advisor',
+            latencyMs: Date.now() - startTime,
+            matchedPackages: formattedRecommendations
+          })}\n\n`);
+          res.end();
+          return true;
+        }
+      }
+
+      // --- NON-STREAMING FALLBACK (When stream: false explicitly requested) ---
       let aiReply = '';
       let usedModel = modelsToTry[0];
       let latencyMs = 0;
-
-      const startTime = Date.now();
 
       for (const modelCandidate of modelsToTry) {
         try {
@@ -433,10 +791,7 @@ ${category ? `User preference category: ${category}` : ''}`;
           if (groqRes.ok) {
             const data = await groqRes.json();
             const choice = data.choices && data.choices[0];
-            // Strictly take content — never leak internal reasoning field to traveler
             let content = choice?.message?.content || '';
-            
-            // Strip any thinking process or scratchpad traces
             content = stripThinkingProcess(content);
 
             if (content) {
@@ -445,9 +800,6 @@ ${category ? `User preference category: ${category}` : ''}`;
               latencyMs = Date.now() - startTime;
               break;
             }
-          } else {
-            const errBody = await groqRes.text();
-            console.warn(`[Chat API] Model ${modelCandidate} failed:`, errBody);
           }
         } catch (callErr) {
           console.warn(`[Chat API] Error with model ${modelCandidate}:`, callErr.message);
@@ -455,20 +807,9 @@ ${category ? `User preference category: ${category}` : ''}`;
       }
 
       if (!aiReply) {
-        // Fallback grounded response if offline
         const topPkg = topMatched[0] || allPkgs[0];
-        aiReply = `I'd recommend checking our **${topPkg.title}** (${topPkg.duration}, starting from ${topPkg.price} per person).\n\n![${topPkg.title}](${topPkg.image})\n\nIt offers a perfectly balanced route covering all key highlights with private cab transfers and accommodation. Connect with me on WhatsApp (+91-9589110765) for custom dates and hotel upgrades!`;
+        aiReply = `Yay! 🎉 I am SO excited to recommend our incredible **${topPkg.title}** (${topPkg.duration}, starting from only ${topPkg.price} per person)! ✈️✨\n\n![${topPkg.title}](${topPkg.image})\n\n[👉 View Package Details & Itinerary: ${topPkg.title}](#package/${topPkg.id})\n\nIt offers a perfectly balanced dream route covering all top highlights with private transfers and lovely stays! Chat with me on WhatsApp (+91-9589110765) for custom dates and luxury hotel upgrades—I'd love to help you plan this! 🌟`;
       }
-
-      const formattedRecommendations = (isGreeting && !hasSpecificTripIntent)
-        ? []
-        : topMatched.map((pkg, idx) => ({
-            ...pkg,
-            matchScore: idx === 0 ? '98% Match' : (idx === 1 ? '95% Match' : '92% Match'),
-            aiReason: idx === 0 
-              ? `Top verified itinerary from our official catalog.`
-              : `Alternative route option matching your preferences.`
-          }));
 
       sendJson(res, 200, {
         success: true,

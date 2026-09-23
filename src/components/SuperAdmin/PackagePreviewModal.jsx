@@ -149,7 +149,7 @@ export default function PackagePreviewModal({ isOpen, packageData, onClose }) {
                 <span className="price-sub">Per person on twin sharing basis</span>
 
                 <button className="preview-book-btn" disabled>
-                  <span>Request Custom Price Quote</span>
+                  <span>Book & Pay Directly Online</span>
                 </button>
 
                 <div className="trust-pills-list">

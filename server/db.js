@@ -9,6 +9,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const DATA_DIR = path.resolve(ROOT_DIR, 'server', 'data');
 const BACKUP_DIR = path.resolve(DATA_DIR, 'backups');
 const DB_FILE = path.resolve(DATA_DIR, 'packages.json');
+const BOOKINGS_FILE = path.resolve(DATA_DIR, 'bookings.json');
 const TRAVEL_DATA_FILE = path.resolve(ROOT_DIR, 'src', 'data', 'travelData.js');
 
 // Mutex queue to prevent race conditions during concurrent writes
@@ -434,6 +435,79 @@ export async function resetToDefault() {
         });
       } catch (err) {
         console.error('[DB] Reset to default failed:', err);
+        reject(err);
+      }
+    });
+  });
+}
+
+/**
+ * Get all confirmed bookings from the store
+ */
+export async function getAllBookings() {
+  ensureDirectories();
+  try {
+    if (!fs.existsSync(BOOKINGS_FILE)) {
+      return { bookings: [], total: 0 };
+    }
+    const raw = await fs.promises.readFile(BOOKINGS_FILE, 'utf8');
+    const data = JSON.parse(raw);
+    return {
+      bookings: Array.isArray(data.bookings) ? data.bookings : [],
+      total: Array.isArray(data.bookings) ? data.bookings.length : 0,
+      lastModified: data.lastModified || null
+    };
+  } catch (err) {
+    console.error('[DB] Error loading bookings:', err.message);
+    return { bookings: [], total: 0 };
+  }
+}
+
+/**
+ * Save or update a booking transaction record atomically
+ */
+export async function saveBookingRecord(record) {
+  return new Promise((resolve, reject) => {
+    writeQueue = writeQueue.then(async () => {
+      try {
+        ensureDirectories();
+        let bookings = [];
+        if (fs.existsSync(BOOKINGS_FILE)) {
+          try {
+            const raw = await fs.promises.readFile(BOOKINGS_FILE, 'utf8');
+            const data = JSON.parse(raw);
+            bookings = Array.isArray(data.bookings) ? data.bookings : [];
+          } catch {
+            bookings = [];
+          }
+        }
+
+        const existingIndex = bookings.findIndex(b => b.bookingId === record.bookingId || (record.paymentId && b.paymentId === record.paymentId));
+        const timestamp = new Date().toISOString();
+        const enrichedRecord = {
+          ...record,
+          updatedAt: timestamp,
+          createdAt: existingIndex >= 0 ? bookings[existingIndex].createdAt : timestamp
+        };
+
+        if (existingIndex >= 0) {
+          bookings[existingIndex] = enrichedRecord;
+        } else {
+          bookings.unshift(enrichedRecord);
+        }
+
+        const storeData = {
+          version: '1.0.0',
+          lastModified: timestamp,
+          total: bookings.length,
+          bookings
+        };
+
+        await atomicWrite(BOOKINGS_FILE, storeData);
+        console.log(`[DB] Saved booking record: ${enrichedRecord.bookingId || enrichedRecord.id} (Status: ${enrichedRecord.status})`);
+        resolve(enrichedRecord);
+      } catch (err) {
+        console.error('[DB] Failed to save booking record:', err);
         reject(err);
       }
     });

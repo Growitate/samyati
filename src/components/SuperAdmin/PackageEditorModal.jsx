@@ -21,7 +21,8 @@ import {
   Building2,
   Tag,
   Eye,
-  RefreshCw
+  RefreshCw,
+  Unlock
 } from 'lucide-react';
 import { API_ENDPOINTS, ADMIN_STORAGE_KEYS } from '../../config/adminConfig';
 
@@ -680,6 +681,77 @@ export default function PackageEditorModal({
                     <span className="field-subtext">Reviews</span>
                   </div>
                 </div>
+
+                {/* UNLOCKED PRODUCT DESCRIPTION BOX (PROMINENT ON MAIN TAB) */}
+                <div className="form-field full-span description-unlocked-box">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="flex items-center gap-1.5 font-bold text-slate-800 text-sm m-0">
+                      <Unlock size={15} className="text-emerald-600" />
+                      <span>Product Overview & Narrative Description *</span>
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">Unlocked & Editable</span>
+                    </label>
+                    <span className="text-xs text-slate-500 font-medium">
+                      {(formData.description || '').length} chars • {(formData.description || '').trim().split(/\s+/).filter(Boolean).length} words
+                    </span>
+                  </div>
+
+                  {/* Quick Preset Buttons */}
+                  <div className="preset-chips-row flex flex-wrap gap-1.5 mb-2">
+                    <span className="text-xs text-slate-500 self-center font-medium mr-1">Quick Templates:</span>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Indulge in a bespoke luxury travel experience crafted exclusively by Samyati The World. Features boutique accommodations, private chauffeured transfers, curated sightseeing, and 24/7 dedicated concierge service.'
+                      })}
+                      className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-200 rounded-md transition-all font-medium"
+                    >
+                      ✨ Curated Luxury
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Breathtaking mountain landscapes, serene valleys, and iconic panoramic viewpoints. Includes handpicked scenic stays, private sightseeing transfers, and authentic regional culinary highlights.'
+                      })}
+                      className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-200 rounded-md transition-all font-medium"
+                    >
+                      🏔️ Alpine & Scenic
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Sun-drenched beaches, azure waters, and tranquil sunset cruises. Includes premium beachfront resort accommodations, private island transfers, and optional water adventure excursions.'
+                      })}
+                      className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-200 rounded-md transition-all font-medium"
+                    >
+                      🌴 Beach Bliss
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Step into royal heritage, majestic architecture, and historic monuments with licensed local expert guides, private transport, and immersive cultural storytelling.'
+                      })}
+                      className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-200 rounded-md transition-all font-medium"
+                    >
+                      🏛️ Heritage & Culture
+                    </button>
+                  </div>
+
+                  <textarea
+                    rows="5"
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Describe the journey experience, highlights, stays, destinations covered, and authentic consultant insights..."
+                    className="w-full p-3 text-sm text-slate-800 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none leading-relaxed"
+                    required
+                  ></textarea>
+                  <span className="field-subtext text-xs text-slate-500 mt-1 block">
+                    Shown prominently on package detail hero, summary cards, and shared quote PDFs.
+                  </span>
+                </div>
               </div>
 
               {/* HOTEL PRICING OPTIONS BREAKDOWN */}
@@ -762,17 +834,86 @@ export default function PackageEditorModal({
           {activeTab === 'content' && (
             <div className="tab-section-pane">
               <div className="form-field full-span">
-                <label>Tour Overview & Narrative Description *</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="flex items-center gap-1.5 font-bold text-slate-800 text-base m-0">
+                    <Unlock size={17} className="text-emerald-600" />
+                    <span>Product Overview & Full Narrative Description *</span>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">Unlocked & Live</span>
+                  </label>
+                  <span className="text-xs text-slate-500 font-medium">
+                    {(formData.description || '').length} characters • {(formData.description || '').trim().split(/\s+/).filter(Boolean).length} words
+                  </span>
+                </div>
+
+                <p className="text-xs text-slate-600 mb-3">
+                  This description is displayed prominently across the customer-facing package detail page, AI travel advisor knowledge grounding, and WhatsApp travel quotation cards.
+                </p>
+
+                {/* Quick Templates Toolbar */}
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg mb-3">
+                  <span className="text-xs font-bold text-slate-700 block mb-2">⚡ Quick Description Presets:</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Indulge in a bespoke luxury travel experience crafted exclusively by Samyati The World. Features boutique accommodations, private chauffeured transfers, curated sightseeing, and 24/7 dedicated concierge service.'
+                      })}
+                      className="px-3 py-1.5 text-xs bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-300 rounded-md transition-all font-semibold shadow-sm"
+                    >
+                      ✨ Curated Luxury Package
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Breathtaking mountain landscapes, serene valleys, and iconic panoramic viewpoints. Includes handpicked scenic stays, private sightseeing transfers, and authentic regional culinary highlights.'
+                      })}
+                      className="px-3 py-1.5 text-xs bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-300 rounded-md transition-all font-semibold shadow-sm"
+                    >
+                      🏔️ Alpine & Scenic Valley
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Sun-drenched beaches, azure waters, and tranquil sunset cruises. Includes premium beachfront resort accommodations, private island transfers, and optional water adventure excursions.'
+                      })}
+                      className="px-3 py-1.5 text-xs bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-300 rounded-md transition-all font-semibold shadow-sm"
+                    >
+                      🌴 Beach & Coastal Escape
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        description: 'Step into royal heritage, majestic architecture, and historic monuments with licensed local expert guides, private transport, and immersive cultural storytelling.'
+                      })}
+                      className="px-3 py-1.5 text-xs bg-white hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 text-slate-700 border border-slate-300 rounded-md transition-all font-semibold shadow-sm"
+                    >
+                      🏛️ Heritage & Cultural Discovery
+                    </button>
+                  </div>
+                </div>
+
                 <textarea
-                  rows="7"
+                  rows="8"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Describe the journey experience, highlights, stays, destinations covered, and authentic consultant insights..."
+                  className="w-full p-3.5 text-sm text-slate-800 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none leading-relaxed font-sans"
                   required
                 ></textarea>
-                <span className="field-subtext">
-                  Shown prominently on the package detail page and summary cards.
-                </span>
+                <div className="flex justify-between items-center mt-2 text-xs text-slate-500">
+                  <span>💡 Tip: Detailed descriptions help travelers choose your package and power AI consultant responses.</span>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, description: '' })}
+                    className="text-red-500 hover:underline"
+                  >
+                    Clear Text
+                  </button>
+                </div>
               </div>
             </div>
           )}

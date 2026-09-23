@@ -28,11 +28,13 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 import { initSmoothScroll, scrollTo } from './smoothScroll';
 import { initScrollReveal } from './utils/scrollReveal';
 
-import { PackageProvider } from './context/PackageContext';
+import { PackageProvider, usePackages } from './context/PackageContext';
 import SuperAdminPortal from './components/SuperAdmin/SuperAdminPortal';
 import { isSecretAdminUrl, ADMIN_SECRET_SLUG } from './config/adminConfig';
 
 function MainApp() {
+  const { packages: PACKAGES } = usePackages();
+
   // Current view: 'home' | 'about' | 'contact' | 'desh' | 'videsh' | 'super-admin'
   const [currentView, setCurrentView] = useState(() => {
     return isSecretAdminUrl() ? 'super-admin' : 'home';
@@ -63,17 +65,42 @@ function MainApp() {
         return;
       }
 
-      const hash = window.location.hash.toLowerCase();
+      const rawHash = window.location.hash || '';
+      const hash = rawHash.toLowerCase();
+
+      // Check if hash points directly to a package (#package/:id, #package-:id, #pkg-:id)
+      if (hash.startsWith('#package/') || hash.startsWith('#package-') || hash.startsWith('#pkg-') || hash.startsWith('#package?')) {
+        const pkgId = rawHash.replace(/^#(?:package[\/-]|pkg[\/-]|package\?id=)/i, '').trim();
+        const found = (PACKAGES || []).find(p => 
+          p.id.toLowerCase() === pkgId.toLowerCase() ||
+          p.id.toLowerCase() === decodeURIComponent(pkgId).toLowerCase() ||
+          (p.title && p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === pkgId.toLowerCase())
+        );
+        if (found) {
+          setSelectedPackage(found);
+          scrollTo(0, { immediate: true });
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          return;
+        }
+      }
+
       if (hash === '#desh') {
         setCurrentView('desh');
+        setSelectedPackage(null);
       } else if (hash === '#videsh') {
         setCurrentView('videsh');
+        setSelectedPackage(null);
       } else if (hash === '#about') {
         setCurrentView('about');
+        setSelectedPackage(null);
       } else if (hash === '#contact') {
         setCurrentView('contact');
+        setSelectedPackage(null);
       } else {
         setCurrentView('home');
+        if (!hash.startsWith('#package') && !hash.startsWith('#pkg')) {
+          setSelectedPackage(null);
+        }
       }
       scrollTo(0, { immediate: true });
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -86,7 +113,17 @@ function MainApp() {
       window.removeEventListener('hashchange', handleLocationChange);
       window.removeEventListener('popstate', handleLocationChange);
     };
-  }, []);
+  }, [PACKAGES]);
+
+  const handleSelectPackage = (pkg) => {
+    if (!pkg) return;
+    setSelectedPackage(pkg);
+    if (pkg.id) {
+      window.location.hash = `#package/${pkg.id}`;
+    }
+    scrollTo(0, { immediate: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  };
 
   const handleNavigate = (view) => {
     setCurrentView(view);
@@ -132,7 +169,12 @@ function MainApp() {
 
         <PackageDetailPage
           packageData={selectedPackage}
-          onBack={() => setSelectedPackage(null)}
+          onBack={() => {
+            setSelectedPackage(null);
+            if (window.location.hash.startsWith('#package') || window.location.hash.startsWith('#pkg')) {
+              window.history.pushState(null, '', window.location.pathname);
+            }
+          }}
           onOpenOfferModal={handleOpenOfferModal}
         />
 
@@ -179,14 +221,14 @@ function MainApp() {
           <DestinationDetailPage
             destination={selectedDestination}
             onBack={() => setSelectedDestination(null)}
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
         ) : (
           <DeshPage
             onBack={() => handleNavigate('home')}
             onSelectDestination={(dest) => setSelectedDestination(dest)}
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
         )}
@@ -234,14 +276,14 @@ function MainApp() {
           <DestinationDetailPage
             destination={selectedDestination}
             onBack={() => setSelectedDestination(null)}
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
         ) : (
           <VideshPage
             onBack={() => handleNavigate('home')}
             onSelectDestination={(dest) => setSelectedDestination(dest)}
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
         )}
@@ -375,14 +417,19 @@ function MainApp() {
         <DestinationDetailPage
           destination={selectedDestination}
           onBack={() => setSelectedDestination(null)}
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+          onSelectPackage={handleSelectPackage}
           onOpenOfferModal={handleOpenOfferModal}
         />
       ) : (
         <>
           <HeroSection
             onOpenOfferModal={handleOpenOfferModal}
-            onSelectDestination={(dest) => setSelectedDestination(dest)}
+            onSelectDestination={(dest) => {
+              setSelectedDestination(dest);
+              scrollTo(0, { immediate: true });
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            }}
+            onSelectPackage={handleSelectPackage}
           />
 
           <TourCategories
@@ -391,17 +438,17 @@ function MainApp() {
           />
 
           <PromiseSection
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
 
           <FeaturedTours
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
 
           <ThemeEscapes
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
             onOpenOfferModal={handleOpenOfferModal}
           />
 
@@ -409,7 +456,7 @@ function MainApp() {
 
           <TopDestinations
             onSelectDestination={(dest) => setSelectedDestination(dest)}
-            onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+            onSelectPackage={handleSelectPackage}
           />
 
           <ProcessSection />
