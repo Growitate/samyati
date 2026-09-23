@@ -10,12 +10,17 @@ import {
   deletePackage,
   syncFromCode,
   resetToDefault,
-  initDatabase,
   getAllBookings,
   saveBookingRecord
 } from './db.js';
-import { authenticateAdmin, verifyToken, checkRateLimit } from './auth.js';
+import { authenticateAdmin, verifyToken } from './auth.js';
 import { buildFullKnowledgeBase, buildDeepInquiryKnowledge } from '../src/data/knowledgeBase.js';
+import {
+  verifyAttributionIntegrity,
+  validateRequestDomain,
+  isTampered,
+  clearTamperLockIfValid
+} from './integrityGuard.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -122,6 +127,16 @@ export async function handleApiRequest(req, res) {
   // Only handle /api/ routes
   if (!pathname.startsWith('/api/')) {
     return false;
+  }
+
+  // Domain security validation for API requests
+  const domainCheck = validateRequestDomain(req);
+  if (!domainCheck.valid) {
+    sendJson(res, 403, {
+      success: false,
+      error: domainCheck.reason || 'Access denied: Unauthorized domain'
+    });
+    return true;
   }
 
   try {
@@ -374,6 +389,16 @@ export async function handleApiRequest(req, res) {
 
     // --- SENIOR TRAVEL CONSULTANT & KNOWLEDGE BASE RETRIEVAL ENDPOINT: POST /api/chat ---
     if (pathname === '/api/chat' && method === 'POST') {
+      // 1. Verify anti-tamper attribution integrity before processing AI request
+      const integrityCheck = verifyAttributionIntegrity();
+      if (!integrityCheck.valid || isTampered()) {
+        sendJson(res, 403, {
+          success: false,
+          error: integrityCheck.reason || 'Security Integrity Violation: Required attribution has been modified or removed. AI functionality is disabled.'
+        });
+        return true;
+      }
+
       const body = await parseJsonBody(req);
       const { messages = [], prompt, destination, category, model: requestedModel } = body;
 
@@ -818,6 +843,31 @@ ${category ? `User preference category: ${category}` : ''}`;
         latencyMs,
         matchedPackages: formattedRecommendations
       });
+      return true;
+    }
+
+    // --- ANTI-TAMPER INTEGRITY STATUS: GET /api/integrity/status ---
+    if (pathname === '/api/integrity/status' && method === 'GET') {
+      const integrity = verifyAttributionIntegrity();
+      sendJson(res, integrity.valid ? 200 : 403, {
+        success: integrity.valid,
+        tampered: !integrity.valid,
+        reason: integrity.reason || 'Attribution integrity verified',
+        attribution: 'Built by Growitate',
+        domainAllowed: domainCheck.valid
+      });
+      return true;
+    }
+
+    // --- ADMIN CLEAR TAMPER LOCK: POST /api/admin/integrity/clear-lock ---
+    if (pathname === '/api/admin/integrity/clear-lock' && method === 'POST') {
+      const token = getAuthToken(req);
+      if (!verifyToken(token)) {
+        sendJson(res, 401, { success: false, message: 'Unauthorized: Valid admin token required' });
+        return true;
+      }
+      const clearResult = clearTamperLockIfValid();
+      sendJson(res, clearResult.success ? 200 : 400, clearResult);
       return true;
     }
 

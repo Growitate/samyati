@@ -1,6 +1,7 @@
 import http from 'http';
 import { handleApiRequest } from './api.js';
 import { initDatabase } from './db.js';
+import { startIntegrityWatchdog } from './integrityGuard.js';
 
 // Load .env configuration
 try {
@@ -14,6 +15,8 @@ const PORT = process.env.PORT || 7392;
 async function startServer() {
   // Initialize file-based database on boot
   await initDatabase();
+  // Start server-side anti-tampering watchdog
+  startIntegrityWatchdog();
 
   const server = http.createServer(async (req, res) => {
     const handled = await handleApiRequest(req, res);

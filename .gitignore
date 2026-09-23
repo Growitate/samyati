@@ -5,4 +5,5 @@ dist
 .env
 .env.local
 .env.*.local
-
+.tamper_lock.json
+server/data/.tamper_lock.json

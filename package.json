@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "node server/test_anti_tamper.js",
     "lint": "oxlint",
     "preview": "vite preview"
   },

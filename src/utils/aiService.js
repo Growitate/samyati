@@ -1,6 +1,4 @@
-// Client-side AI Service for Groq Travel Advisor
-import { PACKAGES, DESTINATIONS } from '../data/travelData.js';
-import { buildFullKnowledgeBase, buildDeepInquiryKnowledge } from '../data/knowledgeBase.js';
+// Client-side AI Service for Groq Travel Advisor (Server-Brokered)
 
 export const GROQ_MODELS = {
   PRIMARY: 'openai/gpt-oss-20b',
@@ -8,10 +6,8 @@ export const GROQ_MODELS = {
   FALLBACK_LARGE: 'openai/gpt-oss-120b'
 };
 
-const DEFAULT_GROQ_KEY = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GROQ_API_KEY) || '';
-
 /**
- * Send chat message to backend /api/chat (with direct Groq fallback if needed)
+ * Send chat message to backend /api/chat securely
  */
 export async function sendChatMessage({
   messages = [],
@@ -26,7 +22,7 @@ export async function sendChatMessage({
     ? messages 
     : [{ role: 'user', content: prompt }];
 
-  // 1. First attempt: call local backend /api/chat with real-time SSE streaming
+  // 1. Call local backend /api/chat with real-time SSE streaming
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
@@ -125,12 +121,25 @@ export async function sendChatMessage({
           };
         }
       }
+    } else {
+      const errData = await res.json().catch(() => ({}));
+      const errMsg = errData.error || errData.message || 'AI service temporarily unavailable.';
+      if (onChunk) {
+        onChunk({ chunk: errMsg, text: errMsg });
+      }
+      return {
+        reply: errMsg,
+        modelUsed: 'System Security',
+        latencyMs: 0,
+        matchedPackages: [],
+        error: errMsg
+      };
     }
   } catch (err) {
     if (err.name === 'AbortError') {
       throw err;
     }
-    console.warn('[AI Service] Backend /api/chat error, attempting direct Groq client call:', err.message);
+    console.warn('[AI Service] Backend /api/chat error:', err.message);
   }
 
   // Client-side greeting shortcut
@@ -148,90 +157,6 @@ export async function sendChatMessage({
       latencyMs: 10,
       matchedPackages: []
     };
-  }
-
-  // 2. Direct client fallback if backend is unreachable
-  try {
-    const fullCatalogKB = buildFullKnowledgeBase(PACKAGES, DESTINATIONS);
-    const systemPrompt = `You are an extremely EXCITED, PASSIONATE, and HAPPY-HAPPY Senior Travel Consultant at "Samyati The World" (samyati.com).
-Speak naturally with bright energy, warmth, and joyful excitement! You genuinely love travel and your enthusiasm is contagious!
-Celebrate the traveler's vacation ideas with cheer ("Oh, I am SO excited for this!", "You will fall in love with this route!").
-Use cheerful travel emojis naturally throughout (🎉, ✨, ✈️, 🏔️, 🌴, 🌟, 🥳, 💛).
-NEVER state that you are an AI, bot, or virtual program. You are a dedicated travel advisor thrilled to plan dream vacations!
-Strictly ground all advice, pricing, and package names in our official Samyati knowledge base below.
-Quote exact package names, exact durations, and starting prices.
-Always embed the official image using markdown ![Package Title](image_url) when recommending a tour.
-
-CRITICAL REQUIREMENT — DIRECT LINK TO LEARN MORE:
-Whenever you suggest, recommend, or mention a package, you MUST ALWAYS provide a direct markdown link for the traveler to go to that package's page and learn more about it:
-[👉 View Package Details & Itinerary: {Package Title}](#package/{package_id})
-or
-[✨ Learn More & Explore Full Itinerary →](#package/{package_id})
-Place this link prominently so the traveler can click it to view the complete package page with all details.
-
-DESTINATIONS NOT LISTED IN THE WEBSITE (CUSTOM DESTINATION EXPERT OPTION):
-If the traveler asks for any destination, city, country, or region NOT listed in our catalog:
-- DO NOT invent fake packages, fake prices, or fake itineraries for unlisted destinations.
-- DO NOT suggest unrelated catalog packages.
-- Simply, warmly, and cheerfully let them know this destination is not currently listed directly on the website catalog, but our specialized Destination Experts can handcraft a 100% custom-tailored itinerary and quote for them.
-- Simply give the direct option to connect with the Destination Expert on WhatsApp:
-[💬 Connect with Destination Expert on WhatsApp](https://wa.me/919589110765?text=Hi%20Samyati%20Team%2C%20I%20would%20like%20to%20plan%20a%20custom%20trip%20to%20{RequestedDestination})
-
-Direct travelers to WhatsApp (+91-9589110765) for custom dates and hotel bookings.
-
-=== OFFICIAL SAMYATI TRAVEL KNOWLEDGE BASE (ALL 75 PACKAGES) ===
-${fullCatalogKB}
-==============================================================`;
-
-    if (!DEFAULT_GROQ_KEY) {
-      console.warn('[AI Service] Direct client fallback bypassed: no VITE_GROQ_API_KEY configured.');
-      return {
-        reply: "Yay! 🎉 Our Destination Experts are super excited to help you plan your dream vacation! Please connect with us directly on WhatsApp at [💬 Connect with Destination Expert on WhatsApp](https://wa.me/919589110765?text=Hi%20Samyati%20Team%2C%20I%20would%20like%20to%20plan%20a%20custom%20trip) to get an instant customized quote! ✨",
-        modelUsed: 'Samyati Travel Desk',
-        latencyMs: 10,
-        matchedPackages: []
-      };
-    }
-
-    const isReasoningModel = model && model.startsWith('openai/gpt-oss-');
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${DEFAULT_GROQ_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...formattedMessages.map(m => ({
-            role: m.sender === 'user' || m.role === 'user' ? 'user' : 'assistant',
-            content: m.text || m.content || ''
-          }))
-        ],
-        temperature: 0.5,
-        max_tokens: 850,
-        ...(isReasoningModel ? { reasoning_format: 'hidden', reasoning_effort: 'low' } : {})
-      })
-    });
-
-    if (groqRes.ok) {
-      const gData = await groqRes.json();
-      let content = gData.choices?.[0]?.message?.content || '';
-      content = content.replace(/<think>[\s\S]*?<\/think>/gi, '');
-      if (content.includes('<think>')) {
-        content = content.replace(/<think>[\s\S]*$/gi, '');
-      }
-      content = content.trim();
-      return {
-        reply: content || 'I am ready to plan your trip! Tell me your destination and preferences.',
-        modelUsed: 'Samyati Travel Advisor',
-        latencyMs: 100,
-        matchedPackages: []
-      };
-    }
-  } catch (directErr) {
-    console.error('[AI Service] Direct Groq call failed:', directErr);
   }
 
   return {
@@ -426,7 +351,7 @@ export function formatAiMarkdown(text = '') {
         htmlParts.push('<ul class="ai-msg-list">');
         inList = true;
       }
-      const itemContent = trimmed.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '');
+      const itemContent = trimmed.replace(/^[* -]\s+/, '').replace(/^\d+\.\s+/, '');
       htmlParts.push(`<li>${itemContent}</li>`);
     } else {
       if (inList) {

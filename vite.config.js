@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { handleApiRequest } from './server/api.js'
 import { initDatabase } from './server/db.js'
+import { startIntegrityWatchdog } from './server/integrityGuard.js'
 
 // Load environment variables for local Vite dev / preview server
 try {
@@ -15,6 +16,7 @@ function samyatiApiPlugin() {
     name: 'samyati-api-plugin',
     async configureServer(server) {
       await initDatabase();
+      startIntegrityWatchdog();
       server.middlewares.use(async (req, res, next) => {
         if (req.url && req.url.startsWith('/api/')) {
           const handled = await handleApiRequest(req, res);
@@ -25,6 +27,7 @@ function samyatiApiPlugin() {
     },
     async configurePreviewServer(server) {
       await initDatabase();
+      startIntegrityWatchdog();
       server.middlewares.use(async (req, res, next) => {
         if (req.url && req.url.startsWith('/api/')) {
           const handled = await handleApiRequest(req, res);
